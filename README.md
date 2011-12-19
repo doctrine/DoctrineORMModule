@@ -1,5 +1,5 @@
 # SpiffyDoctrineORM Module for Zend Framework 2
-The SpiffyDoctrineORM module intends to integrate Doctrine 2 MongoDB ODM with Zend Framework 2 quickly 
+The SpiffyDoctrineORM module intends to integrate Doctrine 2 ORM with Zend Framework 2 quickly 
 and easily. The following features are intended to work out of the box: 
   
   - Doctrine ORM support
