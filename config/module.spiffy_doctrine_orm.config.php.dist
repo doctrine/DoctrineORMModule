@@ -31,7 +31,9 @@ $settings = array(
     'driver' => array(
         'class'     => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
         'namespace' => 'Application\Entity',
-        'paths'     => array('module/Application/src/Application/Entity') 
+        'paths'     => array('module/Application/src/Application/Entity')
+    ),
+    'namespace_aliases' => array(
     ),
 );
 
@@ -56,6 +58,7 @@ return array(
             'orm_config' => array(
                 'parameters' => array(
                     'opts' => array(
+                        'entity_namespaces' => $settings['namespace_aliases'],
                         'auto_generate_proxies' => !$settings['production']
                     ),
                     'metadataCache' => $settings['cache'],
