@@ -19,6 +19,7 @@ class Configuration extends Instance
             'proxy_namespace'       => 'string',
         ),
         'optional' => array(
+            'entity_namespaces'         => 'array',
             'custom_datetime_functions' => 'array',
             'custom_numeric_functions'  => 'array',
             'custom_string_functions'   => 'array',
@@ -91,7 +92,10 @@ class Configuration extends Instance
         $config->setAutoGenerateProxyClasses($opts['auto_generate_proxies']);
         $config->setProxyDir($opts['proxy_dir']);
         $config->setProxyNamespace($opts['proxy_namespace']);
-        
+
+        // entity namespaces
+        $config->setEntityNamespaces($opts['entity_namespaces']);
+
         // add custom functions
         $config->setCustomDatetimeFunctions($opts['custom_datetime_functions']);
         $config->setCustomStringFunctions($opts['custom_string_functions']);
@@ -107,7 +111,7 @@ class Configuration extends Instance
             $this->_validateOptions($query, $this->_namedNativeQueryDefinition);
             $config->addNamedNativeQuery($query['name'], $query['sql'], new $query['rsm']);
         }
-        
+
         // caching
         $config->setQueryCacheImpl($this->queryCache);
         $config->setMetadataCacheImpl($this->metadataCache);

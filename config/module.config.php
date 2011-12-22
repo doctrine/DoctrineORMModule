@@ -36,6 +36,7 @@ return array(
                         'auto_generate_proxies'     => true,
                         'proxy_dir'                 => __DIR__ . '/../../../data/SpiffyDoctrine/Proxy',
                         'proxy_namespace'           => 'SpiffyDoctrine\Proxy',
+                        'entity_namespaces'         => array(),
                         'custom_datetime_functions' => array(),
                         'custom_numeric_functions'  => array(),
                         'custom_string_functions'   => array(),
