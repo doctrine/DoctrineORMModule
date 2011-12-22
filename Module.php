@@ -13,7 +13,7 @@ class Module implements AutoloaderProvider
         if (file_exists($libfile)) {
             AnnotationRegistry::registerFile($libfile);
         } else {
-            @include_once 'Doctrine/ORM/Mapping/Annotations/DoctrineAnnotations.php';
+            @include_once 'Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php';
             if (!class_exists('Doctrine\ORM\Mapping\Entity', false)) {
                 throw new \Exception(
                     'Ensure Doctrine can be autoloaded or initalize submodules in SpiffyDoctrineORM'
