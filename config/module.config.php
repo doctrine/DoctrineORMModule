@@ -1,5 +1,9 @@
 <?php
 return array(
+    'doctrine_orm_module' => array(
+        'annotation_file' => __DIR__ . '/../vendor/doctrine2-orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php',
+        'use_annotations' => true,
+    ),
     'di' => array(
         'definition' => array(
             'class' => array(
@@ -9,11 +13,11 @@ return array(
                         'port' => array('type' => false, 'required' => true),
                     )
                 ),
-                'SpiffyDoctrineORM\Factory\EntityManager' => array(
-                    'instantiator' => array('SpiffyDoctrineORM\Factory\EntityManager', 'get'),
+                'DoctrineORMModule\Factory\EntityManager' => array(
+                    'instantiator' => array('DoctrineORMModule\Factory\EntityManager', 'get'),
                     'methods' => array(
                         'get' => array(
-                            'conn' => array('type' => 'SpiffyDoctrineORM\Doctrine\ORM\Connection', 'required' => true)
+                            'conn' => array('type' => 'DoctrineORMModule\Doctrine\ORM\Connection', 'required' => true)
                         )
                     )
                 ),
@@ -22,20 +26,21 @@ return array(
         'instance' => array(
             'alias' => array(
                 // entity manager
-                'doctrine_em'    => 'SpiffyDoctrineORM\Factory\EntityManager',
+                'doctrine_em' => 'DoctrineORMModule\Factory\EntityManager',
+                'orm_em'      => 'doctrine_em',
                 
                 // configuration
-                'orm_config'       => 'SpiffyDoctrineORM\Doctrine\ORM\Configuration',
-                'orm_connection'   => 'SpiffyDoctrineORM\Doctrine\ORM\Connection',
-                'orm_driver_chain' => 'SpiffyDoctrineORM\Doctrine\ORM\DriverChain',
-                'orm_evm'          => 'SpiffyDoctrine\Doctrine\Common\EventManager',
+                'orm_config'       => 'DoctrineORMModule\Doctrine\ORM\Configuration',
+                'orm_connection'   => 'DoctrineORMModule\Doctrine\ORM\Connection',
+                'orm_driver_chain' => 'DoctrineORMModule\Doctrine\ORM\DriverChain',
+                'orm_evm'          => 'DoctrineModule\Doctrine\Common\EventManager',
             ),
             'orm_config' => array(
                 'parameters' => array(
                     'opts' => array(
                         'auto_generate_proxies'     => true,
-                        'proxy_dir'                 => __DIR__ . '/../../../data/SpiffyDoctrine/Proxy',
-                        'proxy_namespace'           => 'SpiffyDoctrine\Proxy',
+                        'proxy_dir'                 => __DIR__ . '/../../../data/DoctrineORMModule/Proxy',
+                        'proxy_namespace'           => 'DoctrineORMModule\Proxy',
                         'entity_namespaces'         => array(),
                         'custom_datetime_functions' => array(),
                         'custom_numeric_functions'  => array(),

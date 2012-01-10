@@ -8,11 +8,17 @@
   * you may override the Zend\Di configuration manually (see module.config.php).
   */
 $settings = array(
+    // if disabled will not register annotations
+    'use_annotations' => true,
+    
+    // if use_annotations (above) is set to true this file will be registered
+    'annotation_file' => __DIR__ . '/../../vendor/DoctrineORMModule/vendor/doctrine2-orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php',
+    
     // enables production mode by disabling generation of proxies
    'production' => false,
    
     // sets the cache to use for metadata: one of 'array', 'apc', or 'memcache'
-    'cache' => 'memcache',
+    'cache' => 'array',
    
     // only used if cache is set to memcache
     'memcache' => array( 
@@ -20,6 +26,7 @@ $settings = array(
         'port' => '11211'
     ),
    
+    // connection parameters
     'connection' => array(
         'driver'   => 'pdo_mysql',
         'host'     => 'localhost',
@@ -28,11 +35,15 @@ $settings = array(
         'password' => 'password',
         'dbname'   => 'database',
     ),
+    
+    // driver settings
     'driver' => array(
         'class'     => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
         'namespace' => 'Application\Entity',
         'paths'     => array('module/Application/src/Application/Entity')
     ),
+    
+    // namespace aliases for annotations
     'namespace_aliases' => array(
     ),
 );
@@ -50,6 +61,10 @@ if (!in_array($settings['cache'], $cache)) {
 $settings['cache'] = 'doctrine_cache_' . $settings['cache'];
 
 return array(
+    'doctrine_orm_module' => array(
+        'annotation_file' => $settings['annotation_file'],
+        'use_annotations' => $settings['use_annotations'],
+    ),
     'di' => array(
         'instance' => array(
             'doctrine_memcache' => array(
