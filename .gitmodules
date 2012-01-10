@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-[submodule "vendor/doctrine2-orm"]
-	path = vendor/doctrine2-orm
-	url = git://github.com/doctrine/doctrine2.git
-=======
 [submodule "vendor/doctrine-orm"]
 	path = vendor/doctrine-orm
-	url = git@github.com:doctrine/doctrine2.git
->>>>>>> 1c937182c564b6c86bf3964e43df8a3193db763b
+	url = git://github.com/doctrine/doctrine2.git

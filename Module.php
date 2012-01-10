@@ -48,7 +48,7 @@ class Module implements AutoloaderProvider
         if ($config->use_annotations) {
             $libfile = $config->annotation_file ? 
                 realpath($config->annotation_file) : 
-                realpath(__DIR__ . '/vendor/doctrine2-orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
+                realpath(__DIR__ . '/vendor/doctrine-orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
                 
             if (!$libfile || !file_exists($libfile)) {
                 throw new RuntimeException(
