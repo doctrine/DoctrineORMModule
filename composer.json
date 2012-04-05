@@ -1,7 +1,6 @@
 {
     "name": "doctrine/DoctrineORMModule",
     "description": "Zend Framework 2 Module that provides Doctrine ORM functionality",
-    "version": "1.0.0-dev",
     "type": "library",
     "keywords": [
         "doctrine",
