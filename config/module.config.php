@@ -1,7 +1,7 @@
 <?php
 return array(
     'doctrine_orm_module' => array(
-        'annotation_file' => __DIR__ . '/../vendor/doctrine-orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php',
+        //'annotation_file' => __DIR__ . '/../vendor/doctrine-orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php',
         'use_annotations' => true,
     ),
     'di' => array(

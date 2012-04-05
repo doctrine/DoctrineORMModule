@@ -46,11 +46,16 @@ class Module implements AutoloaderProvider
         $config = $config['doctrine_orm_module'];
         
         if ($config->use_annotations) {
-            $libfile = $config->annotation_file ? 
-                realpath($config->annotation_file) : 
-                realpath(__DIR__ . '/vendor/doctrine-orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
+            if (isset($config->annotation_file)) {
+                $libfile = realpath($config->annotation_file);
+            } else {
+                // Switching between composer and submodule installation
+                $libfile = file_exists(__DIR__ . '/vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php')
+                    ? __DIR__ . '/vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php'
+                    : realpath(__DIR__ . '/vendor/doctrine-orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
+            }
                 
-            if (!$libfile || !file_exists($libfile)) {
+            if (!$libfile) {
                 throw new RuntimeException(
                     'Failed to load annotation mappings - check the "annotation_file" setting'
                 );
@@ -67,6 +72,13 @@ class Module implements AutoloaderProvider
     
     public function getAutoloaderConfig()
     {
+        $composerAutoloader = realpath(__DIR__ . '/vendor/.composer/autoload.php');
+
+        if ($composerAutoloader) {
+            require_once $composerAutoloader;
+            return array();
+        }
+
         return array(
             'Zend\Loader\ClassMapAutoloader' => array(
                 __DIR__ . '/autoload_classmap.php',
