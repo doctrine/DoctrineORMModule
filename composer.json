@@ -1,0 +1,50 @@
+{
+    "name": "doctrine/DoctrineORMModule",
+    "description": "Zend Framework 2 Module that provides Doctrine ORM functionality",
+    "version": "1.0.0-dev",
+    "type": "library",
+    "keywords": [
+        "doctrine",
+        "orm",
+        "module",
+        "zf2"
+    ],
+    "homepage": "http://www.doctrine-project.org/",
+    "authors": [
+        {
+            "name": "Kyle Spraggs",
+            "email": "theman@spiffyjr.me",
+            "homepage": "http://www.spiffyjr.me/"
+        },
+        {
+            "name": "Marco Pivetta",
+            "email": "ocramius@gmail.com",
+            "homepage": "http://marco-pivetta.com/"
+        },
+        {
+            "name": "Evan Coury",
+            "email": "me@evancoury.com",
+            "homepage": "http://blog.evan.pro/"
+        },
+        {
+            "name": "Guilherme Blanco",
+            "email": "guilhermeblanco@hotmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "doctrine/DoctrineModule": "dev-master",
+        "doctrine/orm": "2.2.*",
+        "symfony/console": "2.0.*",
+        "symfony/yaml": "2.0.*"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "DoctrineORMModule": "src/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
