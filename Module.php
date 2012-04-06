@@ -71,18 +71,17 @@ class Module implements AutoloaderProvider
 
     public function getAutoloaderConfig()
     {
-        $composerAutoloader = realpath(__DIR__ . '/vendor/.composer/autoload.php');
+        $submoduleInstallation = realpath(__DIR__ . '/vendor/doctrine-orm/lib');
 
-        if ($composerAutoloader) {
-            require_once $composerAutoloader;
-            return array();
+        if ($submoduleInstallation) {
+            return array(
+                'Zend\Loader\ClassMapAutoloader' => array(
+                    __DIR__ . '/autoload_classmap.php',
+                ),
+            );
         }
 
-        return array(
-            'Zend\Loader\ClassMapAutoloader' => array(
-                __DIR__ . '/autoload_classmap.php',
-            ),
-        );
+        return array();
     }
 
     public function getConfig($env = null)
