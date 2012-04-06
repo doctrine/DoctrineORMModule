@@ -1,6 +1,7 @@
 <?php
 return array(
     'doctrine_orm_module' => array(
+        // Use following setting if you know where your 'DoctrineAnnotations.php' is
         //'annotation_file' => __DIR__ . '/../vendor/doctrine-orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php',
         'use_annotations' => true,
     ),
@@ -28,7 +29,7 @@ return array(
                 // entity manager
                 'doctrine_em' => 'DoctrineORMModule\Factory\EntityManager',
                 'orm_em'      => 'doctrine_em',
-                
+
                 // configuration
                 'orm_config'       => 'DoctrineORMModule\Doctrine\ORM\Configuration',
                 'orm_connection'   => 'DoctrineORMModule\Doctrine\ORM\Connection',
@@ -61,7 +62,7 @@ return array(
                     'params' => array(
                         'driver'   => 'pdo_mysql',
                         'host'     => 'localhost',
-                        'port'     => '3306', 
+                        'port'     => '3306',
                         'user'     => 'testuser',
                         'password' => 'testpassword',
                         'dbname'   => 'testdbname',
