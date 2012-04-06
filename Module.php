@@ -39,22 +39,21 @@ class Module implements AutoloaderProvider
     {
         $moduleManager->events()->attach('loadModules.post', array($this, 'modulesLoaded'));
     }
-    
+
     public function modulesLoaded($e)
     {
         $config = $e->getConfigListener()->getMergedConfig();
         $config = $config['doctrine_orm_module'];
-        
+
         if ($config->use_annotations) {
             if (isset($config->annotation_file)) {
                 $libfile = realpath($config->annotation_file);
             } else {
-                // Switching between composer and submodule installation
-                $libfile = file_exists(__DIR__ . '/vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php')
-                    ? __DIR__ . '/vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php'
-                    : realpath(__DIR__ . '/vendor/doctrine-orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
+                // Trying to load DoctrineAnnotations.php without knowing its location
+                $annotationReflection = new \ReflectionClass('Doctrine\ORM\Mapping\Driver\AnnotationDriver');
+                $libfile = dirname($annotationReflection->getFileName()) . '/DoctrineAnnotations.php';
             }
-                
+
             if (!$libfile) {
                 throw new RuntimeException(
                     'Failed to load annotation mappings - check the "annotation_file" setting'
@@ -62,28 +61,27 @@ class Module implements AutoloaderProvider
             }
             AnnotationRegistry::registerFile($libfile);
         }
-        
+
         if (!class_exists('Doctrine\ORM\Mapping\Entity', true)) {
-            throw new \Exception('
-                Doctrine could not be autoloaded - ensure it is in the correct path.
-            ');
+            throw new \Exception(
+                'Doctrine could not be autoloaded - ensure it is in the correct path.'
+            );
         }
     }
-    
+
     public function getAutoloaderConfig()
     {
-        $composerAutoloader = realpath(__DIR__ . '/vendor/.composer/autoload.php');
+        $submoduleInstallation = realpath(__DIR__ . '/vendor/doctrine-orm/lib');
 
-        if ($composerAutoloader) {
-            require_once $composerAutoloader;
-            return array();
+        if ($submoduleInstallation) {
+            return array(
+                'Zend\Loader\ClassMapAutoloader' => array(
+                    __DIR__ . '/autoload_classmap.php',
+                ),
+            );
         }
 
-        return array(
-            'Zend\Loader\ClassMapAutoloader' => array(
-                __DIR__ . '/autoload_classmap.php',
-            ),
-        );
+        return array();
     }
 
     public function getConfig($env = null)
