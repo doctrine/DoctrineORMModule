@@ -1,4 +1,7 @@
 # DoctrineORM Module for Zend Framework 2
+
+Master: [![Build Status](https://secure.travis-ci.org/doctrine/DoctrineORMModule.png?branch=master)](http://travis-ci.org/doctrine/DoctrineORMModule)
+
 The DoctrineModule module intends to integrate Doctrine 2 ORM with Zend Framework 2 quickly 
 and easily. The following features are intended to work out of the box: 
   
