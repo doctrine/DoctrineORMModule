@@ -14,6 +14,6 @@ before_script:
   - php composer.phar install --install-suggests
   - rm -rf vendor/doctrine/DoctrineORMModule
   - cp -r ../DoctrineORMModule vendor/doctrine/
-  - cd tests
+  - cd vendor/doctrine/DoctrineORMModule/tests
 
 script: phpunit
