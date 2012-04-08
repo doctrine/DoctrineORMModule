@@ -8,7 +8,7 @@ php:
 # the one that has been checked out.
 before_script:
   - cd ..
-  - git clone git://github.com/ocramius/ZendSkeletonApplication.git -b doctrine-orm-module-tests --recursive
+  - git clone git://github.com/Ocramius/ZendSkeletonApplication.git -b doctrine-orm-module-tests --recursive
   - cd ZendSkeletonApplication
   - wget -nc http://getcomposer.org/composer.phar
   - php composer.phar install --install-suggests
