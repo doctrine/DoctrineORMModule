@@ -41,8 +41,12 @@
 
     "autoload": {
         "psr-0": {
-            "DoctrineORMModule": "src/"
-        }
+            "DoctrineORMModule": "src/",
+            "DoctrineORMModuleTest": "tests/"
+        },
+        "classmap": [
+            "./"
+        ]
     },
     "config": {
         "bin-dir": "bin"
