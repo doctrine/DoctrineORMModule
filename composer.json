@@ -33,6 +33,7 @@
     "require": {
         "php": ">=5.3.3",
         "doctrine/DoctrineModule": "dev-master",
+        "ocramius/OcraComposer": "dev-master",
         "doctrine/orm": "2.2.*",
         "symfony/console": "2.0.*",
         "symfony/yaml": "2.0.*"
