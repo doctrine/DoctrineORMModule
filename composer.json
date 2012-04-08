@@ -40,7 +40,8 @@
 
     "autoload": {
         "psr-0": {
-            "DoctrineORMModule": "src/"
+            "DoctrineORMModule": "src/",
+            "DoctrineORMModuleTest": "tests/"
         }
     },
     "config": {

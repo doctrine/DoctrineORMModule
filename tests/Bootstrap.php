@@ -1,55 +1,43 @@
 <?php
 
-$rootPath  = realpath(dirname(__DIR__));
-$testsPath = "$rootPath/tests";
+chdir(__DIR__);
 
-if (is_readable($testsPath . '/TestConfiguration.php')) {
-    require_once $testsPath . '/TestConfiguration.php';
-} else {
-    require_once $testsPath . '/TestConfiguration.php.dist';
-}
-
-set_include_path(
-    implode(
-        PATH_SEPARATOR,
-        array(
-            $testsPath,
-            get_include_path(),
-        )
-    )
-);
-
-if (getenv('ZF2_PATH')) {
-    require_once getenv('ZF2_PATH') . '/Zend/Loader/AutoloaderFactory.php';
-} else {
-    // Assuming the module is in a subdir of a skeleton application
-    $previousDir = $zf2Dir = $rootPath;
-    while (!file_exists($zf2Dir . '/vendor/ZendFramework/library')) {
-        $zf2Dir = dirname($zf2Dir);
-        if($previousDir === $zf2Dir) {
-            throw new RuntimeException(
-                'Unable to locate "vendor/ZendFramework/library":'
-                    . ' is DoctrineModule in a subdir of your application skeleton?'
-            );
-        }
-        $previousDir = $zf2Dir;
+$previousDir = '.';
+while (!file_exists('config/application.config.php')) {
+    $dir = dirname(getcwd());
+    if($previousDir === $dir) {
+        throw new RuntimeException(
+            'Unable to locate "config/application.config.php":'
+            . ' is DoctrineORMModule in a subdir of your application skeleton?'
+        );
     }
-    require_once $zf2Dir . '/vendor/ZendFramework/library/Zend/Loader/AutoloaderFactory.php';
+    $previousDir = $dir;
+    chdir($dir);
 }
 
+if (is_readable(__DIR__ . '/TestConfiguration.php')) {
+    require_once __DIR__ . '/TestConfiguration.php';
+} else {
+    require_once __DIR__ . '/TestConfiguration.php.dist';
+}
+
+set_include_path(__DIR__ . PATH_SEPARATOR . get_include_path());
+require_once (getenv('ZF2_PATH') ?: 'vendor/ZendFramework/library') . '/Zend/Loader/AutoloaderFactory.php';
 \Zend\Loader\AutoloaderFactory::factory();
 
 $defaultListeners = new Zend\Module\Listener\DefaultListenerAggregate(
     new Zend\Module\Listener\ListenerOptions(
         array(
             'module_paths' => array(
-                realpath(__DIR__ . '/../..')
+                realpath(__DIR__ . '/../..'),
+                realpath(__DIR__ . '/../../../ocramius')
             ),
         )
     )
 );
 
 $moduleManager = new \Zend\Module\Manager(array(
+    'OcraComposer',
     'DoctrineModule',
     'DoctrineORMModule',
 ));
