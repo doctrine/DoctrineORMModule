@@ -52,5 +52,5 @@ uses an unofficial `OcraComposer` package, which is still quite primitive.
 Access the entity manager using the following di alias: 
 
 ```php
-$em = $this->getLocator()->get('doctrine_em');
+$em = $this->getLocator()->get('Doctrine\ORM\EntityManager');
 ```
