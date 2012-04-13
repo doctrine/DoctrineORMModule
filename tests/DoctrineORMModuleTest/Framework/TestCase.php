@@ -45,6 +45,6 @@ class TestCase extends PHPUnit_Framework_TestCase
      */
     public function getEntityManager()
     {
-        return $this->getLocator()->get('doctrine_em');
+        return $this->getLocator()->get('Doctrine\ORM\EntityManager');
     }
 }
