@@ -14,13 +14,21 @@ return array(
                         'port' => array('type' => false, 'required' => true),
                     )
                 ),
+                'Doctrine\ORM\EntityManager' => array(
+                    'instantiator' => array(
+                        'DoctrineORMModule\Factory\EntityManager',
+                        'get'
+                    ),
+                ),
                 'DoctrineORMModule\Factory\EntityManager' => array(
-                    'instantiator' => array('DoctrineORMModule\Factory\EntityManager', 'get'),
                     'methods' => array(
                         'get' => array(
-                            'conn' => array('type' => 'DoctrineORMModule\Doctrine\ORM\Connection', 'required' => true)
-                        )
-                    )
+                            'conn' => array(
+                                'type' => 'DoctrineORMModule\Doctrine\ORM\Connection',
+                                'required' => true,
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -28,7 +36,7 @@ return array(
 
             'alias' => array(
                 // entity manager
-                'doctrine_em' => 'DoctrineORMModule\Factory\EntityManager',
+                'doctrine_em' => 'Doctrine\ORM\EntityManager',
                 'orm_em'      => 'doctrine_em',
 
                 // configuration
@@ -87,7 +95,7 @@ return array(
                     )
                 )
             ),
-            'DoctrineORMModule\Factory\EntityManager' => array(
+            'Doctrine\ORM\EntityManager' => array(
                 'parameters' => array(
                     'conn' => 'orm_connection',
                 )
