@@ -25,6 +25,7 @@ return array(
             ),
         ),
         'instance' => array(
+
             'alias' => array(
                 // entity manager
                 'doctrine_em' => 'DoctrineORMModule\Factory\EntityManager',
@@ -36,6 +37,7 @@ return array(
                 'orm_driver_chain' => 'DoctrineORMModule\Doctrine\ORM\DriverChain',
                 'orm_evm'          => 'DoctrineModule\Doctrine\Common\EventManager',
             ),
+
             'orm_config' => array(
                 'parameters' => array(
                     'opts' => array(
@@ -85,7 +87,7 @@ return array(
                     )
                 )
             ),
-            'doctrine_em' => array(
+            'DoctrineORMModule\Factory\EntityManager' => array(
                 'parameters' => array(
                     'conn' => 'orm_connection',
                 )
