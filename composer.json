@@ -35,6 +35,7 @@
         "doctrine/DoctrineModule": "dev-master",
         "ocramius/OcraComposer": "dev-master",
         "doctrine/orm": "2.2.*",
+        "doctrine/migrations": "dev-master",
         "symfony/console": "2.0.*",
         "symfony/yaml": "2.0.*"
     },
