@@ -31,7 +31,7 @@ class DoctrineEntityTest extends TestCase
 
         $entity = new \DoctrineORMModuleTest\Assets\Entity\Test;
         $entity->setUsername('username');
-        $entity->password('password');
+        $entity->setPassword('password');
         $em->persist($entity);
         $em->flush();
 
