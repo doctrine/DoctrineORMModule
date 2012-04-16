@@ -3,4 +3,4 @@
 	url = git://github.com/doctrine/doctrine2.git
 [submodule "vendor/doctrine-migrations"]
 	path = vendor/doctrine-migrations
-	url = https://github.com/doctrine/migrations
+	url = git://github.com/doctrine/migrations.git
