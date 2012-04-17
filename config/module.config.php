@@ -10,8 +10,14 @@ return array(
             'class' => array(
                 'Memcache' => array(
                     'addServer' => array(
-                        'host' => array('type' => false, 'required' => true),
-                        'port' => array('type' => false, 'required' => true),
+                        'host' => array(
+                            'type' => false,
+                            'required' => true
+                        ),
+                        'port' => array(
+                            'type' => false,
+                            'required' => true
+                        ),
                     )
                 ),
                 'Doctrine\ORM\EntityManager' => array(
@@ -45,12 +51,17 @@ return array(
                 'orm_driver_chain' => 'DoctrineORMModule\Doctrine\ORM\DriverChain',
                 'orm_evm'          => 'DoctrineModule\Doctrine\Common\EventManager',
             ),
+            
+            'preference' => array(
+                'Doctrine\ORM\EntityManager' => 'doctrine_em',
+                'DoctrineORMModule\Doctrine\ORM\Connection' => 'orm_connection',
+            ),
 
             'orm_config' => array(
                 'parameters' => array(
                     'opts' => array(
                         'auto_generate_proxies'     => true,
-                        'proxy_dir'                 => __DIR__ . '/../../../data/DoctrineORMModule/Proxy',
+                        'proxy_dir'                 => 'data/DoctrineORMModule/Proxy',
                         'proxy_namespace'           => 'DoctrineORMModule\Proxy',
                         'entity_namespaces'         => array(),
                         'custom_datetime_functions' => array(),
@@ -80,7 +91,7 @@ return array(
                     'config' => 'orm_config',
                     'evm'    => 'orm_evm',
                     'pdo'    => null
-                )
+                ),
             ),
             'orm_driver_chain' => array(
                 'parameters' => array(
@@ -95,11 +106,11 @@ return array(
                     )
                 )
             ),
-            'Doctrine\ORM\EntityManager' => array(
+            'doctrine_em' => array(
                 'parameters' => array(
                     'conn' => 'orm_connection',
                 )
             ),
-        )
-    )
+        ),
+    ),
 );
