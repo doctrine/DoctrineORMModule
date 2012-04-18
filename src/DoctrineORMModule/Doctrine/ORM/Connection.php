@@ -19,10 +19,10 @@
 
 namespace DoctrineORMModule\Doctrine\ORM;
 
-use PDO,
-    Doctrine\DBAL\DriverManager,
-    DoctrineModule\Doctrine\Instance,
-    DoctrineModule\Doctrine\Common\EventManager;
+use PDO;
+use Doctrine\DBAL\DriverManager;
+use DoctrineModule\Doctrine\Instance;
+use DoctrineModule\Doctrine\Common\EventManager;
 
 /**
  * Wrapper for Doctrine ORM connection that helps setup configuration without relying
@@ -36,46 +36,46 @@ use PDO,
  */
 class Connection extends Instance
 {
-	/**
-	 * @var Doctrine\ORM\Configuration
-	 */
-	protected $config;
-	
-	/**
-	 * @var Doctrine\Common\EventManager
-	 */
-	protected $evm;
-	
-	/**
-	 * Constructor
-	 * 
-	 * @param array 		$opts
-	 * @param Configuration $config
-	 * @param EventManager  $evm
-	 * @param PDO 			$pdo
-	 */
-	public function __construct(array $params, Configuration $config, EventManager $evm, PDO $pdo = null)
-	{
-		if ($pdo) {
-			$params['pdo'] = $pdo;
-		}
-		
-		$this->config = $config->getInstance();
-		$this->evm    = $evm->getInstance();
-		
-		parent::__construct($params);
-	}
-	
-	/**
-	 * (non-PHPdoc)
-	 * @see DoctrineORMModule\Instance.Instance::loadInstance()
-	 */
-	protected function loadInstance()
-	{
+    /**
+     * @var Doctrine\ORM\Configuration
+     */
+    protected $config;
+
+    /**
+     * @var Doctrine\Common\EventManager
+     */
+    protected $evm;
+
+    /**
+     * Constructor
+     *
+     * @param array         $opts
+     * @param Configuration $config
+     * @param EventManager  $evm
+     * @param PDO             $pdo
+     */
+    public function __construct(array $params, Configuration $config, EventManager $evm, PDO $pdo = null)
+    {
+        if ($pdo) {
+            $params['pdo'] = $pdo;
+        }
+
+        $this->config = $config->getInstance();
+        $this->evm = $evm->getInstance();
+
+        parent::__construct($params);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see DoctrineORMModule\Instance.Instance::loadInstance()
+     */
+    protected function loadInstance()
+    {
         $this->instance = DriverManager::getConnection(
             $this->opts,
             $this->config,
             $this->evm
-        );		
-	}
+        );
+    }
 }
