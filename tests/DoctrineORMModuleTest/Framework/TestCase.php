@@ -1,11 +1,18 @@
 <?php
+
 namespace DoctrineORMModuleTest\Framework;
-use PHPUnit_Framework_TestCase,
-    DoctrineModule\Service\Doctrine;
+
+use PHPUnit_Framework_TestCase;
+use DoctrineModule\Service\Doctrine;
+use Doctrine\ORM\EntityManager;
+use Zend\Di\Locator;
 
 class TestCase extends PHPUnit_Framework_TestCase
 {
-    public static $locator;
+    /**
+     * @var Locator
+     */
+    protected static $locator;
 
     /**
      * @var boolean
@@ -28,11 +35,21 @@ class TestCase extends PHPUnit_Framework_TestCase
 
         $em = $this->getEntityManager();
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-        $classes = array($em->getClassMetadata('DoctrineORMModuleTest\Assets\Entity\Test'));
-        $tool->createSchema($classes);
+        $tool->createSchema($this->getEntityManager()->getMetadataFactory()->getAllMetadata());
         self::$hasDb = true;
     }
 
+    /**
+     * @param Locator $locator
+     */
+    public static function setLocator(Locator $locator)
+    {
+        self::$locator = $locator;
+    }
+
+    /**
+     * @return Locator
+     */
     public function getLocator()
     {
     	return self::$locator;
@@ -41,7 +58,7 @@ class TestCase extends PHPUnit_Framework_TestCase
     /**
      * Get EntityManager.
      *
-     * @return Doctrine\ORM\EntityManager
+     * @return EntityManager
      */
     public function getEntityManager()
     {

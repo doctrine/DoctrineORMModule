@@ -65,4 +65,4 @@ $di->instanceManager()->addTypePreference('Zend\Di\Locator', $di);
 $config = new \Zend\Di\Configuration($config['di']);
 $config->configure($di);
 
-\DoctrineORMModuleTest\Framework\TestCase::$locator = $di;
+\DoctrineORMModuleTest\Framework\TestCase::setLocator($di);

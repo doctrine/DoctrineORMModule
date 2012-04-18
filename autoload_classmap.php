@@ -1011,6 +1011,7 @@ return array(
     'DoctrineORMModuleTest\Framework\TestCase'                                                                                                           => __DIR__ . '/tests/DoctrineORMModuleTest/Framework/TestCase.php',
     'DoctrineORMModuleTest\Doctrine\CliTest'                                                                                                             => __DIR__ . '/tests/DoctrineORMModuleTest/Doctrine/CliTest.php',
     'DoctrineORMModule\Factory\EntityManager'                                                                                                            => __DIR__ . '/src/DoctrineORMModule/Factory/EntityManager.php',
+    'DoctrineORMModule\Factory\Connection'                                                                                                               => __DIR__ . '/src/DoctrineORMModule/Factory/Connection.php',
     'DoctrineORMModule\Doctrine\ORM\DriverChain'                                                                                                         => __DIR__ . '/src/DoctrineORMModule/Doctrine/ORM/DriverChain.php',
     'DoctrineORMModule\Doctrine\ORM\Connection'                                                                                                          => __DIR__ . '/src/DoctrineORMModule/Doctrine/ORM/Connection.php',
     'DoctrineORMModule\Doctrine\ORM\Configuration'                                                                                                       => __DIR__ . '/src/DoctrineORMModule/Doctrine/ORM/Configuration.php',
