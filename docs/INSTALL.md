@@ -10,6 +10,7 @@ DoctrineORMModule key to your modules array before your Application module key.
   3. open `my/project/directory/configs/application.config.php` and add `DoctrineORMModule` to your `modules` parameter.
   4. drop `config/module.doctrine_orm.local.config.php.dist` into your application `config/autoload` directory,
      rename to `module.doctrine_orm.local.config.php` and make the appropriate changes.
+  5. do a `mkdir -p my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write access.
 
 ## Composer installation
 
