@@ -7,16 +7,18 @@ php:
 # cloning a custom zend skeleton application, running composer on it and replacing the module with
 # the one that has been checked out.
 before_script:
-  - git submodule update --init --recursive
-  - mysql -e 'create database travis_test;'
+  - git submodule update --init
   - cd ..
-  - git clone git://github.com/Ocramius/ZendSkeletonApplication.git -b doctrine-orm-module-tests --recursive
+  - git clone git://github.com/zendframework/ZendSkeletonApplication.git --recursive
   - cd ZendSkeletonApplication
-  - wget -nc http://getcomposer.org/composer.phar
+  - rm config/application.config.php && cp ../DoctrineORMModule/.travis/application.config.php config/
+  - cp ../DoctrineORMModule/.travis/composer.json ./
+  - curl -s http://getcomposer.org/installer | php
   - php composer.phar install
   - rm -rf vendor/doctrine/DoctrineORMModule
   - cp -r ../DoctrineORMModule vendor/doctrine/
   - cp ../DoctrineORMModule/.travis/travis.doctrine_orm.local.config.php config/autoload/
+  - mysql -e 'create database travis_test;'
 
 script:
   - ./vendor/doctrine/DoctrineORMModule/.travis/run-cli.sh
