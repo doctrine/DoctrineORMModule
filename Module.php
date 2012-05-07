@@ -71,9 +71,7 @@ class Module implements AutoloaderProvider
 
     public function getAutoloaderConfig()
     {
-        $submoduleInstallation = realpath(__DIR__ . '/vendor/doctrine-orm/lib');
-
-        if ($submoduleInstallation) {
+        if (realpath(__DIR__ . '/vendor/doctrine-orm/lib')) {
             return array(
                 'Zend\Loader\ClassMapAutoloader' => array(
                     __DIR__ . '/autoload_classmap.php',
