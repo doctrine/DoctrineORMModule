@@ -18,7 +18,7 @@ class EntityManagerTest extends TestCase
         $this->assertInstanceOf('DoctrineORMModuleTest\Di\\EntityManagerTestInjectTarget', $target);
         $em = $target->getEntityManager();
         $this->assertInstanceOf('Doctrine\ORM\EntityManager', $em);
-        $this->assertSame($em, $locator->get('Doctrine\ORM\EntityManager'));
+        $this->assertSame($em, $locator->get('doctrine_em'));
     }
 }
 
