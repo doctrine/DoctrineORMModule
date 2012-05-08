@@ -4,10 +4,7 @@ php:
   - 5.3
   - 5.4
 
-# cloning a custom zend skeleton application, running composer on it and replacing the module with
-# the one that has been checked out.
 before_script:
-  - git submodule update --init
   - cd ..
   - git clone git://github.com/zendframework/ZendSkeletonApplication.git --recursive
   - cd ZendSkeletonApplication
