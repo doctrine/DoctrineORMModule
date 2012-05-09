@@ -14,7 +14,7 @@ return array(
                     'resultCache'    => 'doctrine_cache_array',
                 )
             ),
-            'orm_connection' => array(
+            'DoctrineORMModule\Doctrine\ORM\Connection' => array(
                 'parameters' => array(
                     'params' => array(
                         'driver'   => 'pdo_mysql',

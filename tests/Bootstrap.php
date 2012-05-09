@@ -47,7 +47,7 @@ $moduleManager->loadModules();
 $config = $defaultListeners->getConfigListener()->getMergedConfig()->toArray();
 
 // setup sqlite
-$config['di']['instance']['orm_connection']['parameters']['params'] = array(
+$config['di']['instance']['DoctrineORMModule\Doctrine\ORM\Connection']['parameters']['params'] = array(
 	'driver' => 'pdo_sqlite',
 	'memory' => true,
 );
