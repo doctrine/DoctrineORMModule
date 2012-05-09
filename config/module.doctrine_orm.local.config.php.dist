@@ -59,7 +59,6 @@ $settings['cache'] = 'doctrine_cache_' . $settings['cache'];
 
 return array(
     'doctrine_orm_module' => array(
-        'annotation_file' => $settings['annotation_file'],
         'use_annotations' => $settings['use_annotations'],
     ),
     'di' => array(
