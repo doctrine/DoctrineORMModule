@@ -11,9 +11,6 @@ $settings = array(
     // if disabled will not register annotations
     'use_annotations' => true,
     
-    // if use_annotations (above) is set to true this file will be registered
-    'annotation_file' => __DIR__ . '/../../vendor/DoctrineORMModule/vendor/doctrine-orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php',
-    
     // enables production mode by disabling generation of proxies
    'production' => false,
    
