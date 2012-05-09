@@ -5,6 +5,7 @@ php:
   - 5.4
 
 before_script:
+  - rm -rf vendor # vendors are ignored, as we're using a composer based installation
   - cd ..
   - git clone git://github.com/zendframework/ZendSkeletonApplication.git --recursive
   - cd ZendSkeletonApplication
