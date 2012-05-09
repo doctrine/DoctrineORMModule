@@ -15,20 +15,13 @@ return array(
             'alias' => array(
                 // EntityManager
                 'doctrine_em' => 'Doctrine\ORM\EntityManager',
-                'orm_em'      => 'doctrine_em',
+                'orm_em'      => 'Doctrine\ORM\EntityManager',
 
                 // configuration
                 'orm_config'       => 'DoctrineORMModule\Doctrine\ORM\Configuration',
                 'orm_connection'   => 'DoctrineORMModule\Doctrine\ORM\Connection',
                 'orm_driver_chain' => 'DoctrineORMModule\Doctrine\ORM\DriverChain',
                 'orm_evm'          => 'DoctrineModule\Doctrine\Common\EventManager',
-            ),
-
-            // Setting defaults: allows implicit injection of doctrine_em and orm_connection when their types
-            // are requested
-            'preference' => array(
-                'Doctrine\ORM\EntityManager' => 'doctrine_em',
-                'DoctrineORMModule\Doctrine\ORM\Connection' => 'orm_connection',
             ),
 
             // ORM main configuration
@@ -55,7 +48,7 @@ return array(
             ),
 
             // Connection parameters
-            'orm_connection' => array(
+            'DoctrineORMModule\Doctrine\ORM\Connection' => array(
                 'parameters' => array(
                     'params' => array(
                         'driver'   => 'pdo_mysql',
