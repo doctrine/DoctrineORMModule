@@ -21,27 +21,30 @@ namespace DoctrineORMModule\Paginator;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\ORM\QueryBuilder;
-use Zend\Paginator\Adapter as PaginatorAdapter;
+use Zend\Paginator\Adapter\AdapterInterface;
 
 /**
  * Paginator adapter for Zend Paginator
  *
- * @author Tõnis Tobre <tobre@bitweb.ee>
+ * @author  Tõnis Tobre <tobre@bitweb.ee>
  * @license New BSD
  */
-class Adapter implements PaginatorAdapter {
+class Adapter implements AdapterInterface {
 
+    /**
+     * @var Paginator
+     */
 	protected $paginator;
-	
+
 	/**
-	 * Constructor.
+	 * Constructor
 	 *
-	 * @param Query|QueryBuilder $query A Doctrine ORM query or query builder.
+	 * @param \Doctrine\ORM\AbstractQuery|QueryBuilder $query a query or query builder from which to get paginator items
 	 */
 	public function __construct($query) {
 		$this->paginator = new Paginator($query);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
