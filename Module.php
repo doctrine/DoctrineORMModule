@@ -49,9 +49,9 @@ class Module implements AutoloaderProvider
     }
 
     /**
-     * Registers
+     * Registers annotations required for the Doctrine AnnotationReader
      *
-     * @param ModuleEvent $e
+     * @param  ModuleEvent $e
      * @throws RuntimeException
      */
     public function registerAnnotations(ModuleEvent $e)
@@ -94,7 +94,7 @@ class Module implements AutoloaderProvider
         if (realpath(__DIR__ . '/vendor/doctrine-orm/lib')) {
             return array(
                 'Zend\Loader\StandardAutoloader' => array(
-                    Zend\Loader\StandardAutoloader::LOAD_NS => array(
+                    StandardAutoloader::LOAD_NS => array(
                         __NAMESPACE__                   => __DIR__ . '/src/' . __NAMESPACE__,
                         __NAMESPACE__ . 'Test'          => __DIR__ . '/tests/' . __NAMESPACE__ . 'Test',
                         'Doctrine\ORM'                  => __DIR__ . '/vendor/doctrine-orm/lib/Doctrine/ORM',
