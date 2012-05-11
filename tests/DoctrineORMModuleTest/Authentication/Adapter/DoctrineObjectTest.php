@@ -1,8 +1,13 @@
 <?php
-namespace DoctrineORMModuleTest\Authentication\Adapter;
-use DoctrineORMModuleTest\Framework\TestCase;
 
-class DoctrineEntityTest extends TestCase
+namespace DoctrineORMModuleTest\Authentication\Adapter;
+
+use DoctrineORMModuleTest\Framework\TestCase;
+use DoctrineModule\Authentication\Adapter\DoctrineObject;
+use DoctrineORMModuleTest\Assets\Entity\Test as TestEntity;
+
+
+class DoctrineObjectTest extends TestCase
 {
     public function setUp()
     {
@@ -11,14 +16,9 @@ class DoctrineEntityTest extends TestCase
 
     public function testInvalidLogin()
     {
-        $em = $this->getEntityManager();
-
-        $adapter = new \DoctrineModule\Authentication\Adapter\DoctrineEntity(
-            $em,
-            'DoctrineORMModuleTest\Assets\Entity\Test'
-        );
-        $adapter->setIdentity('username');
-        $adapter->setCredential('password');
+        $adapter = new DoctrineObject($this->getEntityManager(), 'DoctrineORMModuleTest\Assets\Entity\Test');
+        $adapter->setIdentityValue('username');
+        $adapter->setCredentialValue('password');
 
         $result = $adapter->authenticate();
 
@@ -28,19 +28,15 @@ class DoctrineEntityTest extends TestCase
     public function testValidLogin()
     {
         $em = $this->getEntityManager();
-
-        $entity = new \DoctrineORMModuleTest\Assets\Entity\Test;
+        $entity = new TestEntity();
         $entity->setUsername('username');
         $entity->setPassword('password');
         $em->persist($entity);
         $em->flush();
 
-        $adapter = new \DoctrineModule\Authentication\Adapter\DoctrineEntity(
-            $em,
-            'DoctrineORMModuleTest\Assets\Entity\Test'
-        );
-        $adapter->setIdentity('username');
-        $adapter->setCredential('password');
+        $adapter = new DoctrineObject($em, 'DoctrineORMModuleTest\Assets\Entity\Test');
+        $adapter->setIdentityValue('username');
+        $adapter->setCredentialValue('password');
 
         $result = $adapter->authenticate();
 

@@ -5,6 +5,7 @@ namespace DoctrineORMModuleTest\Framework;
 use PHPUnit_Framework_TestCase;
 use DoctrineModule\Service\Doctrine;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\SchemaTool;
 use Zend\Di\Locator;
 
 class TestCase extends PHPUnit_Framework_TestCase
@@ -20,7 +21,7 @@ class TestCase extends PHPUnit_Framework_TestCase
     protected static $hasDb = false;
 
     /**
-     * @var DoctrineModule\Service\Doctrine
+     * @var \DoctrineModule\Service\Doctrine
      */
     protected $_service;
 
@@ -34,9 +35,18 @@ class TestCase extends PHPUnit_Framework_TestCase
         }
 
         $em = $this->getEntityManager();
-        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-        $tool->createSchema($this->getEntityManager()->getMetadataFactory()->getAllMetadata());
+        $tool = new SchemaTool($em);
+        $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
         self::$hasDb = true;
+    }
+
+    public function dropDb()
+    {
+        $em = $this->getEntityManager();
+        $tool = new SchemaTool($em);
+        $tool->dropSchema($em->getMetadataFactory()->getAllMetadata());
+        $em->clear();
+        self::$hasDb = false;
     }
 
     /**
