@@ -97,8 +97,6 @@ class Module implements AutoloaderProvider
                     StandardAutoloader::LOAD_NS => array(
                         __NAMESPACE__                   => __DIR__ . '/src/' . __NAMESPACE__,
                         __NAMESPACE__ . 'Test'          => __DIR__ . '/tests/' . __NAMESPACE__ . 'Test',
-                        'Doctrine\ORM'                  => __DIR__ . '/vendor/doctrine-orm/lib/Doctrine/ORM',
-                        'Doctrine\DBAL'                 => __DIR__ . '/vendor/doctrine-orm/lib/vendor/doctrine-dbal/lib/Doctrine/DBAL',
                     ),
                 ),
             );
