@@ -19,10 +19,14 @@
 
 namespace DoctrineORMModule;
 
-use Doctrine\Common\Annotations\AnnotationRegistry,
-    RuntimeException,
-    Zend\Module\Consumer\AutoloaderProvider,
-    Zend\Module\Manager;
+use RuntimeException;
+use ReflectionClass;
+use Zend\EventManager\Event;
+use Zend\Module\Consumer\AutoloaderProvider;
+use Zend\Module\Manager;
+use Zend\Module\ModuleEvent;
+use Zend\Loader\StandardAutoloader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 /**
  * Base module for Doctrine ORM.
@@ -32,49 +36,70 @@ use Doctrine\Common\Annotations\AnnotationRegistry,
  * @since   1.0
  * @version $Revision$
  * @author  Kyle Spraggs <theman@spiffyjr.me>
+ * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class Module implements AutoloaderProvider
 {
+    /**
+     * @param Manager $moduleManager
+     */
     public function init(Manager $moduleManager)
     {
-        $moduleManager->events()->attach('loadModules.post', array($this, 'modulesLoaded'));
+        $moduleManager->events()->attach('loadModules.post', array($this, 'registerAnnotations'));
     }
 
-    public function modulesLoaded($e)
+    /**
+     * Registers
+     *
+     * @param ModuleEvent $e
+     * @throws RuntimeException
+     */
+    public function registerAnnotations(ModuleEvent $e)
     {
         $config = $e->getConfigListener()->getMergedConfig();
         $config = $config['doctrine_orm_module'];
 
         if ($config->use_annotations) {
+            $annotationsFile = false;
+
             if (isset($config->annotation_file)) {
-                $libfile = realpath($config->annotation_file);
-            } else {
-                // Trying to load DoctrineAnnotations.php without knowing its location
-                $annotationReflection = new \ReflectionClass('Doctrine\ORM\Mapping\Driver\AnnotationDriver');
-                $libfile = dirname($annotationReflection->getFileName()) . '/DoctrineAnnotations.php';
+                $annotationsFile = realpath($config->annotation_file);
             }
 
-            if (!$libfile) {
-                throw new RuntimeException(
-                    'Failed to load annotation mappings - check the "annotation_file" setting'
-                );
+            if (!$annotationsFile) {
+                // Trying to load DoctrineAnnotations.php without knowing its location
+                $annotationReflection = new ReflectionClass('Doctrine\ORM\Mapping\Driver\AnnotationDriver');
+                $annotationsFile = realpath(dirname($annotationReflection->getFileName()) . '/DoctrineAnnotations.php');
             }
-            AnnotationRegistry::registerFile($libfile);
+
+            if (!$annotationsFile) {
+                throw new RuntimeException('Failed to load annotation mappings, check the "annotation_file" setting');
+            }
+
+            AnnotationRegistry::registerFile($annotationsFile);
         }
 
         if (!class_exists('Doctrine\ORM\Mapping\Entity', true)) {
-            throw new \Exception(
-                'Doctrine could not be autoloaded - ensure it is in the correct path.'
-            );
+            throw new RuntimeException('Doctrine could not be autoloaded: ensure it is in the correct path.');
         }
     }
 
+    /**
+     * Retrieves configuration that can be consumed by Zend\Loader\AutoloaderFactory
+     *
+     * @return array
+     */
     public function getAutoloaderConfig()
     {
         if (realpath(__DIR__ . '/vendor/doctrine-orm/lib')) {
             return array(
-                'Zend\Loader\ClassMapAutoloader' => array(
-                    __DIR__ . '/autoload_classmap.php',
+                'Zend\Loader\StandardAutoloader' => array(
+                    Zend\Loader\StandardAutoloader::LOAD_NS => array(
+                        __NAMESPACE__                   => __DIR__ . '/src/' . __NAMESPACE__,
+                        __NAMESPACE__ . 'Test'          => __DIR__ . '/tests/' . __NAMESPACE__ . 'Test',
+                        'Doctrine\ORM'                  => __DIR__ . '/vendor/doctrine-orm/lib/Doctrine/ORM',
+                        'Doctrine\DBAL'                 => __DIR__ . '/vendor/doctrine-orm/lib/vendor/doctrine-dbal/lib/Doctrine/DBAL',
+                    ),
                 ),
             );
         }
@@ -82,7 +107,10 @@ class Module implements AutoloaderProvider
         return array();
     }
 
-    public function getConfig($env = null)
+    /**
+     * @return array
+     */
+    public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
     }
