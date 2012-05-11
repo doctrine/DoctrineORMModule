@@ -11,7 +11,7 @@ and easily. The following features are intended to work out of the box:
   - Support reuse existing PDO connections in DBAL
 
 ## Requirements
-DoctrineORMModule [Zend Framework 2](http://www.github.com/zendframework/zf2)
+[Zend Framework 2](http://www.github.com/zendframework/zf2)
 
 ## Installation
 
