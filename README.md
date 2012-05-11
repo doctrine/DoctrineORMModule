@@ -2,20 +2,62 @@
 
 Master: [![Build Status](https://secure.travis-ci.org/doctrine/DoctrineORMModule.png?branch=master)](http://travis-ci.org/doctrine/DoctrineORMModule)
 
-The DoctrineModule module intends to integrate Doctrine 2 ORM with Zend Framework 2 quickly 
-and easily. The following features are intended to work out of the box: 
-  
+The DoctrineORMModule module intends to integrate Doctrine 2 ORM with Zend Framework 2 quickly
+and easily. The following features are intended to work out of the box:
+
   - Doctrine ORM support
-  - Multiple entity managers
-  - Multiple connections
-  - Support for using existing PDO connections  
-  
+  - Multiple ORM entity managers
+  - Multiple DBAL connections
+  - Support reuse existing PDO connections in DBAL
+
 ## Requirements
-  - [DoctrineModule](http://www.github.com/doctrine/DoctrineModule)
-  - [Zend Framework 2](http://www.github.com/zendframework/zf2)
+DoctrineORMModule [Zend Framework 2](http://www.github.com/zendframework/zf2)
 
 ## Installation
-See the [INSTALL.md](http://www.github.com/doctrine/DoctrineORMModule/tree/master/docs/INSTALL.md) file.
 
-## TODO
-See the [TODO.md](http://www.github.com/doctrine/DoctrineORMModule/tree/master/docs/TODO.md) file.
+Installation of this module uses composer. For composer documentation, please refer to
+[getcomposer.org](http://getcomposer.org/). To achieve the task, it currently uses ocramius/OcraComposer to integrate
+your application with composer. This may change in future.
+
+#### Installation steps
+
+  1. `cd my/project/directory`
+  2. create a `composer.json` file with following contents:
+
+     ```json
+     {
+         "require": {
+             "doctrine/DoctrineORMModule": "dev-master"
+         }
+     }
+     ```
+  3. install composer via `curl -s http://getcomposer.org/installer | php` (on windows, download
+     http://getcomposer.org/installer and execute it with PHP)
+  4. run `php composer.phar install`
+  5. open `my/project/directory/configs/application.config.php` and add following keys to your `modules` (in this order)
+
+     ```php
+     'OcraComposer',
+     'DoctrineModule',
+     'DoctrineORMModule',
+     ```
+
+     also add following `module_paths`:
+
+     ```php
+     'vendor/ocramius',
+     'vendor/doctrine',
+     ```
+
+  6. drop `config/module.doctrine_orm.local.config.php.dist` into your application `config/autoload` directory,
+     rename it to `module.doctrine_orm.local.config.php` and make the appropriate changes.
+  8. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write access
+     to it.
+
+## Usage
+Access the entity manager using the following di alias:
+
+```php
+<?php
+$em = $this->getLocator()->get('Doctrine\ORM\EntityManager');
+```
