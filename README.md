@@ -49,15 +49,35 @@ your application with composer. This may change in future.
      'vendor/doctrine',
      ```
 
-  6. drop `config/module.doctrine_orm.local.config.php.dist` into your application `config/autoload` directory,
-     rename it to `module.doctrine_orm.local.config.php` and make the appropriate changes.
-  8. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write access
-     to it.
+  6. drop `vendor/doctrine/DoctrineModule/config/module.doctrine_orm.local.config.php.dist` into your application's
+     `config/autoload` directory, rename it to `module.doctrine_orm.local.config.php` and make the appropriate changes.
+  8. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
+     access to it.
 
 ## Usage
+
+#### Command Line
+Access the Doctrine command line as following
+
+```sh
+./vendor/doctrine/DoctrineModule/bin/doctrine
+```
+
+#### Service Locator
 Access the entity manager using the following di alias:
 
 ```php
 <?php
 $em = $this->getLocator()->get('Doctrine\ORM\EntityManager');
 ```
+
+#### Injection
+You can also inject the `EntityManager` directly in your controllers/services:
+```php
+class MyController extends \Zend\Mvc\Controller\ActionController
+{
+    public function __construct(\Doctrine\ORM\EntityManager $em) {
+        $this->em = $em;
+        // now you can use the EntityManager!
+    }
+}
