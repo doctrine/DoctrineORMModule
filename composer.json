@@ -32,12 +32,12 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "doctrine/DoctrineModule": "dev-master",
-        "ocramius/OcraComposer": "dev-master",
-        "doctrine/orm": "2.2.*",
+        "doctrine/DoctrineModule": "0.2.1",
+        "ocramius/OcraComposer": "0.1.0",
+        "doctrine/orm": "2.2.2",
         "doctrine/migrations": "dev-master",
-        "symfony/console": "2.0.*",
-        "symfony/yaml": "2.0.*"
+        "symfony/console": "v2.0.13",
+        "symfony/yaml": "v2.0.13"
     },
 
     "autoload": {
