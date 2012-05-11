@@ -32,7 +32,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "doctrine/DoctrineModule": "dev-master",
+        "doctrine/DoctrineModule": "0.2.0",
         "ocramius/OcraComposer": "dev-master",
         "doctrine/orm": "2.2.*",
         "doctrine/migrations": "dev-master",
