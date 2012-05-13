@@ -29,8 +29,7 @@ $defaultListeners = new Zend\Module\Listener\DefaultListenerAggregate(
     new Zend\Module\Listener\ListenerOptions(
         array(
             'module_paths' => array(
-                realpath(__DIR__ . '/../..'),
-                realpath(__DIR__ . '/../../../ocramius')
+                './vendor',
             ),
         )
     )
