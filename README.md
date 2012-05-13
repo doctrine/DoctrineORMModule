@@ -53,7 +53,7 @@ your application with composer. This may change in future.
 Access the Doctrine command line as following
 
 ```sh
-./vendor/doctrine/DoctrineModule/bin/doctrine
+./vendor/bin/doctrine-module
 ```
 
 #### Service Locator
