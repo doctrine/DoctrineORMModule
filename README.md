@@ -16,7 +16,7 @@ and easily. The following features are intended to work out of the box:
 ## Installation
 
 Installation of this module uses composer. For composer documentation, please refer to
-[getcomposer.org](http://getcomposer.org/). To achieve the task, it currently uses ocramius/OcraComposer to integrate
+[getcomposer.org](http://getcomposer.org/). To achieve the task, it currently uses `OcraComposer` to integrate
 your application with composer. This may change in future.
 
 #### Installation steps
@@ -40,13 +40,6 @@ your application with composer. This may change in future.
      'OcraComposer',
      'DoctrineModule',
      'DoctrineORMModule',
-     ```
-
-     also add following `module_paths`:
-
-     ```php
-     'vendor/ocramius',
-     'vendor/doctrine',
      ```
 
   6. drop `vendor/doctrine/DoctrineModule/config/module.doctrine_orm.local.config.php.dist` into your application's
