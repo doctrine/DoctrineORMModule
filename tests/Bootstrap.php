@@ -43,7 +43,7 @@ $moduleManager = new \Zend\Module\Manager(array(
 $moduleManager->events()->attachAggregate($defaultListeners);
 $moduleManager->loadModules();
 
-$config = $defaultListeners->getConfigListener()->getMergedConfig()->toArray();
+$config = $defaultListeners->getConfigListener()->getMergedConfig(false);
 
 // setup sqlite
 $config['di']['instance']['DoctrineORMModule\Doctrine\ORM\Connection']['parameters']['params'] = array(

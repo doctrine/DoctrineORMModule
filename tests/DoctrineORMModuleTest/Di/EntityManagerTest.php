@@ -14,6 +14,7 @@ class EntityManagerTest extends TestCase
     public function testCanInjectEntityManager()
     {
         $locator = $this->getLocator();
+        /* @var $target EntityManagerTestInjectTarget */
         $target = $locator->get('DoctrineORMModuleTest\Di\\EntityManagerTestInjectTarget');
         $this->assertInstanceOf('DoctrineORMModuleTest\Di\\EntityManagerTestInjectTarget', $target);
         $em = $target->getEntityManager();

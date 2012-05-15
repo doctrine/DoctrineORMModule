@@ -37,8 +37,8 @@ use Doctrine\Common\Cache\Cache,
 class Configuration extends Instance
 {
     /**
-     * Definition for configuration options. 
-     * 
+     * Definition for configuration options.
+     *
      * @var array
      */
     protected $definition = array(
@@ -57,12 +57,12 @@ class Configuration extends Instance
             'named_native_queries'      => 'array',
         )
     );
-    
+
     /**
-     * @var Doctrine\ORM\Mapping\Driver\Driver
+     * @var \Doctrine\Common\Persistence\Mapping\Driver\MappingDriver
      */
     protected $metadataDriver;
-    
+
     /**
      * @var Doctrine\Common\Cache\Cache
      */
@@ -72,51 +72,50 @@ class Configuration extends Instance
      * @var Doctrine\Common\Cache\Cache
      */
     protected $queryCache;
-    
+
     /**
      * @var Doctrine\Common\Cache\Cache
      */
     protected $resutlCache;
-    
+
     /**
      * @var Doctrine\DBAL\Logging\SQLLogger
      */
     protected $logger;
-    
+
     /**
      * Constructor.
-     * 
+     *
      * @param array 	$opts
      * @param Cache 	$metadataCache
      * @param Cache 	$queryCache
      * @param Cache 	$resultCache
      * @param SQLLogger $logger
      */
-    public function __construct(array $opts, $metadataDriver, Cache $metadataCache, Cache $queryCache, 
+    public function __construct(array $opts, $metadataDriver, Cache $metadataCache, Cache $queryCache,
                                 Cache $resultCache = null, SQLLogger $logger = null)
     {
     	if ($metadataDriver instanceof DriverChain) {
     		$metadataDriver = $metadataDriver->getInstance();
     	}
-    	
+
     	$this->metadataDriver = $metadataDriver;
         $this->metadataCache  = $metadataCache;
         $this->queryCache     = $queryCache;
         $this->resultCache    = $resultCache;
         $this->logger         = $logger;
-        
+
         parent::__construct($opts);
     }
-    
+
     /**
-     * (non-PHPdoc)
-     * @see DoctrineORMModule\Instance.Instance::loadInstance()
+     * {@inheritDoc}
      */
     protected function loadInstance()
     {
         $opts   = $this->opts;
         $config = new DoctrineConfiguration;
-        
+
         // proxies
         $config->setAutoGenerateProxyClasses($opts['auto_generate_proxies']);
         $config->setProxyDir($opts['proxy_dir']);
@@ -129,15 +128,13 @@ class Configuration extends Instance
         $config->setCustomDatetimeFunctions($opts['custom_datetime_functions']);
         $config->setCustomStringFunctions($opts['custom_string_functions']);
         $config->setCustomNumericFunctions($opts['custom_numeric_functions']);
-        
+
         // custom queries
         foreach($opts['named_queries'] as $query) {
-            $this->_validateOptions($query, $this->_namedQueryDefinition);
             $config->addNamedQuery($query['name'], $query['dql']);
         }
-        
+
         foreach($opts['named_native_queries'] as $query) {
-            $this->_validateOptions($query, $this->_namedNativeQueryDefinition);
             $config->addNamedNativeQuery($query['name'], $query['sql'], new $query['rsm']);
         }
 
@@ -148,10 +145,10 @@ class Configuration extends Instance
 
         // logger
         $config->setSQLLogger($this->logger);
-        
+
         // finally, the driver
         $config->setMetadataDriverImpl($this->metadataDriver);
-        
+
         $this->instance = $config;
     }
 }

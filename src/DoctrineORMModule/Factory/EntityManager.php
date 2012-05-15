@@ -36,10 +36,12 @@ class EntityManager
 {
 	public static function get(Connection $conn)
 	{
+        /** @var $instance \Doctrine\DBAL\Connection */
+        $instance = $conn->getInstance();
 		return DoctrineEntityManager::create(
-			$conn->getInstance(),
-			$conn->getInstance()->getConfiguration(),
-			$conn->getInstance()->getEventManager()
+            $instance,
+            $instance->getConfiguration(),
+            $instance->getEventManager()
 		);
 	}
 }
