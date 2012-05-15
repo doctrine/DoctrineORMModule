@@ -42,7 +42,7 @@ your application with composer. This may change in future.
      'DoctrineORMModule',
      ```
 
-  6. drop `vendor/doctrine/DoctrineModule/config/module.doctrine_orm.local.config.php.dist` into your application's
+  6. drop `vendor/doctrine/DoctrineORMModule/config/module.doctrine_orm.local.config.php.dist` into your application's
      `config/autoload` directory, rename it to `module.doctrine_orm.local.config.php` and make the appropriate changes.
   8. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
      access to it.
