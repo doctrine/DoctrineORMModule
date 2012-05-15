@@ -14,12 +14,15 @@ class ConnectionTest extends TestCase
     public function testCanInjectConnection()
     {
         $locator = $this->getLocator();
-        $target = $locator->get('DoctrineORMModuleTest\Di\\ConnectionTestInjectTarget');
-        $this->assertInstanceOf('DoctrineORMModuleTest\Di\\ConnectionTestInjectTarget', $target);
+        /* @var $target ConnectionTestInjectTarget */
+        $target = $locator->get('DoctrineORMModuleTest\\Di\\ConnectionTestInjectTarget');
+        $this->assertInstanceOf('DoctrineORMModuleTest\\Di\\ConnectionTestInjectTarget', $target);
         $connection = $target->getConnection();
-        $this->assertInstanceOf('Doctrine\DBAL\Connection', $connection);
-        $this->assertSame($connection, $locator->get('Doctrine\DBAL\Connection'));
-        $this->assertSame($connection, $locator->get('Doctrine\ORM\EntityManager')->getConnection());
+        $this->assertInstanceOf('Doctrine\\DBAL\\Connection', $connection);
+        $this->assertSame($connection, $locator->get('Doctrine\\DBAL\\Connection'));
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $locator->get('Doctrine\\ORM\\EntityManager');
+        $this->assertSame($connection, $em->getConnection());
     }
 }
 

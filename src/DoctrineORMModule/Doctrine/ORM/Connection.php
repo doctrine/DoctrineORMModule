@@ -37,7 +37,7 @@ use DoctrineModule\Doctrine\Common\EventManager;
 class Connection extends Instance
 {
     /**
-     * @var Doctrine\ORM\Configuration
+     * @var \Doctrine\ORM\Configuration
      */
     protected $config;
 
@@ -67,8 +67,7 @@ class Connection extends Instance
     }
 
     /**
-     * (non-PHPdoc)
-     * @see DoctrineORMModule\Instance.Instance::loadInstance()
+     * {@inheritDoc}
      */
     protected function loadInstance()
     {

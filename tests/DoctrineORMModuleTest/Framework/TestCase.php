@@ -3,15 +3,14 @@
 namespace DoctrineORMModuleTest\Framework;
 
 use PHPUnit_Framework_TestCase;
-use DoctrineModule\Service\Doctrine;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
-use Zend\Di\Locator;
+use Zend\Di\LocatorInterface;
 
 class TestCase extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var Locator
+     * @var LocatorInterface
      */
     protected static $locator;
 
@@ -19,11 +18,6 @@ class TestCase extends PHPUnit_Framework_TestCase
      * @var boolean
      */
     protected static $hasDb = false;
-
-    /**
-     * @var \DoctrineModule\Service\Doctrine
-     */
-    protected $_service;
 
     /**
      * Creates a database if not done already.
@@ -50,15 +44,15 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param Locator $locator
+     * @param LocatorInterface $locator
      */
-    public static function setLocator(Locator $locator)
+    public static function setLocator(LocatorInterface $locator)
     {
         self::$locator = $locator;
     }
 
     /**
-     * @return Locator
+     * @return LocatorInterface
      */
     public function getLocator()
     {
