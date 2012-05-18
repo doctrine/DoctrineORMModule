@@ -22,8 +22,7 @@ namespace DoctrineORMModule;
 use RuntimeException;
 use ReflectionClass;
 use Zend\EventManager\Event;
-use Zend\Module\Consumer\AutoloaderProvider;
-use Zend\Module\Manager;
+use Zend\ModuleManager\ModuleManager;
 use Zend\Module\ModuleEvent;
 use Zend\Loader\StandardAutoloader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
@@ -38,12 +37,12 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
  * @author  Kyle Spraggs <theman@spiffyjr.me>
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class Module implements AutoloaderProvider
+class Module
 {
     /**
-     * @param Manager $moduleManager
+     * @param ModuleManager $moduleManager
      */
-    public function init(Manager $moduleManager)
+    public function init(ModuleManager $moduleManager)
     {
         $moduleManager->events()->attach('loadModules.post', array($this, 'registerAnnotations'));
     }
