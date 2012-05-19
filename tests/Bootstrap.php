@@ -1,73 +1,56 @@
 <?php
-/*
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
- * <http://www.doctrine-project.org>.
- */
-
 use Zend\ServiceManager\ServiceManager;
 use Zend\Mvc\Service\ServiceManagerConfiguration;
-use Zend\Di\Di;
-use Zend\Di\Configuration as DiConfiguration;
-use DoctrineORMModuleTest\Framework\TestCase;
 
 chdir(__DIR__);
 
 $previousDir = '.';
-
 while (!file_exists('config/application.config.php')) {
     $dir = dirname(getcwd());
-
-    if ($previousDir === $dir) {
+    if($previousDir === $dir) {
         throw new RuntimeException(
-            'Unable to locate "config/application.config.php":'
-                . ' is DoctrineModule in a subdir of your application skeleton?'
+            'Unable to locate "config/application.config.php": ' .
+            'is DoctrineORMModule in a subdir of your application skeleton?'
         );
     }
-
     $previousDir = $dir;
     chdir($dir);
 }
 
-if (!include('vendor/autoload.php')) {
-    throw new RuntimeException('vendor/autoload.php could not be found. Did you run php composer.phar install?');
+if (is_readable(__DIR__ . '/TestConfiguration.php')) {
+    require_once __DIR__ . '/TestConfiguration.php';
+} else {
+    require_once __DIR__ . '/TestConfiguration.php.dist';
 }
 
-// get application stack configuration
-$configuration = require 'config/application.config.php';
+require_once('vendor/autoload.php');
 
-// setup service manager
+// $configuration is loaded from TestConfiguration.php (or .dist)
 $serviceManager = new ServiceManager(new ServiceManagerConfiguration($configuration['service_manager']));
 $serviceManager->setService('ApplicationConfiguration', $configuration);
+$serviceManager->setAllowOverride(true);
 
 $config = $serviceManager->get('Configuration');
-
-// setup sqlite
-$config['di']['instance']['DoctrineORMModule\Doctrine\ORM\Connection']['parameters']['params'] = array(
-	'driver' => 'pdo_sqlite',
-	'memory' => true,
-);
-// setup the driver
-$config['di']['instance']['orm_driver_chain']['parameters']['drivers']['doctrine_test_driver'] = array(
-	'class' 	=> 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-	'namespace' => 'DoctrineORMModuleTest\Assets\Entity',
-	'paths'     => array(__DIR__ . '/DoctrineORMModuleTest/Assets/Entity'),
+$config['doctrine']['connection']['orm_default'] = array(
+    'configuration' => 'doctrine_orm_default_configuration',
+    'eventmanager'  => 'doctrine_orm_default_eventmanager',
+    'driver'        => 'pdo_sqlite',
+    'memory'        => true
 );
 
-$di = new Di();
-$config = new DiConfiguration($config['di']);
-$config->configure($di);
+$serviceManager->setService('Configuration', $config);
 
-TestCase::setLocator($di);
+/** @var $moduleManager \Zend\ModuleManager\ModuleManager */
+$moduleManager = $serviceManager->get('ModuleManager');
+$moduleManager->loadModules();
+
+// register annotation driver
+$sharedEvents = $moduleManager->events()->getSharedManager();
+$sharedEvents->attach('DoctrineORMModule', 'loadDrivers', function($e) {
+    $chain  = $e->getTarget();
+    $driver = $e->getParam('config')->newDefaultAnnotationDriver(__DIR__ . '/DoctrineORMModuleTest/Assets/Entity');
+
+    $chain->addDriver($driver, 'DoctrineORMModuleTest\Assets\Entity');
+});
+
+\DoctrineORMModuleTest\Framework\TestCase::setServiceManager($serviceManager);

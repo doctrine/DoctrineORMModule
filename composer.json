@@ -35,16 +35,17 @@
         "php": ">=5.3.3",
         "doctrine/DoctrineModule": "dev-master",
         "doctrine/orm": "2.2.*",
-        "doctrine/migrations": "dev-master"
+        "doctrine/migrations": "dev-master",
+        "doctrine/DoctrineModule": "dev-feature/beta4"
     },
 
     "autoload": {
         "psr-0": {
             "DoctrineORMModule": "src/",
             "DoctrineORMModuleTest": "tests/"
-        }
-    },
-    "config": {
-        "bin-dir": "bin"
+        },
+        "classmap": [
+            "./"
+        ]
     }
 }

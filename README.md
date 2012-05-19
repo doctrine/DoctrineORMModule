@@ -30,22 +30,70 @@ Installation of this module uses composer. For composer documentation, please re
          }
      }
      ```
-  3. install composer via `curl -s http://getcomposer.org/installer | php` (on windows, download
-     http://getcomposer.org/installer and execute it with PHP)
-  4. run `php composer.phar install`
-  5. open `my/project/directory/configs/application.config.php` and add following keys to your `modules` (in this order)
-
-     ```php
-     'DoctrineModule',
-     'DoctrineORMModule',
-     ```
-
-  6. drop `vendor/doctrine/DoctrineORMModule/config/module.doctrine_orm.local.php.dist` into your application's
-     `config/autoload` directory, rename it to `module.doctrine_orm.local.php` and make the appropriate changes.
-  8. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
+  3. run `php composer.phar install`
+  4. open `my/project/directory/configs/application.config.php` and add `DoctrineORMModule` to your `modules`
+  5. drop `vendor/doctrine/DoctrineORMModule/config/module.doctrine_orm.local.config.php.dist` into your application's
+     `config/autoload` directory, rename it to `module.doctrine_orm.local.config.php` and make the appropriate changes.
+  6. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
      access to it.
 
+## Registering drivers with the DriverChain
+
+To register drivers with the driver chain simply add the necessary configuration options to your configuration.
+
+```
+return array(
+    'doctrine' => array(
+        'driver' => array(
+            'my_annotation_driver' => array(
+                'type'  => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(
+                    'path/to/my/entities'
+                )
+            )
+        )
+    )
+);
+```
+
+By default, the orm ships with a DriverChain so that modules can add their entities to the chain. Once you have setup
+your driver you should add it to the chain as follows:
+
+```
+return array(
+    'doctrine' => array(
+        'driver' => array(
+            'orm_default' => array(
+                'drivers' => array(
+                    'My\Namespace' => 'my_annotation_driver'
+                )
+            )
+        )
+    )
+);
+```
+
+You also have access to the chain directly via the `doctrine.driver.orm_default` service and you can manipulate the
+chain however you wish and/or add drivers to it directly without using the driver factory and configuration array.
+
+#### Custom driver settings
+
+Certain drivers have custom configuration options.
+
+ * FileDrivers, can take extension as an option to modify the file extension.
+ * AnnotationDriver, can take cache as an option to specify the cache to use from the doctrine.cache array.
+ * DriverChain, can take drivers as an option to specify the drivers to load from the doctrine.driver array.
+
 ## Usage
+
+#### Registered Services
+
+ * doctrine.connection.orm_default
+ * doctrine.configuration.orm_default
+ * doctrine.driver.orm_default
+ * doctrine.entitymanager.orm_default
+ * doctrine.eventmanager.orm_default
 
 #### Command Line
 Access the Doctrine command line as following
@@ -59,7 +107,7 @@ Access the entity manager using the following di alias:
 
 ```php
 <?php
-$em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+$em = $this->getLocator()->get('Doctrine\ORM\EntityManager');
 ```
 
 #### Injection

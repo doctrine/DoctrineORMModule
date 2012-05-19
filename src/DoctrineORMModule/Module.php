@@ -13,73 +13,81 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
+ * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
  */
 
 namespace DoctrineORMModule;
 
-use RuntimeException;
-use ReflectionClass;
-use Zend\EventManager\Event;
-use Zend\ModuleManager\ModuleManager;
-use Zend\ModuleManager\ModuleEvent;
-use Zend\Loader\StandardAutoloader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use DoctrineModule\Service as CommonService;
+use DoctrineORMModule\Service as ORMService;
 
 /**
  * Base module for Doctrine ORM.
  *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @since   0.1.0
+ * @license http://www.opensource.org/licenses/lgpl-license.php LGPL
+ * @link    www.doctrine-project.org
+ * @since   1.0
+ * @version $Revision$
  * @author  Kyle Spraggs <theman@spiffyjr.me>
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class Module
 {
-    /**
-     * @param ModuleManager $moduleManager
-     */
-    public function init(ModuleManager $moduleManager)
+    public function init($mm)
     {
-        $moduleManager->events()->attach('loadModules.post', array($this, 'registerAnnotations'));
+        $mm->events()->attach('loadModules.post', function($e) {
+            $config   = $e->getConfigListener()->getMergedConfig();
+            $autoload = isset($config['doctrine']['orm_autoload_annotations']) ?
+                $config['doctrine']['orm_autoload_annotations'] :
+                false;
+
+            if ($autoload) {
+                $refl = new \ReflectionClass('Doctrine\ORM\Mapping\Driver\AnnotationDriver');
+                $path = realpath(dirname($refl->getFileName())) . '/DoctrineAnnotations.php';
+
+                AnnotationRegistry::registerFile($path);
+            }
+        });
     }
 
-    /**
-     * Registers annotations required for the Doctrine AnnotationReader
-     *
-     * @param  ModuleEvent $e
-     * @throws RuntimeException
-     */
-    public function registerAnnotations(ModuleEvent $e)
+    public function onBootstrap($e)
     {
-        $config = $e->getConfigListener()->getMergedConfig();
-        $config = $config['doctrine_orm_module'];
+        $app    = $e->getTarget();
+        $events = $app->events()->getSharedManager();
 
-        if ($config['use_annotations']) {
-            $annotationsFile = false;
+        // Attach to helper set event and load the entity manager helper.
+        $events->attach('doctrine', 'loadCli.post', function($e) {
+            $cli = $e->getTarget();
 
-            if (isset($config['annotation_file'])) {
-                $annotationsFile = realpath($config['annotation_file']);
-            }
+            $cli->addCommands(array(
+                // DBAL Commands
+                new \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand(),
+                new \Doctrine\DBAL\Tools\Console\Command\ImportCommand(),
 
-            if (!$annotationsFile) {
-                // Trying to load DoctrineAnnotations.php without knowing its location
-                $annotationReflection = new ReflectionClass('Doctrine\ORM\Mapping\Driver\AnnotationDriver');
-                $annotationsFile = realpath(dirname($annotationReflection->getFileName()) . '/DoctrineAnnotations.php');
-            }
+                // ORM Commands
+                new \Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\ConvertDoctrine1SchemaCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\RunDqlCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\InfoCommand()
+            ));
 
-            if (!$annotationsFile) {
-                throw new RuntimeException('Failed to load annotation mappings, check the "annotation_file" setting');
-            }
-
-            AnnotationRegistry::registerFile($annotationsFile);
-        }
-
-        if (!class_exists('Doctrine\ORM\Mapping\Entity', true)) {
-            throw new RuntimeException('Doctrine could not be autoloaded: ensure it is in the correct path.');
-        }
+            $em = $e->getParam('ServiceManager')->get('doctrine.entitymanager.orm_default');
+            $eh = new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em);
+            $cli->getHelperSet()->set($eh, 'em');
+        });
     }
 
     /**
@@ -88,5 +96,24 @@ class Module
     public function getConfig()
     {
         return include __DIR__ . '/../../config/module.config.php';
+    }
+
+    /**
+     * Expected to return \Zend\ServiceManager\Configuration object or array to
+     * seed such an object.
+     *
+     * @return array|\Zend\ServiceManager\Configuration
+     */
+    public function getServiceConfiguration()
+    {
+        return array(
+            'factories' => array(
+                'doctrine.connection.orm_default'    => new CommonService\ConnectionFactory('orm_default'),
+                'doctrine.configuration.orm_default' => new ORMService\ConfigurationFactory('orm_default'),
+                'doctrine.driver.orm_default'        => new CommonService\DriverFactory('orm_default'),
+                'doctrine.entitymanager.orm_default' => new ORMService\EntityManagerFactory('orm_default'),
+                'doctrine.eventmanager.orm_default'  => new CommonService\EventManagerFactory('orm_default'),
+            )
+        );
     }
 }
