@@ -24,8 +24,11 @@ use ReflectionClass;
 use Zend\EventManager\Event;
 use Zend\ModuleManager\ModuleManager;
 use Zend\ModuleManager\ModuleEvent;
+use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\Loader\StandardAutoloader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use DoctrineORMModule\ModuleManager\Feature\DoctrineDriverProviderInterface;
 
 /**
  * Base module for Doctrine ORM.
@@ -36,7 +39,7 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
  * @author  Kyle Spraggs <theman@spiffyjr.me>
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class Module
+class Module implements BootstrapListenerInterface, ServiceProviderInterface
 {
     /**
      * @param ModuleManager $moduleManager
@@ -47,38 +50,27 @@ class Module
     }
 
     /**
-     * Registers annotations required for the Doctrine AnnotationReader
-     *
-     * @param  ModuleEvent $e
-     * @throws RuntimeException
+     * {@inheritDoc}
      */
-    public function registerAnnotations(ModuleEvent $e)
+    public function onBootstrap(Event $e)
     {
-        $config = $e->getConfigListener()->getMergedConfig();
-        $config = $config['doctrine_orm_module'];
+        $app = $e->getTarget();
+        $sm  = $app->getServiceManager();
+        $mm  = $sm->get('ModuleManager');
 
-        if ($config['use_annotations']) {
-            $annotationsFile = false;
+        $chain = $sm->get('Doctrine\ORM\Mapping\Driver\DriverChain');
 
-            if (isset($config['annotation_file'])) {
-                $annotationsFile = realpath($config['annotation_file']);
+        foreach($mm->getLoadedModules() as $module) {
+            if (!$module instanceof DoctrineDriverProviderInterface
+                && !method_exists($module, 'getDoctrineDrivers')
+            ) {
+                continue;
             }
 
-            if (!$annotationsFile) {
-                // Trying to load DoctrineAnnotations.php without knowing its location
-                $annotationReflection = new ReflectionClass('Doctrine\ORM\Mapping\Driver\AnnotationDriver');
-                $annotationsFile = realpath(dirname($annotationReflection->getFileName()) . '/DoctrineAnnotations.php');
+            $drivers = $module->getDoctrineDrivers($sm->get('Doctrine\ORM\Configuration'));
+            foreach($drivers as $namespace => $driver) {
+                $chain->addDriver($driver, $namespace);
             }
-
-            if (!$annotationsFile) {
-                throw new RuntimeException('Failed to load annotation mappings, check the "annotation_file" setting');
-            }
-
-            AnnotationRegistry::registerFile($annotationsFile);
-        }
-
-        if (!class_exists('Doctrine\ORM\Mapping\Entity', true)) {
-            throw new RuntimeException('Doctrine could not be autoloaded: ensure it is in the correct path.');
         }
     }
 
@@ -88,5 +80,68 @@ class Module
     public function getConfig()
     {
         return include __DIR__ . '/../../config/module.config.php';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getServiceConfiguration()
+    {
+        return array(
+            'aliases' => array(
+                'doctrine_orm_metadata_cache'  => 'Doctrine\Common\Cache\ArrayCache',
+                'doctrine_orm_query_cache'     => 'Doctrine\Common\Cache\ArrayCache',
+                'doctrine_orm_result_cache'    => 'Doctrine\Common\Cache\ArrayCache',
+            ),
+            'factories' => array(
+                'Doctrine\Common\Cache\ArrayCache' => function() {
+                    return new \Doctrine\Common\Cache\ArrayCache;
+                },
+
+                'Doctrine\ORM\Configuration' => function($sm) {
+                    $userConfig = $sm->get('Configuration')->doctrine_orm_config;
+                    $config     = new \Doctrine\ORM\Configuration;
+
+                    $config->setAutoGenerateProxyClasses($userConfig->proxy_auto_generate);
+                    $config->setProxyDir($userConfig->proxy_dir);
+                    $config->setProxyNamespace($userConfig->proxy_namespace);
+
+                    $config->setEntityNamespaces($userConfig->entity_namespaces->toArray());
+
+                    $config->setCustomDatetimeFunctions($userConfig->custom_datetime_functions->toArray());
+                    $config->setCustomStringFunctions($userConfig->custom_string_functions->toArray());
+                    $config->setCustomNumericFunctions($userConfig->custom_numeric_functions->toArray());
+
+                    foreach($userConfig->named_queries as $query) {
+                        $config->addNamedQuery($query->name, $query->dql);
+                    }
+
+                    foreach($userConfig->named_native_queries as $query) {
+                        $config->addNamedNativeQuery($query->name, $query->sql, new $query->rsm);
+                    }
+
+                    $config->setMetadataCacheImpl($sm->get('doctrine_orm_metadata_cache'));
+                    $config->setQueryCacheImpl($sm->get('doctrine_orm_query_cache'));
+                    $config->setResultCacheImpl($sm->get('doctrine_orm_result_cache'));
+
+                    $config->setSQLLogger($userConfig->sql_logger);
+
+                    $config->setMetadataDriverImpl($sm->get('Doctrine\ORM\Mapping\Driver\DriverChain'));
+
+                    return $config;
+                },
+
+                'Doctrine\ORM\EntityManager' => function($sm) {
+                    $connection = $sm->get('Configuration')->doctrine_orm_connection;
+                    $ormConfig  = $sm->get('Doctrine\ORM\Configuration');
+
+                    return \Doctrine\ORM\EntityManager::create($connection->toArray(), $ormConfig);
+                },
+
+                'Doctrine\ORM\Mapping\Driver\DriverChain' => function($sm) {
+                    return new \Doctrine\ORM\Mapping\Driver\DriverChain;
+                },
+            )
+        );
     }
 }
