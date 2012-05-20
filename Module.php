@@ -19,12 +19,7 @@
 
 namespace DoctrineORMModule;
 
-use DoctrineORMModule\ModuleManager\Feature\DoctrineDriverProviderInterface,
-    Zend\EventManager\Event,
-    Zend\ModuleManager\Feature\ServiceProviderInterface,
-    Zend\ModuleManager\Feature\BootstrapListenerInterface,
-    Zend\ModuleManager\ModuleEvent,
-    Zend\ModuleManager\ModuleManager;
+use Zend\ModuleManager\ModuleManager;
 
 /**
  * Base module for Doctrine ORM.
@@ -36,35 +31,8 @@ use DoctrineORMModule\ModuleManager\Feature\DoctrineDriverProviderInterface,
  * @author  Kyle Spraggs <theman@spiffyjr.me>
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class Module implements BootstrapListenerInterface, ServiceProviderInterface
+class Module
 {
-    /**
-     * Listen to the bootstrap event
-     *
-     * @return array
-     */
-    public function onBootstrap(Event $e)
-    {
-        $app = $e->getTarget();
-        $sm  = $app->getServiceManager();
-        $mm  = $sm->get('ModuleManager');
-
-        $chain = $sm->get('Doctrine\ORM\Mapping\Driver\DriverChain');
-
-        foreach($mm->getLoadedModules() as $module) {
-            if (!$module instanceof DoctrineDriverProviderInterface
-                && !method_exists($module, 'getDoctrineDrivers')
-            ) {
-                continue;
-            }
-
-            $drivers = $module->getDoctrineDrivers($sm->get('Doctrine\ORM\Configuration'));
-            foreach($drivers as $namespace => $driver) {
-                $chain->addDriver($driver, $namespace);
-            }
-        }
-    }
-
     /**
      * @return array
      */
@@ -91,50 +59,12 @@ class Module implements BootstrapListenerInterface, ServiceProviderInterface
                 'Doctrine\Common\Cache\ArrayCache' => function() {
                     return new \Doctrine\Common\Cache\ArrayCache;
                 },
-
-                'Doctrine\ORM\Configuration' => function($sm) {
-                    $userConfig = $sm->get('Configuration')->doctrine_orm_config;
-                    $config     = new \Doctrine\ORM\Configuration;
-
-                    $config->setAutoGenerateProxyClasses($userConfig->proxy_auto_generate);
-                    $config->setProxyDir($userConfig->proxy_dir);
-                    $config->setProxyNamespace($userConfig->proxy_namespace);
-
-                    $config->setEntityNamespaces($userConfig->entity_namespaces->toArray());
-
-                    $config->setCustomDatetimeFunctions($userConfig->custom_datetime_functions->toArray());
-                    $config->setCustomStringFunctions($userConfig->custom_string_functions->toArray());
-                    $config->setCustomNumericFunctions($userConfig->custom_numeric_functions->toArray());
-
-                    foreach($userConfig->named_queries as $query) {
-                        $config->addNamedQuery($query->name, $query->dql);
-                    }
-
-                    foreach($userConfig->named_native_queries as $query) {
-                        $config->addNamedNativeQuery($query->name, $query->sql, new $query->rsm);
-                    }
-
-                    $config->setMetadataCacheImpl($sm->get('doctrine_orm_metadata_cache'));
-                    $config->setQueryCacheImpl($sm->get('doctrine_orm_query_cache'));
-                    $config->setResultCacheImpl($sm->get('doctrine_orm_result_cache'));
-
-                    $config->setSQLLogger($userConfig->sql_logger);
-
-                    $config->setMetadataDriverImpl($sm->get('Doctrine\ORM\Mapping\Driver\DriverChain'));
-
-                    return $config;
-                },
-
-                'Doctrine\ORM\EntityManager' => function($sm) {
-                    $connection = $sm->get('Configuration')->doctrine_orm_connection;
-                    $ormConfig  = $sm->get('Doctrine\ORM\Configuration');
-
-                    return \Doctrine\ORM\EntityManager::create($connection->toArray(), $ormConfig);
-                },
-
                 'Doctrine\ORM\Mapping\Driver\DriverChain' => function($sm) {
                     return new \Doctrine\ORM\Mapping\Driver\DriverChain;
                 },
+
+                'Doctrine\ORM\Configuration' => 'DoctrineORMModule\Service\ConfigurationFactory',
+                'Doctrine\ORM\EntityManager' => 'DoctrineORMModule\Service\EntityManagerFactory',
             )
         );
     }
