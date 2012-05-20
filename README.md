@@ -42,14 +42,14 @@ Installation of this module uses composer. For composer documentation, please re
 
 To register drivers with the driver chain simply include the following snippet in your Module's init() method.
 
-     ```php
-     $sharedEvents = $mm->events()->getSharedManager();
-     $sharedEvents->attach('DoctrineORMModule', 'loadDrivers', function($e) {
-         return array(
-             'Application\Entity' => $e->getParam('config')->newDefaultAnnotationDriver('/src/Application/Entity')
-         );
-     });
-     ```
+```php
+$sharedEvents = $mm->events()->getSharedManager();
+$sharedEvents->attach('DoctrineORMModule', 'loadDrivers', function($e) {
+    return array(
+        'Application\Entity' => $e->getParam('config')->newDefaultAnnotationDriver('/src/Application/Entity')
+    );
+});
+```
 
 In the example above the newDefaultAnnotationDriver() method is used to create a generic annotation driver. You have
 full control over the number and types of drivers to use. The only requirement is that the driver is returned as an
