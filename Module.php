@@ -22,9 +22,9 @@ namespace DoctrineORMModule;
 use RuntimeException;
 use ReflectionClass;
 use Zend\EventManager\Event;
-use Zend\Module\Consumer\AutoloaderProvider;
-use Zend\Module\Manager;
-use Zend\Module\ModuleEvent;
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\ModuleManager;
+use Zend\ModuleManager\ModuleEvent;
 use Zend\Loader\StandardAutoloader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
@@ -37,12 +37,12 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
  * @author  Kyle Spraggs <theman@spiffyjr.me>
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class Module implements AutoloaderProvider
+class Module implements AutoloaderProviderInterface
 {
     /**
-     * @param Manager $moduleManager
+     * @param ModuleManager $moduleManager
      */
-    public function init(Manager $moduleManager)
+    public function init(ModuleManager $moduleManager)
     {
         $moduleManager->events()->attach('loadModules.post', array($this, 'registerAnnotations'));
     }
@@ -94,8 +94,8 @@ class Module implements AutoloaderProvider
             return array(
                 'Zend\Loader\StandardAutoloader' => array(
                     StandardAutoloader::LOAD_NS => array(
-                        __NAMESPACE__                   => __DIR__ . '/src/' . __NAMESPACE__,
-                        __NAMESPACE__ . 'Test'          => __DIR__ . '/tests/' . __NAMESPACE__ . 'Test',
+                        __NAMESPACE__           => __DIR__ . '/src/' . __NAMESPACE__,
+                        __NAMESPACE__ . 'Test'  => __DIR__ . '/tests/' . __NAMESPACE__ . 'Test',
                     ),
                 ),
             );
