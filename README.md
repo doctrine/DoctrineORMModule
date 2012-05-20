@@ -16,8 +16,7 @@ and easily. The following features are intended to work out of the box:
 ## Installation
 
 Installation of this module uses composer. For composer documentation, please refer to
-[getcomposer.org](http://getcomposer.org/). To achieve the task, it currently uses `OcraComposer` to integrate
-your application with composer. This may change in future.
+[getcomposer.org](http://getcomposer.org/).
 
 #### Installation steps
 
@@ -31,21 +30,29 @@ your application with composer. This may change in future.
          }
      }
      ```
-  3. install composer via `curl -s http://getcomposer.org/installer | php` (on windows, download
-     http://getcomposer.org/installer and execute it with PHP)
-  4. run `php composer.phar install`
-  5. open `my/project/directory/configs/application.config.php` and add following keys to your `modules` (in this order)
-
-     ```php
-     'OcraComposer',
-     'DoctrineModule',
-     'DoctrineORMModule',
-     ```
-
-  6. drop `vendor/doctrine/DoctrineORMModule/config/module.doctrine_orm.local.config.php.dist` into your application's
+  3. run `php composer.phar install`
+  4. open `my/project/directory/configs/application.config.php` and add `DoctrineORMModule` to your `modules`
+  5. drop `vendor/doctrine/DoctrineORMModule/config/module.doctrine_orm.local.config.php.dist` into your application's
      `config/autoload` directory, rename it to `module.doctrine_orm.local.config.php` and make the appropriate changes.
-  8. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
+  6. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
      access to it.
+
+## Registering drivers with the DriverChain
+
+To register drivers with the driver chain simply include the following snippet in your Module's init() method.
+
+    ```php
+    $sharedEvents = $mm->events()->getSharedManager();
+    $sharedEvents->attach('DoctrineORMModule', 'loadDrivers', function($e) {
+        return array(
+            'Application\Entity' => $e->getParam('config')->newDefaultAnnotationDriver('/src/Application/Entity')
+        );
+    });
+    ```
+
+In the example above the newDefaultAnnotationDriver() method is used to create a generic annotation driver. You have
+full control over the number and types of drivers to use. The only requirement is that the driver is returned as an
+array with the namespace as the key and the driver as the value.
 
 ## Usage
 
@@ -55,22 +62,3 @@ Access the Doctrine command line as following
 ```sh
 ./vendor/bin/doctrine-module
 ```
-
-#### Service Locator
-Access the entity manager using the following di alias:
-
-```php
-<?php
-$em = $this->getLocator()->get('Doctrine\ORM\EntityManager');
-```
-
-#### Injection
-You can also inject the `EntityManager` directly in your controllers/services:
-```php
-class MyController extends \Zend\Mvc\Controller\ActionController
-{
-    public function __construct(\Doctrine\ORM\EntityManager $em) {
-        $this->em = $em;
-        // now you can use the EntityManager!
-    }
-}
