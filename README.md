@@ -51,7 +51,7 @@ $sharedEvents->attach('DoctrineORMModule', 'loadDrivers', function($e) {
 ```
 
 In the example above the newDefaultAnnotationDriver() method is used to create a generic annotation driver. You have
-full control over the number and types of drivers to use. The only requirement is that the driver is returned as an
+full control over the number and types of drivers to use. The only requirement is that the drivers are returned as an
 array with the namespace as the key and the driver as the value.
 
 ## Usage
