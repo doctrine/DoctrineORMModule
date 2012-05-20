@@ -44,7 +44,7 @@
             "DoctrineORMModuleTest": "tests/"
         }
     },
-    "config": {
-        "bin-dir": "bin"
-    }
+    "bin": [
+        "bin/doctrine-orm-module"
+    ]
 }
