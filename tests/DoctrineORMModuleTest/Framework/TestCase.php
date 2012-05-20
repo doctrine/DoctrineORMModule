@@ -5,14 +5,14 @@ namespace DoctrineORMModuleTest\Framework;
 use PHPUnit_Framework_TestCase;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
-use Zend\Di\LocatorInterface;
+use Zend\ServiceManager\ServiceManager;
 
 class TestCase extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var LocatorInterface
+     * @var ServiceManager
      */
-    protected static $locator;
+    protected static $sm;
 
     /**
      * @var boolean
@@ -44,19 +44,19 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param LocatorInterface $locator
+     * @param ServiceManager $sm
      */
-    public static function setLocator(LocatorInterface $locator)
+    public static function setServiceManager(ServiceManager $sm)
     {
-        self::$locator = $locator;
+        self::$sm = $sm;
     }
 
     /**
-     * @return LocatorInterface
+     * @return ServiceManager
      */
-    public function getLocator()
+    public function getServiceManager()
     {
-    	return self::$locator;
+    	return self::$sm;
     }
 
     /**
@@ -66,6 +66,6 @@ class TestCase extends PHPUnit_Framework_TestCase
      */
     public function getEntityManager()
     {
-        return $this->getLocator()->get('Doctrine\ORM\EntityManager');
+        return $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
     }
 }
