@@ -2,6 +2,7 @@
     "name": "doctrine/DoctrineORMModule",
     "description": "Zend Framework 2 Module that provides Doctrine ORM functionality",
     "type": "library",
+    "license": "MIT",
     "keywords": [
         "doctrine",
         "orm",
