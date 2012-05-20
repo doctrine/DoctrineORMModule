@@ -19,9 +19,8 @@
 
 namespace DoctrineORMModule;
 
-use RuntimeException;
-use ReflectionClass;
-use Zend\EventManager\Event;
+use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\ORM\Mapping\Driver\DriverChain;
 use Zend\ModuleManager\ModuleManager;
 use Zend\ModuleManager\ModuleEvent;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
@@ -60,15 +59,10 @@ class Module
                 'doctrine_orm_result_cache'    => 'Doctrine\Common\Cache\ArrayCache',
             ),
             'factories' => array(
-                'Doctrine\Common\Cache\ArrayCache' => function() {
-                    return new \Doctrine\Common\Cache\ArrayCache;
-                },
-                'Doctrine\ORM\Mapping\Driver\DriverChain' => function($sm) {
-                    return new \Doctrine\ORM\Mapping\Driver\DriverChain;
-                },
-
-                'Doctrine\ORM\Configuration' => 'DoctrineORMModule\Service\ConfigurationFactory',
-                'Doctrine\ORM\EntityManager' => 'DoctrineORMModule\Service\EntityManagerFactory',
+                'doctrine_orm_cli'                 => 'DoctrineORMModule\Service\CliFactory',
+                'Doctrine\Common\Cache\ArrayCache' => function() { return new ArrayCache; },
+                'Doctrine\ORM\Configuration'       => 'DoctrineORMModule\Service\ConfigurationFactory',
+                'Doctrine\ORM\EntityManager'       => 'DoctrineORMModule\Service\EntityManagerFactory',
             )
         );
     }
