@@ -46,6 +46,6 @@
         }
     },
     "bin": [
-        "bin/doctrine-orm-module"
+        "bin/doctrine-module"
     ]
 }

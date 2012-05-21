@@ -2,23 +2,11 @@
 
 namespace DoctrineORMModule\Service;
 
-use Doctrine\ORM\Mapping\Driver\DriverChain;
-use Zend\EventManager\EventManager;
-use Zend\ServiceManager\FactoryInterface;
+use DoctrineModule\Service\AbstractConfigurationFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ConfigurationFactory implements FactoryInterface
+class ConfigurationFactory extends AbstractConfigurationFactory
 {
-    /**
-     * @var \Zend\EventManager\EventManager
-     */
-    protected $events;
-
-    /**
-     * @var \Doctrine\ORM\Mapping\Driver\DriverChain
-     */
-    protected $chain;
-
     public function createService(ServiceLocatorInterface $sl)
     {
         $userConfig = $sl->get('Configuration')->doctrine_orm_config;
@@ -51,43 +39,5 @@ class ConfigurationFactory implements FactoryInterface
         $config->setMetadataDriverImpl($this->getDriverChain($sl, $config));
 
         return $config;
-    }
-
-    protected function events()
-    {
-        if (null === $this->events) {
-            $events = new EventManager;
-            $events->setIdentifiers(array(
-                __CLASS__,
-                'Doctrine\ORM\Configuration',
-                'doctrine_orm_configuration',
-                'DoctrineORMModule'
-            ));
-
-            $this->events = $events;
-        }
-        return $this->events;
-    }
-
-    protected function getDriverChain(ServiceLocatorInterface $sl, $config)
-    {
-        if (null === $this->chain) {
-            $events = $this->events();
-            $chain  = new DriverChain;
-
-            // TODO: Temporary workaround for EventManagerFactory. Remove when file is patched.
-            $events->setSharedManager($sl->get('ModuleManager')->events()->getSharedManager());
-
-            $collection = $events->trigger('loadDrivers', $sl, array('config' => $config));
-            foreach($collection as $response) {
-                foreach($response as $namespace => $driver) {
-                    $chain->addDriver($driver, $namespace);
-                }
-            }
-
-            $this->chain = $chain;
-        }
-
-        return $this->chain;
     }
 }
