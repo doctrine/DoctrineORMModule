@@ -19,7 +19,6 @@
 
 namespace DoctrineORMModule;
 
-use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\ORM\Mapping\Driver\DriverChain;
 use Zend\ModuleManager\ModuleManager;
 
@@ -35,6 +34,49 @@ use Zend\ModuleManager\ModuleManager;
  */
 class Module
 {
+    public function onBootstrap($e)
+    {
+        $app    = $e->getTarget();
+        $events = $app->events()->getSharedManager();
+
+        // Attach to helper set event and load the entity manager helper.
+        $events->attach('doctrine', 'loadCliHelperSet', function($e) {
+            $helperSet      = $e->getTarget();
+            $serviceManager = $e->getParam('ServiceManager');
+            $entityManager  = $serviceManager->get('Doctrine\ORM\EntityManager');
+            $entityHelper   = new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($entityManager);
+
+            $helperSet->set($entityHelper, 'em');
+        });
+
+        $events->attach('doctrine', 'loadCliCommands', function($e) {
+            $cli = $e->getTarget();
+
+            $cli->addCommands(array(
+                // DBAL Commands
+                new \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand(),
+                new \Doctrine\DBAL\Tools\Console\Command\ImportCommand(),
+
+                // ORM Commands
+                new \Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\ConvertDoctrine1SchemaCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\RunDqlCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand(),
+                new \Doctrine\ORM\Tools\Console\Command\InfoCommand()
+            ));
+        });
+    }
+
     /**
      * @return array
      */
@@ -53,15 +95,13 @@ class Module
     {
         return array(
             'aliases' => array(
-                'doctrine_orm_metadata_cache'  => 'Doctrine\Common\Cache\ArrayCache',
-                'doctrine_orm_query_cache'     => 'Doctrine\Common\Cache\ArrayCache',
-                'doctrine_orm_result_cache'    => 'Doctrine\Common\Cache\ArrayCache',
+                'doctrine_orm_metadata_cache' => 'Doctrine\Common\Cache\ArrayCache',
+                'doctrine_orm_query_cache'    => 'Doctrine\Common\Cache\ArrayCache',
+                'doctrine_orm_result_cache'   => 'Doctrine\Common\Cache\ArrayCache',
             ),
             'factories' => array(
-                'doctrine_orm_cli'                 => 'DoctrineORMModule\Service\CliFactory',
-                'Doctrine\Common\Cache\ArrayCache' => function() { return new ArrayCache; },
-                'Doctrine\ORM\Configuration'       => 'DoctrineORMModule\Service\ConfigurationFactory',
-                'Doctrine\ORM\EntityManager'       => 'DoctrineORMModule\Service\EntityManagerFactory',
+                'Doctrine\ORM\Configuration' => 'DoctrineORMModule\Service\ConfigurationFactory',
+                'Doctrine\ORM\EntityManager' => 'DoctrineORMModule\Service\EntityManagerFactory',
             )
         );
     }
