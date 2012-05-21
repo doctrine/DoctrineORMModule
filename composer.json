@@ -33,7 +33,8 @@
     "require": {
         "php": ">=5.3.3",
         "doctrine/orm": "2.2.*",
-        "doctrine/migrations": "dev-master"
+        "doctrine/migrations": "dev-master",
+        "doctrine/DoctrineModule": "dev-master"
     },
 
     "autoload": {
