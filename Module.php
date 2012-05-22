@@ -58,11 +58,11 @@ class Module implements AutoloaderProviderInterface
         $config = $e->getConfigListener()->getMergedConfig();
         $config = $config['doctrine_orm_module'];
 
-        if ($config->use_annotations) {
+        if ($config['use_annotations']) {
             $annotationsFile = false;
 
-            if (isset($config->annotation_file)) {
-                $annotationsFile = realpath($config->annotation_file);
+            if (isset($config['annotation_file'])) {
+                $annotationsFile = realpath($config['annotation_file']);
             }
 
             if (!$annotationsFile) {
