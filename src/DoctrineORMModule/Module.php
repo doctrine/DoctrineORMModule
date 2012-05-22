@@ -96,13 +96,23 @@ class Module
     {
         return array(
             'aliases' => array(
-                'doctrine_orm_metadata_cache' => 'Doctrine\Common\Cache\ArrayCache',
-                'doctrine_orm_query_cache'    => 'Doctrine\Common\Cache\ArrayCache',
-                'doctrine_orm_result_cache'   => 'Doctrine\Common\Cache\ArrayCache',
+                'doctrine_orm_metadata_cache' => 'doctrine_common_cache_arraycache',
+                'doctrine_orm_query_cache'    => 'doctrine_common_cache_arraycache',
+                'doctrine_orm_result_cache'   => 'doctrine_common_cache_arraycache',
             ),
             'factories' => array(
-                'Doctrine\ORM\Configuration' => 'DoctrineORMModule\Service\ConfigurationFactory',
-                'Doctrine\ORM\EntityManager' => 'DoctrineORMModule\Service\EntityManagerFactory',
+                'doctrine_orm_connection' => new \DoctrineModule\Service\DBAL\ConnectionFactory(
+                    'orm_default',
+                    'doctrine_orm_configuration',
+                    'doctrine_common_eventmanager'
+                ),
+                'Doctrine\ORM\Configuration' => new \DoctrineORMModule\Service\ConfigurationFactory(
+                    'orm_default'
+                ),
+                'Doctrine\ORM\EntityManager' => new \DoctrineORMModule\Service\EntityManagerFactory(
+                    'doctrine_orm_connection',
+                    'doctrine_orm_configuration'
+                ),
             )
         );
     }
