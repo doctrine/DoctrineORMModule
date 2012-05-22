@@ -2,15 +2,34 @@
 
 namespace DoctrineORMModule\Service;
 
-use DoctrineModule\Service\AbstractConfigurationFactory;
+use DoctrineModule\Service\DBAL\AbstractConfigurationFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ConfigurationFactory extends AbstractConfigurationFactory
 {
-    public function createService(ServiceLocatorInterface $sl)
+    /**
+     * @var name
+     */
+    protected $name;
+
+    public function __construct($name)
     {
-        $userConfig = $sl->get('Configuration')->doctrine_orm_config;
-        $config     = new \Doctrine\ORM\Configuration;
+        $this->name = $name;
+    }
+
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $name       = $this->name;
+        $userConfig = $serviceLocator->get('Configuration')->doctrine_orm_config;
+
+        if (null === ($userConfig = $userConfig->$name)) {
+            throw new RuntimeException(sprintf(
+                'Configuration with name "%s" could not be found in doctrine_orm_config.',
+                $name
+            ));
+        }
+
+        $config = new \Doctrine\ORM\Configuration;
 
         $config->setAutoGenerateProxyClasses($userConfig->proxy_auto_generate);
         $config->setProxyDir($userConfig->proxy_dir);
@@ -30,14 +49,19 @@ class ConfigurationFactory extends AbstractConfigurationFactory
             $config->addNamedNativeQuery($query->name, $query->sql, new $query->rsm);
         }
 
-        $config->setMetadataCacheImpl($sl->get('doctrine_orm_metadata_cache'));
-        $config->setQueryCacheImpl($sl->get('doctrine_orm_query_cache'));
-        $config->setResultCacheImpl($sl->get('doctrine_orm_result_cache'));
+        $config->setMetadataCacheImpl($serviceLocator->get('doctrine_orm_metadata_cache'));
+        $config->setQueryCacheImpl($serviceLocator->get('doctrine_orm_query_cache'));
+        $config->setResultCacheImpl($serviceLocator->get('doctrine_orm_result_cache'));
 
         $config->setSQLLogger($userConfig->sql_logger);
 
-        $config->setMetadataDriverImpl($this->getDriverChain($sl, $config));
+        $config->setMetadataDriverImpl($this->getDriverChain($serviceLocator, $config));
 
         return $config;
+    }
+
+    protected function getIdentifier()
+    {
+        return 'DoctrineORMModule';
     }
 }
