@@ -1,5 +1,6 @@
 {
     "require": {
-        "doctrine/DoctrineORMModule": "dev-master"
+        "doctrine/DoctrineORMModule": "dev-master",
+        "zendframework/zendframework": "dev-master"
     }
 }
