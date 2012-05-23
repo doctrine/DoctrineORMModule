@@ -61,7 +61,7 @@ Access the entity manager using the following di alias:
 
 ```php
 <?php
-$em = $this->getLocator()->get('Doctrine\ORM\EntityManager');
+$em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
 ```
 
 #### Injection
