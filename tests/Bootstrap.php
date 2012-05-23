@@ -17,12 +17,8 @@
  * <http://www.doctrine-project.org>.
  */
 
-use Zend\Loader\AutoloaderFactory;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Mvc\Service\ServiceManagerConfiguration;
-use Zend\ModuleManager\Listener\DefaultListenerAggregate;
-use Zend\ModuleManager\Listener\ListenerOptions;
-use Zend\ModuleManager\ModuleManager;
 use Zend\Di\Di;
 use Zend\Di\Configuration as DiConfiguration;
 use DoctrineORMModuleTest\Framework\TestCase;
@@ -45,10 +41,9 @@ while (!file_exists('config/application.config.php')) {
     chdir($dir);
 }
 
-require_once (getenv('ZF2_PATH') ?: 'vendor/ZendFramework/library') . '/Zend/Loader/AutoloaderFactory.php';
-
-// setup autoloader
-AutoloaderFactory::factory();
+if (!include('vendor/autoload.php')) {
+    throw new RuntimeException('vendor/autoload.php could not be found. Did you run php composer.phar install?');
+}
 
 // get application stack configuration
 $configuration = require 'config/application.config.php';
