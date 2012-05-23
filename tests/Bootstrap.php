@@ -52,10 +52,7 @@ $configuration = require 'config/application.config.php';
 $serviceManager = new ServiceManager(new ServiceManagerConfiguration($configuration['service_manager']));
 $serviceManager->setService('ApplicationConfiguration', $configuration);
 
-/* @var $config \Zend\Config\Config */
 $config = $serviceManager->get('Configuration');
-/* @var $config array */
-$config = $config->toArray();
 
 // setup sqlite
 $config['di']['instance']['DoctrineORMModule\Doctrine\ORM\Connection']['parameters']['params'] = array(
