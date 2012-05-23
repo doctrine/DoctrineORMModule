@@ -16,8 +16,7 @@ and easily. The following features are intended to work out of the box:
 ## Installation
 
 Installation of this module uses composer. For composer documentation, please refer to
-[getcomposer.org](http://getcomposer.org/). To achieve the task, it currently uses `OcraComposer` to integrate
-your application with composer. This may change in future.
+[getcomposer.org](http://getcomposer.org/).
 
 #### Installation steps
 
@@ -37,7 +36,6 @@ your application with composer. This may change in future.
   5. open `my/project/directory/configs/application.config.php` and add following keys to your `modules` (in this order)
 
      ```php
-     'OcraComposer',
      'DoctrineModule',
      'DoctrineORMModule',
      ```
