@@ -45,8 +45,5 @@
         "classmap": [
             "./"
         ]
-    },
-    "bin": [
-        "bin/doctrine-module"
-    ]
+    }
 }
