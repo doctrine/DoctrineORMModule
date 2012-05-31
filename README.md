@@ -44,9 +44,11 @@ To register drivers with the driver chain simply include the following snippet i
 ```php
 $sharedEvents = $mm->events()->getSharedManager();
 $sharedEvents->attach('DoctrineORMModule', 'loadDrivers', function($e) {
-    return array(
-        'Module\Entity' => $e->getParam('config')->newDefaultAnnotationDriver(__DIR__ . '/src/Module/Entity')
-    );
+    $chain  = $e->getTarget();
+    $driver = $e->getParam('config')->newDefaultAnnotationDriver(__DIR__ . '/src/Module/Entity');
+
+    // Register driver for entities in namespace 'Module\Entity'
+    $chain->addDriver($driver, 'Module\Entity');
 });
 ```
 
