@@ -24,7 +24,7 @@ use Doctrine\ORM\QueryBuilder;
 use Zend\Paginator\Adapter\AdapterInterface;
 
 /**
- * Paginator adapter for Zend Paginator
+ * Paginator adapter for the Zend\Paginator component
  *
  * @license MIT
  * @link    http://www.doctrine-project.org/
@@ -55,11 +55,10 @@ class Adapter implements AdapterInterface
     public function setPaginator(Paginator $paginator)
     {
         $this->paginator = $paginator;
-        return $this;
     }
 
     /**
-     * @return \Doctrine\ORM\Tools\Pagination\Paginator
+     * @return Paginator
      */
     public function getPaginator()
     {
@@ -76,8 +75,7 @@ class Adapter implements AdapterInterface
             ->setFirstResult($offset)
             ->setMaxResults($itemCountPerPage);
 
-        return $this->paginator
-                    ->getIterator();
+        return $this->paginator->getIterator();
     }
 
     /**
@@ -85,7 +83,6 @@ class Adapter implements AdapterInterface
      */
     public function count()
     {
-        return $this->paginator
-                    ->count();
+        return $this->paginator->count();
     }
 }
