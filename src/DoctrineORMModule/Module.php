@@ -22,7 +22,6 @@ namespace DoctrineORMModule;
 use RuntimeException;
 use ReflectionClass;
 use Zend\EventManager\Event;
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\ModuleManager;
 use Zend\ModuleManager\ModuleEvent;
 use Zend\Loader\StandardAutoloader;
@@ -37,7 +36,7 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
  * @author  Kyle Spraggs <theman@spiffyjr.me>
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class Module implements AutoloaderProviderInterface
+class Module
 {
     /**
      * @param ModuleManager $moduleManager
@@ -84,31 +83,10 @@ class Module implements AutoloaderProviderInterface
     }
 
     /**
-     * Retrieves configuration that can be consumed by Zend\Loader\AutoloaderFactory
-     *
-     * @return array
-     */
-    public function getAutoloaderConfig()
-    {
-        if (realpath(__DIR__ . '/vendor/doctrine-orm/lib')) {
-            return array(
-                'Zend\Loader\StandardAutoloader' => array(
-                    StandardAutoloader::LOAD_NS => array(
-                        __NAMESPACE__           => __DIR__ . '/src/' . __NAMESPACE__,
-                        __NAMESPACE__ . 'Test'  => __DIR__ . '/tests/' . __NAMESPACE__ . 'Test',
-                    ),
-                ),
-            );
-        }
-
-        return array();
-    }
-
-    /**
      * @return array
      */
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        return include __DIR__ . '/../../config/module.config.php';
     }
 }
