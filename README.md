@@ -30,20 +30,30 @@ Installation of this module uses composer. For composer documentation, please re
          }
      }
      ```
-  3. install composer via `curl -s http://getcomposer.org/installer | php` (on windows, download
-     http://getcomposer.org/installer and execute it with PHP)
-  4. run `php composer.phar install`
-  5. open `my/project/directory/configs/application.config.php` and add following keys to your `modules` (in this order)
 
-     ```php
-     'DoctrineModule',
-     'DoctrineORMModule',
-     ```
-
-  6. drop `vendor/doctrine/DoctrineORMModule/config/module.doctrine_orm.local.php.dist` into your application's
-     `config/autoload` directory, rename it to `module.doctrine_orm.local.php` and make the appropriate changes.
-  8. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
+  3. run `php composer.phar install`
+  4. open `my/project/directory/configs/application.config.php` and add `DoctrineORMModule` to your `modules`
+  5. drop `vendor/doctrine/DoctrineORMModule/config/module.doctrine_orm.local.config.php.dist` into your application's
+     `config/autoload` directory, rename it to `module.doctrine_orm.local.config.php` and make the appropriate changes.
+  6. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
      access to it.
+
+## Registering drivers with the DriverChain
+
+To register drivers with the driver chain simply include the following snippet in your Module's init() method.
+
+```php
+$sharedEvents = $mm->events()->getSharedManager();
+$sharedEvents->attach('DoctrineORMModule', 'loadDrivers', function($e) {
+    return array(
+        'Module\Entity' => $e->getParam('config')->newDefaultAnnotationDriver(__DIR__ . '/src/Module/Entity')
+    );
+});
+```
+
+In the example above the newDefaultAnnotationDriver() method is used to create a generic annotation driver. You have
+full control over the number and types of drivers to use. The only requirement is that the drivers are returned as an
+array with the namespace as the key and the driver as the value.
 
 ## Usage
 
@@ -72,3 +82,4 @@ class MyController extends \Zend\Mvc\Controller\ActionController
         // now you can use the EntityManager!
     }
 }
+```

@@ -19,9 +19,9 @@
 
 use Zend\ServiceManager\ServiceManager;
 use Zend\Mvc\Service\ServiceManagerConfiguration;
-use Zend\Di\Di;
-use Zend\Di\Configuration as DiConfiguration;
 use DoctrineORMModuleTest\Framework\TestCase;
+use Zend\ServiceManager\ServiceManager;
+use Zend\Mvc\Service\ServiceManagerConfiguration;
 
 chdir(__DIR__);
 
@@ -42,32 +42,19 @@ while (!file_exists('config/application.config.php')) {
 }
 
 if (!include('vendor/autoload.php')) {
-    throw new RuntimeException('vendor/autoload.php could not be found. Did you run php composer.phar install?');
+    throw new RuntimeException('vendor/autoload.php could not be found. Did you run `php composer.phar install`?');
 }
 
 // get application stack configuration
 $configuration = require 'config/application.config.php';
 
-// setup service manager
+require_once('vendor/autoload.php');
+
+// $configuration is loaded from TestConfiguration.php (or .dist)
 $serviceManager = new ServiceManager(new ServiceManagerConfiguration($configuration['service_manager']));
 $serviceManager->setService('ApplicationConfiguration', $configuration);
 
-$config = $serviceManager->get('Configuration');
+$moduleManager = $serviceManager->get('ModuleManager');
+$moduleManager->loadModules();
 
-// setup sqlite
-$config['di']['instance']['DoctrineORMModule\Doctrine\ORM\Connection']['parameters']['params'] = array(
-	'driver' => 'pdo_sqlite',
-	'memory' => true,
-);
-// setup the driver
-$config['di']['instance']['orm_driver_chain']['parameters']['drivers']['doctrine_test_driver'] = array(
-	'class' 	=> 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-	'namespace' => 'DoctrineORMModuleTest\Assets\Entity',
-	'paths'     => array(__DIR__ . '/DoctrineORMModuleTest/Assets/Entity'),
-);
-
-$di = new Di();
-$config = new DiConfiguration($config['di']);
-$config->configure($di);
-
-TestCase::setLocator($di);
+\DoctrineORMModuleTest\Framework\TestCase::setServiceManager($serviceManager);
