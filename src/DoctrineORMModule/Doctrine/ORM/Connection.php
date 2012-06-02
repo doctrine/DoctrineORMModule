@@ -48,10 +48,10 @@ class Connection extends Instance
     /**
      * Constructor
      *
-     * @param array         $opts
+     * @param array $params
      * @param Configuration $config
      * @param EventManager  $evm
-     * @param PDO             $pdo
+     * @param PDO           $pdo
      */
     public function __construct(array $params, Configuration $config, EventManager $evm, PDO $pdo = null)
     {

@@ -85,10 +85,11 @@ class Configuration extends Instance
     /**
      * Constructor.
      *
-     * @param array 	$opts
-     * @param Cache 	$metadataCache
-     * @param Cache 	$queryCache
-     * @param Cache 	$resultCache
+     * @param array     $opts
+     * @param $metadataDriver
+     * @param Cache     $metadataCache
+     * @param Cache     $queryCache
+     * @param Cache     $resultCache
      * @param SQLLogger $logger
      */
     public function __construct(array $opts, $metadataDriver, Cache $metadataCache, Cache $queryCache,

@@ -35,7 +35,7 @@ class Connection
 {
     /**
      * @static
-     * @param ModuleConnection $conn
+     * @param ModuleConnection $connection
      * @return DBALConnection
      */
     public static function get(ModuleConnection $connection)
