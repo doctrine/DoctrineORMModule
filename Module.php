@@ -19,9 +19,6 @@
 
 namespace DoctrineORMModule;
 
-use Doctrine\ORM\Mapping\Driver\DriverChain;
-use Zend\ModuleManager\ModuleManager;
-
 /**
  * Base module for Doctrine ORM.
  *
@@ -100,18 +97,10 @@ class Module
                 'doctrine_orm_result_cache'   => 'doctrine_common_cache_arraycache',
             ),
             'factories' => array(
-                'doctrine_orm_connection' => new \DoctrineModule\Service\DBAL\ConnectionFactory(
-                    'orm_default',
-                    'doctrine_orm_configuration',
-                    'doctrine_common_eventmanager'
-                ),
-                'Doctrine\ORM\Configuration' => new \DoctrineORMModule\Service\ConfigurationFactory(
-                    'orm_default'
-                ),
-                'Doctrine\ORM\EntityManager' => new \DoctrineORMModule\Service\EntityManagerFactory(
-                    'doctrine_orm_connection',
-                    'doctrine_orm_configuration'
-                ),
+                'doctrine_orm_default_connection'    => 'DoctrineORMModule\Service\DefaultConnectionFactory',
+                'doctrine_orm_default_configuration' => 'DoctrineORMModule\Service\DefaultConfigurationFactory',
+                'doctrine_orm_default_entitymanager' => 'DoctrineORMModule\Service\DefaultEntityManagerFactory',
+                'doctrine_orm_default_eventmanager'  => 'DoctrineORMModule\Service\DefaultEventManagerFactory',
             )
         );
     }

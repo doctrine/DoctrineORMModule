@@ -9,8 +9,8 @@ while (!file_exists('config/application.config.php')) {
     $dir = dirname(getcwd());
     if($previousDir === $dir) {
         throw new RuntimeException(
-            'Unable to locate "config/application.config.php":'
-            . ' is DoctrineORMModule in a subdir of your application skeleton?'
+            'Unable to locate "config/application.config.php": ' .
+            'is DoctrineORMModule in a subdir of your application skeleton?'
         );
     }
     $previousDir = $dir;
@@ -28,7 +28,17 @@ require_once('vendor/autoload.php');
 // $configuration is loaded from TestConfiguration.php (or .dist)
 $serviceManager = new ServiceManager(new ServiceManagerConfiguration($configuration['service_manager']));
 $serviceManager->setService('ApplicationConfiguration', $configuration);
+$serviceManager->setAllowOverride(true);
 
+$config = $serviceManager->get('Configuration');
+$config['doctrine']['connections']['orm_default'] = array(
+    'driver' => 'pdo_sqlite',
+    'memory' => true
+);
+
+$serviceManager->setService('Configuration', $config);
+
+/** @var $moduleManager \Zend\ModuleManager\ModuleManager */
 $moduleManager = $serviceManager->get('ModuleManager');
 $moduleManager->loadModules();
 

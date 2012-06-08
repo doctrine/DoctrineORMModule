@@ -2,26 +2,19 @@
 
 namespace DoctrineORMModule\Service;
 
-use DoctrineModule\Service\DBAL\AbstractConfigurationFactory;
+use RuntimeException;
+use DoctrineModule\Service\AbstractConfigurationFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ConfigurationFactory extends AbstractConfigurationFactory
+class DefaultConfigurationFactory extends AbstractConfigurationFactory
 {
-    /**
-     * @var name
-     */
-    protected $name;
-
-    public function __construct($name)
-    {
-        $this->name = $name;
-    }
-
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $name       = $this->name;
+        $name       = $this->getName();
         $cfg        = $serviceLocator->get('Configuration');
-        $userConfig = isset($cfg['doctrine_orm_config'][$name]) ? $cfg['doctrine_orm_config'][$name] : null;
+        $userConfig = isset($cfg['doctrine']['orm']['configuration'][$name]) ?
+                          $cfg['doctrine']['orm']['configuration'][$name] :
+                          null;
 
         if (null === $userConfig) {
             throw new RuntimeException(sprintf(
@@ -59,6 +52,11 @@ class ConfigurationFactory extends AbstractConfigurationFactory
         $config->setMetadataDriverImpl($this->getDriverChain($serviceLocator, $config));
 
         return $config;
+    }
+
+    public function getName()
+    {
+        return 'default';
     }
 
     protected function getIdentifier()
