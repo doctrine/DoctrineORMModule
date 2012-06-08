@@ -40,7 +40,7 @@ class Module
         $events->attach('doctrine', 'loadCliHelperSet', function($e) {
             $helperSet      = $e->getTarget();
             $serviceManager = $e->getParam('ServiceManager');
-            $entityManager  = $serviceManager->get('Doctrine\ORM\EntityManager');
+            $entityManager  = $serviceManager->get('doctrine_orm_default_entitymanager');
             $entityHelper   = new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($entityManager);
 
             $helperSet->set($entityHelper, 'em');

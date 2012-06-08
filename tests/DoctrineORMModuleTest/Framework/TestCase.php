@@ -66,6 +66,6 @@ class TestCase extends PHPUnit_Framework_TestCase
      */
     public function getEntityManager()
     {
-        return $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        return $this->getServiceManager()->get('doctrine_orm_default_entitymanager');
     }
 }

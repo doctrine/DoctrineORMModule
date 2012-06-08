@@ -1,28 +1,26 @@
 <?php
 namespace DoctrineORMModuleTest\Assets\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
- * @ORM\Entity
- * @ORM\Table(name="doctrine_orm_module_test")
+ * @Entity
+ * @Table(name="doctrine_orm_module_test")
  */
 class Test
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer");
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @Id
+     * @Column(type="integer");
+     * @GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @Column(type="string")
      */
     protected $username;
 
     /**
-     * @ORM\Column(type="string")
+     * @Column(type="string")
      */
     protected $password;
 

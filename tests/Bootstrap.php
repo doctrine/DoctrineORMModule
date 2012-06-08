@@ -31,9 +31,11 @@ $serviceManager->setService('ApplicationConfiguration', $configuration);
 $serviceManager->setAllowOverride(true);
 
 $config = $serviceManager->get('Configuration');
-$config['doctrine']['connections']['orm_default'] = array(
-    'driver' => 'pdo_sqlite',
-    'memory' => true
+$config['doctrine']['connection']['orm_default'] = array(
+    'configuration' => 'doctrine_orm_default_configuration',
+    'eventmanager'  => 'doctrine_orm_default_eventmanager',
+    'driver'        => 'pdo_sqlite',
+    'memory'        => true
 );
 
 $serviceManager->setService('Configuration', $config);
@@ -41,5 +43,14 @@ $serviceManager->setService('Configuration', $config);
 /** @var $moduleManager \Zend\ModuleManager\ModuleManager */
 $moduleManager = $serviceManager->get('ModuleManager');
 $moduleManager->loadModules();
+
+// register annotation driver
+$sharedEvents = $moduleManager->events()->getSharedManager();
+$sharedEvents->attach('DoctrineORMModule', 'loadDrivers', function($e) {
+    $chain  = $e->getTarget();
+    $driver = $e->getParam('config')->newDefaultAnnotationDriver(__DIR__ . '/DoctrineORMModuleTest/Assets/Entity');
+
+    $chain->addDriver($driver, 'DoctrineORMModuleTest\Assets\Entity');
+});
 
 \DoctrineORMModuleTest\Framework\TestCase::setServiceManager($serviceManager);
