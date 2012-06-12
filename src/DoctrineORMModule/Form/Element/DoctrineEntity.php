@@ -21,6 +21,7 @@ class DoctrineEntity extends Element
      * @var array
      */
     protected $attributes = array(
+        'options' => array(),
         'type' => 'select',
     );
 
