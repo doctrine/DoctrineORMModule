@@ -51,7 +51,7 @@ class DoctrineEntity extends Element
     protected $targetClass;
 
     /**
-     * @var \Doctrine|ORM\Query|\Doctrine\ORM\QueryBuilder|null
+     * @var mixed
      */
     protected $spec;
 
@@ -95,6 +95,7 @@ class DoctrineEntity extends Element
             if ($spec instanceof Query) {
                 $entities = $spec->getQuery()->execute();
             } else if (is_callable($spec)) {
+                /** @var $spec \Closure  */
                 $callable = $spec($this->em->getRepository($this->targetClass));
                 $entities = $callable->getQuery()->execute();
             } else {
