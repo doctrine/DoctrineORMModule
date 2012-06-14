@@ -2,10 +2,10 @@
 
 namespace DoctrineORMModule\Service;
 
-use DoctrineModule\Service\AbstractConfigurationFactory;
+use DoctrineModule\Service\ConfigurationFactory as DoctrineConfigurationFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ConfigurationFactory extends AbstractConfigurationFactory
+class ConfigurationFactory extends DoctrineConfigurationFactory
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
@@ -42,6 +42,6 @@ class ConfigurationFactory extends AbstractConfigurationFactory
 
     protected function getOptionsClass()
     {
-        return 'DoctrineORMModule\Service\ConfigurationOptions';
+        return 'DoctrineORMModule\Options\Configuration';
     }
 }

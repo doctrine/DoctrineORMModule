@@ -1,10 +1,10 @@
 <?php
 
-namespace DoctrineORMModule\Service;
+namespace DoctrineORMModule\Options;
 
-use DoctrineModule\Service\AbstractConfigurationOptions;
+use DoctrineModule\Options\Configuration as DoctrineConfiguration;
 
-class ConfigurationOptions extends AbstractConfigurationOptions
+class Configuration extends DoctrineConfiguration
 {
     /**
      * Set the cache key for the metadata cache. Cache key

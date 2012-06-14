@@ -8,12 +8,14 @@ return array(
                 'configuration' => 'orm_default',
                 'eventmanager'  => 'orm_default',
 
-                'driver'   => 'pdo_mysql',
-                'host'     => 'localhost',
-                'port'     => '3306',
-                'user'     => 'username',
-                'password' => 'password',
-                'dbname'   => 'database',
+                'params' => array(
+                    'driver'   => 'pdo_mysql',
+                    'host'     => 'localhost',
+                    'port'     => '3306',
+                    'user'     => 'username',
+                    'password' => 'password',
+                    'dbname'   => 'database',
+                )
             ),
         ),
 
@@ -33,7 +35,7 @@ return array(
 
         'driver' => array(
             'orm_default' => array(
-                'type'    => 'Doctrine\ORM\Mapping\Driver\DriverChain',
+                'class'   => 'Doctrine\ORM\Mapping\Driver\DriverChain',
                 'drivers' => array()
             )
         ),
