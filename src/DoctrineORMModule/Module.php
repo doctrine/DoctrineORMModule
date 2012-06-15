@@ -107,6 +107,9 @@ class Module
     public function getServiceConfiguration()
     {
         return array(
+            'aliases' => array(
+                'Doctrine\ORM\EntityManager' => 'doctrine.entitymanager.orm_default',
+            ),
             'factories' => array(
                 'doctrine.connection.orm_default'    => new CommonService\ConnectionFactory('orm_default'),
                 'doctrine.configuration.orm_default' => new ORMService\ConfigurationFactory('orm_default'),

@@ -32,14 +32,12 @@ Installation of this module uses composer. For composer documentation, please re
      ```
   3. run `php composer.phar install`
   4. open `my/project/directory/configs/application.config.php` and add `DoctrineORMModule` to your `modules`
-  5. drop `vendor/doctrine/DoctrineORMModule/config/module.doctrine_orm.local.config.php.dist` into your application's
-     `config/autoload` directory, rename it to `module.doctrine_orm.local.config.php` and make the appropriate changes.
-  6. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
-     access to it.
+  5. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
+     access to it. This directory can be changed using the module options.
 
 ## Registering drivers with the DriverChain
 
-To register drivers with the driver chain simply add the necessary configuration options to your configuration.
+To register drivers with Doctrine module simply add the drivers to the doctrine.driver key in your configuration.
 
 ```
 return array(
@@ -57,7 +55,7 @@ return array(
 );
 ```
 
-By default, the orm ships with a DriverChain so that modules can add their entities to the chain. Once you have setup
+By default, this module ships with a DriverChain so that modules can add their entities to the chain. Once you have setup
 your driver you should add it to the chain as follows:
 
 ```
@@ -75,15 +73,8 @@ return array(
 ```
 
 You also have access to the chain directly via the `doctrine.driver.orm_default` service and you can manipulate the
-chain however you wish and/or add drivers to it directly without using the driver factory and configuration array.
-
-#### Custom driver settings
-
-Certain drivers have custom configuration options.
-
- * FileDrivers, can take extension as an option to modify the file extension.
- * AnnotationDriver, can take cache as an option to specify the cache to use from the doctrine.cache array.
- * DriverChain, can take drivers as an option to specify the drivers to load from the doctrine.driver array.
+chain however you wish and/or add drivers to it directly without using the driver factory and configuration array. A
+good place to do this is the `onBootstrap()` method of your `Module.php` file or in another service.
 
 ## Usage
 
@@ -103,20 +94,16 @@ Access the Doctrine command line as following
 ```
 
 #### Service Locator
-Access the entity manager using the following di alias:
+Access the entity manager using the following alias:
 
 ```php
 <?php
-$em = $this->getLocator()->get('Doctrine\ORM\EntityManager');
+$em = $this->getLocator()->get('doctrine.entitymanager.orm_default');
 ```
 
 #### Injection
-You can also inject the `EntityManager` directly in your controllers/services:
-```php
-class MyController extends \Zend\Mvc\Controller\ActionController
-{
-    public function __construct(\Doctrine\ORM\EntityManager $em) {
-        $this->em = $em;
-        // now you can use the EntityManager!
-    }
-}
+You can also inject the `EntityManager` directly in your controllers/services by using a controller factory. Please
+refer to the official ServiceManager documentation for more information.
+
+#### Implementing EntityManagerAware interface
+Coming soon!
