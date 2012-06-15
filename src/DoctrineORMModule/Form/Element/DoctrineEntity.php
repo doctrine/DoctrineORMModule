@@ -11,11 +11,6 @@ use Zend\Form\Element;
 class DoctrineEntity extends Element
 {
     /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    protected $em;
-
-    /**
      * Seed attributes
      *
      * @var array
@@ -29,51 +24,6 @@ class DoctrineEntity extends Element
      * @var array
      */
     protected $entities;
-
-    /**
-     * @var string
-     */
-    protected $property;
-
-    /**
-     * @var string
-     */
-    protected $method;
-
-    /**
-     * @var string
-     */
-    protected $emptyValue;
-
-    /**
-     * @var string
-     */
-    protected $targetClass;
-
-    /**
-     * @var mixed
-     */
-    protected $spec;
-
-    /**
-     * @param EntityManager $em
-     * @return DoctrineEntity
-     */
-    public function setEntityManager(EntityManager $em)
-    {
-        $this->em = $em;
-        return $this;
-    }
-
-    /**
-     * @param string $targetClass
-     * @return DoctrineEntity
-     */
-    public function setTargetClass($targetClass)
-    {
-        $this->targetClass = $targetClass;
-        return $this;
-    }
 
     /**
      * @return array|\Traversable
@@ -90,16 +40,21 @@ class DoctrineEntity extends Element
     public function getEntities()
     {
         if (null === $this->entities) {
-            $spec = $this->getAttribute('spec');
+            $spec        = $this->getAttribute('spec');
+            $em          = $this->getAttribute('entityManager');
+            $targetClass = $this->getAttribute('targetClass');
 
-            if ($spec instanceof Query) {
-                $entities = $spec->getQuery()->execute();
-            } else if (is_callable($spec)) {
+            if (is_callable($spec)) {
                 /** @var $spec \Closure  */
-                $callable = $spec($this->em->getRepository($this->targetClass));
-                $entities = $callable->getQuery()->execute();
+                $spec = $spec($em->getRepository($targetClass));
+            }
+
+            if ($spec instanceof QueryBuilder) {
+                $entities = $spec->getQuery()->execute();
+            } else if ($spec instanceof Query) {
+                $entities = $spec->execute();
             } else {
-                $entities = $this->em->getRepository($this->targetClass)->findAll();
+                $entities = $em->getRepository($targetClass)->findAll();
             }
             $this->entities = $entities;
         }
@@ -115,7 +70,15 @@ class DoctrineEntity extends Element
             return;
         }
 
-        $metadata   = $this->em->getClassMetadata($this->targetClass);
+        if (!($em = $this->getAttribute('entityManager'))) {
+            throw new RuntimeException('No entityManager was set');
+        }
+
+        if (!($targetClass = $this->getAttribute('targetClass'))) {
+            throw new RuntimeException('No targetClass was set');
+        }
+
+        $metadata   = $em->getClassMetadata($targetClass);
         $identifier = $metadata->getIdentifierFieldNames();
         $entities   = $this->getEntities();
         $options    = array();
@@ -131,7 +94,7 @@ class DoctrineEntity extends Element
                 }
                 $reflClass = $metadata->getReflectionProperty($property);
                 $label     = $reflClass->getValue($entity);
-            } else if (($method = $this->getAttribute($method))) {
+            } else if (($method = $this->getAttribute('method'))) {
                 if (!is_callable(array($entity, $method))) {
                     throw new RuntimeException(sprintf(
                         'Method "%s::%s" is not callable',
@@ -145,7 +108,7 @@ class DoctrineEntity extends Element
                     throw new RuntimeException(sprintf(
                         '%s must have a "__toString()" method defined if you have not set ' .
                         'a property or method to use.',
-                        $this->targetClass
+                        $targetClass
                     ));
                 }
                 $label = (string) $entity;
