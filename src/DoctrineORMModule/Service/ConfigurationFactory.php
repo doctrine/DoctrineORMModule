@@ -9,31 +9,32 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        /** @var $options \DoctrineORMModule\Options\Configuration */
         $options = $this->getOptions($serviceLocator);
         $config  = new \Doctrine\ORM\Configuration;
 
-        $config->setAutoGenerateProxyClasses($options->generateProxies);
-        $config->setProxyDir($options->proxyDir);
-        $config->setProxyNamespace($options->proxyNamespace);
+        $config->setAutoGenerateProxyClasses($options->getGenerateProxies());
+        $config->setProxyDir($options->getProxyDir());
+        $config->setProxyNamespace($options->getProxyNamespace());
 
-        $config->setEntityNamespaces($options->entityNamespaces);
+        $config->setEntityNamespaces($options->getEntityNamespaces());
 
-        $config->setCustomDatetimeFunctions($options->datetimeFunctions);
-        $config->setCustomStringFunctions($options->stringFunctions);
-        $config->setCustomNumericFunctions($options->numericFunctions);
+        $config->setCustomDatetimeFunctions($options->getDatetimeFunctions());
+        $config->setCustomStringFunctions($options->getStringFunctions());
+        $config->setCustomNumericFunctions($options->getNumericFunctions());
 
-        foreach($options->namedQueries as $query) {
-            $config->addNamedQuery($query['name'], $query['dql']);
+        foreach($options->getNamedQueries() as $name => $query) {
+            $config->addNamedQuery($name, $query);
         }
 
-        foreach($options->namedNativeQueries as $query) {
-            $config->addNamedNativeQuery($query['name'], $query['sql'], new $query['rsm']);
+        foreach($options->getNamedNativeQueries() as $name => $query) {
+            $config->addNamedNativeQuery($name, $query['sql'], new $query['rsm']);
         }
 
-        $config->setMetadataCacheImpl($serviceLocator->get($options->metadataCache));
-        $config->setQueryCacheImpl($serviceLocator->get($options->queryCache));
+        $config->setMetadataCacheImpl($serviceLocator->get($options->getMetadataCache()));
+        $config->setQueryCacheImpl($serviceLocator->get($options->getQueryCache()));
 
-        $config->setMetadataDriverImpl($serviceLocator->get($options->driver));
+        $config->setMetadataDriverImpl($serviceLocator->get($options->getDriver()));
 
         $this->setupDBALConfiguration($serviceLocator, $config);
 

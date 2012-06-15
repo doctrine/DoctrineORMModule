@@ -2,39 +2,29 @@
 
 namespace DoctrineORMModule\Service;
 
-use RuntimeException;
 use Doctrine\ORM\EntityManager;
-use Zend\ServiceManager\FactoryInterface;
+use DoctrineModule\Service\AbstractFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class EntityManagerFactory implements FactoryInterface
+class EntityManagerFactory extends AbstractFactory
 {
-    /**
-     * @var string
-     */
-    protected $name;
-
-    public function __construct($name)
+    public function createService(ServiceLocatorInterface $sl)
     {
-        $this->name = $name;
-    }
+        $options = $this->getOptions($sl, 'entitymanager');
 
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        $doctrine = $serviceLocator->get('Configuration');
-        $doctrine = $doctrine['doctrine'];
-        $config   = isset($doctrine['entitymanager'][$this->name]) ? $doctrine['entitymanager'][$this->name] : null;
-
-        if (null === $config) {
-            throw new RuntimeException(sprintf(
-                'EntityManager with name "%s" could not be found in "doctrine.entitymanager".',
-                $this->name
-            ));
-        }
-
-        $connection = $serviceLocator->get("doctrine.connection.{$config['connection']}");
-        $config     = $serviceLocator->get("doctrine.configuration.{$config['configuration']}");
+        $connection = $sl->get($options->getConnection());
+        $config     = $sl->get($options->getConfiguration());
 
         return EntityManager::create($connection, $config);
+    }
+
+    /**
+     * Get the class name of the options associated with this factory.
+     *
+     * @return string
+     */
+    public function getOptionsClass()
+    {
+        return 'DoctrineORMModule\Options\EntityManager';
     }
 }

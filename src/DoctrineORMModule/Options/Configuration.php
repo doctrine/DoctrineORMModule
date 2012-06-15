@@ -34,46 +34,68 @@ class Configuration extends DoctrineConfiguration
     protected $driver = 'array';
 
     /**
+     * Automatic generation of proxies (disable for production!)
+     *
      * @var bool
      */
     protected $generateProxies = true;
 
     /**
+     * Proxy directory.
+     *
      * @var string
      */
     protected $proxyDir = 'data';
 
     /**
+     * Proxy namespace.
+     *
      * @var string
      */
     protected $proxyNamespace = 'DoctrineORMModule\Proxy';
 
     /**
+     * Entity alias map.
+     *
      * @var array
      */
     protected $entityNamespaces = array();
 
     /**
+     * Keys must be function names and values the FQCN of the implementing class.
+     * The function names will be case-insensitive in DQL.
+     *
      * @var array
      */
     protected $datetimeFunctions = array();
 
     /**
+     * Keys must be function names and values the FQCN of the implementing class.
+     * The function names will be case-insensitive in DQL.
+     *
      * @var array
      */
     protected $stringFunctions = array();
 
     /**
+     * Keys must be function names and values the FQCN of the implementing class.
+     * The function names will be case-insensitive in DQL.
+     *
      * @var array
      */
     protected $numericFunctions = array();
 
     /**
+     * Keys must be the name of the query and values the DQL query string.
+     *
      * @var array
      */
     protected $namedQueries = array();
 
     /**
+     * Keys must be the name of the query and the value is an array containing
+     * the keys 'sql' for native SQL query string and 'rsm' for the Query\ResultSetMapping.
+     *
      * @var array
      */
     protected $namedNativeQueries = array();
@@ -84,6 +106,7 @@ class Configuration extends DoctrineConfiguration
     public function setDatetimeFunctions($datetimeFunctions)
     {
         $this->datetimeFunctions = $datetimeFunctions;
+        return $this;
     }
 
     /**
@@ -100,6 +123,7 @@ class Configuration extends DoctrineConfiguration
     public function setDriver($driver)
     {
         $this->driver = $driver;
+        return $this;
     }
 
     /**
@@ -116,6 +140,7 @@ class Configuration extends DoctrineConfiguration
     public function setEntityNamespaces($entityNamespaces)
     {
         $this->entityNamespaces = $entityNamespaces;
+        return $this;
     }
 
     /**
@@ -132,6 +157,7 @@ class Configuration extends DoctrineConfiguration
     public function setGenerateProxies($generateProxies)
     {
         $this->generateProxies = $generateProxies;
+        return $this;
     }
 
     /**
@@ -148,6 +174,7 @@ class Configuration extends DoctrineConfiguration
     public function setMetadataCache($metadataCache)
     {
         $this->metadataCache = $metadataCache;
+        return $this;
     }
 
     /**
@@ -164,6 +191,7 @@ class Configuration extends DoctrineConfiguration
     public function setNamedNativeQueries($namedNativeQueries)
     {
         $this->namedNativeQueries = $namedNativeQueries;
+        return $this;
     }
 
     /**
@@ -180,6 +208,7 @@ class Configuration extends DoctrineConfiguration
     public function setNamedQueries($namedQueries)
     {
         $this->namedQueries = $namedQueries;
+        return $this;
     }
 
     /**
@@ -196,6 +225,7 @@ class Configuration extends DoctrineConfiguration
     public function setNumericFunctions($numericFunctions)
     {
         $this->numericFunctions = $numericFunctions;
+        return $this;
     }
 
     /**
@@ -212,6 +242,7 @@ class Configuration extends DoctrineConfiguration
     public function setProxyDir($proxyDir)
     {
         $this->proxyDir = $proxyDir;
+        return $this;
     }
 
     /**
@@ -228,6 +259,7 @@ class Configuration extends DoctrineConfiguration
     public function setProxyNamespace($proxyNamespace)
     {
         $this->proxyNamespace = $proxyNamespace;
+        return $this;
     }
 
     /**
@@ -244,6 +276,7 @@ class Configuration extends DoctrineConfiguration
     public function setQueryCache($queryCache)
     {
         $this->queryCache = $queryCache;
+        return $this;
     }
 
     /**
@@ -260,6 +293,7 @@ class Configuration extends DoctrineConfiguration
     public function setStringFunctions($stringFunctions)
     {
         $this->stringFunctions = $stringFunctions;
+        return $this;
     }
 
     /**
