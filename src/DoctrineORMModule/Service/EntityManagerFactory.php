@@ -11,7 +11,6 @@ class EntityManagerFactory extends AbstractFactory
     public function createService(ServiceLocatorInterface $sl)
     {
         $options = $this->getOptions($sl, 'entitymanager');
-
         $connection = $sl->get($options->getConnection());
         $config     = $sl->get($options->getConfiguration());
 
