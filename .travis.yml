@@ -8,6 +8,7 @@ before_script:
   - cd ..
   - git clone git://github.com/zendframework/ZendSkeletonApplication.git --recursive
   - cd ZendSkeletonApplication
+  - rm .gitmodules
   - rm config/application.config.php && cp ../DoctrineORMModule/.travis/application.config.php config/
   - cp ../DoctrineORMModule/.travis/composer.json ./
   - curl -s http://getcomposer.org/installer | php
