@@ -45,11 +45,9 @@ return array(
     'doctrine' => array(
         'driver' => array(
             'my_annotation_driver' => array(
-                'type'  => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(
-                    'path/to/my/entities'
-                )
+                'paths' => array('path/to/my/entities', 'another/path/if/i/want')
             )
         )
     )
