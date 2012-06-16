@@ -81,7 +81,7 @@ class DoctrineEntity implements HydratorInterface
                     if (false) {
                         // todo: implement to many mapping
                     } else {
-                        $value = $this->em()->getRepository($target)->find($value);
+                        $value = $this->em()->getReference($target, $value);
                     }
                 }
             } else if ($metadata->hasField($field)) {
