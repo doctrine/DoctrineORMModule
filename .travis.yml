@@ -14,7 +14,7 @@ before_script:
   - php composer.phar install
   - rm -rf vendor/doctrine/DoctrineORMModule
   - cp -r ../DoctrineORMModule vendor/doctrine/
-  - cp ../DoctrineORMModule/.travis/travis.doctrine_orm.local.php config/autoload/
+  - cp ../DoctrineORMModule/.travis/travis.local.php config/autoload/
   - mysql -e 'create database travis_test;'
 
 script:

@@ -85,7 +85,9 @@ class Module
             ));
 
             $em = $e->getParam('ServiceManager')->get('doctrine.entitymanager.orm_default');
+            $db = new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($em->getConnection());
             $eh = new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em);
+            $cli->getHelperSet()->set($db, 'db');
             $cli->getHelperSet()->set($eh, 'em');
         });
     }
