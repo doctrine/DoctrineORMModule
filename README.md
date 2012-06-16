@@ -35,20 +35,19 @@ Installation of this module uses composer. For composer documentation, please re
   5. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
      access to it. This directory can be changed using the module options.
 
-## Registering drivers with the DriverChain
+#### Registering drivers with the DriverChain
 
 To register drivers with Doctrine module simply add the drivers to the doctrine.driver key in your configuration.
 
-```
+```php
+<?php
 return array(
     'doctrine' => array(
         'driver' => array(
             'my_annotation_driver' => array(
-                'type'  => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(
-                    'path/to/my/entities'
-                )
+                'paths' => array('path/to/my/entities', 'another/path/if/i/want')
             )
         )
     )
@@ -58,7 +57,8 @@ return array(
 By default, this module ships with a DriverChain so that modules can add their entities to the chain. Once you have setup
 your driver you should add it to the chain as follows:
 
-```
+```php
+<?php
 return array(
     'doctrine' => array(
         'driver' => array(
@@ -75,6 +75,40 @@ return array(
 You also have access to the chain directly via the `doctrine.driver.orm_default` service and you can manipulate the
 chain however you wish and/or add drivers to it directly without using the driver factory and configuration array. A
 good place to do this is the `onBootstrap()` method of your `Module.php` file or in another service.
+
+#### Setting up your connection
+
+Setup your connection by adding the module configuration to any valid ZF2 config file. This can be any file in autoload/
+or a module configuration (such as the Application/config/module.config.php file).
+
+```php
+<?php
+return array(
+    'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => array(
+                    'host'     => 'localhost',
+                    'port'     => '3306',
+                    'user'     => 'username',
+                    'password' => 'password',
+                    'dbname'   => 'database',
+                )
+            )
+        )
+    ),
+);
+```
+
+You can add more connections by adding additional keys to the `connection` and specifying your parameters.
+
+#### Full configuration options
+
+An exhaustive list of configuration options can be found directly in the Options classes of each module.
+
+ * [Common configuration](https://github.com/Doctrine/DoctrineModule/tree/master/src/DoctrineModule/Options)
+ * [ORM Configuration](https://github.com/Doctrine/DoctrineORMModule/tree/master/src/DoctrineORMModule/Options)
 
 ## Usage
 
