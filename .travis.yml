@@ -6,7 +6,7 @@ php:
 
 before_script:
   - cd ..
-  - git clone git://github.com/zendframework/ZendSkeletonApplication.git --recursive
+  - git clone git://github.com/zendframework/ZendSkeletonApplication.git
   - cd ZendSkeletonApplication
   - rm .gitmodules
   - git rm --cached vendor/ZF2
