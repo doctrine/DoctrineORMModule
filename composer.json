@@ -42,9 +42,9 @@
         "psr-0": {
             "DoctrineORMModule": "src/",
             "DoctrineORMModuleTest": "tests/"
-        }
-    },
-    "config": {
-        "bin-dir": "bin"
+        },
+        "classmap": [
+            "./"
+        ]
     }
 }
