@@ -17,30 +17,17 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModule\Factory;
-
-use Doctrine\Common\Annotations\AnnotationRegistry,
-    Doctrine\ORM\EntityManager as DoctrineEntityManager,
-	DoctrineORMModule\Doctrine\ORM\Connection;
+namespace DoctrineORMModule;
 
 /**
- * Doctrine ORM entity manager factory.
+ * Version
  *
  * @license MIT
  * @link    http://www.doctrine-project.org/
  * @since   0.1.0
  * @author  Kyle Spraggs <theman@spiffyjr.me>
  */
-class EntityManager
+class Version
 {
-	public static function get(Connection $conn)
-	{
-        /** @var $instance \Doctrine\DBAL\Connection */
-        $instance = $conn->getInstance();
-		return DoctrineEntityManager::create(
-            $instance,
-            $instance->getConfiguration(),
-            $instance->getEventManager()
-		);
-	}
+    const VERSION = '0.4.0';
 }

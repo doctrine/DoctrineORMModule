@@ -4,7 +4,7 @@
     backupGlobals="false"
 >
     <testsuites>
-        <testsuite name="DoctrineModule Test Suite">
+        <testsuite name="DoctrineORMModule Test Suite">
             <directory>./</directory>
         </testsuite>
     </testsuites>
