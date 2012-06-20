@@ -139,7 +139,7 @@ $em = $this->getLocator()->get('doctrine.entitymanager.orm_default');
 You can also inject the `EntityManager` directly in your controllers/services by using a controller factory. Please
 refer to the official ServiceManager documentation for more information.
 
-Example implementation using `Boostrap` event that add into you module class:
+Example implementation using `Boostrap` event that you can add into you module class:
 ```php
 <?php
 
