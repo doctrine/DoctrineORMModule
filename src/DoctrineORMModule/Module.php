@@ -113,6 +113,11 @@ class Module
                 'Doctrine\ORM\EntityManager' => 'doctrine.entitymanager.orm_default',
             ),
             'factories' => array(
+                'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function($sm) {
+                    return new \DoctrineORMModule\Form\Annotation\AnnotationBuilder(
+                        $sm->get('doctrine.entitymanager.orm_default')
+                    );
+                },
                 'doctrine.connection.orm_default'    => new CommonService\ConnectionFactory('orm_default'),
                 'doctrine.configuration.orm_default' => new ORMService\ConfigurationFactory('orm_default'),
                 'doctrine.driver.orm_default'        => new CommonService\DriverFactory('orm_default'),
