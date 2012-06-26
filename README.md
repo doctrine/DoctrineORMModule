@@ -139,5 +139,32 @@ $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 You can also inject the `EntityManager` directly in your controllers/services by using a controller factory. Please
 refer to the official ServiceManager documentation for more information.
 
+Example implementation using `Boostrap` event that you can add into you module class:
+```php
+<?php
+
+namespace MyModule;
+
+class Module
+{
+    //..
+
+    public function onBootstrap(\Zend\EventManager\EventInterface $e)
+    {
+        $application = $e->getApplication();
+        $serviceManager = $application->getServiceManager();
+
+        $controllerLoader = $serviceManager->get('ControllerLoader');
+
+        // Add initializer to Controller Service Manager that check if controllers needs entity manager injection
+        $controllerLoader->addInitializer(function ($instance) use ($serviceManager) {
+            if (method_exists($instance, 'setEntityManager')) {
+                $instance->setEntityManager($serviceManager->get('doctrine.entitymanager.orm_default'));
+            }
+        });
+    }
+}
+```
+
 #### Implementing EntityManagerAware interface
 Coming soon!
