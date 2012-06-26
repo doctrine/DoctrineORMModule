@@ -34,7 +34,7 @@
     "require": {
         "php": ">=5.3.3",
         "doctrine/DoctrineModule": "dev-master",
-        "doctrine/orm": "2.2.2",
+        "doctrine/orm": ">=2.2.2",
         "doctrine/migrations": "dev-master"
     },
 
