@@ -31,7 +31,7 @@ Installation of this module uses composer. For composer documentation, please re
      }
      ```
   3. run `php composer.phar install`
-  4. open `my/project/directory/config/application.config.php` and add `DoctrineORMModule` to your `modules`
+  4. open `my/project/directory/config/application.config.php` and add `DoctrineModule` and `DoctrineORMModule` to your `modules`
   5. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
      access to it. This directory can be changed using the module options.
 
