@@ -2,9 +2,9 @@
 
 namespace DoctrineORMModule\Options;
 
-use Zend\Stdlib\Options;
+use Zend\Stdlib\AbstractOptions;
 
-class EntityManager extends Options
+class EntityManager extends AbstractOptions
 {
     /**
      * Set the configuration key for the Configuration. Configuration key
