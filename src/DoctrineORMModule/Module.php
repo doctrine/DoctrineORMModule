@@ -37,7 +37,7 @@ class Module
 {
     public function init($mm)
     {
-        $mm->events()->attach('loadModules.post', function($e) {
+        $mm->getEventManager()->attach('loadModules.post', function($e) {
             $config   = $e->getConfigListener()->getMergedConfig();
             $autoload = isset($config['doctrine']['orm_autoload_annotations']) ?
                 $config['doctrine']['orm_autoload_annotations'] :
@@ -55,7 +55,7 @@ class Module
     public function onBootstrap($e)
     {
         $app    = $e->getTarget();
-        $events = $app->events()->getSharedManager();
+        $events = $app->getEventManager()->getSharedManager();
 
         // Attach to helper set event and load the entity manager helper.
         $events->attach('doctrine', 'loadCli.post', function($e) {
