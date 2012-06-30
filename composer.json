@@ -35,7 +35,7 @@
         "php": ">=5.3.3",
         "doctrine/doctrine-module": "dev-master",
         "doctrine/orm": ">=2.2.2",
-        "doctrine/migrations": "dev-master"
+        "zendframework/zendframework": "dev-master"
     },
 
     "autoload": {
