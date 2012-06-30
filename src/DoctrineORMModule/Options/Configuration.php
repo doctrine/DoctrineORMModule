@@ -102,6 +102,7 @@ class Configuration extends DoctrineConfiguration
 
     /**
      * @param array $datetimeFunctions
+     * @return self
      */
     public function setDatetimeFunctions($datetimeFunctions)
     {
@@ -119,6 +120,7 @@ class Configuration extends DoctrineConfiguration
 
     /**
      * @param string $driver
+     * @return self
      */
     public function setDriver($driver)
     {
@@ -136,6 +138,7 @@ class Configuration extends DoctrineConfiguration
 
     /**
      * @param array $entityNamespaces
+     * @return self
      */
     public function setEntityNamespaces($entityNamespaces)
     {
@@ -153,6 +156,7 @@ class Configuration extends DoctrineConfiguration
 
     /**
      * @param boolean $generateProxies
+     * @return self
      */
     public function setGenerateProxies($generateProxies)
     {
@@ -170,6 +174,7 @@ class Configuration extends DoctrineConfiguration
 
     /**
      * @param string $metadataCache
+     * @return self
      */
     public function setMetadataCache($metadataCache)
     {
@@ -187,6 +192,7 @@ class Configuration extends DoctrineConfiguration
 
     /**
      * @param array $namedNativeQueries
+     * @return self
      */
     public function setNamedNativeQueries($namedNativeQueries)
     {
@@ -204,6 +210,7 @@ class Configuration extends DoctrineConfiguration
 
     /**
      * @param array $namedQueries
+     * @return self
      */
     public function setNamedQueries($namedQueries)
     {
@@ -221,6 +228,7 @@ class Configuration extends DoctrineConfiguration
 
     /**
      * @param array $numericFunctions
+     * @return self
      */
     public function setNumericFunctions($numericFunctions)
     {
@@ -238,6 +246,7 @@ class Configuration extends DoctrineConfiguration
 
     /**
      * @param string $proxyDir
+     * @return self
      */
     public function setProxyDir($proxyDir)
     {
@@ -255,6 +264,7 @@ class Configuration extends DoctrineConfiguration
 
     /**
      * @param string $proxyNamespace
+     * @return self
      */
     public function setProxyNamespace($proxyNamespace)
     {
@@ -272,6 +282,7 @@ class Configuration extends DoctrineConfiguration
 
     /**
      * @param string $queryCache
+     * @return self
      */
     public function setQueryCache($queryCache)
     {
@@ -289,6 +300,7 @@ class Configuration extends DoctrineConfiguration
 
     /**
      * @param array $stringFunctions
+     * @return self
      */
     public function setStringFunctions($stringFunctions)
     {

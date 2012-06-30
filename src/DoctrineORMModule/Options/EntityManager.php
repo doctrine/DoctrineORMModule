@@ -26,6 +26,7 @@ class EntityManager extends AbstractOptions
 
     /**
      * @param string $configuration
+     * @return self
      */
     public function setConfiguration($configuration)
     {
@@ -43,6 +44,7 @@ class EntityManager extends AbstractOptions
 
     /**
      * @param string $connection
+     * @return self
      */
     public function setConnection($connection)
     {
@@ -52,6 +54,7 @@ class EntityManager extends AbstractOptions
 
     /**
      * @return string
+     * @return self
      */
     public function getConnection()
     {

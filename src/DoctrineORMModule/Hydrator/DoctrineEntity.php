@@ -13,7 +13,7 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
 class DoctrineEntity implements HydratorInterface
 {
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     protected $em;
 
@@ -23,7 +23,7 @@ class DoctrineEntity implements HydratorInterface
     protected $hydrator;
 
     /**
-     * @param $em \Doctrine|ORM\EntityManager
+     * @param $em EntityManager
      */
     public function __construct(EntityManager $em)
     {
@@ -62,6 +62,7 @@ class DoctrineEntity implements HydratorInterface
      *
      * @param  array $data
      * @param  object $object
+     * @throws RuntimeException
      * @return object
      */
     public function hydrate(array $data, $object)

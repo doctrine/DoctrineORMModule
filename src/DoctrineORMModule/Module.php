@@ -23,6 +23,15 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use DoctrineModule\Service as CommonService;
 use DoctrineORMModule\Service as ORMService;
 
+use Zend\ModuleManager\ModuleManagerInterface;
+use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\ModuleEvent;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\EventManager\EventInterface;
+
+use ReflectionClass;
+
 /**
  * Base module for Doctrine ORM.
  *
@@ -33,18 +42,18 @@ use DoctrineORMModule\Service as ORMService;
  * @author  Kyle Spraggs <theman@spiffyjr.me>
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class Module
+class Module implements ServiceProviderInterface, ConfigProviderInterface
 {
-    public function init($mm)
+    public function init(ModuleManagerInterface $moduleManager)
     {
-        $mm->getEventManager()->attach('loadModules.post', function($e) {
+        $moduleManager->getEventManager()->attach('loadModules.post', function(ModuleEvent $e) {
             $config   = $e->getConfigListener()->getMergedConfig();
             $autoload = isset($config['doctrine']['orm_autoload_annotations']) ?
                 $config['doctrine']['orm_autoload_annotations'] :
                 false;
 
             if ($autoload) {
-                $refl = new \ReflectionClass('Doctrine\ORM\Mapping\Driver\AnnotationDriver');
+                $refl = new ReflectionClass('Doctrine\ORM\Mapping\Driver\AnnotationDriver');
                 $path = realpath(dirname($refl->getFileName())) . '/DoctrineAnnotations.php';
 
                 AnnotationRegistry::registerFile($path);
@@ -52,13 +61,15 @@ class Module
         });
     }
 
-    public function onBootstrap($e)
+    public function onBootstrap(EventInterface $e)
     {
+        /* @var $app \Zend\Mvc\ApplicationInterface */
         $app    = $e->getTarget();
         $events = $app->getEventManager()->getSharedManager();
 
         // Attach to helper set event and load the entity manager helper.
-        $events->attach('doctrine', 'loadCli.post', function($e) {
+        $events->attach('doctrine', 'loadCli.post', function(EventInterface $e) {
+            /* @var $cli \Symfony\Component\Console\Application */
             $cli = $e->getTarget();
 
             $cli->addCommands(array(
@@ -84,7 +95,10 @@ class Module
                 new \Doctrine\ORM\Tools\Console\Command\InfoCommand()
             ));
 
-            $em = $e->getParam('ServiceManager')->get('doctrine.entitymanager.orm_default');
+            /* @var $sm ServiceLocatorInterface */
+            $sm = $e->getParam('ServiceManager');
+            /* @var $em \Doctrine\ORM\EntityManager */
+            $em = $sm->get('doctrine.entitymanager.orm_default');
             $db = new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($em->getConnection());
             $eh = new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em);
             $cli->getHelperSet()->set($db, 'db');
@@ -93,7 +107,7 @@ class Module
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getConfig()
     {
@@ -101,10 +115,7 @@ class Module
     }
 
     /**
-     * Expected to return \Zend\ServiceManager\Configuration object or array to
-     * seed such an object.
-     *
-     * @return array|\Zend\ServiceManager\Configuration
+     * {@inheritDoc}
      */
     public function getServiceConfiguration()
     {
@@ -113,9 +124,9 @@ class Module
                 'Doctrine\ORM\EntityManager' => 'doctrine.entitymanager.orm_default',
             ),
             'factories' => array(
-                'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function($sm) {
+                'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function(ServiceLocatorInterface $sl) {
                     return new \DoctrineORMModule\Form\Annotation\AnnotationBuilder(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $sl->get('doctrine.entitymanager.orm_default')
                     );
                 },
                 'doctrine.connection.orm_default'    => new CommonService\ConnectionFactory('orm_default'),

@@ -62,7 +62,7 @@ class DoctrineEntity extends Element
     }
 
     /**
-     * @return void
+     * @throws RuntimeException
      */
     protected function loadOptions()
     {
