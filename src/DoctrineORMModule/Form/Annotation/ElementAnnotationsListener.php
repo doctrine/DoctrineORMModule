@@ -3,6 +3,7 @@
 namespace DoctrineORMModule\Form\Annotation;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 
@@ -56,13 +57,13 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function handleAttributesAnnotation($e)
     {
         $annotation = $e->getParam('annotation');
-        if (!$annotation instanceof Column) {
+        if (!$annotation instanceof Mapping\Column) {
             return;
         }
 
         $attributes = array();
 
-        switch($annotation->getType()) {
+        switch($annotation->type) {
             case 'bool':
             case 'boolean':
                 $attributes['type'] = 'checkbox';
@@ -109,7 +110,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function handleFilterAnnotation($e)
     {
         $annotation = $e->getParam('annotation');
-        if (!$annotation instanceof Column) {
+        if (!$annotation instanceof Mapping\Column) {
             return;
         }
 
@@ -118,7 +119,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             $inputSpec['filters'] = array();
         }
 
-        switch($annotation->getType()) {
+        switch($annotation->type) {
             case 'bool':
             case 'boolean':
                 $inputSpec['filters'][] = array('name' => 'Boolean');
@@ -150,12 +151,12 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function handleRequiredAnnotation($e)
     {
         $annotation = $e->getParam('annotation');
-        if (!$annotation instanceof Column) {
+        if (!$annotation instanceof Mapping\Column) {
             return;
         }
 
         $inputSpec = $e->getParam('inputSpec');
-        $inputSpec['required'] = (bool) !$annotation->getNullable();
+        $inputSpec['required'] = (bool) !$annotation->nullable;
     }
 
     /**
@@ -169,11 +170,11 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function handleTypeAnnotation($e)
     {
         $annotation = $e->getParam('annotation');
-        if (!$annotation instanceof Column) {
+        if (!$annotation instanceof Mapping\Column) {
             return;
         }
 
-        $type = $annotation->getType();
+        $type = $annotation->type;
         switch($type) {
             default:
                 $type = 'Zend\Form\Element';
@@ -195,7 +196,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function handleValidatorAnnotation($e)
     {
         $annotation = $e->getParam('annotation');
-        if (!$annotation instanceof Column) {
+        if (!$annotation instanceof Mapping\Column) {
             return;
         }
 
@@ -204,7 +205,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             $inputSpec['validators'] = array();
         }
 
-        switch($annotation->getType()) {
+        switch($annotation->type) {
             case 'bool':
             case 'boolean':
             $inputSpec['validators'][] = array('name' => 'Date');

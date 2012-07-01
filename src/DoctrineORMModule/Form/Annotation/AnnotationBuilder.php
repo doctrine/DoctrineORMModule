@@ -4,6 +4,7 @@ namespace DoctrineORMModule\Form\Annotation;
 
 use Doctrine\ORM\EntityManager;
 use Zend\Code\Annotation\AnnotationManager;
+use Zend\Code\Annotation\Parser;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
 
@@ -25,21 +26,20 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     }
 
     /**
-     * Override default setAnnotationManager to add custom annotations for Doctrine.
+     * Set annotation manager to use when building form from annotations
      *
-     * @param \Zend\Code\Annotation\AnnotationManager $annotationManager
-     * @return void|\Zend\Form\Annotation\AnnotationBuilder
+     * @param  AnnotationManager $annotationManager
+     * @return AnnotationBuilder
      */
     public function setAnnotationManager(AnnotationManager $annotationManager)
     {
         parent::setAnnotationManager($annotationManager);
 
-        $annotationManager->registerAnnotation(new Column);
-        $annotationManager->registerAnnotation(new GeneratedValue);
+        $parser = new Parser\DoctrineAnnotationParser();
+        $parser->registerAnnotation('Doctrine\ORM\Mapping\Column');
+        $parser->registerAnnotation('Doctrine\ORM\Mapping\GeneratedValue');
 
-        $annotationManager->setAlias('Doctrine\ORM\Mapping\Column', 'DoctrineORMModule\Form\Annotation\Column');
-        $annotationManager->setAlias('Doctrine\ORM\Mapping\GeneratedValue', 'DoctrineORMModule\Form\Annotation\GeneratedValue');
-
+        $this->annotationManager->attach($parser);
         return $this;
     }
 
