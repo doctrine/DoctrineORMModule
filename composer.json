@@ -34,17 +34,15 @@
     "require": {
         "php": ">=5.3.3",
         "doctrine/doctrine-module": "dev-master",
-        "doctrine/orm": ">=2.2.2",
+        "doctrine/orm": "dev-master",
+        "doctrine/dbal": "dev-master",
         "zendframework/zendframework": "dev-master"
     },
-
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
             "DoctrineORMModule": "src/",
             "DoctrineORMModuleTest": "tests/"
-        },
-        "classmap": [
-            "./"
-        ]
+        }
     }
 }
