@@ -21,10 +21,12 @@ Installation of this module uses composer. For composer documentation, please re
 #### Installation steps
 
   1. `cd my/project/directory`
-  2. create a `composer.json` file with following contents:
+  2. create a `composer.json` file with following contents (minimum stability is required since the module still has
+     frequent updates):
 
      ```json
      {
+         "minimum-stability": "dev",
          "require": {
              "doctrine/doctrine-orm-module": "dev-master"
          }
