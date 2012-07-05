@@ -66,4 +66,14 @@ class Test
     {
         return $this->username;
     }
+
+    /**
+     * Used for testing DoctrineEntity form element
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->username;
+    }
 }

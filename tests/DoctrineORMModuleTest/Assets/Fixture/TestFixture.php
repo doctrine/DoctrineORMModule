@@ -41,6 +41,8 @@ class TestFixture extends AbstractFixture
     {
         for ($i = 0; $i < self::INSTANCES_COUNT; $i += 1) {
             $instance = new TestEntity();
+            $instance->setUsername('username');
+            $instance->setPassword('password');
             $manager->persist($instance);
         }
 
