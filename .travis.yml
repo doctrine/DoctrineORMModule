@@ -14,8 +14,8 @@ before_script:
   - cp ../DoctrineORMModule/.travis/composer.json ./
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install
-  - rm -rf vendor/doctrine/DoctrineORMModule
-  - cp -r ../DoctrineORMModule vendor/doctrine/
+  - rm -rf vendor/doctrine/doctrine-orm-module
+  - cp -r ../DoctrineORMModule vendor/doctrine/doctrine-orm-module
   - cp ../DoctrineORMModule/.travis/travis.local.php config/autoload/
   - mysql -e 'create database travis_test;'
 
