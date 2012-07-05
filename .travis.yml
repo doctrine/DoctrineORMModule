@@ -20,6 +20,6 @@ before_script:
   - mysql -e 'create database travis_test;'
 
 script:
-  - ./vendor/doctrine/DoctrineORMModule/.travis/run-cli.sh
-  - cd vendor/doctrine/DoctrineORMModule/tests
+  - ./vendor/doctrine/doctrine-orm-module/.travis/run-cli.sh
+  - cd vendor/doctrine/doctrine-orm-module/tests
   - phpunit
