@@ -31,6 +31,13 @@ use Zend\ModuleManager\ModuleEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\EventManager\EventInterface;
 
+use Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand;
+use Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand;
+use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
+use Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand;
+use Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand;
+use Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
+
 use ReflectionClass;
 
 /**
@@ -74,6 +81,14 @@ class Module implements ServiceProviderInterface, ConfigProviderInterface
             $cli = $e->getTarget();
 
             ORMConsoleRunner::addCommands($cli);
+            $cli->addCommands(array(
+                new DiffCommand(),
+                new ExecuteCommand(),
+                new GenerateCommand(),
+                new MigrateCommand(),
+                new StatusCommand(),
+                new VersionCommand(),
+            ));
 
             /* @var $sm ServiceLocatorInterface */
             $sm = $e->getParam('ServiceManager');
