@@ -5,29 +5,38 @@ use Zend\Mvc\Service\ServiceManagerConfiguration;
 chdir(__DIR__);
 
 $previousDir = '.';
+
 while (!file_exists('config/application.config.php')) {
     $dir = dirname(getcwd());
-    if($previousDir === $dir) {
+
+    if ($previousDir === $dir) {
         throw new RuntimeException(
-            'Unable to locate "config/application.config.php": ' .
-            'is DoctrineORMModule in a subdir of your application skeleton?'
+            'Unable to locate "config/application.config.php":'
+                . ' is OcraDiCompiler in a sub-directory of your application skeleton?'
         );
     }
+
     $previousDir = $dir;
     chdir($dir);
 }
 
-if (is_readable(__DIR__ . '/TestConfiguration.php')) {
-    require_once __DIR__ . '/TestConfiguration.php';
-} else {
-    require_once __DIR__ . '/TestConfiguration.php.dist';
+if  (!(@include_once __DIR__ . '/../vendor/autoload.php') && !(@include_once __DIR__ . '/../../../autoload.php')) {
+    throw new RuntimeException('vendor/autoload.php could not be found. Did you run `php composer.phar install`?');
 }
 
-require_once('vendor/autoload.php');
+if (!$configuration = @include __DIR__ . '/TestConfiguration.php') {
+    $configuration = require __DIR__ . '/TestConfiguration.php.dist';
+}
 
 // $configuration is loaded from TestConfiguration.php (or .dist)
-$serviceManager = new ServiceManager(new ServiceManagerConfiguration($configuration['service_manager']));
+$serviceManager = new ServiceManager(new ServiceManagerConfiguration(
+    isset($configuration['service_manager']) ? $configuration['service_manager'] : array()
+));
 $serviceManager->setService('ApplicationConfiguration', $configuration);
+
+/** @var $moduleManager \Zend\ModuleManager\ModuleManager */
+$moduleManager = $serviceManager->get('ModuleManager');
+$moduleManager->loadModules();
 $serviceManager->setAllowOverride(true);
 
 $config = $serviceManager->get('Configuration');
@@ -50,9 +59,5 @@ $config['doctrine']['connection']['orm_default'] = array(
 );
 
 $serviceManager->setService('Configuration', $config);
-
-/** @var $moduleManager \Zend\ModuleManager\ModuleManager */
-$moduleManager = $serviceManager->get('ModuleManager');
-$moduleManager->loadModules();
 
 \DoctrineORMModuleTest\Framework\TestCase::setServiceManager($serviceManager);
