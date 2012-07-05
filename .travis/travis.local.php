@@ -42,7 +42,7 @@ return array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => array(
-                    'vendor/doctrine/DoctrineORMModule/tests/DoctrineORMModuleTest/Assets/Entity'
+                    'vendor/doctrine/doctrine-orm-module/tests/DoctrineORMModuleTest/Assets/Entity'
                 )
             ),
             'orm_default' => array(
