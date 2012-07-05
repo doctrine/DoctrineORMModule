@@ -222,10 +222,10 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
                 $inputSpec['validators'][] = array('name' => 'Date');
                 break;
             case 'string':
-                if ($annotation->getLength()) {
+                if ($annotation->length) {
                     $inputSpec['validators'][] = array(
                         'name' => 'StringLength',
-                        'options' => array('max' => $annotation->getLength())
+                        'options' => array('max' => $annotation->length)
                     );
                 }
                 break;
