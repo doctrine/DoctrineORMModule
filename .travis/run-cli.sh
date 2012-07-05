@@ -12,5 +12,5 @@
 ./vendor/bin/doctrine-module orm:validate-schema
 ./vendor/bin/doctrine-module orm:run-dql "SELECT COUNT(a) FROM DoctrineORMModuleTest\Assets\Entity\Test a"
 ./vendor/bin/doctrine-module orm:schema-tool:drop
-./vendor/bin/doctrine-module migrations:generate --configuration=vendor/doctrine/DoctrineORMModule/.travis/migrations-config.xml
-./vendor/bin/doctrine-module migrations:diff --configuration=vendor/doctrine/DoctrineORMModule/.travis/migrations-config.xml
+./vendor/bin/doctrine-module migrations:generate --configuration=vendor/doctrine/doctrine-orm-module/.travis/migrations-config.xml
+./vendor/bin/doctrine-module migrations:diff --configuration=vendor/doctrine/doctrine-orm-module/.travis/migrations-config.xml
