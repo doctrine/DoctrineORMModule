@@ -3,6 +3,7 @@
 namespace DoctrineORMModule\Options;
 
 use DoctrineModule\Options\Configuration as DoctrineConfiguration;
+use Doctrine\ORM\Mapping\DefaultNamingStrategy;
 
 class Configuration extends DoctrineConfiguration
 {
@@ -99,6 +100,13 @@ class Configuration extends DoctrineConfiguration
      * @var array
      */
     protected $namedNativeQueries = array();
+
+    /**
+     * Class of the naming strategy to use, null to disable
+     *
+     * @var string|null
+     */
+    protected $namingStrategy = null;
 
     /**
      * @param array $datetimeFunctions
@@ -314,5 +322,31 @@ class Configuration extends DoctrineConfiguration
     public function getStringFunctions()
     {
         return $this->stringFunctions;
+    }
+
+    /**
+     * @param null|string $namingStrategy
+     * @return Configuration
+     */
+    public function setNamingStrategy($namingStrategy)
+    {
+        $this->namingStrategy = $namingStrategy;
+        return $this;
+    }
+
+    /**
+     * @return \Doctrine\ORM\Mapping\NamingStrategy
+     */
+    public function getNamingStrategy()
+    {
+        if (!$this->namingStrategy) {
+            return new DefaultNamingStrategy();
+        }
+
+        if (is_object($this->namingStrategy)) {
+            return $this->namingStrategy;
+        }
+
+        return new $this->namingStrategy;
     }
 }

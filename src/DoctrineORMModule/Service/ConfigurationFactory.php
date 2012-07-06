@@ -36,6 +36,8 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
 
         $config->setMetadataDriverImpl($serviceLocator->get($options->getDriver()));
 
+        $config->setNamingStrategy($options->getNamingStrategy());
+
         $this->setupDBALConfiguration($serviceLocator, $config);
 
         return $config;
