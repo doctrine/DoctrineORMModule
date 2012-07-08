@@ -206,14 +206,19 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         }
 
         switch($annotation->type) {
+            case 'bool':
+            case 'boolean':
+                $inputSpec['validators'][] = array(
+                    'name' => 'InArray',
+                    'options' => array('haystack' => array('0', '1'))
+                );
+                break;
             case 'float':
                 $inputSpec['validators'][] = array('name' => 'Float');
                 break;
             case 'bigint':
             case 'integer':
             case 'smallint':
-            case 'bool':
-            case 'boolean':
                 $inputSpec['validators'][] = array('name' => 'Int');
                 break;
             case 'date':
