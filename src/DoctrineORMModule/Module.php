@@ -63,7 +63,10 @@ class Module implements ServiceProviderInterface, ConfigProviderInterface
             if ($autoload) {
                 $refl = new ReflectionClass('Doctrine\ORM\Mapping\Driver\AnnotationDriver');
                 $path = realpath(dirname($refl->getFileName())) . '/DoctrineAnnotations.php';
+                AnnotationRegistry::registerFile($path);
 
+                $refl = new ReflectionClass('Zend\Form\Annotation\AnnotationBuilder');
+                $path = realpath(dirname($refl->getFileName())) . '/ZendAnnotations.php';
                 AnnotationRegistry::registerFile($path);
             }
         });
