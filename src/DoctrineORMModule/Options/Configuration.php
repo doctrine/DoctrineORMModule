@@ -335,18 +335,10 @@ class Configuration extends DoctrineConfiguration
     }
 
     /**
-     * @return \Doctrine\ORM\Mapping\NamingStrategy
+     * @return string
      */
     public function getNamingStrategy()
     {
-        if (!$this->namingStrategy) {
-            return new DefaultNamingStrategy();
-        }
-
-        if (is_object($this->namingStrategy)) {
-            return $this->namingStrategy;
-        }
-
-        return new $this->namingStrategy;
+        return $this->namingStrategy;
     }
 }
