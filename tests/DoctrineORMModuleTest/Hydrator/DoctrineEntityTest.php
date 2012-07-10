@@ -22,6 +22,7 @@ namespace DoctrineORMModuleTest\Hydrator;
 use DoctrineORMModuleTest\Framework\TestCase;
 use DoctrineORMModuleTest\Assets\Fixture\TestFixture;
 use DoctrineORMModuleTest\Assets\Entity\Test as SimpleEntity;
+use DoctrineORMModuleTest\Assets\Entity\Product as ProductEntity;
 use DoctrineORMModuleTest\Assets\Entity\City as CityEntity;
 
 use Doctrine\Common\DataFixtures\Loader as FixtureLoader;
@@ -70,12 +71,23 @@ class DoctrineEntityTest extends TestCase
         );
 
         $entity = $this->hydrator->hydrate($data, new CityEntity());
-        $this->assertInstanceOf('DoctrineORMModuleTest\Assets\EntityCountry', $entity->getCountry());
-        $this->assertEquals('1', $entity->getCountry()->getName());
+        $this->assertInstanceOf('DoctrineORMModuleTest\Assets\Entity\Country', $entity->getCountry());
     }
 
     public function testCanHydrateOneToManyEntity()
     {
+        $data = array(
+            'name' => 'Chair',
+            'categories' => array(
+                1, 2, 3
+            )
+        );
 
+        $entity = $this->hydrator->hydrate($data, new ProductEntity());
+        $this->assertEquals(3, count($entity->getCategories()));
+
+        foreach ($entity->getCategories() as $category) {
+            $this->assertInstanceOf('DoctrineORMModuleTest\Assets\Entity\Category', $category);
+        }
     }
 }
