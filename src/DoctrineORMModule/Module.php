@@ -31,6 +31,9 @@ use Zend\ModuleManager\ModuleEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\EventManager\EventInterface;
 
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputOption;
+
 use Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
@@ -90,10 +93,20 @@ class Module implements ServiceProviderInterface, ConfigProviderInterface
                 new VersionCommand(),
             ));
 
+            $allCommands = $cli->all('orm');
+            foreach($allCommands as $cmd) {
+                $cmd->addOption('em', null, 
+                                InputOption::VALUE_OPTIONAL,
+                                'Name of the entity manager to use.', 'orm_default');
+            }
+
+            $input = new ArgvInput();
+            $emName = $input->getParameterOption('--em', 'orm_default');
+
             /* @var $sm ServiceLocatorInterface */
             $sm = $e->getParam('ServiceManager');
             /* @var $em \Doctrine\ORM\EntityManager */
-            $em = $sm->get('doctrine.entitymanager.orm_default');
+            $em = $sm->get('doctrine.entitymanager.' . $emName);
             $db = new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($em->getConnection());
             $eh = new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em);
             $cli->getHelperSet()->set($db, 'db');
