@@ -6,9 +6,12 @@ use RuntimeException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityManager;
+use DoctrineModule\Validator\ObjectExists as ObjectExistsValidator;
 use Zend\Form\Element;
+use Zend\InputFilter\InputProviderInterface;
+use Zend\Validator\ValidatorInterface;
 
-class DoctrineEntity extends Element
+class DoctrineEntity extends Element implements InputProviderInterface
 {
     /**
      * Seed attributes
@@ -19,6 +22,11 @@ class DoctrineEntity extends Element
         'options' => array(),
         'type'    => 'select',
     );
+
+    /**
+     * @var ValidatorInterface
+     */
+    protected $validator;
 
     /**
      * @var EntityManager
@@ -196,11 +204,43 @@ class DoctrineEntity extends Element
     /**
      * Get the spec
      *
-     * @return Closure|Query|QueryBuilder
+     * @return \Closure|Query|QueryBuilder
      */
     public function getSpec()
     {
         return $this->spec;
+    }
+
+    /**
+     * @return array
+     */
+    public function getInputSpecification()
+    {
+        return array(
+            'name'       => $this->getName(),
+            'required'   => true,
+            'validators' => array(
+                $this->getValidator()
+            )
+        );
+    }
+
+    /**
+     * Get the validator
+     *
+     * @return ValidatorInterface
+     */
+    protected function getValidator()
+    {
+        if (null === $this->validator) {
+            $this->validator = new ObjectExistsValidator(array(
+                'object_repository' => $this->entityManager->getRepository($this->targetClass),
+                'fields'            => $this->entityManager->getClassMetadata($this->targetClass)
+                    ->getIdentifierFieldNames()
+            ));
+        }
+
+        return $this->validator;
     }
 
     /**
@@ -249,7 +289,7 @@ class DoctrineEntity extends Element
                 if (!is_callable(array($entity, '__toString'))) {
                     throw new RuntimeException(sprintf(
                         '%s must have a "__toString()" method defined if you have not set ' .
-                        'a property or method to use.',
+                            'a property or method to use.',
                         $targetClass
                     ));
                 }
