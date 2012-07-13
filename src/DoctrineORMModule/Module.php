@@ -52,26 +52,19 @@ use ReflectionClass;
  */
 class Module implements ServiceProviderInterface, ConfigProviderInterface
 {
+    /**
+     * @param ModuleManagerInterface $moduleManager
+     */
     public function init(ModuleManagerInterface $moduleManager)
     {
-        $moduleManager->getEventManager()->attach('loadModules.post', function(ModuleEvent $e) {
-            $config   = $e->getConfigListener()->getMergedConfig();
-            $autoload = isset($config['doctrine']['orm_autoload_annotations']) ?
-                $config['doctrine']['orm_autoload_annotations'] :
-                false;
-
-            if ($autoload) {
-                $refl = new ReflectionClass('Doctrine\ORM\Mapping\Driver\AnnotationDriver');
-                $path = dirname($refl->getFileName()) . '/DoctrineAnnotations.php';
-                AnnotationRegistry::registerFile($path);
-
-                $refl = new ReflectionClass('Zend\Form\Annotation\AnnotationBuilder');
-                $path = dirname($refl->getFileName()) . '/ZendAnnotations.php';
-                AnnotationRegistry::registerFile($path);
-            }
+        AnnotationRegistry::registerLoader(function ($className) {
+            return class_exists($className);
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function onBootstrap(EventInterface $e)
     {
         /* @var $app \Zend\Mvc\ApplicationInterface */
