@@ -3,28 +3,59 @@
 namespace DoctrineORMModule\Hydrator;
 
 use DateTime;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
 class DoctrineEntity implements HydratorInterface
 {
     /**
-     * @var EntityManager
+     * @var ObjectManager
      */
-    protected $em;
+    protected $objectManager;
 
     /**
-     * @var ClassMetadataInfo
+     * @var ClassMetadata
      */
     protected $metadata;
 
     /**
-     * @param EntityManager $em
+     * @var HydratorInterface
      */
-    public function __construct(EntityManager $em)
+    protected $hydrator;
+
+    /**
+     * @param ObjectManager     $objectManager
+     * @param HydratorInterface $hydrator
+     */
+    public function __construct(ObjectManager $objectManager, HydratorInterface $hydrator = null)
     {
-        $this->em = $em;
+        $this->objectManager = $objectManager;
+
+        if ($hydrator === null) {
+            $hydrator = new ClassMethodsHydrator(false);
+        }
+
+        $this->setHydrator($hydrator);
+    }
+
+    /**
+     * @param HydratorInterface $hydrator
+     * @return DoctrineEntity
+     */
+    public function setHydrator(HydratorInterface $hydrator)
+    {
+        $this->hydrator = $hydrator;
+        return $this;
+    }
+
+    /**
+     * @return HydratorInterface
+     */
+    public function getHydrator()
+    {
+        return $this->hydrator;
     }
 
     /**
@@ -35,11 +66,9 @@ class DoctrineEntity implements HydratorInterface
      */
     public function extract($object)
     {
-        $this->metadata = $this->em->getClassMetadata(get_class($object));
-
         $result = array();
+
         $names = $this->metadata->getFieldNames();
-        
         foreach ($names as $name) {
             $result[$name] = $this->metadata->getFieldValue($object, $name);
         }
@@ -57,9 +86,9 @@ class DoctrineEntity implements HydratorInterface
      */
     public function hydrate(array $data, $object)
     {
-        $this->metadata = $this->em->getClassMetadata(get_class($object));
+        $this->metadata = $this->objectManager->getClassMetadata(get_class($object));
 
-        foreach($data as $field => $value)
+        foreach($data as $field => &$value)
         {
             if ($this->metadata->hasAssociation($field)) {
                 $target = $this->metadata->getAssociationTargetClass($field);
@@ -70,11 +99,9 @@ class DoctrineEntity implements HydratorInterface
                     $value = $this->toMany($value, $target);
                 }
             }
-
-            $this->metadata->setFieldValue($object, $field, $value);
         }
 
-        return $object;
+        return $this->hydrator->hydrate($data, $object);
     }
 
     /**
@@ -85,11 +112,11 @@ class DoctrineEntity implements HydratorInterface
     protected function toOne($valueOrObject, $target)
     {
         if (is_numeric($valueOrObject)) {
-            return $this->em->getReference($target, $valueOrObject);
+            return $this->objectManager->find($target, $valueOrObject);
         }
 
         $identifiers = $this->metadata->getIdentifierValues($valueOrObject);
-        return $this->em->getReference($target, $identifiers);
+        return $this->objectManager->find($target, $identifiers);
     }
 
     /**
@@ -106,12 +133,12 @@ class DoctrineEntity implements HydratorInterface
         $values = array();
         foreach($valueOrObject as $value) {
             if (is_numeric($value)) {
-                $values[] = $this->em->getReference($target, $value);
+                $values[] = $this->objectManager->find($target, $value);
                 continue;
             }
 
             $identifiers = $this->metadata->getIdentifierValues($valueOrObject);
-            $values[] = $this->em->getReference($target, $identifiers);
+            $values[] = $this->objectManager->find($target, $identifiers);
         }
 
         return $values;
