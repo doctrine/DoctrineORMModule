@@ -14,3 +14,4 @@
 ./vendor/bin/doctrine-module orm:schema-tool:drop
 ./vendor/bin/doctrine-module migrations:generate --configuration=vendor/doctrine/doctrine-orm-module/.travis/migrations-config.xml
 ./vendor/bin/doctrine-module migrations:diff --configuration=vendor/doctrine/doctrine-orm-module/.travis/migrations-config.xml
+./vendor/bin/doctrine-module migrations:execute 20120714005702 -n --configuration=vendor/doctrine/doctrine-orm-module/.travis/migrations-execute-config.xml

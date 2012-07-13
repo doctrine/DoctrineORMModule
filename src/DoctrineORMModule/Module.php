@@ -13,14 +13,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
- * and is licensed under the LGPL. For more information, see
+ * and is licensed under the MIT license. For more information, see
  * <http://www.doctrine-project.org>.
  */
 
 namespace DoctrineORMModule;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Doctrine\ORM\Tools\Console\ConsoleRunner as ORMConsoleRunner;
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use DoctrineModule\Service as CommonService;
 use DoctrineORMModule\Service as ORMService;
 
@@ -31,6 +31,9 @@ use Zend\ModuleManager\ModuleEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\EventManager\EventInterface;
 
+use Symfony\Component\Console\Helper\DialogHelper;
+use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
+use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
@@ -43,10 +46,8 @@ use ReflectionClass;
 /**
  * Base module for Doctrine ORM.
  *
- * @license http://www.opensource.org/licenses/lgpl-license.php LGPL
+ * @license MIT
  * @link    www.doctrine-project.org
- * @since   1.0
- * @version $Revision$
  * @author  Kyle Spraggs <theman@spiffyjr.me>
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
@@ -57,7 +58,7 @@ class Module implements ServiceProviderInterface, ConfigProviderInterface
      */
     public function init(ModuleManagerInterface $moduleManager)
     {
-        AnnotationRegistry::registerLoader(function ($className) {
+        AnnotationRegistry::registerLoader(function($className) {
             return class_exists($className);
         });
     }
@@ -76,7 +77,7 @@ class Module implements ServiceProviderInterface, ConfigProviderInterface
             /* @var $cli \Symfony\Component\Console\Application */
             $cli = $e->getTarget();
 
-            ORMConsoleRunner::addCommands($cli);
+            ConsoleRunner::addCommands($cli);
             $cli->addCommands(array(
                 new DiffCommand(),
                 new ExecuteCommand(),
@@ -90,10 +91,10 @@ class Module implements ServiceProviderInterface, ConfigProviderInterface
             $sm = $e->getParam('ServiceManager');
             /* @var $em \Doctrine\ORM\EntityManager */
             $em = $sm->get('doctrine.entitymanager.orm_default');
-            $db = new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($em->getConnection());
-            $eh = new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em);
-            $cli->getHelperSet()->set($db, 'db');
-            $cli->getHelperSet()->set($eh, 'em');
+            $helperSet = $cli->getHelperSet();
+            $helperSet->set(new DialogHelper(), 'dialog');
+            $helperSet->set(new ConnectionHelper($em->getConnection()), 'db');
+            $helperSet->set(new EntityManagerHelper($em), 'em');
         });
     }
 
