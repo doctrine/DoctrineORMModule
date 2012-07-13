@@ -23,6 +23,8 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use DoctrineORMModuleTest\Assets\Entity\Test as TestEntity;
+use DoctrineORMModuleTest\Assets\Entity\Category as TestCategory;
+use DoctrineORMModuleTest\Assets\Entity\Category as TestCountry;
 
 /**
  * Fixture that loads a constant amount of \DoctrineORMModuleTest\Assets\Entity\Test objects into the manager
@@ -44,6 +46,14 @@ class TestFixture extends AbstractFixture
             $instance->setUsername('username');
             $instance->setPassword('password');
             $manager->persist($instance);
+
+            $category = new TestCategory();
+            $category->setName((string)$i);
+            $manager->persist($category);
+
+            $country = new TestCountry();
+            $country->setName((string)$i);
+            $manager->persist($country);
         }
 
         $manager->flush();

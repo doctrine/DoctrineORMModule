@@ -1,49 +1,7 @@
 {
-    "name": "doctrine/doctrine-orm-module",
-    "description": "Zend Framework 2 Module that provides Doctrine ORM functionality",
-    "type": "library",
-    "license": "MIT",
-    "keywords": [
-        "doctrine",
-        "orm",
-        "module",
-        "zf2"
-    ],
-    "homepage": "http://www.doctrine-project.org/",
-    "authors": [
-        {
-            "name": "Kyle Spraggs",
-            "email": "theman@spiffyjr.me",
-            "homepage": "http://www.spiffyjr.me/"
-        },
-        {
-            "name": "Marco Pivetta",
-            "email": "ocramius@gmail.com",
-            "homepage": "http://marco-pivetta.com/"
-        },
-        {
-            "name": "Evan Coury",
-            "email": "me@evancoury.com",
-            "homepage": "http://blog.evan.pro/"
-        },
-        {
-            "name": "Guilherme Blanco",
-            "email": "guilhermeblanco@hotmail.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.3.3",
-        "doctrine/doctrine-module": "dev-master",
-        "doctrine/orm": "dev-master",
-        "doctrine/dbal": "dev-master",
-		"doctrine/migrations": "dev-master",
-        "zendframework/zendframework": "dev-master"
-    },
     "minimum-stability": "dev",
-    "autoload": {
-        "psr-0": {
-            "DoctrineORMModule": "src/",
-            "DoctrineORMModuleTest": "tests/"
-        }
+    "require": {
+        "doctrine/doctrine-orm-module": "dev-master",
+        "zendframework/zendframework": "dev-master"
     }
 }
