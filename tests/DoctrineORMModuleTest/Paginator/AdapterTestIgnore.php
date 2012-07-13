@@ -28,7 +28,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
-use DoctrineORMModule\Paginator\Adapter as PaginatorAdapter;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as PaginatorAdapter;
 
 
 class AdapterTest extends TestCase
