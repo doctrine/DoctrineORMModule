@@ -236,7 +236,7 @@ class DoctrineEntity extends Element implements InputProviderInterface
             $this->validator = new ObjectExistsValidator(array(
                 'object_repository' => $this->entityManager->getRepository($this->targetClass),
                 'fields'            => $this->entityManager->getClassMetadata($this->targetClass)
-                    ->getIdentifierFieldNames()
+                                                           ->getIdentifierFieldNames()
             ));
         }
 
