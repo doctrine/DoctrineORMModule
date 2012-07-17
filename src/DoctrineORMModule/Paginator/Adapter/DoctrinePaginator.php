@@ -17,7 +17,7 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModule\Paginator;
+namespace DoctrineORMModule\Paginator\Adapter;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\ORM\QueryBuilder;
@@ -31,7 +31,7 @@ use Zend\Paginator\Adapter\AdapterInterface;
  * @since   0.1.0
  * @author  Tõnis Tobre <tobre@bitweb.ee>
  */
-class Adapter implements AdapterInterface
+class DoctrinePaginator implements AdapterInterface
 {
     /**
      * @var Paginator
@@ -71,9 +71,9 @@ class Adapter implements AdapterInterface
     public function getItems($offset, $itemCountPerPage)
     {
         $this->paginator
-            ->getQuery()
-            ->setFirstResult($offset)
-            ->setMaxResults($itemCountPerPage);
+             ->getQuery()
+             ->setFirstResult($offset)
+             ->setMaxResults($itemCountPerPage);
 
         return $this->paginator->getIterator();
     }
