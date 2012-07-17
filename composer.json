@@ -34,9 +34,9 @@
     "require": {
         "php": ">=5.3.3",
         "doctrine/doctrine-module": "dev-master",
-        "doctrine/orm": "dev-master",
-        "doctrine/dbal": "dev-master",
-		"doctrine/migrations": "dev-master",
+        "doctrine/orm": ">2.2,<2.4-dev",
+        "doctrine/dbal": ">2.2,<2.4-dev",
+        "doctrine/migrations": "dev-master",
         "zendframework/zendframework": "dev-master"
     },
     "minimum-stability": "dev",
