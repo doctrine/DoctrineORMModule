@@ -37,6 +37,25 @@ Installation of this module uses composer. For composer documentation, please re
   5. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
      access to it. This directory can be changed using the module options.
 
+
+
+#### Installation steps (without composer)
+
+  1. install [DoctrineModule](http://github.com/doctrine/DoctrineModule)
+  2. clone this module to `vendor/DoctrineORMModule`
+  2. setup PSR-0 autoloading for namespace `DoctrineORMModule` (the directory where the classes in this namespace live 
+     is `vendor/DoctrineORMModule/src/DoctrineORMModule`.
+  3. The module depends on [Doctrine ORM 2.3.*](https://github.com/doctrine/orm), 
+     [Doctrine DBAL 2.3.*](https://github.com/doctrine/dbal), 
+     [Doctrine Migrations](https://github.com/symfony/migrations). You have to download/install those
+     packages and have them autoloaded.
+  4. open `my/project/directory/configs/application.config.php` and add the following key to your `modules`:
+
+     ```php
+     'DoctrineModule',
+     'DoctrineORMModule',
+     ```
+
 #### Registering drivers with the DriverChain
 
 To register drivers with Doctrine module simply add the drivers to the doctrine.driver key in your configuration.
