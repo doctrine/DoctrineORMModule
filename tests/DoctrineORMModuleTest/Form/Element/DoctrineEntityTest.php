@@ -69,12 +69,12 @@ class DoctrineElementTest extends TestCase
     public function testCanGetEntitiesWithSpec()
     {
         $this->qb = $this
-             ->getEntityManager()
-             ->createQueryBuilder()
-             ->select('t')
-             ->from('DoctrineORMModuleTest\Assets\Entity\Test', 't')
-             ->where('t.id = ?1')
-             ->setParameter(1, 1);
+            ->getEntityManager()
+            ->createQueryBuilder()
+            ->select('t')
+            ->from('DoctrineORMModuleTest\Assets\Entity\Test', 't')
+            ->where('t.id = ?1')
+            ->setParameter(1, 1);
 
         $this->element->setSpec($this->qb);
         $entities = $this->element->getEntities();
@@ -107,5 +107,26 @@ class DoctrineElementTest extends TestCase
 
         $this->assertEquals($firstEntity->getPassword(), $firstOption['label']);
         $this->assertEquals($firstEntity->getId(), $firstOption['value']);
+    }
+
+    public function testProvidesInputSpecificationThatIncludesValidatorsBasedOnAttributes()
+    {
+        $element = new DoctrineEntityElement('foo');
+        $element->setOptions(array(
+            'entity_manager' => $this->getEntityManager(),
+            'target_class' => 'DoctrineORMModuleTest\Assets\Entity\Test'
+        ));
+
+        $inputSpec = $element->getInputSpecification();
+        $this->assertArrayHasKey('validators', $inputSpec);
+        $this->assertInternalType('array', $inputSpec['validators']);
+
+        $expectedClasses = array(
+            'DoctrineModule\Validator\ObjectExists'
+        );
+        foreach ($inputSpec['validators'] as $validator) {
+            $class = get_class($validator);
+            $this->assertTrue(in_array($class, $expectedClasses), $class);
+        }
     }
 }

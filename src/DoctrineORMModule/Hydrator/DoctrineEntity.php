@@ -3,39 +3,59 @@
 namespace DoctrineORMModule\Hydrator;
 
 use DateTime;
-use RuntimeException;
-use Traversable;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\EntityManager;
-use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
 class DoctrineEntity implements HydratorInterface
 {
     /**
-     * @var EntityManager
+     * @var ObjectManager
      */
-    protected $em;
+    protected $objectManager;
 
     /**
-     * @var \Zend\Stdlib\Hydrator\ClassMethods
+     * @var ClassMetadata
+     */
+    protected $metadata;
+
+    /**
+     * @var HydratorInterface
      */
     protected $hydrator;
 
     /**
-     * @param $em EntityManager
+     * @param ObjectManager     $objectManager
+     * @param HydratorInterface $hydrator
      */
-    public function __construct(EntityManager $em)
+    public function __construct(ObjectManager $objectManager, HydratorInterface $hydrator = null)
     {
-        $this->em = $em;
+        $this->objectManager = $objectManager;
+
+        if ($hydrator === null) {
+            $hydrator = new ClassMethodsHydrator(false);
+        }
+
+        $this->setHydrator($hydrator);
     }
 
     /**
-     * @return \Doctrine\ORM\EntityManager
+     * @param HydratorInterface $hydrator
+     * @return DoctrineEntity
      */
-    public function em()
+    public function setHydrator(HydratorInterface $hydrator)
     {
-        return $this->em;
+        $this->hydrator = $hydrator;
+        return $this;
+    }
+
+    /**
+     * @return HydratorInterface
+     */
+    public function getHydrator()
+    {
+        return $this->hydrator;
     }
 
     /**
@@ -46,12 +66,11 @@ class DoctrineEntity implements HydratorInterface
      */
     public function extract($object)
     {
-        $result = $this->getHydrator()->extract($object);
+        $result = array();
 
-        foreach($result as &$value) {
-            if ($value instanceof DateTime) {
-                $value = $value->format('Y-m-d H:i:s');
-            }
+        $names = $this->metadata->getFieldNames();
+        foreach ($names as $name) {
+            $result[$name] = $this->metadata->getFieldValue($object, $name);
         }
 
         return $result;
@@ -60,61 +79,68 @@ class DoctrineEntity implements HydratorInterface
     /**
      * Hydrate $object with the provided $data.
      *
-     * @param  array $data
+     * @param  array  $data
      * @param  object $object
-     * @throws RuntimeException
+     * @throws \Exception
      * @return object
      */
     public function hydrate(array $data, $object)
     {
-        $objectClass = get_class($object);
-        $metadata    = $this->em()->getClassMetadata($objectClass);
+        $this->metadata = $this->objectManager->getClassMetadata(get_class($object));
 
-        foreach($data as $field => &$value) {
-            if ($metadata->hasAssociation($field)) {
-                $target = $metadata->getAssociationTargetClass($field);
+        foreach($data as $field => &$value)
+        {
+            if ($this->metadata->hasAssociation($field)) {
+                $target = $this->metadata->getAssociationTargetClass($field);
 
-                if (is_numeric($value)) {
-                    $value = $this->em()->getReference($target, $value);
-                } else if (is_array($value)) {
-                    $assocData = $metadata->getAssociationMappedByTargetField($field);
-
-                    if (false) {
-                        // todo: implement to many mapping
-                    } else {
-                        $value = $this->em()->getReference($target, $value);
-                    }
-                }
-            } else if ($metadata->hasField($field)) {
-                $fdata = $metadata->getFieldMapping($field);
-
-                $isDate = $fdata['type'] == 'datetime' || $fdata['type'] == 'date' || $fdata['type'] == 'time';
-                if ($isDate && !$value instanceof DateTime) {
-                    if ($value == 0) {
-                        $value = 'now';
-                    }
-
-                    if (false === strtotime($value)) {
-                        throw new RuntimeException(sprintf(
-                            'Field "%s" is a date, time, or datetime but "%s" could not be turned into a valid date',
-                            $field,
-                            $value
-                        ));
-                    }
-
-                    $value = new DateTime($value);
+                if ($this->metadata->isSingleValuedAssociation($field)) {
+                    $value = $this->toOne($value, $target);
+                } elseif ($this->metadata->isCollectionValuedAssociation($field)) {
+                    $value = $this->toMany($value, $target);
                 }
             }
         }
 
-        return $this->getHydrator()->hydrate($data, $object);
+        return $this->hydrator->hydrate($data, $object);
     }
 
-    public function getHydrator()
+    /**
+     * @param mixed  $valueOrObject
+     * @param        $target
+     * @return object
+     */
+    protected function toOne($valueOrObject, $target)
     {
-        if (null === $this->hydrator) {
-            $this->hydrator = new Hydrator;
+        if (is_numeric($valueOrObject)) {
+            return $this->objectManager->find($target, $valueOrObject);
         }
-        return $this->hydrator;
+
+        $identifiers = $this->metadata->getIdentifierValues($valueOrObject);
+        return $this->objectManager->find($target, $identifiers);
+    }
+
+    /**
+     * @param mixed $valueOrObject
+     * @param       $target
+     * @return array
+     */
+    protected function toMany($valueOrObject, $target)
+    {
+        if (!is_array($valueOrObject)) {
+            $valueOrObject = (array) $valueOrObject;
+        }
+
+        $values = array();
+        foreach($valueOrObject as $value) {
+            if (is_numeric($value)) {
+                $values[] = $this->objectManager->find($target, $value);
+                continue;
+            }
+
+            $identifiers = $this->metadata->getIdentifierValues($valueOrObject);
+            $values[] = $this->objectManager->find($target, $identifiers);
+        }
+
+        return $values;
     }
 }

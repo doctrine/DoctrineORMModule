@@ -3,12 +3,13 @@
 namespace DoctrineORMModule\Form\Element;
 
 use RuntimeException;
-use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Persistence\ObjectManager;
+use DoctrineModule\Validator\ObjectExists as ObjectExistsValidator;
 use Zend\Form\Element;
+use Zend\InputFilter\InputProviderInterface;
+use Zend\Validator\ValidatorInterface;
 
-class DoctrineEntity extends Element
+class DoctrineEntity extends Element implements InputProviderInterface
 {
     /**
      * Seed attributes
@@ -21,9 +22,14 @@ class DoctrineEntity extends Element
     );
 
     /**
-     * @var EntityManager
+     * @var ValidatorInterface
      */
-    protected $entityManager;
+    protected $validator;
+
+    /**
+     * @var ObjectManager
+     */
+    protected $objectManager;
 
     /**
      * @var string
@@ -36,7 +42,7 @@ class DoctrineEntity extends Element
     protected $property;
 
     /**
-     * @var \Closure|QueryBuilder|Query
+     * @var \Closure
      */
     protected $spec;
 
@@ -57,7 +63,7 @@ class DoctrineEntity extends Element
 
     /**
      * Accepted options for DoctrineEntity:
-     * - entity_manager: a valid Doctrine 2 Entity Manager
+     * - object_manager: a valid Doctrine 2 ObjectManager
      * - target_class: a FQCN of the target entity
      * - property: the property of the entity to use as the label in the options
      * - spec: a closure, QueryBuilder or Query
@@ -69,8 +75,8 @@ class DoctrineEntity extends Element
     {
         parent::setOptions($options);
 
-        if (isset($options['entity_manager'])) {
-            $this->setEntityManager($options['entity_manager']);
+        if (isset($options['object_manager'])) {
+            $this->setObjectManager($options['object_manager']);
         }
 
         if (isset($options['target_class'])) {
@@ -95,20 +101,13 @@ class DoctrineEntity extends Element
     {
         if (null === $this->entities) {
             $spec        = $this->spec;
-            $em          = $this->entityManager;
+            $om          = $this->objectManager;
             $targetClass = $this->targetClass;
 
             if (is_callable($spec)) {
-                /** @var $spec \Closure  */
-                $spec = $spec($em->getRepository($targetClass));
-            }
-
-            if ($spec instanceof QueryBuilder) {
-                $entities = $spec->getQuery()->execute();
-            } else if ($spec instanceof Query) {
-                $entities = $spec->execute();
+                $entities = $spec($om->getRepository($targetClass));
             } else {
-                $entities = $em->getRepository($targetClass)->findAll();
+                $entities = $om->getRepository($targetClass)->findAll();
             }
 
             $this->entities = $entities;
@@ -118,25 +117,25 @@ class DoctrineEntity extends Element
     }
 
     /**
-     * Set the entity manager
+     * Set the object manager
      *
-     * @param EntityManager $entityManager
+     * @param  ObjectManager  $objectManager
      * @return DoctrineEntity
      */
-    public function setEntityManager(EntityManager $entityManager)
+    public function setObjectManager(ObjectManager $objectManager)
     {
-        $this->entityManager = $entityManager;
+        $this->objectManager = $objectManager;
         return $this;
     }
 
     /**
-     * Get the entity manager
+     * Get the object manager
      *
-     * @return \Doctrine\ORM\EntityManager
+     * @return ObjectManager
      */
-    public function getEntityManager()
+    public function getObjectManager()
     {
-        return $this->entityManager;
+        return $this->objectManager;
     }
 
     /**
@@ -196,11 +195,43 @@ class DoctrineEntity extends Element
     /**
      * Get the spec
      *
-     * @return Closure|Query|QueryBuilder
+     * @return \Closure|Query|QueryBuilder
      */
     public function getSpec()
     {
         return $this->spec;
+    }
+
+    /**
+     * @return array
+     */
+    public function getInputSpecification()
+    {
+        return array(
+            'name'       => $this->getName(),
+            'required'   => true,
+            'validators' => array(
+                $this->getValidator()
+            )
+        );
+    }
+
+    /**
+     * Get the validator
+     *
+     * @return ValidatorInterface
+     */
+    protected function getValidator()
+    {
+        if (null === $this->validator) {
+            $this->validator = new ObjectExistsValidator(array(
+                'object_repository' => $this->objectManager->getRepository($this->targetClass),
+                'fields'            => $this->objectManager->getClassMetadata($this->targetClass)
+                                                           ->getIdentifierFieldNames()
+            ));
+        }
+
+        return $this->validator;
     }
 
     /**
@@ -212,15 +243,15 @@ class DoctrineEntity extends Element
             return;
         }
 
-        if (!($em = $this->entityManager)) {
-            throw new RuntimeException('No entityManager was set');
+        if (!($om = $this->objectManager)) {
+            throw new RuntimeException('No object manager was set');
         }
 
         if (!($targetClass = $this->targetClass)) {
-            throw new RuntimeException('No targetClass was set');
+            throw new RuntimeException('No target class was set');
         }
 
-        $metadata   = $em->getClassMetadata($targetClass);
+        $metadata   = $om->getClassMetadata($targetClass);
         $identifier = $metadata->getIdentifierFieldNames();
         $entities   = $this->getEntities();
         $options    = array();
@@ -234,25 +265,25 @@ class DoctrineEntity extends Element
                         $targetClass
                     ));
                 }
-                $reflClass = $metadata->getReflectionProperty($property);
-                $label     = $reflClass->getValue($entity);
-            } else if (($method = $this->getAttribute('method'))) {
-                if (!is_callable(array($entity, $method))) {
+
+                $getter = 'get' . ucfirst($property);
+                if (!is_callable(array($entity, $getter))) {
                     throw new RuntimeException(sprintf(
                         'Method "%s::%s" is not callable',
                         $this->targetClass,
-                        $method
+                        $getter
                     ));
                 }
-                $label = $entity->{$method}();
+
+                $label = $entity->{$getter}();
             } else {
                 if (!is_callable(array($entity, '__toString'))) {
                     throw new RuntimeException(sprintf(
-                        '%s must have a "__toString()" method defined if you have not set ' .
-                        'a property or method to use.',
+                        '%s must have a "__toString()" method defined if you have not set a property or method to use.' .
                         $targetClass
                     ));
                 }
+
                 $label = (string) $entity;
             }
 
