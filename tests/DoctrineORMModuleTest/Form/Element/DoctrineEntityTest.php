@@ -68,15 +68,9 @@ class DoctrineElementTest extends TestCase
 
     public function testCanGetEntitiesWithSpec()
     {
-        $this->qb = $this
-            ->getEntityManager()
-            ->createQueryBuilder()
-            ->select('t')
-            ->from('DoctrineORMModuleTest\Assets\Entity\Test', 't')
-            ->where('t.id = ?1')
-            ->setParameter(1, 1);
-
-        $this->element->setSpec($this->qb);
+        $this->element->setSpec(function($repository) {
+            return $repository->findById(1);
+        });
         $entities = $this->element->getEntities();
 
         $this->assertEquals(1, count($entities));
