@@ -55,7 +55,7 @@ class DoctrineElementTest extends TestCase
         $executor->execute($loader->getFixtures());
 
         $this->element = new DoctrineEntityElement('foo', array(
-            'entity_manager' => $this->getEntityManager(),
+            'object_manager' => $this->getEntityManager(),
             'target_class' => 'DoctrineORMModuleTest\Assets\Entity\Test'
         ));
     }
@@ -113,7 +113,7 @@ class DoctrineElementTest extends TestCase
     {
         $element = new DoctrineEntityElement('foo');
         $element->setOptions(array(
-            'entity_manager' => $this->getEntityManager(),
+            'object_manager' => $this->getEntityManager(),
             'target_class' => 'DoctrineORMModuleTest\Assets\Entity\Test'
         ));
 
