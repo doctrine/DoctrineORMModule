@@ -46,6 +46,18 @@ class TestFixture extends AbstractFixture
             $manager->persist($instance);
         }
 
+        for ($i = 0 ; $i < self::INSTANCES_COUNT ; $i += 1) {
+            $instance = new \DoctrineORMModuleTest\Assets\Entity\Category();
+            $instance->setName('category');
+            $manager->persist($instance);
+        }
+
+        for ($i = 0 ; $i < self::INSTANCES_COUNT ; $i += 1) {
+            $instance = new \DoctrineORMModuleTest\Assets\Entity\Country();
+            $instance->setName('country');
+            $manager->persist($instance);
+        }
+
         $manager->flush();
     }
 }
