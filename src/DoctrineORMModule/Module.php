@@ -109,7 +109,7 @@ class Module implements ServiceProviderInterface, ConfigProviderInterface
     /**
      * {@inheritDoc}
      */
-    public function getServiceConfiguration()
+    public function getServiceConfig()
     {
         return array(
             'aliases' => array(
