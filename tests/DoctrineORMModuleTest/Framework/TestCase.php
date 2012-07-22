@@ -22,6 +22,7 @@ namespace DoctrineORMModuleTest\Framework;
 use PHPUnit_Framework_TestCase;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\ORM\Tools\ToolsException;
 use Zend\ServiceManager\ServiceManager;
 
 class TestCase extends PHPUnit_Framework_TestCase
@@ -47,7 +48,7 @@ class TestCase extends PHPUnit_Framework_TestCase
 
         $em = $this->getEntityManager();
         $tool = new SchemaTool($em);
-        $tool->createSchema($em->getMetadataFactory()->getAllMetadata());
+        $tool->updateSchema($em->getMetadataFactory()->getAllMetadata());
         self::$hasDb = true;
     }
 
