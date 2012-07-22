@@ -21,13 +21,15 @@ namespace DoctrineORMModule;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use DoctrineModule\Service as CommonService;
-use DoctrineORMModule\Service as ORMService;
+use DoctrineModule\Service\DriverFactory;
+use DoctrineModule\Service\EventManagerFactory;
+use DoctrineORMModule\Service\ConfigurationFactory as ORMConfigurationFactory;
+use DoctrineORMModule\Service\EntityManagerFactory;
+use DoctrineORMModule\Service\DBALConnectionFactory;
 
 use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\ModuleEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\EventManager\EventInterface;
 
@@ -40,8 +42,6 @@ use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
-
-use ReflectionClass;
 
 /**
  * Base module for Doctrine ORM.
@@ -121,11 +121,13 @@ class Module implements ServiceProviderInterface, ConfigProviderInterface
                         $sl->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'doctrine.connection.orm_default'    => new CommonService\ConnectionFactory('orm_default'),
-                'doctrine.configuration.orm_default' => new ORMService\ConfigurationFactory('orm_default'),
-                'doctrine.driver.orm_default'        => new CommonService\DriverFactory('orm_default'),
-                'doctrine.entitymanager.orm_default' => new ORMService\EntityManagerFactory('orm_default'),
-                'doctrine.eventmanager.orm_default'  => new CommonService\EventManagerFactory('orm_default'),
+
+                'doctrine.connection.orm_default'    => new DBALConnectionFactory('orm_default'),
+                'doctrine.configuration.orm_default' => new ORMConfigurationFactory('orm_default'),
+                'doctrine.entitymanager.orm_default' => new EntityManagerFactory('orm_default'),
+
+                'doctrine.driver.orm_default'        => new DriverFactory('orm_default'),
+                'doctrine.eventmanager.orm_default'  => new EventManagerFactory('orm_default'),
             )
         );
     }

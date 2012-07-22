@@ -31,6 +31,7 @@ class EntityManager extends AbstractOptions
     public function setConfiguration($configuration)
     {
         $this->configuration = $configuration;
+
         return $this;
     }
 
@@ -49,6 +50,7 @@ class EntityManager extends AbstractOptions
     public function setConnection($connection)
     {
         $this->connection = $connection;
+
         return $this;
     }
 
@@ -58,6 +60,6 @@ class EntityManager extends AbstractOptions
      */
     public function getConnection()
     {
-        return "doctrine.connection.{$this->connection}";
+        return 'doctrine.connection.' . $this->connection;
     }
 }

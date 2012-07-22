@@ -2,9 +2,17 @@
 
 namespace DoctrineORMModule\Options;
 
-use DoctrineModule\Options\Configuration as DoctrineConfiguration;
+use DoctrineORMModule\Options\DBALConfiguration;
 
-class Configuration extends DoctrineConfiguration
+/**
+ * Configuration options for an ORM Configuration
+ *
+ * @license MIT
+ * @link    http://www.doctrine-project.org/
+ * @author  Kyle Spraggs <theman@spiffyjr.me>
+ * @author  Marco Pivetta <ocramius@gmail.com>
+ */
+class Configuration extends DBALConfiguration
 {
     /**
      * Set the cache key for the metadata cache. Cache key

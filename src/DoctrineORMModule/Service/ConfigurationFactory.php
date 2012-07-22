@@ -2,7 +2,7 @@
 
 namespace DoctrineORMModule\Service;
 
-use DoctrineModule\Service\ConfigurationFactory as DoctrineConfigurationFactory;
+use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ConfigurationFactory extends DoctrineConfigurationFactory

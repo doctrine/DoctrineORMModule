@@ -1,6 +1,7 @@
 <?php
 use Zend\ServiceManager\ServiceManager;
-use Zend\Mvc\Service\ServiceManagerConfiguration;
+use Zend\Mvc\Service\ServiceManagerConfig;
+use DoctrineORMModuleTest\Framework\TestCase;
 
 chdir(__DIR__);
 
@@ -12,7 +13,7 @@ while (!file_exists('config/application.config.php')) {
     if ($previousDir === $dir) {
         throw new RuntimeException(
             'Unable to locate "config/application.config.php":'
-                . ' is OcraDiCompiler in a sub-directory of your application skeleton?'
+                . ' is DoctrineORMModule in a sub-directory of your application skeleton?'
         );
     }
 
@@ -29,10 +30,10 @@ if (!$configuration = @include __DIR__ . '/TestConfiguration.php') {
 }
 
 // $configuration is loaded from TestConfiguration.php (or .dist)
-$serviceManager = new ServiceManager(new ServiceManagerConfiguration(
+$serviceManager = new ServiceManager(new ServiceManagerConfig(
     isset($configuration['service_manager']) ? $configuration['service_manager'] : array()
 ));
-$serviceManager->setService('ApplicationConfiguration', $configuration);
+$serviceManager->setService('ApplicationConfig', $configuration);
 
 /** @var $moduleManager \Zend\ModuleManager\ModuleManager */
 $moduleManager = $serviceManager->get('ModuleManager');
@@ -59,5 +60,4 @@ $config['doctrine']['connection']['orm_default'] = array(
 );
 
 $serviceManager->setService('Configuration', $config);
-
-\DoctrineORMModuleTest\Framework\TestCase::setServiceManager($serviceManager);
+TestCase::setServiceManager($serviceManager);
