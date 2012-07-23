@@ -66,15 +66,7 @@ class DoctrineEntity implements HydratorInterface
      */
     public function extract($object)
     {
-        $result   = array();
-        $metadata = $this->objectManager->getClassMetadata(get_class($object));
-        $names    = $metadata->getFieldNames();
-
-        foreach ($names as $name) {
-            $result[$name] = $metadata->getFieldValue($object, $name);
-        }
-
-        return $result;
+        return $this->hydrator->extract($object);
     }
 
     /**
