@@ -17,33 +17,26 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModule\Service;
+namespace DoctrineORMModule\Stdlib\Hydrator;
 
-use Doctrine\ORM\EntityManager;
-use DoctrineModule\Service\AbstractFactory;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineObjectHydrator;
 
-class EntityManagerFactory extends AbstractFactory
+/**
+ * This hydrator is used as an optimization purpose for Doctrine ORM, and retrieves references to
+ * objects instead of fetching the object from the database.
+ *
+ * @license MIT
+ * @link    http://www.doctrine-project.org/
+ * @since   0.5.0
+ * @author  Michaël Gallego <mic.gallego@gmail.com>
+ */
+class DoctrineEntity extends DoctrineObjectHydrator
 {
     /**
      * {@inheritDoc}
-     * @return EntityManager
      */
-    public function createService(ServiceLocatorInterface $sl)
+    protected function find($target, $identifiers)
     {
-        /* @var $options \DoctrineORMModule\Options\EntityManager */
-        $options = $this->getOptions($sl, 'entitymanager');
-        $connection = $sl->get($options->getConnection());
-        $config     = $sl->get($options->getConfiguration());
-
-        return EntityManager::create($connection, $config);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getOptionsClass()
-    {
-        return 'DoctrineORMModule\Options\EntityManager';
+        return $this->objectManager->getReference($target, $identifiers);
     }
 }
