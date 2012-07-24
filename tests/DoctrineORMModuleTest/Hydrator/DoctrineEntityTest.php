@@ -73,7 +73,6 @@ class DoctrineEntityTest extends TestCase
     public function testCanHydrateSimpleEntity()
     {
         $data = array(
-            'id'       => '',
             'username' => 'foo',
             'password' => 'bar'
         );

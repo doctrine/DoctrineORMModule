@@ -66,15 +66,7 @@ class DoctrineEntity implements HydratorInterface
      */
     public function extract($object)
     {
-        $result   = array();
-        $metadata = $this->objectManager->getClassMetadata(get_class($object));
-        $names    = $metadata->getFieldNames();
-
-        foreach ($names as $name) {
-            $result[$name] = $metadata->getFieldValue($object, $name);
-        }
-
-        return $result;
+        return $this->hydrator->extract($object);
     }
 
     /**
@@ -124,11 +116,11 @@ class DoctrineEntity implements HydratorInterface
     protected function toOne($valueOrObject, $target)
     {
         if (is_numeric($valueOrObject)) {
-            return $this->objectManager->find($target, $valueOrObject);
+            return $this->find($target, $valueOrObject);
         }
 
         $identifiers = $this->metadata->getIdentifierValues($valueOrObject);
-        return $this->objectManager->find($target, $identifiers);
+        return $this->find($target, $identifiers);
     }
 
     /**
@@ -145,14 +137,24 @@ class DoctrineEntity implements HydratorInterface
         $values = array();
         foreach($valueOrObject as $value) {
             if (is_numeric($value)) {
-                $values[] = $this->objectManager->find($target, $value);
+                $values[] = $this->find($target, $value);
                 continue;
             }
 
             $identifiers = $this->metadata->getIdentifierValues($valueOrObject);
-            $values[] = $this->objectManager->find($target, $identifiers);
+            $values[] = $this->find($target, $identifiers);
         }
 
         return $values;
+    }
+
+    /**
+     * @param  string    $target
+     * @param  int|array $identifiers
+     * @return object
+     */
+    protected function find($target, $identifiers)
+    {
+        return $this->objectManager->find($target, $identifiers);
     }
 }
