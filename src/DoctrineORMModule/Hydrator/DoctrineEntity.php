@@ -89,8 +89,19 @@ class DoctrineEntity implements HydratorInterface
     {
         $this->metadata = $this->objectManager->getClassMetadata(get_class($object));
 
-        foreach($data as $field => &$value)
-        {
+        foreach($data as $field => &$value) {
+            // Handle DateTime objects properly
+            if (in_array($this->metadata->getTypeOfField($field), array('datetime', 'time', 'date'))) {
+                if (is_int($value)) {
+                    $dt = new DateTime();
+                    $dt->setTimestamp($value);
+
+                    $value = $dt;
+                } else if (is_string($value)) {
+                    $value = new DateTime($value);
+                }
+            }
+
             if ($this->metadata->hasAssociation($field)) {
                 $target = $this->metadata->getAssociationTargetClass($field);
 

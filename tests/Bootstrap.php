@@ -40,7 +40,7 @@ $moduleManager = $serviceManager->get('ModuleManager');
 $moduleManager->loadModules();
 $serviceManager->setAllowOverride(true);
 
-$config = $serviceManager->get('Configuration');
+$config = $serviceManager->get('Config');
 $config['doctrine']['driver']['test'] = array(
     'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
     'cache' => 'array',
@@ -59,5 +59,5 @@ $config['doctrine']['connection']['orm_default'] = array(
     )
 );
 
-$serviceManager->setService('Configuration', $config);
+$serviceManager->setService('Config', $config);
 TestCase::setServiceManager($serviceManager);

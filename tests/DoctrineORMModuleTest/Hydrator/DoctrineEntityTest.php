@@ -21,6 +21,7 @@ namespace DoctrineORMModuleTest\Hydrator;
 
 use DoctrineORMModuleTest\Framework\TestCase;
 use DoctrineORMModuleTest\Assets\Fixture\TestFixture;
+use DoctrineORMModuleTest\Assets\Entity\Date as DateEntity;
 use DoctrineORMModuleTest\Assets\Entity\Test as SimpleEntity;
 use DoctrineORMModuleTest\Assets\Entity\Product as ProductEntity;
 use DoctrineORMModuleTest\Assets\Entity\City as CityEntity;
@@ -43,11 +44,30 @@ class DoctrineEntityTest extends TestCase
         $this->createDb();
         $loader = new FixtureLoader();
         $loader->addFixture(new TestFixture());
-        $purger = new ORMPurger();
+
+        $purger   = new ORMPurger();
         $executor = new ORMExecutor($this->getEntityManager(), $purger);
         $executor->execute($loader->getFixtures());
 
         $this->hydrator = new DoctrineEntityHydrator($this->getEntityManager());
+    }
+
+    public function testHydrateHandlesDateTimeFieldsCorrectly()
+    {
+        // Integers
+        $now    = time();
+        $data   = array('date' => $now);
+        $entity = $this->hydrator->hydrate($data, new DateEntity());
+
+        $this->assertInstanceOf('DateTime', $entity->getDate());
+        $this->assertEquals($entity->getDate()->getTimestamp(), $now);
+
+        // Strings
+        $data   = array('date' => date('Y-m-d h:i:s'));
+        $entity = $this->hydrator->hydrate($data, new DateEntity());
+
+        $this->assertInstanceOf('DateTime', $entity->getDate());
+        $this->assertEquals($entity->getDate()->getTimestamp(), $now);
     }
 
     public function testCanHydrateSimpleEntity()
@@ -58,7 +78,7 @@ class DoctrineEntityTest extends TestCase
             'password' => 'bar'
         );
 
-        $entity = $this->hydrator->hydrate($data, new SimpleEntity());
+        $entity  = $this->hydrator->hydrate($data, new SimpleEntity());
         $extract = $this->hydrator->extract($entity);
 
         $this->assertEquals($data, $extract);
