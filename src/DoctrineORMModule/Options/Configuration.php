@@ -107,6 +107,14 @@ class Configuration extends DBALConfiguration
      * @var array
      */
     protected $namedNativeQueries = array();
+    
+    /**
+     * An array of filters. Array should be in the form
+     * array('filterName' => 'BSON\Filter\Class')
+     *
+     * @var array
+     */
+    protected $filters = array();
 
     /**
      * @param array $datetimeFunctions
@@ -322,5 +330,23 @@ class Configuration extends DBALConfiguration
     public function getStringFunctions()
     {
         return $this->stringFunctions;
+    }
+    
+	/**
+     * @return array
+     */
+    public function getFilters()
+    {
+        return $this->filters;
+    }
+
+    /**
+     * @param array $filters
+     * @return \DoctrineMongoODMModule\Options\Configuration
+     */
+    public function setFilters(array $filters)
+    {
+        $this->filters = $filters;
+        return $this;
     }
 }
