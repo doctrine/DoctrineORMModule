@@ -89,8 +89,8 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     {
         $annotations = $e->getParam('annotations');
         foreach($annotations as $annotation) {
-            if ($annotation instanceof GeneratedValue) {
-                if ($annotation->getStrategy() === 'auto') {
+            if ($annotation instanceof Mapping\GeneratedValue) {
+                if ($annotation->strategy == 'AUTO') {
                     return true;
                 }
             }
