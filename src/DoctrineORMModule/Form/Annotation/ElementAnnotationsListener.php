@@ -3,7 +3,8 @@
 namespace DoctrineORMModule\Form\Annotation;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 
@@ -57,7 +58,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function handleAttributesAnnotation($e)
     {
         $annotation = $e->getParam('annotation');
-        if (!$annotation instanceof Mapping\Column) {
+        if (!$annotation instanceof Column) {
             return;
         }
 
@@ -90,7 +91,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         $annotations = $e->getParam('annotations');
         foreach($annotations as $annotation) {
             if ($annotation instanceof GeneratedValue) {
-                if ($annotation->getStrategy() === 'auto') {
+                if ($annotation->strategy == 'AUTO') {
                     return true;
                 }
             }
@@ -110,7 +111,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function handleFilterAnnotation($e)
     {
         $annotation = $e->getParam('annotation');
-        if (!$annotation instanceof Mapping\Column) {
+        if (!$annotation instanceof Column) {
             return;
         }
 
@@ -151,7 +152,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function handleRequiredAnnotation($e)
     {
         $annotation = $e->getParam('annotation');
-        if (!$annotation instanceof Mapping\Column) {
+        if (!$annotation instanceof Column) {
             return;
         }
 
@@ -170,7 +171,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function handleTypeAnnotation($e)
     {
         $annotation = $e->getParam('annotation');
-        if (!$annotation instanceof Mapping\Column) {
+        if (!$annotation instanceof Column) {
             return;
         }
 
@@ -196,7 +197,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function handleValidatorAnnotation($e)
     {
         $annotation = $e->getParam('annotation');
-        if (!$annotation instanceof Mapping\Column) {
+        if (!$annotation instanceof Column) {
             return;
         }
 
