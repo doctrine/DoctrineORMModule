@@ -58,7 +58,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function handleAttributesAnnotation($e)
     {
         $annotation = $e->getParam('annotation');
-        if (!$annotation instanceof Mapping\Column) {
+        if (!$annotation instanceof Column) {
             return;
         }
 
