@@ -39,6 +39,12 @@
         "doctrine/migrations": "dev-master",
         "zendframework/zendframework": "dev-master"
     },
+    "require-dev": {
+        "zendframework/zend-developer-tools": "dev-master"
+    },
+    "suggest": {
+        "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development"
+    },
     "minimum-stability": "dev",
     "autoload": {
         "psr-0": {

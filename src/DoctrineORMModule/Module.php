@@ -21,11 +21,19 @@ namespace DoctrineORMModule;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
+
 use DoctrineModule\Service\DriverFactory;
 use DoctrineModule\Service\EventManagerFactory;
+
 use DoctrineORMModule\Service\ConfigurationFactory as ORMConfigurationFactory;
 use DoctrineORMModule\Service\EntityManagerFactory;
 use DoctrineORMModule\Service\DBALConnectionFactory;
+use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
+
+// @todo move to own factory to allow wrapping of controllers
+use DoctrineORMModule\Collector\SQLLoggerCollector;
+use Doctrine\DBAL\Logging\DebugStack;
+use Doctrine\DBAL\Logging\LoggerChain;
 
 use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
@@ -117,9 +125,7 @@ class Module implements ServiceProviderInterface, ConfigProviderInterface
             ),
             'factories' => array(
                 'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function(ServiceLocatorInterface $sl) {
-                    return new \DoctrineORMModule\Form\Annotation\AnnotationBuilder(
-                        $sl->get('doctrine.entitymanager.orm_default')
-                    );
+                    return new AnnotationBuilder($sl->get('doctrine.entitymanager.orm_default'));
                 },
 
                 'doctrine.connection.orm_default'    => new DBALConnectionFactory('orm_default'),
@@ -128,7 +134,23 @@ class Module implements ServiceProviderInterface, ConfigProviderInterface
 
                 'doctrine.driver.orm_default'        => new DriverFactory('orm_default'),
                 'doctrine.eventmanager.orm_default'  => new EventManagerFactory('orm_default'),
-            )
+                'doctrine.collector.orm_default'     => function(ServiceLocatorInterface $sl) {
+                    $debugStackLogger = new DebugStack();
+                    /* @var $configuration \Doctrine\ORM\Configuration */
+                    $configuration = $sl->get('doctrine.configuration.orm_default');
+
+                    if (null !== $configuration->getSQLLogger()) {
+                        $logger = new LoggerChain();
+                        $logger->addLogger($debugStackLogger);
+                        $logger->addLogger($configuration->getSQLLogger());
+                        $configuration->setSQLLogger($logger);
+                    } else {
+                        $configuration->setSQLLogger($debugStackLogger);
+                    }
+
+                    return new SQLLoggerCollector($debugStackLogger, 'orm_default');
+                },
+            ),
         );
     }
 }

@@ -50,4 +50,21 @@ return array(
             'orm_default' => array()
         ),
     ),
+
+    'view_manager' => array(
+        'template_map' => array(
+            'zend-developer-tools/toolbar/doctrine-orm' => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm.phtml',
+        ),
+    ),
+
+    'zdt' => array(
+        'collectors' => array(
+            'orm_default' => 'doctrine.collector.orm_default',
+        ),
+        'toolbar' => array(
+            'entries' => array(
+                'orm_default' => 'zend-developer-tools/toolbar/doctrine-orm',
+            ),
+        ),
+    ),
 );
