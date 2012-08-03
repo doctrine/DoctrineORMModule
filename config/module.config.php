@@ -49,5 +49,30 @@ return array(
         'eventmanager' => array(
             'orm_default' => array()
         ),
+
+        'sql_logger_collector' => array(
+            'orm_default' => array(),
+        ),
+    ),
+
+    // zendframework/zend-developer-tools specific settings
+
+    'view_manager' => array(
+        'template_map' => array(
+            'zend-developer-tools/toolbar/doctrine-orm' => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm.phtml',
+        ),
+    ),
+
+    'zdt' => array(
+        'profiler' => array(
+            'collectors' => array(
+                'orm_default' => 'doctrine.sql_logger_collector.orm_default',
+            ),
+        ),
+        'toolbar' => array(
+            'entries' => array(
+                'orm_default' => 'zend-developer-tools/toolbar/doctrine-orm',
+            ),
+        ),
     ),
 );

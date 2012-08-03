@@ -21,11 +21,15 @@ namespace DoctrineORMModule;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
+
 use DoctrineModule\Service\DriverFactory;
 use DoctrineModule\Service\EventManagerFactory;
+
 use DoctrineORMModule\Service\ConfigurationFactory as ORMConfigurationFactory;
 use DoctrineORMModule\Service\EntityManagerFactory;
 use DoctrineORMModule\Service\DBALConnectionFactory;
+use DoctrineORMModule\Service\SQLLoggerCollectorFactory;
+use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 
 use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
@@ -96,6 +100,12 @@ class Module implements ServiceProviderInterface, ConfigProviderInterface
             $helperSet->set(new ConnectionHelper($em->getConnection()), 'db');
             $helperSet->set(new EntityManagerHelper($em), 'em');
         });
+
+        $config = $app->getServiceManager()->get('Config');
+
+        if (isset($config['zdt']['profiler']['enabled']) && $config['zdt']['profiler']['enabled']) {
+            $app->getServiceManager()->get('doctrine.sql_logger_collector.orm_default');
+        }
     }
 
     /**
@@ -116,19 +126,18 @@ class Module implements ServiceProviderInterface, ConfigProviderInterface
                 'Doctrine\ORM\EntityManager' => 'doctrine.entitymanager.orm_default',
             ),
             'factories' => array(
+                'doctrine.connection.orm_default'           => new DBALConnectionFactory('orm_default'),
+                'doctrine.configuration.orm_default'        => new ORMConfigurationFactory('orm_default'),
+                'doctrine.entitymanager.orm_default'        => new EntityManagerFactory('orm_default'),
+
+                'doctrine.driver.orm_default'               => new DriverFactory('orm_default'),
+                'doctrine.eventmanager.orm_default'         => new EventManagerFactory('orm_default'),
+                'doctrine.sql_logger_collector.orm_default' => new SQLLoggerCollectorFactory('orm_default'),
+
                 'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function(ServiceLocatorInterface $sl) {
-                    return new \DoctrineORMModule\Form\Annotation\AnnotationBuilder(
-                        $sl->get('doctrine.entitymanager.orm_default')
-                    );
+                    return new AnnotationBuilder($sl->get('doctrine.entitymanager.orm_default'));
                 },
-
-                'doctrine.connection.orm_default'    => new DBALConnectionFactory('orm_default'),
-                'doctrine.configuration.orm_default' => new ORMConfigurationFactory('orm_default'),
-                'doctrine.entitymanager.orm_default' => new EntityManagerFactory('orm_default'),
-
-                'doctrine.driver.orm_default'        => new DriverFactory('orm_default'),
-                'doctrine.eventmanager.orm_default'  => new EventManagerFactory('orm_default'),
-            )
+            ),
         );
     }
 }
