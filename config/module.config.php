@@ -49,7 +49,13 @@ return array(
         'eventmanager' => array(
             'orm_default' => array()
         ),
+
+        'sql_logger_collector' => array(
+            'orm_default' => array(),
+        ),
     ),
+
+    // zendframework/zend-developer-tools specific settings
 
     'view_manager' => array(
         'template_map' => array(
@@ -58,8 +64,10 @@ return array(
     ),
 
     'zdt' => array(
-        'collectors' => array(
-            'orm_default' => 'doctrine.collector.orm_default',
+        'profiler' => array(
+            'collectors' => array(
+                'orm_default' => 'doctrine.sql_logger_collector.orm_default',
+            ),
         ),
         'toolbar' => array(
             'entries' => array(
