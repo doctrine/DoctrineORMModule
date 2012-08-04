@@ -48,6 +48,10 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             $config->addNamedNativeQuery($name, $query['sql'], new $query['rsm']);
         }
 
+        foreach($options->getFilters() as $alias => $class){
+            $config->addFilter($alias, $class);
+        }
+
         $config->setMetadataCacheImpl($serviceLocator->get($options->getMetadataCache()));
         $config->setQueryCacheImpl($serviceLocator->get($options->getQueryCache()));
 
