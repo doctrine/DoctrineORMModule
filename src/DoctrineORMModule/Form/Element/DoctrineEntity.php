@@ -279,7 +279,7 @@ class DoctrineEntity extends Element implements InputProviderInterface
             } else {
                 if (!is_callable(array($entity, '__toString'))) {
                     throw new RuntimeException(sprintf(
-                        '%s must have a "__toString()" method defined if you have not set a property or method to use.' .
+                        '%s must have a "__toString()" method defined if you have not set a property or method to use.',
                         $targetClass
                     ));
                 }
