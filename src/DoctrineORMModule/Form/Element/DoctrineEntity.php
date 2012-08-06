@@ -51,6 +51,11 @@ class DoctrineEntity extends Element implements InputProviderInterface
      */
     protected $entities;
 
+    /**
+     * @var bool
+     */
+    protected $multipleEntities;
+
 
     /**
      * @return array|\Traversable
@@ -89,6 +94,10 @@ class DoctrineEntity extends Element implements InputProviderInterface
 
         if (isset($options['spec'])) {
             $this->setSpec($options['spec']);
+        }
+
+        if (isset($options['multiple_entities'])) {
+            $this->setMultipleEntities($options['multiple_entities']);
         }
 
         return $this;
@@ -203,6 +212,28 @@ class DoctrineEntity extends Element implements InputProviderInterface
     }
 
     /**
+     * Sets whether or not multiple entities are specified in this element.
+     *
+     * @param bool $multipleEntities
+     * @return DoctrineEntity
+     */
+    public function setMultipleEntities($multipleEntities)
+    {
+        $this->multipleEntities = $multipleEntities;
+        return $this;
+    }
+
+    /**
+     * Gets whether or not multiple entities are specified in this element.
+     *
+     * @return bool
+     */
+    public function getMultipleEntities()
+    {
+        return $this->multipleEntities;
+    }
+
+    /**
      * @return array
      */
     public function getInputSpecification()
@@ -227,7 +258,8 @@ class DoctrineEntity extends Element implements InputProviderInterface
             $this->validator = new ObjectExistsValidator(array(
                 'object_repository' => $this->objectManager->getRepository($this->targetClass),
                 'fields'            => $this->objectManager->getClassMetadata($this->targetClass)
-                                                           ->getIdentifierFieldNames()
+                                                           ->getIdentifierFieldNames(),
+                'multiple_entities' => $this->multipleEntities,
             ));
         }
 
