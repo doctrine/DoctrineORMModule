@@ -103,7 +103,10 @@ class Module implements ServiceProviderInterface, ConfigProviderInterface
 
         $config = $app->getServiceManager()->get('Config');
 
-        if (isset($config['zdt']['profiler']['enabled']) && $config['zdt']['profiler']['enabled']) {
+        if (
+            isset($config['zenddevelopertools']['profiler']['enabled'])
+            && $config['zenddevelopertools']['profiler']['enabled']
+        ) {
             $app->getServiceManager()->get('doctrine.sql_logger_collector.orm_default');
         }
     }
