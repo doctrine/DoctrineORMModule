@@ -45,7 +45,7 @@ class Module
             'doctrine' => array(
                 'sql_logger_collector' => array(
                     'other_orm' => array(
-                        // name of the sql logger collector (used by ZDT)
+                        // name of the sql logger collector (used by ZendDeveloperTools)
                         'name' => 'other_orm',
 
                         // name of the configuration service at which to attach the logger
@@ -58,9 +58,9 @@ class Module
                 ),
             ),
 
-            'zdt' => array(
+            'zenddevelopertools' => array(
 
-                // registering the profiler with ZDT
+                // registering the profiler with ZendDeveloperTools
                 'profiler' => array(
                     'collectors' => array(
                         // reference to the service we have defined
@@ -68,7 +68,7 @@ class Module
                     ),
                 ),
 
-                // registering a new toolbar item with ZDT (name must be the same of the collector name)
+                // registering a new toolbar item with ZendDeveloperTools (name must be the same of the collector name)
                 'toolbar' => array(
                     'entries' => array(
                         // this is actually a name of a view script to use - you can use your custom one
@@ -93,8 +93,11 @@ class Module
     {
         $config = $e->getTarget()->getServiceManager()->get('Config');
 
-        if (isset($config['zdt']['profiler']['enabled']) && $config['zdt']['profiler']['enabled']) {
-            // when ZDT is enabled, initialize the sql collector
+        if (
+            isset($config['zenddevelopertools']['profiler']['enabled']) 
+            && $config['zenddevelopertools']['profiler']['enabled']
+        ) {
+            // when ZendDeveloperTools is enabled, initialize the sql collector
             $app->getServiceManager()->get('doctrine.sql_logger_collector.other_orm');
         }
     }
