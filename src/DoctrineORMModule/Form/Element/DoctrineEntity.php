@@ -195,7 +195,7 @@ class DoctrineEntity extends Element implements InputProviderInterface
     /**
      * Get the spec
      *
-     * @return \Closure|Query|QueryBuilder
+     * @return \Closure|\Doctrine\ORM\Query|\Doctrine\ORM\QueryBuilder
      */
     public function getSpec()
     {

@@ -37,6 +37,8 @@ class DoctrineEntity extends DoctrineObjectHydrator
      */
     protected function find($target, $identifiers)
     {
-        return $this->objectManager->getReference($target, $identifiers);
+        /* @var $entityManager \Doctrine\ORM\EntityManager */
+        $entityManager = $this->objectManager;
+        return $entityManager->getReference($target, $identifiers);
     }
 }

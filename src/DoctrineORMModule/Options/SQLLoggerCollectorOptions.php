@@ -46,7 +46,7 @@ class SQLLoggerCollectorOptions extends AbstractOptions
     protected $sqlLogger;
 
     /**
-     * @param string $configuration
+     * @param string $name
      */
     public function setName($name)
     {
@@ -82,7 +82,7 @@ class SQLLoggerCollectorOptions extends AbstractOptions
     }
 
     /**
-     * @param string|null $logger
+     * @param string|null $sqlLogger
      */
     public function setSqlLogger($sqlLogger)
     {

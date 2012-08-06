@@ -18,7 +18,7 @@ for that).
 Once `ZendDeveloperTools` is enabled, having `doctrine.entity_manager.orm_default` as your default `EntityManager`, you
 will notice that the queries performed by the ORM get logged and displayed in the toolbar.
 
-![](http://github.com/doctrine/DoctrineModule/raw/master/docs/images/zf2-zend-developer-tools-doctrine-module.png)
+![](http://github.com/doctrine/DoctrineORMModule/raw/master/docs/images/zf2-zend-developer-tools-doctrine-module.png)
 
 ## Customization
 
@@ -104,4 +104,4 @@ class Module
 This example will simply generate a new icon in the toolbar, with the log results of your `other_orm` connection:
 
 
-![](http://github.com/doctrine/DoctrineModule/raw/master/docs/images/zend-developer-tools-multiple-entity-managers.png)
+![](http://github.com/doctrine/DoctrineORMModule/raw/master/docs/images/zend-developer-tools-multiple-entity-managers.png)

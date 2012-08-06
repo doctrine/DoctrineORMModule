@@ -50,7 +50,7 @@ class DoctrinePaginator implements AdapterInterface
 
     /**
      * @param Paginator $paginator
-     * @return Adapter
+     * @return self
      */
     public function setPaginator(Paginator $paginator)
     {
