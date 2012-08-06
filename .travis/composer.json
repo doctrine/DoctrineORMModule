@@ -3,5 +3,8 @@
     "require": {
         "doctrine/doctrine-orm-module": "dev-master",
         "zendframework/zendframework": "dev-master"
+    },
+    "require-dev": {
+        "zendframework/zend-developer-tools": "dev-master"
     }
 }
