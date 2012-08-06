@@ -2,7 +2,6 @@
 
 namespace DoctrineORMModule\Form\Annotation;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Zend\EventManager\EventManagerInterface;
@@ -64,7 +63,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
 
         $attributes = array();
 
-        switch($annotation->type) {
+        switch ($annotation->type) {
             case 'bool':
             case 'boolean':
                 $attributes['type'] = 'checkbox';
@@ -89,7 +88,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function handleExcludeAnnotation($e)
     {
         $annotations = $e->getParam('annotations');
-        foreach($annotations as $annotation) {
+        foreach ($annotations as $annotation) {
             if ($annotation instanceof GeneratedValue) {
                 if ($annotation->strategy == 'AUTO') {
                     return true;
@@ -120,7 +119,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             $inputSpec['filters'] = array();
         }
 
-        switch($annotation->type) {
+        switch ($annotation->type) {
             case 'bool':
             case 'boolean':
                 $inputSpec['filters'][] = array('name' => 'Boolean');
@@ -176,7 +175,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         }
 
         $type = $annotation->type;
-        switch($type) {
+        switch ($type) {
             default:
                 $type = 'Zend\Form\Element';
                 break;
@@ -206,7 +205,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             $inputSpec['validators'] = array();
         }
 
-        switch($annotation->type) {
+        switch ($annotation->type) {
             case 'bool':
             case 'boolean':
                 $inputSpec['validators'][] = array(

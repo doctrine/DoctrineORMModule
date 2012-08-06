@@ -40,11 +40,11 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         $config->setCustomStringFunctions($options->getStringFunctions());
         $config->setCustomNumericFunctions($options->getNumericFunctions());
 
-        foreach($options->getNamedQueries() as $name => $query) {
+        foreach ($options->getNamedQueries() as $name => $query) {
             $config->addNamedQuery($name, $query);
         }
 
-        foreach($options->getNamedNativeQueries() as $name => $query) {
+        foreach ($options->getNamedNativeQueries() as $name => $query) {
             $config->addNamedNativeQuery($name, $query['sql'], new $query['rsm']);
         }
 
