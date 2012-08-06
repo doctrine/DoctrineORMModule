@@ -52,7 +52,7 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
 
     /**
      * @param DebugStack $sqlLogger
-     * @param string $name
+     * @param string     $name
      */
     public function __construct(DebugStack $sqlLogger, $name)
     {

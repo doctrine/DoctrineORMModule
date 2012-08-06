@@ -133,7 +133,7 @@ class DBALConnection extends AbstractOptions
     }
 
     /**
-     * @param  array                              $doctrineTypeMappings
+     * @param  array                                     $doctrineTypeMappings
      * @return \DoctrineORMModule\Options\DBALConnection
      */
     public function setDoctrineTypeMappings($doctrineTypeMappings)

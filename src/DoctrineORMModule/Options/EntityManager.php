@@ -25,7 +25,7 @@ class EntityManager extends AbstractOptions
     protected $connection = 'orm_default';
 
     /**
-     * @param string $configuration
+     * @param  string $configuration
      * @return self
      */
     public function setConfiguration($configuration)
@@ -44,7 +44,7 @@ class EntityManager extends AbstractOptions
     }
 
     /**
-     * @param string $connection
+     * @param  string $connection
      * @return self
      */
     public function setConnection($connection)

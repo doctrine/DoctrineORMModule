@@ -109,12 +109,13 @@ class Configuration extends DBALConfiguration
     protected $namedNativeQueries = array();
 
     /**
-     * @param array $datetimeFunctions
+     * @param  array $datetimeFunctions
      * @return self
      */
     public function setDatetimeFunctions($datetimeFunctions)
     {
         $this->datetimeFunctions = $datetimeFunctions;
+
         return $this;
     }
 
@@ -127,12 +128,13 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param string $driver
+     * @param  string $driver
      * @return self
      */
     public function setDriver($driver)
     {
         $this->driver = $driver;
+
         return $this;
     }
 
@@ -145,12 +147,13 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param array $entityNamespaces
+     * @param  array $entityNamespaces
      * @return self
      */
     public function setEntityNamespaces($entityNamespaces)
     {
         $this->entityNamespaces = $entityNamespaces;
+
         return $this;
     }
 
@@ -163,12 +166,13 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param boolean $generateProxies
+     * @param  boolean $generateProxies
      * @return self
      */
     public function setGenerateProxies($generateProxies)
     {
         $this->generateProxies = $generateProxies;
+
         return $this;
     }
 
@@ -181,12 +185,13 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param string $metadataCache
+     * @param  string $metadataCache
      * @return self
      */
     public function setMetadataCache($metadataCache)
     {
         $this->metadataCache = $metadataCache;
+
         return $this;
     }
 
@@ -199,12 +204,13 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param array $namedNativeQueries
+     * @param  array $namedNativeQueries
      * @return self
      */
     public function setNamedNativeQueries($namedNativeQueries)
     {
         $this->namedNativeQueries = $namedNativeQueries;
+
         return $this;
     }
 
@@ -217,12 +223,13 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param array $namedQueries
+     * @param  array $namedQueries
      * @return self
      */
     public function setNamedQueries($namedQueries)
     {
         $this->namedQueries = $namedQueries;
+
         return $this;
     }
 
@@ -235,12 +242,13 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param array $numericFunctions
+     * @param  array $numericFunctions
      * @return self
      */
     public function setNumericFunctions($numericFunctions)
     {
         $this->numericFunctions = $numericFunctions;
+
         return $this;
     }
 
@@ -253,12 +261,13 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param string $proxyDir
+     * @param  string $proxyDir
      * @return self
      */
     public function setProxyDir($proxyDir)
     {
         $this->proxyDir = $proxyDir;
+
         return $this;
     }
 
@@ -271,12 +280,13 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param string $proxyNamespace
+     * @param  string $proxyNamespace
      * @return self
      */
     public function setProxyNamespace($proxyNamespace)
     {
         $this->proxyNamespace = $proxyNamespace;
+
         return $this;
     }
 
@@ -289,12 +299,13 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param string $queryCache
+     * @param  string $queryCache
      * @return self
      */
     public function setQueryCache($queryCache)
     {
         $this->queryCache = $queryCache;
+
         return $this;
     }
 
@@ -307,12 +318,13 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param array $stringFunctions
+     * @param  array $stringFunctions
      * @return self
      */
     public function setStringFunctions($stringFunctions)
     {
         $this->stringFunctions = $stringFunctions;
+
         return $this;
     }
 

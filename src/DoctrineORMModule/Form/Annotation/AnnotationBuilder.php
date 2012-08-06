@@ -40,6 +40,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
         $parser->registerAnnotation('Doctrine\ORM\Mapping\GeneratedValue');
 
         $this->annotationManager->attach($parser);
+
         return $this;
     }
 
