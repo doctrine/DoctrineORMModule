@@ -20,7 +20,6 @@
 namespace DoctrineORMModule\Paginator\Adapter;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Doctrine\ORM\QueryBuilder;
 use Zend\Paginator\Adapter\AdapterInterface;
 
 /**
@@ -49,8 +48,8 @@ class DoctrinePaginator implements AdapterInterface
     }
 
     /**
-     * @param Paginator $paginator
-     * @return Adapter
+     * @param  Paginator $paginator
+     * @return self
      */
     public function setPaginator(Paginator $paginator)
     {

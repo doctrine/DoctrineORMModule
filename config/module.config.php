@@ -63,7 +63,7 @@ return array(
         ),
     ),
 
-    'zdt' => array(
+    'zenddevelopertools' => array(
         'profiler' => array(
             'collectors' => array(
                 'orm_default' => 'doctrine.sql_logger_collector.orm_default',

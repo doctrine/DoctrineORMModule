@@ -51,13 +51,13 @@ class DoctrineEntity extends Element implements InputProviderInterface
      */
     protected $entities;
 
-
     /**
      * @return array|\Traversable
      */
     public function getAttributes()
     {
         $this->loadOptions();
+
         return parent::getAttributes();
     }
 
@@ -125,6 +125,7 @@ class DoctrineEntity extends Element implements InputProviderInterface
     public function setObjectManager(ObjectManager $objectManager)
     {
         $this->objectManager = $objectManager;
+
         return $this;
     }
 
@@ -141,12 +142,13 @@ class DoctrineEntity extends Element implements InputProviderInterface
     /**
      * Set the FQCN of the target entity
      *
-     * @param  string $targetClass
+     * @param  string         $targetClass
      * @return DoctrineEntity
      */
     public function setTargetClass($targetClass)
     {
         $this->targetClass = $targetClass;
+
         return $this;
     }
 
@@ -163,12 +165,13 @@ class DoctrineEntity extends Element implements InputProviderInterface
     /**
      * Set the property to use as the label in the options
      *
-     * @param  string $property
+     * @param  string         $property
      * @return DoctrineEntity
      */
     public function setProperty($property)
     {
         $this->property = $property;
+
         return $this;
     }
 
@@ -189,13 +192,14 @@ class DoctrineEntity extends Element implements InputProviderInterface
     public function setSpec($spec)
     {
         $this->spec = $spec;
+
         return $this;
     }
 
     /**
      * Get the spec
      *
-     * @return \Closure|Query|QueryBuilder
+     * @return \Closure|\Doctrine\ORM\Query|\Doctrine\ORM\QueryBuilder
      */
     public function getSpec()
     {
@@ -256,7 +260,7 @@ class DoctrineEntity extends Element implements InputProviderInterface
         $entities   = $this->getEntities();
         $options    = array();
 
-        foreach($entities as $key => $entity) {
+        foreach ($entities as $key => $entity) {
             if (($property = $this->property)) {
                 if (!$metadata->hasField($property)) {
                     throw new RuntimeException(sprintf(
