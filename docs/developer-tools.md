@@ -9,7 +9,7 @@ developing.
 To setup [Zend Developer Tools](https://github.com/zendframework/ZendDeveloperTools), run
 
 ```sh
-php composer.phar require zendframework/zend-developer-tools dev-master
+php composer.phar require zendframework/zend-developer-tools
 ```
 
 Then enable `ZendDeveloperTools` in your modules and enable profiling and the toolbar (see docs of Zend Developer Tools
