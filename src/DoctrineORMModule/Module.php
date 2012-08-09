@@ -38,6 +38,7 @@ use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Loader\AutoloaderFactory;
 use Zend\Loader\StandardAutoloader;
 use Zend\EventManager\EventInterface;
 
@@ -72,7 +73,7 @@ class Module implements
     public function getAutoloaderConfig()
     {
         return array(
-            'Zend\Loader\StandardAutoloader' => array(
+            AutoloaderFactory::STANDARD_AUTOLOADER => array(
                 StandardAutoloader::LOAD_NS => array(
                     __NAMESPACE__ => __DIR__,
                 ),
