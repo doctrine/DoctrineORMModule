@@ -37,6 +37,7 @@ Entities
 --------
 The entity classes need to be namespaced as `Application\Entities`, and we also need to use `Doctrine\ORM\Mapping as ORM`. We then need to preface all the Doctrine annotations with `ORM\` so that the annotation parser knows they are Doctrine annotations, and not ZF2 annotations. We also need to change any annotations to use the FQN of classes that are included. As an example, once you've modified Application/Entities/Bug.php it should look something like:
 
+```php
     <?php
     namespace Application\Entities;
     
@@ -157,11 +158,13 @@ The entity classes need to be namespaced as `Application\Entities`, and we also 
         }
     
     }
+```    
     
 Repositories
 ------------
 Similar changes need to be made to the `BugRespository` code to get the DQL queries to work. Firstly, it needs to be namespaced in the same way as the entities, and any references to the entities needs to be changed to the FQN of that entity. So your modified `Application\Repositories\BugRepository.php` code should look like:
 
+```php
     <?php
     namespace Application\Repositories;
     
@@ -208,6 +211,7 @@ Similar changes need to be made to the `BugRespository` code to get the DQL quer
             return $this->getEntityManager()->createQuery($dql)->getScalarResult();
         }
     }
+```    
 
 Testing
 -------
@@ -220,13 +224,16 @@ Service Manager
 ---------------
 Once you are at this stage, you should now have an instance of the Doctrine entity manager available in the global service manager under the key `Doctrine\ORM\EntityManager`. It is easy to test this in the index controller by simply running the code:
 
+```php
     public function indexAction()
     {
         var_dump($this->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
     }
+```    
 
 You should see dumped a configured instance of `Doctrine\ORM\EntityManager`. Lets use the service manager to inject the entity manager into our IndexController, and use the entity manager to retreive and query the BugRepository. Firstly, we need to modify IndexController.php to accept an instance of the entity manager in it's contructor:
 
+```php
     <?php
     namespace Application\Controller;
     
@@ -245,9 +252,11 @@ You should see dumped a configured instance of `Doctrine\ORM\EntityManager`. Let
         {
             $this->em = $em;
         }
+```        
 
 Next, we need to modify the controller entry in `module.config.php` to change it from an invokable to a factory:
 
+```php
     'controllers' => array(
         'factories' => array(
             'Application\Controller\Index' => function(Zend\Mvc\Controller\ControllerManager $sm)
@@ -258,17 +267,20 @@ Next, we need to modify the controller entry in `module.config.php` to change it
             }
         ),
     ),
+```    
 
 All we are doing here is telling the service manager that when it is requested the key `Application\Controller\Index`, retrieve the EM from the service manager, and inject it into the contructor of our index controller.
 
 Finally, we can use the EM in our index controller to retrieve and query the bug repository:
 
+```php
     public function indexAction()
     {
         $bug = $this->em->getRepository('Application\Entities\Bug');
         var_dump($bug->getRecentBugsArray());
         return new ViewModel();
     }
+```
 
 This should dump out the recent bugs array from the database (that you created using the command line tools in the Doctrine quickstart).
 
