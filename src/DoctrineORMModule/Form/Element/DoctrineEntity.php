@@ -5,6 +5,7 @@ namespace DoctrineORMModule\Form\Element;
 use RuntimeException;
 use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Validator\ObjectExists as ObjectExistsValidator;
+use Doctrine\ORM\Proxy\Proxy;
 use Zend\Form\Element;
 use Zend\InputFilter\InputProviderInterface;
 use Zend\Validator\ValidatorInterface;
@@ -218,6 +219,30 @@ class DoctrineEntity extends Element implements InputProviderInterface
                 $this->getValidator()
             )
         );
+    }
+
+    /**
+     * Override set value to handle objects.
+     *
+     * @param mixed $value
+     * @return void|\Zend\Form\Element
+     */
+    public function setValue($value)
+    {
+        if (is_object($value)) {
+            $metadata   = $this->objectManager->getClassMetadata(get_class($value));
+            $identifier = $metadata->getIdentifierFieldNames();
+
+            if (count($identifier) > 1) {
+                //$value = $key;
+            } else {
+                if ($value instanceof Proxy) {
+                    $value->__load();
+                }
+                $value = current($metadata->getIdentifierValues($value));
+            }
+        }
+        return parent::setValue($value);
     }
 
     /**
