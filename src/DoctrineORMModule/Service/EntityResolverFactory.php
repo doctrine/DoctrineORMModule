@@ -20,6 +20,7 @@
 namespace DoctrineORMModule\Service;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Events;
 use Doctrine\ORM\Tools\ResolveTargetEntityListener;
 use DoctrineModule\Service\AbstractFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -38,14 +39,11 @@ class EntityResolverFactory extends AbstractFactory
 
         $targetEntityListener = new ResolveTargetEntityListener();
 
-        foreach ($resolvers as $entity => $resolveParameters) {
-            $resolvedEntityName = $resolveParameters['resolved_entity_name'];
-            $mapping            = $resolveParameters['mapping'];
-
-            $targetEntityListener->addResolveTargetEntity($entity, $resolvedEntityName, $mapping);
+        foreach ($resolvers as $oldEntity => $newEntity) {
+            $targetEntityListener->addResolveTargetEntity($oldEntity, $newEntity, array());
         }
 
-        $eventManager->addEventListener($targetEntityListener);
+        $eventManager->addEventListener(Events::loadClassMetadata, $targetEntityListener);
 
         return $eventManager;
     }

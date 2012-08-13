@@ -113,6 +113,7 @@ class Module implements
         });
 
         $config = $app->getServiceManager()->get('Config');
+        $app->getServiceManager()->get('doctrine.entity_resolver.orm_default');
 
         if (
             isset($config['zenddevelopertools']['profiler']['enabled'])

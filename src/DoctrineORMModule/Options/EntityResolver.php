@@ -5,7 +5,7 @@ namespace DoctrineORMModule\Options;
 use InvalidArgumentException;
 use Zend\Stdlib\AbstractOptions;
 
-class EntityResolver
+class EntityResolver extends AbstractOptions
 {
     /**
      * Set the configuration key for the EventManager. Event manager key
@@ -18,7 +18,7 @@ class EntityResolver
 
     /**
      * An array that maps a class name (or interface name) to another class
-     * name (and with an optional mapping)
+     * name
      *
      * @var array
      */
@@ -46,23 +46,21 @@ class EntityResolver
 
     /**
      * @param array $resolvers
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setResolvers(array $resolvers)
     {
-        foreach ($resolvers as $entity => $resolveParameters) {
-            if (!isset($resolveParameters['resolved_entity_name'])) {
-                throw new InvalidArgumentException(
-                    'The resolved entity name for %s has not been set',
-                    $entity
+        foreach ($resolvers as $old => $new) {
+            if (!class_exists($new)) {
+                throw new InvalidArgumentException(sprintf(
+                        '%s is resolved to the entity %s, which does not exist',
+                        $old,
+                        $new
+                    )
                 );
             }
 
-            if (!isset($resolveParameters['mapping'])) {
-                $resolveParameters['mapping'] = array();
-            }
-
-            $this->resolvers[$entity] = $resolveParameters;
+            $this->resolvers[$old] = $new;
         }
     }
 
