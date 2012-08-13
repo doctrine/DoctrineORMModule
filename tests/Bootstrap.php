@@ -49,6 +49,12 @@ $config['doctrine']['driver']['test'] = array(
         __DIR__ . '/DoctrineORMModuleTest/Assets/Entity'
     )
 );
+$config['doctrine']['entity_resolver']['orm_default'] = array(
+    'resolvers' => array(
+        'DoctrineORMModuleTest\Assets\Entity\TargetInterface' =>
+        'DoctrineORMModuleTest\Assets\Entity\TargetEntity'
+    )
+);
 $config['doctrine']['driver']['orm_default']['drivers']['DoctrineORMModuleTest\Assets\Entity'] = 'test';
 $config['doctrine']['connection']['orm_default'] = array(
     'configuration' => 'orm_default',
@@ -61,4 +67,5 @@ $config['doctrine']['connection']['orm_default'] = array(
 );
 
 $serviceManager->setService('Config', $config);
+$serviceManager->get('doctrine.entity_resolver.orm_default');
 TestCase::setServiceManager($serviceManager);

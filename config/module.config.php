@@ -53,6 +53,10 @@ return array(
         'sql_logger_collector' => array(
             'orm_default' => array(),
         ),
+
+        'entity_resolver' => array(
+            'orm_default' => array()
+        )
     ),
 
     // zendframework/zend-developer-tools specific settings

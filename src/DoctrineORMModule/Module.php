@@ -24,6 +24,7 @@ use DoctrineModule\Service\EventManagerFactory;
 
 use DoctrineORMModule\Service\ConfigurationFactory as ORMConfigurationFactory;
 use DoctrineORMModule\Service\EntityManagerFactory;
+use DoctrineORMModule\Service\EntityResolverFactory;
 use DoctrineORMModule\Service\DBALConnectionFactory;
 use DoctrineORMModule\Service\SQLLoggerCollectorFactory;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
@@ -112,6 +113,7 @@ class Module implements
         });
 
         $config = $app->getServiceManager()->get('Config');
+        $app->getServiceManager()->get('doctrine.entity_resolver.orm_default');
 
         if (
             isset($config['zenddevelopertools']['profiler']['enabled'])
@@ -145,6 +147,7 @@ class Module implements
 
                 'doctrine.driver.orm_default'               => new DriverFactory('orm_default'),
                 'doctrine.eventmanager.orm_default'         => new EventManagerFactory('orm_default'),
+                'doctrine.entity_resolver.orm_default'      => new EntityResolverFactory('orm_default'),
                 'doctrine.sql_logger_collector.orm_default' => new SQLLoggerCollectorFactory('orm_default'),
 
                 'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function(ServiceLocatorInterface $sl) {
