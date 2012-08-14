@@ -48,6 +48,10 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             $config->addNamedNativeQuery($name, $query['sql'], new $query['rsm']);
         }
 
+        foreach ($options->getCustomHydrationModes() AS $modeName => $hydrator) {
+            $config->addCustomHydrationMode($modeName, $hydrator);
+        }
+
         $config->setMetadataCacheImpl($serviceLocator->get($options->getMetadataCache()));
         $config->setQueryCacheImpl($serviceLocator->get($options->getQueryCache()));
 
