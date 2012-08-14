@@ -109,6 +109,14 @@ class Configuration extends DBALConfiguration
     protected $namedNativeQueries = array();
 
     /**
+     * Keys must be the name of the custom hydration method and the value must be
+     * the class name for the custom hydrator
+     *
+     * @var array
+     */
+    protected $customHydrationModes = array();
+
+    /**
      * @param  array $datetimeFunctions
      * @return self
      */
@@ -335,4 +343,24 @@ class Configuration extends DBALConfiguration
     {
         return $this->stringFunctions;
     }
+
+    /**
+     * @param array $modes
+     * @return self
+     */
+    public function setCustomHydrationModes($modes)
+    {
+        $this->customHydrationModes = $modes;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomHydrationModes()
+    {
+        return $this->customHydrationModes;
+    }
+
 }
