@@ -6,22 +6,14 @@ use RuntimeException;
 use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Validator\ObjectExists as ObjectExistsValidator;
 use Doctrine\ORM\Proxy\Proxy;
-use Zend\Form\Element;
+use Zend\Form\Element\Select as SelectElement;
+use Zend\Form\ElementPrepareAwareInterface;
+use Zend\Form\Form;
 use Zend\InputFilter\InputProviderInterface;
 use Zend\Validator\ValidatorInterface;
 
-class DoctrineEntity extends Element implements InputProviderInterface
+class DoctrineEntity extends SelectElement implements InputProviderInterface, ElementPrepareAwareInterface
 {
-    /**
-     * Seed attributes
-     *
-     * @var array
-     */
-    protected $attributes = array(
-        'options' => array(),
-        'type'    => 'select',
-    );
-
     /**
      * @var ValidatorInterface
      */
@@ -52,15 +44,6 @@ class DoctrineEntity extends Element implements InputProviderInterface
      */
     protected $entities;
 
-    /**
-     * @return array|\Traversable
-     */
-    public function getAttributes()
-    {
-        $this->loadOptions();
-
-        return parent::getAttributes();
-    }
 
     /**
      * Accepted options for DoctrineEntity:
@@ -96,28 +79,6 @@ class DoctrineEntity extends Element implements InputProviderInterface
     }
 
     /**
-     * @return array
-     */
-    public function getEntities()
-    {
-        if (null === $this->entities) {
-            $spec        = $this->spec;
-            $om          = $this->objectManager;
-            $targetClass = $this->targetClass;
-
-            if (is_callable($spec)) {
-                $entities = $spec($om->getRepository($targetClass));
-            } else {
-                $entities = $om->getRepository($targetClass)->findAll();
-            }
-
-            $this->entities = $entities;
-        }
-
-        return $this->entities;
-    }
-
-    /**
      * Set the object manager
      *
      * @param  ObjectManager  $objectManager
@@ -126,7 +87,6 @@ class DoctrineEntity extends Element implements InputProviderInterface
     public function setObjectManager(ObjectManager $objectManager)
     {
         $this->objectManager = $objectManager;
-
         return $this;
     }
 
@@ -149,7 +109,6 @@ class DoctrineEntity extends Element implements InputProviderInterface
     public function setTargetClass($targetClass)
     {
         $this->targetClass = $targetClass;
-
         return $this;
     }
 
@@ -172,7 +131,6 @@ class DoctrineEntity extends Element implements InputProviderInterface
     public function setProperty($property)
     {
         $this->property = $property;
-
         return $this;
     }
 
@@ -193,7 +151,6 @@ class DoctrineEntity extends Element implements InputProviderInterface
     public function setSpec($spec)
     {
         $this->spec = $spec;
-
         return $this;
     }
 
@@ -210,22 +167,27 @@ class DoctrineEntity extends Element implements InputProviderInterface
     /**
      * @return array
      */
-    public function getInputSpecification()
+    public function getEntities()
     {
-        return array(
-            'name'       => $this->getName(),
-            'required'   => true,
-            'validators' => array(
-                $this->getValidator()
-            )
-        );
+        if (null === $this->entities) {
+            $spec        = $this->spec;
+            $om          = $this->objectManager;
+            $targetClass = $this->targetClass;
+
+            if (is_callable($spec)) {
+                $entities = $spec($om->getRepository($targetClass));
+            } else {
+                $entities = $om->getRepository($targetClass)->findAll();
+            }
+
+            $this->entities = $entities;
+        }
+
+        return $this->entities;
     }
 
     /**
-     * Override set value to handle objects.
-     *
-     * @param mixed $value
-     * @return void|\Zend\Form\Element
+     * {@inheritDoc}
      */
     public function setValue($value)
     {
@@ -242,33 +204,17 @@ class DoctrineEntity extends Element implements InputProviderInterface
                 $value = current($metadata->getIdentifierValues($value));
             }
         }
+
         return parent::setValue($value);
     }
 
     /**
-     * Get the validator
-     *
-     * @return ValidatorInterface
+     * {@inheritDoc}
      */
-    protected function getValidator()
+    public function prepareElement(Form $form)
     {
-        if (null === $this->validator) {
-            $this->validator = new ObjectExistsValidator(array(
-                'object_repository' => $this->objectManager->getRepository($this->targetClass),
-                'fields'            => $this->objectManager->getClassMetadata($this->targetClass)
-                                                           ->getIdentifierFieldNames()
-            ));
-        }
-
-        return $this->validator;
-    }
-
-    /**
-     * @throws RuntimeException
-     */
-    protected function loadOptions()
-    {
-        if (!empty($this->attributes['options'])) {
+        // Don't load data twice !
+        if (!empty($this->valueOptions)) {
             return;
         }
 
@@ -325,6 +271,39 @@ class DoctrineEntity extends Element implements InputProviderInterface
             $options[] = array('label' => $label, 'value' => $value);
         }
 
-        $this->attributes['options'] = $options;
+        $this->setValueOptions($options);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getInputSpecification()
+    {
+        return array(
+            'name'       => $this->getName(),
+            'required'   => true,
+            'validators' => array(
+                $this->getValidator()
+            )
+        );
+    }
+
+    /**
+     * Get the validator
+     *
+     * @return ValidatorInterface
+     */
+    protected function getValidator()
+    {
+        if (null === $this->validator) {
+            $this->validator = new ObjectExistsValidator(array(
+                'object_repository' => $this->objectManager->getRepository($this->targetClass),
+                'fields'            => $this->objectManager->getClassMetadata($this->targetClass)
+                                                           ->getIdentifierFieldNames()
+            ));
+        }
+
+        return $this->validator;
     }
 }
+

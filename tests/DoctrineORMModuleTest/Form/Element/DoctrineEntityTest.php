@@ -30,6 +30,8 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 use DoctrineORMModule\Form\Element\DoctrineEntity as DoctrineEntityElement;
 
+use Zend\Form\Form;
+
 
 class DoctrineElementTest extends TestCase
 {
@@ -43,6 +45,11 @@ class DoctrineElementTest extends TestCase
      */
     protected $element;
 
+    /**
+     * @var Form
+     */
+    protected $form;
+
     public function setUp()
     {
         parent::setUp();
@@ -54,14 +61,17 @@ class DoctrineElementTest extends TestCase
         $executor = new ORMExecutor($this->getEntityManager(), $purger);
         $executor->execute($loader->getFixtures());
 
+        $this->form = new Form('bar');
         $this->element = new DoctrineEntityElement('foo', array(
             'object_manager' => $this->getEntityManager(),
             'target_class' => 'DoctrineORMModuleTest\Assets\Entity\Test'
         ));
+        $this->form->add($this->element);
     }
 
     public function testCanGetEntitiesWithDefaultSettings()
     {
+        $this->form->prepare();
         $entities = $this->element->getEntities();
         $this->assertEquals(100, count($entities));
     }
@@ -71,6 +81,7 @@ class DoctrineElementTest extends TestCase
         $this->element->setSpec(function($repository) {
             return $repository->findById(1);
         });
+        $this->form->prepare();
         $entities = $this->element->getEntities();
 
         $this->assertEquals(1, count($entities));
@@ -78,9 +89,9 @@ class DoctrineElementTest extends TestCase
 
     public function testCanGenerateCorrectOptionsForForm()
     {
+        $this->form->prepare();
         $entities = $this->element->getEntities();
-        $attributes = $this->element->getAttributes();
-        $options = $attributes['options'];
+        $options = $this->element->getValueOptions();
 
         $firstEntity = $entities[0];
         $firstOption = $options[0];
@@ -92,9 +103,9 @@ class DoctrineElementTest extends TestCase
     public function testCanGenerateCorrectOptionsForFormWithProperty()
     {
         $this->element->setProperty('password');
+        $this->form->prepare();
         $entities = $this->element->getEntities();
-        $attributes = $this->element->getAttributes();
-        $options = $attributes['options'];
+        $options = $this->element->getValueOptions();
 
         $firstEntity = $entities[0];
         $firstOption = $options[0];
