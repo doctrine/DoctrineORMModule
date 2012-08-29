@@ -187,10 +187,7 @@ class DoctrineEntity extends SelectElement implements InputProviderInterface, El
     }
 
     /**
-     * Override set value to handle objects.
-     *
-     * @param  mixed $value
-     * @return void|self
+     * {@inheritDoc}
      */
     public function setValue($value)
     {
@@ -212,11 +209,7 @@ class DoctrineEntity extends SelectElement implements InputProviderInterface, El
     }
 
     /**
-     * Prepare the form element (mostly used for rendering purposes)
-     *
-     * @param  Form $form
-     * @throws RuntimeException
-     * @return mixed
+     * {@inheritDoc}
      */
     public function prepareElement(Form $form)
     {
@@ -282,7 +275,7 @@ class DoctrineEntity extends SelectElement implements InputProviderInterface, El
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getInputSpecification()
     {
