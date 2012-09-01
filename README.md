@@ -47,7 +47,7 @@ Installation of this module uses composer. For composer documentation, please re
      is `vendor/DoctrineORMModule/src/DoctrineORMModule`.
   3. The module depends on [Doctrine ORM 2.3.*](https://github.com/doctrine/orm), 
      [Doctrine DBAL 2.3.*](https://github.com/doctrine/dbal), 
-     [Doctrine Migrations](https://github.com/symfony/migrations). You have to download/install those
+     [Doctrine Migrations](https://github.com/doctrine/migrations). You have to download/install those
      packages and have them autoloaded.
   4. open `my/project/directory/configs/application.config.php` and add the following key to your `modules`:
 
