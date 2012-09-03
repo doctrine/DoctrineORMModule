@@ -41,9 +41,11 @@
     },
     "require-dev": {
         "zendframework/zend-developer-tools": "dev-master"
+        "zolex/firephp": "dev-master"
     },
     "suggest": {
-        "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development"
+        "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development",
+        "zolex/firephp": "firephp if you want to push all queries to the firebug console"
     },
     "minimum-stability": "dev",
     "autoload": {
