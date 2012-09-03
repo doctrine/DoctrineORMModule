@@ -4,7 +4,10 @@
         <span class="zdt-toolbar-info">
             <?php echo $this->collector->getQueryCount(); ?>
             queries in
-            <?php echo $this->ZendDeveloperToolsTime($this->collector->getQueryTime()); ?> s
+            <?php echo $this->ZendDeveloperToolsTime($this->collector->getQueryTime()); ?>
+            <?php if (class_exists('FirePHPCore\FirePHP')): ?>
+                <?php FirePHPCore\FirePHP::getInstance()->log($this->collector->getQueries()) ?>
+            <?php endif ?>
         </span>
     </div>
     <div class="zdt-toolbar-detail">
