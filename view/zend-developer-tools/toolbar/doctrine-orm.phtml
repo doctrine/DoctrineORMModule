@@ -32,16 +32,20 @@
             <span class="clear"></span>
             <span class="zdt-detail-label">Params</span>
             <span class="zdt-detail-value ddt-detail-value">
-                <?php foreach($query['params'] as $key => $value): ?>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $key ?> => <?php echo $value ?><br/>
-                <?php endforeach ?>
+                <?php if (isset($query['params']) && is_array($query['params'])): ?>
+                    <?php foreach($query['params'] as $key => $value): ?>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $key ?> => <?php echo $value ?><br/>
+                    <?php endforeach ?>
+                <?php endif ?>
             </span>
             <span class="clear"></span>
             <span class="zdt-detail-label">Types</span>
             <span class="zdt-detail-value ddt-detail-value">
-                <?php foreach($query['types'] as $key => $value): ?>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $key ?> => <?php echo $value ?><br/>
-                <?php endforeach ?>
+                <?php if (isset($query['types']) && is_array($query['types'])): ?>
+                    <?php foreach($query['types'] as $key => $value): ?>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $key ?> => <?php echo $value ?><br/>
+                    <?php endforeach ?>
+                <?php endif ?>
             </span>
             <span class="clear"></span>
             <span class="zdt-detail-label">Time</span>
