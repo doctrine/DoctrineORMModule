@@ -23,5 +23,74 @@
                 </a>
             </span>
         </span>
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">Queries</span>
+        <span class="zdt-toolbar-info ddt-toolbar-info">
+        <?php foreach ($this->collector->getQueries() as $query): ?>
+            <hr/>
+            <span class="zdt-detail-label">SQL</span>
+            <span class="zdt-detail-value ddt-detail-query ddt-detail-value">
+                <?php /* highlight UPPERCASE words in the query, which should mostly match SQL keywords */ ?>
+                <?php echo preg_replace('/([A-Z]+)/', '<span class="highlight">$1</span>', $query['sql']) ?>
+            </span>
+            <span class="clear"></span>
+            <span class="zdt-detail-label">Params</span>
+            <span class="zdt-detail-value ddt-detail-value">
+                <?php if (isset($query['params']) && is_array($query['params'])): ?>
+                    <?php foreach($query['params'] as $key => $value): ?>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $key ?> => <?php \Doctrine\Common\Util\Debug::dump($value) ?><br/>
+                    <?php endforeach ?>
+                <?php endif ?>
+            </span>
+            <span class="clear"></span>
+            <span class="zdt-detail-label">Types</span>
+            <span class="zdt-detail-value ddt-detail-value">
+                <?php if (isset($query['types']) && is_array($query['types'])): ?>
+                    <?php foreach($query['types'] as $key => $value): ?>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $key ?> => <?php \Doctrine\Common\Util\Debug::dump($value) ?><br/>
+                    <?php endforeach ?>
+                <?php endif ?>
+            </span>
+            <span class="clear"></span>
+            <span class="zdt-detail-label">Time</span>
+            <span class="zdt-detail-value ddt-detail-value"><?php echo $query['executionMS'] ?></span>
+            <span class="clear"></span>
+        <?php endforeach ?>
+        </span>
     </div>
 </div>
+<style>
+.zdt-toolbar-entry .zdt-toolbar-detail .ddt-toolbar-info {
+
+    font-size: 11px;
+    max-width: 600px;
+    witdh: 600px;
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.zdt-toolbar-entry .zdt-toolbar-detail .ddt-detail-query {
+
+    white-space: normal;
+    width: 400px;
+}
+
+.zdt-toolbar-entry .zdt-toolbar-detail .ddt-detail-query .highlight {
+
+    color: #80DC09;
+    font-weight: bold;
+}
+
+.zdt-toolbar-entry .zdt-toolbar-info .clear {
+
+    clear: both;
+    display: block;
+}
+
+.zdt-toolbar-entry .zdt-toolbar-detail .ddt-toolbar-info hr {
+
+    border: 0;
+    border-top: 1px solid #80DC09;
+    clear: both;
+}
+</style>

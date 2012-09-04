@@ -100,6 +100,14 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
     }
 
     /**
+     * @return array
+     */
+    public function getQueries()
+    {
+        return $this->sqlLogger->queries;
+    }
+    
+    /**
      * @return float
      */
     public function getQueryTime()
