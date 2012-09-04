@@ -37,7 +37,7 @@
             <span class="zdt-detail-value ddt-detail-value">
                 <?php if (isset($query['params']) && is_array($query['params'])): ?>
                     <?php foreach($query['params'] as $key => $value): ?>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $key ?> => <?php echo $value ?><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $key ?> => <?php \Doctrine\Common\Util\Debug::dump($value) ?><br/>
                     <?php endforeach ?>
                 <?php endif ?>
             </span>
@@ -46,7 +46,7 @@
             <span class="zdt-detail-value ddt-detail-value">
                 <?php if (isset($query['types']) && is_array($query['types'])): ?>
                     <?php foreach($query['types'] as $key => $value): ?>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $key ?> => <?php echo $value ?><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $key ?> => <?php \Doctrine\Common\Util\Debug::dump($value) ?><br/>
                     <?php endforeach ?>
                 <?php endif ?>
             </span>
