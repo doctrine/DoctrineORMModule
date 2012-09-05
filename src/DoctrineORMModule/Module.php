@@ -91,7 +91,7 @@ class Module implements
         $config = $app->getServiceManager()->get('Configuration');
         if (isset($config['doctrine']['migrations'])) {
             
-            $migrationsConfig = $config['doctrine']['migrations'];
+            $migrationsConfig = &$config['doctrine']['migrations'];
         }
         
         // Attach to helper set event and load the entity manager helper.
@@ -100,14 +100,24 @@ class Module implements
             $cli = $e->getTarget();
 
             ConsoleRunner::addCommands($cli);
-            $cli->addCommands(array(
-                new DiffCommand(null, $migrationsConfig),
-                new ExecuteCommand(null, $migrationsConfig),
-                new GenerateCommand(null, $migrationsConfig),
-                new MigrateCommand(null, $migrationsConfig),
-                new StatusCommand(null, $migrationsConfig),
-                new VersionCommand(null, $migrationsConfig),
-            ));
+            $commands = array(
+                new DiffCommand(),
+                new ExecuteCommand(),
+                new GenerateCommand(),
+                new MigrateCommand(),
+                new StatusCommand(),
+                new VersionCommand(),
+            );
+            
+            foreach ($commands as $command) {
+                
+                if (method_exists($command, 'setArrayConfig')) {
+                    
+                    $command->setArrayConfig($migrationsConfig);
+                }
+            }
+            
+            $cli->addCommands($commands);
 
             /* @var $sm ServiceLocatorInterface */
             $sm = $e->getParam('ServiceManager');
