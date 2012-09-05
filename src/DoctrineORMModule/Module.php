@@ -109,11 +109,14 @@ class Module implements
                 new VersionCommand(),
             );
             
-            foreach ($commands as $command) {
+            if (is_array($migrationsConfig)) {
                 
-                if (method_exists($command, 'setArrayConfig')) {
+                foreach ($commands as $command) {
                     
-                    $command->setArrayConfig($migrationsConfig);
+                    if (method_exists($command, 'setArrayConfig')) {
+                        
+                        $command->setArrayConfig($migrationsConfig);
+                    }
                 }
             }
             
