@@ -87,19 +87,26 @@ class Module implements
         $app    = $e->getTarget();
         $events = $app->getEventManager()->getSharedManager();
 
+        $migrationsConfig = null;
+        $config = $app->getServiceManager()->get('Configuration');
+        if (isset($config['doctrine']['migrations'])) {
+            
+            $migrationsConfig = &$config['doctrine']['migrations'];
+        }
+        
         // Attach to helper set event and load the entity manager helper.
-        $events->attach('doctrine', 'loadCli.post', function(EventInterface $e) {
+        $events->attach('doctrine', 'loadCli.post', function(EventInterface $e) use ($migrationsConfig) {
             /* @var $cli \Symfony\Component\Console\Application */
             $cli = $e->getTarget();
 
             ConsoleRunner::addCommands($cli);
             $cli->addCommands(array(
-                new DiffCommand(),
-                new ExecuteCommand(),
-                new GenerateCommand(),
-                new MigrateCommand(),
-                new StatusCommand(),
-                new VersionCommand(),
+                new DiffCommand(null, $migrationsConfig),
+                new ExecuteCommand(null, $migrationsConfig),
+                new GenerateCommand(null, $migrationsConfig),
+                new MigrateCommand(null, $migrationsConfig),
+                new StatusCommand(null, $migrationsConfig),
+                new VersionCommand(null, $migrationsConfig),
             ));
 
             /* @var $sm ServiceLocatorInterface */
