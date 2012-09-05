@@ -91,7 +91,7 @@ class Module implements
         $config = $app->getServiceManager()->get('Configuration');
         if (isset($config['doctrine']['migrations'])) {
             
-            $migrationsConfig = &$config['doctrine']['migrations'];
+            $migrationsConfig = $config['doctrine']['migrations'];
         }
         
         // Attach to helper set event and load the entity manager helper.
