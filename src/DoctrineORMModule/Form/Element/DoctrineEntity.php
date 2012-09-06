@@ -192,19 +192,8 @@ class DoctrineEntity extends SelectElement implements InputProviderInterface, El
     public function setValue($value)
     {
         if (is_object($value)) {
-            $metadata   = $this->objectManager->getClassMetadata(get_class($value));
-            $identifier = $metadata->getIdentifierFieldNames();
-
-            if (count($identifier) > 1) {
-                //$value = $key;
-            } else {
-                if ($value instanceof Proxy) {
-                    $value->__load();
-                }
-                $value = current($metadata->getIdentifierValues($value));
-            }
+            $value = $this->getIdentifiers($value);
         }
-
         return parent::setValue($value);
     }
 
@@ -286,6 +275,28 @@ class DoctrineEntity extends SelectElement implements InputProviderInterface, El
                 $this->getValidator()
             )
         );
+    }
+
+    protected function getIdentifiers($object)
+    {
+        if (!is_object($object)) {
+            return null;
+        }
+
+        $metadata   = $this->objectManager->getClassMetadata(get_class($object));
+        $identifier = $metadata->getIdentifierFieldNames();
+        $value      = null;
+
+        if (count($identifier) > 1) {
+            //$value = $key;
+        } else {
+            if ($object instanceof Proxy) {
+                $object->__load();
+            }
+            $value = current($metadata->getIdentifierValues($object));
+        }
+
+        return $value;
     }
 
     /**
