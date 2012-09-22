@@ -4,15 +4,11 @@ namespace DoctrineORMModule\Form\Element;
 
 use RuntimeException;
 use Doctrine\Common\Persistence\ObjectManager;
-use DoctrineModule\Validator\ObjectExists as ObjectExistsValidator;
 use Doctrine\ORM\Proxy\Proxy;
 use Zend\Form\Element\Select as SelectElement;
-use Zend\Form\ElementPrepareAwareInterface;
 use Zend\Form\Form;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\ValidatorInterface;
 
-class DoctrineEntity extends SelectElement implements InputProviderInterface, ElementPrepareAwareInterface
+class DoctrineEntity extends SelectElement
 {
     /**
      * @var ValidatorInterface
@@ -211,13 +207,24 @@ class DoctrineEntity extends SelectElement implements InputProviderInterface, El
     /**
      * {@inheritDoc}
      */
-    public function prepareElement(Form $form)
+    public function getValueOptions()
     {
         // Don't load data twice !
-        if (!empty($this->valueOptions)) {
-            return;
+        if (empty($this->valueOptions)) {
+            $this->loadValueOptions();
         }
 
+        return $this->valueOptions;
+    }
+
+    /**
+     * Load the options value from the database
+     *
+     * @throws \RuntimeException
+     * @return void
+     */
+    protected function loadValueOptions()
+    {
         if (!($om = $this->objectManager)) {
             throw new RuntimeException('No object manager was set');
         }
