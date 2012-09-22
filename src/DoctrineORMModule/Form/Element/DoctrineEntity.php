@@ -273,37 +273,5 @@ class DoctrineEntity extends SelectElement implements InputProviderInterface, El
 
         $this->setValueOptions($options);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getInputSpecification()
-    {
-        return array(
-            'name'       => $this->getName(),
-            'required'   => true,
-            'validators' => array(
-                $this->getValidator()
-            )
-        );
-    }
-
-    /**
-     * Get the validator
-     *
-     * @return ValidatorInterface
-     */
-    protected function getValidator()
-    {
-        if (null === $this->validator) {
-            $this->validator = new ObjectExistsValidator(array(
-                'object_repository' => $this->objectManager->getRepository($this->targetClass),
-                'fields'            => $this->objectManager->getClassMetadata($this->targetClass)
-                                                           ->getIdentifierFieldNames()
-            ));
-        }
-
-        return $this->validator;
-    }
 }
 
