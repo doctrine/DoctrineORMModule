@@ -28,7 +28,8 @@ return array(
 
                 'generate_proxies'  => true,
                 'proxy_dir'         => 'data/DoctrineORMModule/Proxy',
-                'proxy_namespace'   => 'DoctrineORMModule\Proxy'
+                'proxy_namespace'   => 'DoctrineORMModule\Proxy',
+                'filters'           => array()
             )
         ),
 

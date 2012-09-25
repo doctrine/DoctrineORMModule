@@ -94,6 +94,14 @@ class Configuration extends DBALConfiguration
     protected $numericFunctions = array();
 
     /**
+     * Keys must be the name of the custom filter and the value must be
+     * the class name for the custom filter.
+     * 
+     * @var array
+     */
+    protected $filters = array();
+
+    /**
      * Keys must be the name of the query and values the DQL query string.
      *
      * @var array
@@ -266,6 +274,24 @@ class Configuration extends DBALConfiguration
     public function getNumericFunctions()
     {
         return $this->numericFunctions;
+    }
+
+    /**
+     * 
+     * @param array $filters
+     * @return self
+     */
+    public function setFilters($filters) {
+        $this->filters = $filters;
+        return $this;
+    }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getFilters() {
+        return $this->filters;
     }
 
     /**
