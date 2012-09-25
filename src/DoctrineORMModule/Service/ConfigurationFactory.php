@@ -52,10 +52,6 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             $config->addCustomHydrationMode($modeName, $hydrator);
         }
 
-        foreach ($options->getFilters() as $name => $class) {
-            $config->addFilter($name, $class);
-        }
-        
         $config->setMetadataCacheImpl($serviceLocator->get($options->getMetadataCache()));
         $config->setQueryCacheImpl($serviceLocator->get($options->getQueryCache()));
 
