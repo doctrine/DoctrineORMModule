@@ -4,18 +4,14 @@ namespace DoctrineORMModule\Form\Element;
 
 use RuntimeException;
 use Doctrine\Common\Persistence\ObjectManager;
-use DoctrineModule\Validator\ObjectExists as ObjectExistsValidator;
 use Doctrine\ORM\Proxy\Proxy;
 use Zend\Form\Element\Select as SelectElement;
-use Zend\Form\ElementPrepareAwareInterface;
 use Zend\Form\Form;
-use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\ValidatorInterface;
 
-class DoctrineEntity extends SelectElement implements InputProviderInterface, ElementPrepareAwareInterface
+class DoctrineEntity extends SelectElement
 {
     /**
-     * @var ValidatorInterface
+     * @var \Zend\Validator\ValidatorInterface
      */
     protected $validator;
 
@@ -211,13 +207,24 @@ class DoctrineEntity extends SelectElement implements InputProviderInterface, El
     /**
      * {@inheritDoc}
      */
-    public function prepareElement(Form $form)
+    public function getValueOptions()
     {
         // Don't load data twice !
-        if (!empty($this->valueOptions)) {
-            return;
+        if (empty($this->valueOptions)) {
+            $this->loadValueOptions();
         }
 
+        return $this->valueOptions;
+    }
+
+    /**
+     * Load the options value from the database
+     *
+     * @throws \RuntimeException
+     * @return void
+     */
+    protected function loadValueOptions()
+    {
         if (!($om = $this->objectManager)) {
             throw new RuntimeException('No object manager was set');
         }
@@ -273,37 +280,4 @@ class DoctrineEntity extends SelectElement implements InputProviderInterface, El
 
         $this->setValueOptions($options);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getInputSpecification()
-    {
-        return array(
-            'name'       => $this->getName(),
-            'required'   => true,
-            'validators' => array(
-                $this->getValidator()
-            )
-        );
-    }
-
-    /**
-     * Get the validator
-     *
-     * @return ValidatorInterface
-     */
-    protected function getValidator()
-    {
-        if (null === $this->validator) {
-            $this->validator = new ObjectExistsValidator(array(
-                'object_repository' => $this->objectManager->getRepository($this->targetClass),
-                'fields'            => $this->objectManager->getClassMetadata($this->targetClass)
-                                                           ->getIdentifierFieldNames()
-            ));
-        }
-
-        return $this->validator;
-    }
 }
-
