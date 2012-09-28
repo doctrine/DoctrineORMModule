@@ -48,8 +48,8 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
-            "DoctrineORMModule": "src/",
-            "DoctrineORMModuleTest": "tests/"
+            "DoctrineORMModule\\": "src/",
+            "DoctrineORMModuleTest\\": "tests/"
         }
     }
 }
