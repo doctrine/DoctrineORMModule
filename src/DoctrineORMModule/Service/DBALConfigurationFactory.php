@@ -67,7 +67,12 @@ class DBALConfigurationFactory implements FactoryInterface
     {
         $options = $this->getOptions($serviceLocator);
         $config->setResultCacheImpl($serviceLocator->get($options->resultCache));
-        $config->setSQLLogger($options->sqlLogger);
+
+        $sqlLogger = $options->sqlLogger;
+        if (is_string($sqlLogger) and $serviceLocator->has($sqlLogger)) {
+            $sqlLogger = $serviceLocator->get($sqlLogger);
+        }
+        $config->setSQLLogger($sqlLogger);
 
         foreach ($options->types as $name => $class) {
             if (Type::hasType($name)) {
