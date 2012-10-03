@@ -22,7 +22,7 @@ namespace DoctrineORMModule;
 use DoctrineModule\Service\DriverFactory;
 use DoctrineModule\Service\EventManagerFactory;
 
-use DoctrineORMModule\Service\Authentication;
+use DoctrineModule\Service\Authentication;
 use DoctrineORMModule\Service\ConfigurationFactory as ORMConfigurationFactory;
 use DoctrineORMModule\Service\EntityManagerFactory;
 use DoctrineORMModule\Service\EntityResolverFactory;
