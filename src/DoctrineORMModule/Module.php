@@ -22,7 +22,7 @@ namespace DoctrineORMModule;
 use DoctrineModule\Service\DriverFactory;
 use DoctrineModule\Service\EventManagerFactory;
 
-use DoctrineORMModule\Service\Authentication
+use DoctrineORMModule\Service\Authentication;
 use DoctrineORMModule\Service\ConfigurationFactory as ORMConfigurationFactory;
 use DoctrineORMModule\Service\EntityManagerFactory;
 use DoctrineORMModule\Service\EntityResolverFactory;
@@ -146,7 +146,7 @@ class Module implements
                 'doctrine.authenticationadapter.orm_default'  => new Authentication\AdapterFactory('orm_default'),
                 'doctrine.authenticationstorage.orm_default'  => new Authentication\StorageFactory('orm_default'),
                 'doctrine.authenticationservice.orm_default'  => new Authentication\AuthenticationServiceFactory('orm_default'),
-                
+
                 'doctrine.connection.orm_default'           => new DBALConnectionFactory('orm_default'),
                 'doctrine.configuration.orm_default'        => new ORMConfigurationFactory('orm_default'),
                 'doctrine.entitymanager.orm_default'        => new EntityManagerFactory('orm_default'),
