@@ -56,7 +56,16 @@ return array(
 
         'entity_resolver' => array(
             'orm_default' => array()
-        )
+        ),
+
+        'authentication' => array(
+            'orm_default' => array(
+                'objectManager' => 'doctrine.entitymanager.orm_default',
+                //'identityClass' => 'Application\Model\User',
+                //'identityProperty' => 'username',
+                //'credentialProperty' => 'password'
+            ),
+        ),
     ),
 
     // zendframework/zend-developer-tools specific settings
