@@ -124,6 +124,21 @@ return array(
 
 You can add more connections by adding additional keys to the `connection` and specifying your parameters.
 
+#### How to Register Custom DQL Functions
+
+```php
+return array(    
+    'doctrine' => array(
+        'configuration' => array(
+            'orm_default' => array(
+                'numeric_functions' => array(
+                    'ROUND' => 'path\to\my\query\round'
+                )
+            )
+        ),
+    ),
+)
+```
 #### Full configuration options
 
 An exhaustive list of configuration options can be found directly in the Options classes of each module.
