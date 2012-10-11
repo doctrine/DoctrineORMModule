@@ -41,7 +41,7 @@ class Configuration extends DBALConfiguration
      *
      * @var string
      */
-    protected $driver = 'array';
+    protected $driver = 'orm_default';
 
     /**
      * Automatic generation of proxies (disable for production!)
