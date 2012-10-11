@@ -19,22 +19,14 @@
 
 namespace DoctrineORMModuleTest\Service;
 
-use DoctrineORMModuleTest\Framework\TestCase;
+use PHPUnit_Framework_TestCase;
 use DoctrineORMModule\Service\ConfigurationFactory;
 use Doctrine\ORM\Configuration as ORMConfiguration;
 use Zend\ServiceManager\ServiceManager;
 
 
-class ConfigurationFactoryTest extends TestCase
+class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
     public function testWillInstantiateConfigWithoutNamingStrategySetting()
     {
         $serviceManager = new ServiceManager();
