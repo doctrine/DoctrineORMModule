@@ -428,6 +428,6 @@ class Configuration extends DBALConfiguration
      */
     public function getNamingStrategy()
     {
-        return $this->customHydrationModes;
+        return $this->namingStrategy;
     }
 }
