@@ -3,6 +3,8 @@
 namespace DoctrineORMModule\Options;
 
 use DoctrineORMModule\Options\DBALConfiguration;
+use Doctrine\ORM\Mapping\NamingStrategy;
+use Zend\Stdlib\Exception\InvalidArgumentException;
 
 /**
  * Configuration options for an ORM Configuration
@@ -123,6 +125,14 @@ class Configuration extends DBALConfiguration
      * @var array
      */
     protected $customHydrationModes = array();
+
+    /**
+     * Naming strategy or name of the naming strategy service to be set in ORM
+     * configuration (if any)
+     *
+     * @var string|null|NamingStrategy
+     */
+    protected $namingStrategy;
 
     /**
      * @param  array $datetimeFunctions
@@ -283,6 +293,7 @@ class Configuration extends DBALConfiguration
      */
     public function setFilters($filters) {
         $this->filters = $filters;
+
         return $this;
     }
     
@@ -389,4 +400,34 @@ class Configuration extends DBALConfiguration
         return $this->customHydrationModes;
     }
 
+    /**
+     * @param string|null|NamingStrategy $namingStrategy
+     * @return self
+     */
+    public function setNamingStrategy($namingStrategy)
+    {
+        if (
+            null !== $namingStrategy
+            && !is_string($namingStrategy)
+            && !$namingStrategy instanceof NamingStrategy
+        ) {
+            throw new InvalidArgumentException(sprintf(
+                'namingStrategy must be either a string, a Doctrine\ORM\Mapping\NamingStrategy '
+                    . 'instance or null, %s given',
+                is_object($namingStrategy) ? get_class($namingStrategy) : gettype($namingStrategy)
+            ));
+        }
+
+        $this->namingStrategy = $namingStrategy;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null|NamingStrategy
+     */
+    public function getNamingStrategy()
+    {
+        return $this->customHydrationModes;
+    }
 }
