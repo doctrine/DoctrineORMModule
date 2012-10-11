@@ -26,9 +26,9 @@ Installation of this module uses composer. For composer documentation, please re
 
      ```json
      {
-         "minimum-stability": "dev",
+         "minimum-stability": "alpha",
          "require": {
-             "doctrine/doctrine-orm-module": "dev-master"
+             "doctrine/doctrine-orm-module": "0.*"
          }
      }
      ```

@@ -33,7 +33,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "doctrine/doctrine-module": "dev-master",
+        "doctrine/doctrine-module": "0.*",
         "doctrine/orm": ">=2.3-dev,<2.5-dev",
         "doctrine/dbal": ">=2.3-dev,<2.5-dev",
         "doctrine/migrations": "dev-master",
@@ -45,7 +45,7 @@
     "suggest": {
         "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "alpha",
     "autoload": {
         "psr-0": {
             "DoctrineORMModule\\": "src/",
