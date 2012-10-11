@@ -22,14 +22,34 @@ namespace DoctrineORMModuleTest\Service;
 use PHPUnit_Framework_TestCase;
 use DoctrineORMModule\Service\ConfigurationFactory;
 use Doctrine\ORM\Configuration as ORMConfiguration;
+use Doctrine\Common\Cache\ArrayCache;
 use Zend\ServiceManager\ServiceManager;
 
 
 class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var ServiceManager
+     */
+    protected $serviceManager;
+
+    /**
+     * @var ConfigurationFactory
+     */
+    protected $factory;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setUp()
+    {
+        $this->serviceManager = new ServiceManager();
+        $this->factory = new ConfigurationFactory('test_default');
+        $this->serviceManager->setService('doctrine.cache.array', new ArrayCache());
+    }
+
     public function testWillInstantiateConfigWithoutNamingStrategySetting()
     {
-        $serviceManager = new ServiceManager();
         $config = array(
             'doctrine' => array(
                 'configuration' => array(
@@ -39,15 +59,13 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
                 ),
             ),
         );
-        $serviceManager->setService('Config', $config);
-        $factory = new ConfigurationFactory('test_default');
-        $ormConfig = $factory->createService($serviceManager);
+        $this->serviceManager->setService('Config', $config);
+        $ormConfig = $this->factory->createService($this->serviceManager);
         $this->assertInstanceOf('Doctrine\ORM\Mapping\NamingStrategy', $ormConfig->getNamingStrategy());
     }
 
     public function testWillInstantiateConfigWithNamingStrategyObject()
     {
-        $serviceManager = new ServiceManager();
         $namingStrategy = $this->getMock('Doctrine\ORM\Mapping\NamingStrategy');
 
         $config = array(
@@ -59,15 +77,14 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
                 ),
             ),
         );
-        $serviceManager->setService('Config', $config);
+        $this->serviceManager->setService('Config', $config);
         $factory = new ConfigurationFactory('test_default');
-        $ormConfig = $factory->createService($serviceManager);
+        $ormConfig = $factory->createService($this->serviceManager);
         $this->assertSame($namingStrategy, $ormConfig->getNamingStrategy());
     }
 
     public function testWillInstantiateConfigWithNamingStrategyReference()
     {
-        $serviceManager = new ServiceManager();
         $namingStrategy = $this->getMock('Doctrine\ORM\Mapping\NamingStrategy');
         $config = array(
             'doctrine' => array(
@@ -78,16 +95,14 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
                 ),
             ),
         );
-        $serviceManager->setService('Config', $config);
-        $serviceManager->setService('test_naming_strategy', $namingStrategy);
-        $factory = new ConfigurationFactory('test_default');
-        $ormConfig = $factory->createService($serviceManager);
+        $this->serviceManager->setService('Config', $config);
+        $this->serviceManager->setService('test_naming_strategy', $namingStrategy);
+        $ormConfig = $this->factory->createService($this->serviceManager);
         $this->assertSame($namingStrategy, $ormConfig->getNamingStrategy());
     }
 
     public function testWillNotInstantiateConfigWithInvalidNamingStrategyReference()
     {
-        $serviceManager = new ServiceManager();
         $config = array(
             'doctrine' => array(
                 'configuration' => array(
@@ -97,10 +112,9 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
                 ),
             ),
         );
-        $serviceManager->setService('Config', $config);
-        $factory = new ConfigurationFactory('test_default');
+        $this->serviceManager->setService('Config', $config);
         $this->setExpectedException('Zend\ServiceManager\Exception\InvalidArgumentException');
-        $factory->createService($serviceManager);
+        $this->factory->createService($this->serviceManager);
     }
 }
 
