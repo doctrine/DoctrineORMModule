@@ -30,7 +30,6 @@ use DoctrineORMModule\Service\DBALConnectionFactory;
 use DoctrineORMModule\Service\SQLLoggerCollectorFactory;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 
-use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
