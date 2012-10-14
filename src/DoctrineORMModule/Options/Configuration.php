@@ -3,6 +3,8 @@
 namespace DoctrineORMModule\Options;
 
 use DoctrineORMModule\Options\DBALConfiguration;
+use Doctrine\ORM\Mapping\NamingStrategy;
+use Zend\Stdlib\Exception\InvalidArgumentException;
 
 /**
  * Configuration options for an ORM Configuration
@@ -39,7 +41,7 @@ class Configuration extends DBALConfiguration
      *
      * @var string
      */
-    protected $driver = 'array';
+    protected $driver = 'orm_default';
 
     /**
      * Automatic generation of proxies (disable for production!)
@@ -123,6 +125,14 @@ class Configuration extends DBALConfiguration
      * @var array
      */
     protected $customHydrationModes = array();
+
+    /**
+     * Naming strategy or name of the naming strategy service to be set in ORM
+     * configuration (if any)
+     *
+     * @var string|null|NamingStrategy
+     */
+    protected $namingStrategy;
 
     /**
      * @param  array $datetimeFunctions
@@ -283,6 +293,7 @@ class Configuration extends DBALConfiguration
      */
     public function setFilters($filters) {
         $this->filters = $filters;
+
         return $this;
     }
     
@@ -389,4 +400,35 @@ class Configuration extends DBALConfiguration
         return $this->customHydrationModes;
     }
 
+    /**
+     * @param string|null|NamingStrategy $namingStrategy
+     * @return self
+     * @throws InvalidArgumentException when the provided naming strategy does not fit the expected type
+     */
+    public function setNamingStrategy($namingStrategy)
+    {
+        if (
+            null === $namingStrategy
+            || is_string($namingStrategy)
+            || $namingStrategy instanceof NamingStrategy
+        ) {
+            $this->namingStrategy = $namingStrategy;
+
+            return $this;
+        }
+
+        throw new InvalidArgumentException(sprintf(
+            'namingStrategy must be either a string, a Doctrine\ORM\Mapping\NamingStrategy '
+                . 'instance or null, %s given',
+            is_object($namingStrategy) ? get_class($namingStrategy) : gettype($namingStrategy)
+        ));
+    }
+
+    /**
+     * @return string|null|NamingStrategy
+     */
+    public function getNamingStrategy()
+    {
+        return $this->namingStrategy;
+    }
 }
