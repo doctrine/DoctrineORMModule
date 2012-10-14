@@ -19,7 +19,6 @@
 
 namespace DoctrineORMModule\Service;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Tools\ResolveTargetEntityListener;
 use DoctrineModule\Service\AbstractFactory;

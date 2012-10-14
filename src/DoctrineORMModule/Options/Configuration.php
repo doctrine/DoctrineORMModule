@@ -403,24 +403,25 @@ class Configuration extends DBALConfiguration
     /**
      * @param string|null|NamingStrategy $namingStrategy
      * @return self
+     * @throws InvalidArgumentException when the provided naming strategy does not fit the expected type
      */
     public function setNamingStrategy($namingStrategy)
     {
         if (
-            null !== $namingStrategy
-            && !is_string($namingStrategy)
-            && !$namingStrategy instanceof NamingStrategy
+            null === $namingStrategy
+            || is_string($namingStrategy)
+            || $namingStrategy instanceof NamingStrategy
         ) {
-            throw new InvalidArgumentException(sprintf(
-                'namingStrategy must be either a string, a Doctrine\ORM\Mapping\NamingStrategy '
-                    . 'instance or null, %s given',
-                is_object($namingStrategy) ? get_class($namingStrategy) : gettype($namingStrategy)
-            ));
+            $this->namingStrategy = $namingStrategy;
+
+            return $this;
         }
 
-        $this->namingStrategy = $namingStrategy;
-
-        return $this;
+        throw new InvalidArgumentException(sprintf(
+            'namingStrategy must be either a string, a Doctrine\ORM\Mapping\NamingStrategy '
+                . 'instance or null, %s given',
+            is_object($namingStrategy) ? get_class($namingStrategy) : gettype($namingStrategy)
+        ));
     }
 
     /**
