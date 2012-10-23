@@ -51,7 +51,6 @@ return array(
             'doctrine_type_mappings' => array(
                 'enum' => 'string'
             ),
-            'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
         )
     )
 ),
