@@ -41,3 +41,18 @@ return array(
     ),
 ),
 ```
+
+### How to register type mapping
+
+```php
+    'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'doctrine_type_mappings' => array(
+                    'enum' => 'string'
+                ),
+                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+            )
+        )
+    ),
+```
