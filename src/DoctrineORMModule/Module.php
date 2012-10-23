@@ -23,6 +23,8 @@ use DoctrineModule\Service\DriverFactory;
 use DoctrineModule\Service\EventManagerFactory;
 
 use DoctrineModule\Service\Authentication;
+use DoctrineModule\Form\ObjectRepositoryProviderInterface;
+use DoctrineModule\Form\ProvidesObjectRepository;
 use DoctrineORMModule\Service\ConfigurationFactory as ORMConfigurationFactory;
 use DoctrineORMModule\Service\EntityManagerFactory;
 use DoctrineORMModule\Service\EntityResolverFactory;
@@ -32,6 +34,7 @@ use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
+use Zend\ModuleManager\Feature\FormElementProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -61,6 +64,7 @@ use Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
 class Module implements
     AutoloaderProviderInterface,
     BootstrapListenerInterface,
+    FormElementProviderInterface,
     ServiceProviderInterface,
     ConfigProviderInterface
 {
@@ -129,6 +133,24 @@ class Module implements
     public function getConfig()
     {
         return include __DIR__ . '/../../config/module.config.php';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFormElementConfig()
+    {
+        return array(
+            'initializers' => array(
+                'objectRepositoryProvider' => function($service, $sm) {
+                    if ($service instanceof ObjectRepositoryProviderInterface
+                        || in_array('DoctrineModule\Form\ProvidesObjectRepository', class_uses($service))) {
+                        $entityManager = $sm->get('Doctrine\ORM\EntityManager');
+                        $service->setObjectRepository($entityManager);
+                    }
+                }
+            )
+        );
     }
 
     /**
