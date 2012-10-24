@@ -23,8 +23,8 @@ use DoctrineModule\Service\DriverFactory;
 use DoctrineModule\Service\EventManagerFactory;
 
 use DoctrineModule\Service\Authentication;
-use DoctrineModule\Form\ObjectRepositoryProviderInterface;
-use DoctrineModule\Form\ProvidesObjectRepository;
+use DoctrineModule\Persistence\ObjectManagerProviderInterface;
+use DoctrineModule\Persistence\ProvidesObjectManager;
 use DoctrineORMModule\Service\ConfigurationFactory as ORMConfigurationFactory;
 use DoctrineORMModule\Service\EntityManagerFactory;
 use DoctrineORMModule\Service\EntityResolverFactory;
@@ -142,11 +142,11 @@ class Module implements
     {
         return array(
             'initializers' => array(
-                'objectRepositoryProvider' => function($service, $sm) {
-                    if ($service instanceof ObjectRepositoryProviderInterface
-                        || in_array('DoctrineModule\Form\ProvidesObjectRepository', class_uses($service))) {
+                'objectManagerProvider' => function($service, $sm) {
+                    if ($service instanceof ObjectManagerProviderInterface
+                        || in_array('DoctrineModule\Persistence\ProvidesObjectManager', class_uses($service))) {
                         $entityManager = $sm->get('Doctrine\ORM\EntityManager');
-                        $service->setObjectRepository($entityManager);
+                        $service->setObjectManager($entityManager);
                     }
                 }
             )
