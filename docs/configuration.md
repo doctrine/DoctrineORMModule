@@ -55,3 +55,39 @@ return array(
     )
 ),
 ```
+
+### How to add new type
+
+```php
+'doctrine' => array(
+    'configuration' => array(
+        'orm_default' => array(
+            'types' => array(
+                'mytype' => 'Application\Types\MyType'
+            )
+        )
+    ),
+),
+
+'connection' => array(
+    'orm_default' => array(
+        'doctrine_type_mappings' => array(            
+            'mytype' => 'mytype'
+        ),
+    )
+),
+
+/** 
+ * @ORM\Entity
+ */
+class Product 
+{
+    //..
+    /**
+     * @var array $attributes
+     *
+     * @ORM\Column(name="attributes", type="mytype")
+     */
+    protected $attributes;
+}
+```
