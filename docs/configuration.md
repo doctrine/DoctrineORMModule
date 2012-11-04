@@ -68,7 +68,9 @@ return array(
         )
     ),
 ),
+```
 
+```php
 'connection' => array(
     'orm_default' => array(
         'doctrine_type_mappings' => array(            
@@ -76,18 +78,4 @@ return array(
         ),
     )
 ),
-
-/** 
- * @ORM\Entity
- */
-class Product 
-{
-    //..
-    /**
-     * @var array $attributes
-     *
-     * @ORM\Column(name="attributes", type="mytype")
-     */
-    protected $attributes;
-}
 ```
