@@ -79,3 +79,97 @@ return array(
     )
 ),
 ```
+
+### How to Use Two Connections
+
+```php
+'doctrine' => array(
+        'connection' => array(
+            'orm_crawler' => array(
+                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => array(
+                    'host'     => 'localhost',
+                    'port'     => '3306',
+                    'user'     => 'root',
+                    'password' => 'root',
+                    'dbname'   => 'crawler',
+                    'driverOptions' => array(
+                        1002 => 'SET NAMES utf8'
+                    ),
+                )
+            )
+        ),
+
+        'configuration' => array(
+            'orm_crawler' => array(
+                'metadata_cache'    => 'array',
+                'query_cache'       => 'array',
+                'result_cache'      => 'array',
+                'driver'            => 'orm_crawler',
+                'generate_proxies'  => true,
+                'proxy_dir'         => 'data/DoctrineORMModule/Proxy',
+                'proxy_namespace'   => 'DoctrineORMModule\Proxy',
+                'filters'           => array()
+            )
+        ),
+
+        'driver' => array(
+            'Crawler_Driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(
+                    __DIR__ . '/../src/Crawler/Entity'
+                )
+            ),
+            'orm_crawler' => array(
+                'class'   => 'Doctrine\ORM\Mapping\Driver\DriverChain',
+                'drivers' => array(
+                    'Crawler\Entity' =>  'Crawler_Driver'
+                )
+            ),
+        ),
+
+        'entitymanager' => array(            
+            'orm_crawler' => array(
+                'connection'    => 'orm_crawler',
+                'configuration' => 'orm_crawler'
+            )
+        ),
+
+        'eventmanager' => array(
+            'orm_crawler' => array()
+        ),
+
+        'sql_logger_collector' => array(
+            'orm_crawler' => array(),
+        ),
+
+        'entity_resolver' => array(
+            'orm_crawler' => array()
+        ),
+
+    ),
+```
+
+Module.php
+```php
+public function getServiceConfig()
+{
+    return array(
+        'factories' => array(
+            'doctrine.connection.orm_crawler'           => new DBALConnectionFactory('orm_crawler'),
+            'doctrine.configuration.orm_crawler'        => new ORMConfigurationFactory('orm_crawler'),
+            'doctrine.entitymanager.orm_crawler'        => new EntityManagerFactory('orm_crawler'),
+
+            'doctrine.driver.orm_crawler'               => new DriverFactory('orm_crawler'),
+            'doctrine.eventmanager.orm_crawler'         => new EventManagerFactory('orm_crawler'),
+            'doctrine.entity_resolver.orm_crawler'      => new EntityResolverFactory('orm_crawler'),
+            'doctrine.sql_logger_collector.orm_crawler' => new SQLLoggerCollectorFactory('orm_crawler'),
+
+            'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function(ServiceLocatorInterface $sl) {
+                return new AnnotationBuilder($sl->get('doctrine.entitymanager.orm_crawler'));
+            },
+        ),
+    );
+}
+```
