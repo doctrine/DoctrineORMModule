@@ -51,5 +51,10 @@
             "DoctrineORMModule\\": "src/",
             "DoctrineORMModuleTest\\": "tests/"
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.6.x-dev"
+        }
     }
 }
