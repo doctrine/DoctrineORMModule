@@ -68,6 +68,7 @@ class Module implements
     public function init(ModuleManagerInterface $manager)
     {
         $events = $manager->getEventManager();
+        // Initialize logger collector once the profiler is initialized itself
         $events->attach('profiler_init', function(EventInterface $e) use ($manager) {
             $manager->getEvent()->getParam('ServiceManager')->get('doctrine.sql_logger_collector.orm_default');
         });
