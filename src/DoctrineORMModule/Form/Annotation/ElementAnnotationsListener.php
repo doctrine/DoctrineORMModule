@@ -176,6 +176,10 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
 
         $type = $annotation->type;
         switch ($type) {
+            case 'bool':
+            case 'boolean':
+                $type = 'Zend\Form\Element\Checkbox';
+                break;
             default:
                 $type = 'Zend\Form\Element';
                 break;
