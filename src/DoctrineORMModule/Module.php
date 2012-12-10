@@ -34,6 +34,8 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\InitProviderInterface;
+use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Loader\AutoloaderFactory;
 use Zend\Loader\StandardAutoloader;
@@ -62,8 +64,21 @@ class Module implements
     AutoloaderProviderInterface,
     BootstrapListenerInterface,
     ServiceProviderInterface,
-    ConfigProviderInterface
+    ConfigProviderInterface,
+    InitProviderInterface
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function init(ModuleManagerInterface $manager)
+    {
+        $events = $manager->getEventManager();
+        // Initialize logger collector once the profiler is initialized itself
+        $events->attach('profiler_init', function(EventInterface $e) use ($manager) {
+            $manager->getEvent()->getParam('ServiceManager')->get('doctrine.sql_logger_collector.orm_default');
+        });
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -112,15 +127,7 @@ class Module implements
             $helperSet->set(new EntityManagerHelper($em), 'em');
         });
 
-        $config = $app->getServiceManager()->get('Config');
         $app->getServiceManager()->get('doctrine.entity_resolver.orm_default');
-
-        if (
-            isset($config['zenddevelopertools']['profiler']['enabled'])
-            && $config['zenddevelopertools']['profiler']['enabled']
-        ) {
-            $app->getServiceManager()->get('doctrine.sql_logger_collector.orm_default');
-        }
     }
 
     /**
