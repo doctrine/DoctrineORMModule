@@ -34,6 +34,7 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Loader\AutoloaderFactory;
@@ -63,8 +64,12 @@ class Module implements
     AutoloaderProviderInterface,
     BootstrapListenerInterface,
     ServiceProviderInterface,
-    ConfigProviderInterface
+    ConfigProviderInterface,
+    InitProviderInterface
 {
+    /**
+     * {@inheritDoc}
+     */
     public function init(ModuleManagerInterface $manager)
     {
         $events = $manager->getEventManager();
@@ -122,7 +127,6 @@ class Module implements
             $helperSet->set(new EntityManagerHelper($em), 'em');
         });
 
-        $app->getServiceManager()->get('Config');
         $app->getServiceManager()->get('doctrine.entity_resolver.orm_default');
     }
 
