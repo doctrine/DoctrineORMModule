@@ -1,5 +1,4 @@
 <?php
-
 namespace DoctrineORMModule\Form\Annotation;
 
 use Doctrine\ORM\Mapping\Column;
@@ -9,6 +8,7 @@ use Zend\EventManager\ListenerAggregateInterface;
 
 class ElementAnnotationsListener implements ListenerAggregateInterface
 {
+
     /**
      * @var \Zend\Stdlib\CallbackHandler[]
      */
@@ -61,20 +61,16 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             return;
         }
 
-        $attributes = array();
-
+        $elementSpec = $e->getParam('elementSpec');
         switch ($annotation->type) {
             case 'bool':
             case 'boolean':
-                $attributes['type'] = 'checkbox';
+                $elementSpec['spec']['attributes']['type'] = 'checkbox';
                 break;
             case 'text':
-                $attributes['type'] = 'textarea';
+                $elementSpec['spec']['attributes']['type'] = 'textarea';
                 break;
         }
-
-        $elementSpec = $e->getParam('elementSpec');
-        $elementSpec['spec']['attributes'] = $attributes;
     }
 
     /**
