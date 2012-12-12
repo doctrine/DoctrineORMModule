@@ -61,20 +61,17 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             return;
         }
 
-        $attributes = array();
-
+        $elementSpec = $e->getParam('elementSpec');
         switch ($annotation->type) {
             case 'bool':
             case 'boolean':
-                $attributes['type'] = 'checkbox';
+                $elementSpec['spec']['attributes']['type'] = 'checkbox';
                 break;
             case 'text':
-                $attributes['type'] = 'textarea';
+               $elementSpec['spec']['attributes']['type'] = 'textarea';
                 break;
         }
 
-        $elementSpec = $e->getParam('elementSpec');
-        $elementSpec['spec']['attributes'] = $attributes;
     }
 
     /**
@@ -173,7 +170,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         if (!$annotation instanceof Column) {
             return;
         }
-
+                        
         $type = $annotation->type;
         switch ($type) {
             case 'bool':

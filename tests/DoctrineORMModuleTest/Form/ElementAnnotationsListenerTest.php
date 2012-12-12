@@ -27,6 +27,22 @@ class ElementAnnotationsListenerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedType , $spec['spec']['type']);
     }
 
+    public function testHandleAnnotationAttributesShallAppent() {
+        $listener = new ElementAnnotationsListener();
+        $event = new Zend\EventManager\Event();
+        $annotation = new Doctrine\ORM\Mapping\Column();
+        
+        $annotation->type = 'text';
+        $event->setParam('annotation', $annotation);
+        $event->setParam('elementSpec',  new ArrayObject(array(
+            'spec'  => array('attributes' => array('attr1')),
+        )));
+        
+        $listener->handleAttributesAnnotation($event);
+        $spec = $event->getParam('elementSpec');
+        $this->assertCount(2 , $spec['spec']['attributes']);
+    }
+
     public function eventProvider() {
 
         return array(
