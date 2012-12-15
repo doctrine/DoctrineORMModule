@@ -40,16 +40,6 @@ class MetadataGrapher
      */
     public function generateFromMetadata(array $metadata)
     {
-
-        //[note: You can stick notes on diagrams too!{bg:cornsilk}],
-        // [Customer]<>1-orders 0..*>[Order],
-        // [Order]++*-*>[LineItem],
-        // [Order]-1>[DeliveryMethod],
-        // [Order]*-*>[Product],
-        // [Category]<->[Product],
-        // [DeliveryMethod]^[National],
-        // [DeliveryMethod]^[International]"
-
         $str = array();
 
         foreach ($metadata as $class) {
@@ -69,14 +59,17 @@ class MetadataGrapher
     {
         $targetClassName = $class1->getAssociationTargetClass($association);
         $class2          = $this->getClassByName($targetClassName, $metadata);
+        $isInverse       = $class1->isAssociationInverseSide($association);
+        $class1Count     = $class1->isCollectionValuedAssociation($association) ? 2 : 1;
 
-        if (!$class2) {
-            // ...
+        if (null === $class2) {
+            return ($isInverse ? '<' : '<>') . '-' . $association . ' '
+                . ($class1Count > 1 ? '*' : ($class1Count ? '1' : ''))
+                . ($isInverse ? '<>' : '>')
+                . '[' . addslashes($targetClassName) . ']';
         }
 
-        $isInverse      = $class1->isAssociationInverseSide($association);
         $class1SideName = $association;
-        $class1Count    = $class1->isCollectionValuedAssociation($association) ? 2 : 1;
         $class2SideName = '';
         $class2Count    = 0;
         $bidirectional  = false;
@@ -102,7 +95,6 @@ class MetadataGrapher
             }
         }
 
-        // @todo mark owning side with <>
         return ($bidirectional ? ($isInverse ? '<' : '<>') : '') // class2 side arrow
             . ($class2SideName ? $class2SideName . ' ' : '')
             . ($class2Count > 1 ? '*' : ($class2Count ? '1' : '')) // class2 side single/multi valued
