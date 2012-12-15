@@ -45,7 +45,7 @@
     "suggest": {
         "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development"
     },
-    "minimum-stability": "alpha",
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
             "DoctrineORMModule\\": "src/",

@@ -19,16 +19,7 @@
 
 namespace DoctrineORMModule;
 
-use DoctrineModule\Service\DriverFactory;
-use DoctrineModule\Service\EventManagerFactory;
-
 use DoctrineModule\Service\Authentication;
-use DoctrineORMModule\Service\ConfigurationFactory as ORMConfigurationFactory;
-use DoctrineORMModule\Service\EntityManagerFactory;
-use DoctrineORMModule\Service\EntityResolverFactory;
-use DoctrineORMModule\Service\DBALConnectionFactory;
-use DoctrineORMModule\Service\SQLLoggerCollectorFactory;
-use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
@@ -144,34 +135,6 @@ class Module implements
      */
     public function getServiceConfig()
     {
-        return array(
-            'aliases' => array(
-                'Doctrine\ORM\EntityManager' => 'doctrine.entitymanager.orm_default',
-            ),
-            'factories' => array(
-
-                'doctrine.authenticationadapter.orm_default'  => new Authentication\AdapterFactory('orm_default'),
-                'doctrine.authenticationstorage.orm_default'  => new Authentication\StorageFactory('orm_default'),
-                'doctrine.authenticationservice.orm_default'  => new Authentication\AuthenticationServiceFactory('orm_default'),
-
-                'doctrine.connection.orm_default'             => new DBALConnectionFactory('orm_default'),
-                'doctrine.configuration.orm_default'          => new ORMConfigurationFactory('orm_default'),
-                'doctrine.entitymanager.orm_default'          => new EntityManagerFactory('orm_default'),
-
-                'doctrine.driver.orm_default'                 => new DriverFactory('orm_default'),
-                'doctrine.eventmanager.orm_default'           => new EventManagerFactory('orm_default'),
-                'doctrine.entity_resolver.orm_default'        => new EntityResolverFactory('orm_default'),
-                'doctrine.sql_logger_collector.orm_default'   => new SQLLoggerCollectorFactory('orm_default'),
-                'doctrine.mapping_collector.orm_default'      => function ($sl) {
-                    $em = $sl->get('doctrine.entitymanager.orm_default');
-
-                    return new MappingCollector($em->getMetadataFactory(), 'orm_default_mappings');
-                },
-
-                'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function(ServiceLocatorInterface $sl) {
-                    return new AnnotationBuilder($sl->get('doctrine.entitymanager.orm_default'));
-                },
-            ),
-        );
+        return include __DIR__ . '/../../config/services.config.php';
     }
 }
