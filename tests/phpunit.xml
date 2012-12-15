@@ -1,11 +1,27 @@
+<?xml version="1.0"?>
 <phpunit
     bootstrap="./Bootstrap.php"
     colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    verbose="true"
+    stopOnFailure="false"
+    processIsolation="false"
     backupGlobals="false"
+    syntaxCheck="true"
 >
-    <testsuites>
-        <testsuite name="DoctrineORMModule Test Suite">
-            <directory>./</directory>
-        </testsuite>
-    </testsuites>
+    <testsuite name="OcraServiceManager tests">
+        <directory>./</directory>
+    </testsuite>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./../src</directory>
+        </whitelist>
+    </filter>
+    <!--
+    <logging>
+        <log type="coverage-clover" target="./clover.xml"/>
+    </logging>
+    -->
 </phpunit>

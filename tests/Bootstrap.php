@@ -51,8 +51,7 @@ $config['doctrine']['driver']['test'] = array(
 );
 $config['doctrine']['entity_resolver']['orm_default'] = array(
     'resolvers' => array(
-        'DoctrineORMModuleTest\Assets\Entity\TargetInterface' =>
-        'DoctrineORMModuleTest\Assets\Entity\TargetEntity'
+        'DoctrineORMModuleTest\Assets\Entity\TargetInterface' => 'DoctrineORMModuleTest\Assets\Entity\TargetEntity'
     )
 );
 $config['doctrine']['driver']['orm_default']['drivers']['DoctrineORMModuleTest\Assets\Entity'] = 'test';
@@ -60,10 +59,9 @@ $config['doctrine']['connection']['orm_default'] = array(
     'configuration' => 'orm_default',
     'eventmanager'  => 'orm_default',
     'driverClass'   => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
-
     'params' => array(
-        'memory'        => true
-    )
+        'memory' => true,
+    ),
 );
 
 $serviceManager->setService('Config', $config);

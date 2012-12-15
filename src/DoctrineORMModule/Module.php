@@ -51,6 +51,7 @@ use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
+use DoctrineORMModule\Collector\MappingCollector;
 
 /**
  * Base module for Doctrine ORM.
@@ -74,7 +75,7 @@ class Module implements
     {
         $events = $manager->getEventManager();
         // Initialize logger collector once the profiler is initialized itself
-        $events->attach('profiler_init', function(EventInterface $e) use ($manager) {
+        $events->attach('profiler_init', function() use ($manager) {
             $manager->getEvent()->getParam('ServiceManager')->get('doctrine.sql_logger_collector.orm_default');
         });
     }
@@ -153,14 +154,19 @@ class Module implements
                 'doctrine.authenticationstorage.orm_default'  => new Authentication\StorageFactory('orm_default'),
                 'doctrine.authenticationservice.orm_default'  => new Authentication\AuthenticationServiceFactory('orm_default'),
 
-                'doctrine.connection.orm_default'           => new DBALConnectionFactory('orm_default'),
-                'doctrine.configuration.orm_default'        => new ORMConfigurationFactory('orm_default'),
-                'doctrine.entitymanager.orm_default'        => new EntityManagerFactory('orm_default'),
+                'doctrine.connection.orm_default'             => new DBALConnectionFactory('orm_default'),
+                'doctrine.configuration.orm_default'          => new ORMConfigurationFactory('orm_default'),
+                'doctrine.entitymanager.orm_default'          => new EntityManagerFactory('orm_default'),
 
-                'doctrine.driver.orm_default'               => new DriverFactory('orm_default'),
-                'doctrine.eventmanager.orm_default'         => new EventManagerFactory('orm_default'),
-                'doctrine.entity_resolver.orm_default'      => new EntityResolverFactory('orm_default'),
-                'doctrine.sql_logger_collector.orm_default' => new SQLLoggerCollectorFactory('orm_default'),
+                'doctrine.driver.orm_default'                 => new DriverFactory('orm_default'),
+                'doctrine.eventmanager.orm_default'           => new EventManagerFactory('orm_default'),
+                'doctrine.entity_resolver.orm_default'        => new EntityResolverFactory('orm_default'),
+                'doctrine.sql_logger_collector.orm_default'   => new SQLLoggerCollectorFactory('orm_default'),
+                'doctrine.mapping_collector.orm_default'      => function ($sl) {
+                    $em = $sl->get('doctrine.entitymanager.orm_default');
+
+                    return new MappingCollector($em->getMetadataFactory(), 'orm_default_mappings');
+                },
 
                 'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function(ServiceLocatorInterface $sl) {
                     return new AnnotationBuilder($sl->get('doctrine.entitymanager.orm_default'));

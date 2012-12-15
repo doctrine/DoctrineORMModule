@@ -73,19 +73,22 @@ return array(
 
     'view_manager' => array(
         'template_map' => array(
-            'zend-developer-tools/toolbar/doctrine-orm' => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm.phtml',
+            'zend-developer-tools/toolbar/doctrine-orm-queries'  => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-queries.phtml',
+            'zend-developer-tools/toolbar/doctrine-orm-mappings' => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-mappings.phtml',
         ),
     ),
 
     'zenddevelopertools' => array(
         'profiler' => array(
             'collectors' => array(
-                'orm_default' => 'doctrine.sql_logger_collector.orm_default',
+                'orm_default'  => 'doctrine.sql_logger_collector.orm_default',
+                'orm_default_mappings' => 'doctrine.mapping_collector.orm_default',
             ),
         ),
         'toolbar' => array(
             'entries' => array(
-                'orm_default' => 'zend-developer-tools/toolbar/doctrine-orm',
+                'orm_default'  => 'zend-developer-tools/toolbar/doctrine-orm-queries',
+                'orm_default_mappings' => 'zend-developer-tools/toolbar/doctrine-orm-mappings',
             ),
         ),
     ),
