@@ -38,6 +38,11 @@ class MetadataGrapher
     protected $visitedAssociations = array();
 
     /**
+     * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata[]
+     */
+    private $metadata;
+
+    /**
      * Generate a YUML compatible `dsl_text` to describe a given array
      * of entities
      *
@@ -47,10 +52,17 @@ class MetadataGrapher
      */
     public function generateFromMetadata(array $metadata)
     {
+        $this->metadata            = $metadata;
         $this->visitedAssociations = array();
-        $str = array();
+        $str                       = array();
 
         foreach ($metadata as $class) {
+            $parent = $this->getParent($class);
+
+            if ($parent) {
+                $str[] = $this->getClassString($parent) . '^' . $this->getClassString($class);
+            }
+
             $associations = $class->getAssociationNames();
 
             if (empty($associations) && !isset($this->visitedAssociations[$class->getName()])) {
@@ -60,8 +72,12 @@ class MetadataGrapher
             }
 
             foreach ($associations as $associationName) {
+                if ($parent && in_array($associationName, $parent->getAssociationNames())) {
+                    continue;
+                }
+
                 if ($this->visitAssociation($class->getName(), $associationName)) {
-                    $str[] = $this->getAssociationString($metadata, $class, $associationName);
+                    $str[] = $this->getAssociationString($class, $associationName);
                 }
             }
         }
@@ -69,10 +85,10 @@ class MetadataGrapher
         return implode(',', $str);
     }
 
-    private function getAssociationString(array $metadata, ClassMetadata $class1, $association)
+    private function getAssociationString(ClassMetadata $class1, $association)
     {
         $targetClassName = $class1->getAssociationTargetClass($association);
-        $class2          = $this->getClassByName($targetClassName, $metadata);
+        $class2          = $this->getClassByName($targetClassName);
         $isInverse       = $class1->isAssociationInverseSide($association);
         $class1Count     = $class1->isCollectionValuedAssociation($association) ? 2 : 1;
 
@@ -126,18 +142,25 @@ class MetadataGrapher
     /**
      * Build the string representing the single graph item
      *
-     * @param ClassMetadata $class
+     * @param ClassMetadata   $class
      *
      * @return string
      */
     private function getClassString(ClassMetadata $class)
     {
-        $className = $class->getName();
-        $classText = '[' . str_replace('\\', '.', $className);
+        $this->visitAssociation($class->getName());
 
-        $fields = array();
+        $className    = $class->getName();
+        $classText    = '[' . str_replace('\\', '.', $className);
+        $fields       = array();
+        $parent       = $this->getParent($class);
+        $parentFields = $parent ? $parent->getFieldNames() : array();
 
         foreach ($class->getFieldNames() as $fieldName) {
+            if (in_array($fieldName, $parentFields)) {
+                continue;
+            }
+
             if ($class->isIdentifier($fieldName)) {
                 $fields[] = '+' . $fieldName;
             } else {
@@ -158,19 +181,36 @@ class MetadataGrapher
      * Retrieve a class metadata instance by name from the given array
      *
      * @param string          $className
-     * @param ClassMetadata[] $metadata
      *
      * @return ClassMetadata|null
      */
-    private function getClassByName($className, $metadata)
+    private function getClassByName($className)
     {
-        foreach ($metadata as $class) {
+        foreach ($this->metadata as $class) {
             if ($class->getName() === $className) {
                 return $class;
             }
         }
 
         return null;
+    }
+
+    /**
+     * Retrieve a class metadata's parent class metadata
+     *
+     * @param ClassMetadata   $class
+     *
+     * @return ClassMetadata|null
+     */
+    private function getParent($class)
+    {
+        $className = $class->getName();
+
+        if (!class_exists($className) || (!$parent = get_parent_class($className))) {
+            return null;
+        }
+
+        return $this->getClassByName($parent);
     }
 
     /**
@@ -181,7 +221,7 @@ class MetadataGrapher
      *
      * @return bool true if the association was visited before
      */
-    private function visitAssociation($className, $association)
+    private function visitAssociation($className, $association = null)
     {
         if (null === $association) {
             if (isset($this->visitedAssociations[$className])) {
