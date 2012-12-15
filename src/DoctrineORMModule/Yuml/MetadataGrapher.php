@@ -135,7 +135,6 @@ class MetadataGrapher
         $className = $class->getName();
         $classText = '[' . addslashes($className);
 
-        /*
         $fields = array();
 
         foreach ($class->getFieldNames() as $fieldName) {
@@ -149,7 +148,6 @@ class MetadataGrapher
         if (!empty($fields)) {
             $classText .= '|' . implode(';', $fields);
         }
-        */
 
         $classText .= ']';
 
