@@ -56,7 +56,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
         $class->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
 
-        $this->assertSame('[Simple\\\\Entity]', $this->grapher->generateFromMetadata(array($class)));
+        $this->assertSame('[Simple.Entity]', $this->grapher->generateFromMetadata(array($class)));
     }
 
     /**
@@ -72,7 +72,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
             return $field === 'a';
         }));
 
-        $this->assertSame('[Simple\\\\Entity|+a;b;c]', $this->grapher->generateFromMetadata(array($class)));
+        $this->assertSame('[Simple.Entity|+a;b;c]', $this->grapher->generateFromMetadata(array($class)));
     }
 
     /**

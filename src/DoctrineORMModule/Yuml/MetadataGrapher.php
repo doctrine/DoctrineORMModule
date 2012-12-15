@@ -81,7 +81,7 @@ class MetadataGrapher
                 . ($isInverse ? '<' : '<>') . '-' . $association . ' '
                 . ($class1Count > 1 ? '*' : ($class1Count ? '1' : ''))
                 . ($isInverse ? '<>' : '>')
-                . '[' . addslashes($targetClassName) . ']';
+                . '[' . str_replace('\\', '.', $targetClassName) . ']';
         }
 
         $class1SideName = $association;
@@ -133,7 +133,7 @@ class MetadataGrapher
     private function getClassString(ClassMetadata $class)
     {
         $className = $class->getName();
-        $classText = '[' . addslashes($className);
+        $classText = '[' . str_replace('\\', '.', $className);
 
         $fields = array();
 
