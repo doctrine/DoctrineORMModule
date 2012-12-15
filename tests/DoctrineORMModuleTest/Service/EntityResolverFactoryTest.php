@@ -20,8 +20,6 @@
 namespace DoctrineORMModuleTest\Service;
 
 use DoctrineORMModuleTest\Framework\TestCase as TestCase;
-use Zend\ServiceManager\ServiceManager;
-
 
 class EntityResolverFactoryTest extends TestCase
 {
@@ -34,4 +32,3 @@ class EntityResolverFactoryTest extends TestCase
         $this->assertSame('DoctrineORMModuleTest\Assets\Entity\TargetEntity', $meta['target']['targetEntity']);
     }
 }
-

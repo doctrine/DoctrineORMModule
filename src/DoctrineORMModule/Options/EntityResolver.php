@@ -24,7 +24,6 @@ class EntityResolver extends AbstractOptions
      */
     protected $resolvers = array();
 
-
     /**
      * @param  string $eventManager
      * @return self
@@ -45,7 +44,7 @@ class EntityResolver extends AbstractOptions
     }
 
     /**
-     * @param array $resolvers
+     * @param  array                    $resolvers
      * @throws InvalidArgumentException
      */
     public function setResolvers(array $resolvers)

@@ -21,4 +21,3 @@ class ResolveTarget
      */
     protected $target;
 }
-

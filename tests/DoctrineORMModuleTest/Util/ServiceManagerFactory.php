@@ -59,7 +59,6 @@ class ServiceManagerFactory
         $moduleManager = $serviceManager->get('ModuleManager');
         $moduleManager->loadModules();
         //$serviceManager->setAllowOverride(true);
-
         return $serviceManager;
     }
 }

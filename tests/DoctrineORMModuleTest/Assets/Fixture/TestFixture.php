@@ -37,7 +37,7 @@ class TestFixture extends AbstractFixture
     /**
      * {@inheritDoc}
      */
-    function load(ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
         for ($i = 0; $i < self::INSTANCES_COUNT; $i += 1) {
             $instance = new TestEntity();

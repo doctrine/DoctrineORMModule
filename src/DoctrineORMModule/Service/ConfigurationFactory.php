@@ -52,7 +52,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         foreach ($options->getCustomHydrationModes() AS $modeName => $hydrator) {
             $config->addCustomHydrationMode($modeName, $hydrator);
         }
-        
+
         foreach ($options->getFilters() as $name => $class) {
             $config->addFilter($name, $class);
         }

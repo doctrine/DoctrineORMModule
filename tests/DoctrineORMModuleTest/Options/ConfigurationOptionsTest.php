@@ -22,7 +22,6 @@ namespace DoctrineORMModuleTest\Collector;
 use PHPUnit_Framework_TestCase as TestCase;
 use DoctrineORMModule\Options\Configuration;
 
-
 class ConfigurationOptionsTest extends TestCase
 {
     public function testSetGetNamingStrategy()

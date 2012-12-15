@@ -20,7 +20,6 @@
 namespace DoctrineORMModuleTest\Assets\GraphEntity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Part of the test assets used to produce a demo of graphs in the ZDT integration

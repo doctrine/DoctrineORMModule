@@ -106,7 +106,7 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
     {
         return $this->sqlLogger->queries;
     }
-    
+
     /**
      * @return float
      */

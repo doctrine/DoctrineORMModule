@@ -19,8 +19,6 @@
 
 namespace DoctrineORMModule;
 
-use DoctrineModule\Service\Authentication;
-
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
@@ -42,7 +40,6 @@ use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
-use DoctrineORMModule\Collector\MappingCollector;
 
 /**
  * Base module for Doctrine ORM.

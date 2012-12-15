@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <phpunit
-    bootstrap="./Bootstrap.php"
+    bootstrap="./tests/Bootstrap.php"
     colors="true"
     convertErrorsToExceptions="true"
     convertNoticesToExceptions="true"
@@ -12,16 +12,14 @@
     syntaxCheck="true"
 >
     <testsuite name="OcraServiceManager tests">
-        <directory>./</directory>
+        <directory>./tests</directory>
     </testsuite>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./../src</directory>
+            <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>
-    <!--
     <logging>
         <log type="coverage-clover" target="./clover.xml"/>
     </logging>
-    -->
 </phpunit>

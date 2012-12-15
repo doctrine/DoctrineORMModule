@@ -307,4 +307,3 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         );
     }
 }
-

@@ -24,7 +24,6 @@ use DoctrineORMModule\Collector\SQLLoggerCollector;
 use Doctrine\DBAL\Logging\DebugStack;
 use Zend\Mvc\MvcEvent;
 
-
 class SQLLoggerCollectorTest extends TestCase
 {
     /**
