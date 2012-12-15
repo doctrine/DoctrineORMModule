@@ -5,19 +5,7 @@ php:
   - 5.4
 
 before_script:
-  - cd ..
-  - git clone git://github.com/zendframework/ZendSkeletonApplication.git
-  - cd ZendSkeletonApplication
-  - rm config/application.config.php && cp ../DoctrineORMModule/.travis/application.config.php config/
-  - cp ../DoctrineORMModule/.travis/composer.json ./
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --dev
-  - rm -rf vendor/doctrine/doctrine-orm-module
-  - cp -r ../DoctrineORMModule vendor/doctrine/doctrine-orm-module
-  - cp ../DoctrineORMModule/.travis/travis.local.php config/autoload/
-  - mysql -e 'create database travis_test;'
+  - composer install --dev
 
 script:
-  - ./vendor/doctrine/doctrine-orm-module/.travis/run-cli.sh
-  - cd vendor/doctrine/doctrine-orm-module/tests
   - phpunit
