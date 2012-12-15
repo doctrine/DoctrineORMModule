@@ -42,12 +42,6 @@ class Address
     protected $id;
 
     /**
-     * @var User
-     * @ORM\OneToOne(targetEntity="User", inversedBy="address")
-     */
-    protected $user;
-
-    /**
      *
      */
     public function __construct()

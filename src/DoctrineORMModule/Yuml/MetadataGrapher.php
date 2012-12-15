@@ -90,23 +90,23 @@ class MetadataGrapher
         $bidirectional  = false;
 
         if ($isInverse) {
+            $class2SideName = (string) $class1->getAssociationMappedByTargetField($association);
+
+            if ($class2SideName) {
+                $class2Count    = $class2->isCollectionValuedAssociation($class2SideName) ? 2 : 1;
+                $bidirectional  = true;
+            }
+        } else {
             foreach ($class2->getAssociationNames() as $class2Side) {
                 if (
-                    !$class2->isAssociationInverseSide($class2Side)
+                    $class2->isAssociationInverseSide($class2Side)
                     && ($class2->getAssociationMappedByTargetField($class2Side) === $association)
                 ) {
                     $class2SideName = $class2Side;
-                    $class2Count    = $class2->isCollectionValuedAssociation($association) ? 2 : 1;
+                    $class2Count    = $class2->isCollectionValuedAssociation($class2SideName) ? 2 : 1;
                     $bidirectional  = true;
                     break;
                 }
-            }
-        } else {
-            $class2SideName = (string) $class1->getAssociationMappedByTargetField($association);
-            $class2Count    = $class2->isCollectionValuedAssociation($association) ? 2 : 1;
-
-            if ($class2SideName) {
-                $bidirectional  = true;
             }
         }
 

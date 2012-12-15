@@ -42,7 +42,7 @@ class Session
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="sessions")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="address")
      */
     protected $user;
 }
