@@ -53,7 +53,7 @@ class MetadataGrapher
         foreach ($metadata as $class) {
             $associations = $class->getAssociationNames();
 
-            if (empty($associations)) {
+            if (empty($associations) && !isset($this->visitedAssociations[$class->getName()])) {
                 $str[] = $this->getClassString($class);
 
                 continue;
@@ -110,9 +110,7 @@ class MetadataGrapher
             }
         }
 
-        if ($class2SideName) {
-            $this->visitAssociation($targetClassName, $class2SideName);
-        }
+        $this->visitAssociation($targetClassName, $class2SideName);
 
         return $this->getClassString($class1)
             . ($bidirectional ? ($isInverse ? '<' : '<>') : '') // class2 side arrow
@@ -180,13 +178,23 @@ class MetadataGrapher
     /**
      * Visit a given association and mark it as visited
      *
-     * @param string $className
-     * @param string $association
+     * @param string      $className
+     * @param string|null $association
      *
      * @return bool true if the association was visited before
      */
     private function visitAssociation($className, $association)
     {
+        if (null === $association) {
+            if (isset($this->visitedAssociations[$className])) {
+                return false;
+            }
+
+            $this->visitedAssociations[$className] = array();
+
+            return true;
+        }
+
         if (isset($this->visitedAssociations[$className][$association])) {
             return false;
         }

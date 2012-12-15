@@ -92,7 +92,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class2->expects($this->any())->method('getName')->will($this->returnValue('B'));
         $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
 
-        $this->assertSame('[A]1-b 1>[B],[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
+        $this->assertSame('[A]1-b 1>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
     }
 
     /**
@@ -203,7 +203,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class2->expects($this->any())->method('getName')->will($this->returnValue('B'));
         $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
 
-        $this->assertSame('[A]1-b *>[B],[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
+        $this->assertSame('[A]1-b *>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
     }
 
     /**
