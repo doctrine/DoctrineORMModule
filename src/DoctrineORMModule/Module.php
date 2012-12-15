@@ -20,6 +20,7 @@
 namespace DoctrineORMModule;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
@@ -51,6 +52,7 @@ use Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
  */
 class Module implements
     AutoloaderProviderInterface,
+    ControllerProviderInterface,
     BootstrapListenerInterface,
     ServiceProviderInterface,
     ConfigProviderInterface,
@@ -133,5 +135,13 @@ class Module implements
     public function getServiceConfig()
     {
         return include __DIR__ . '/../../config/services.config.php';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getControllerConfig()
+    {
+        return include __DIR__ . '/../../config/controllers.config.php';
     }
 }

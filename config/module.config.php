@@ -143,6 +143,21 @@ return array(
     // zend developer tools                                           //
     ////////////////////////////////////////////////////////////////////
 
+    'router' => array(
+        'routes' => array(
+            'doctrine_orm_module_yuml' => array(
+                'type' => 'Zend\\Mvc\\Router\\Http\\Literal',
+                'options' => array(
+                    'route' => '/ocra_service_manager_yuml',
+                    'defaults' => array(
+                        'controller' => 'DoctrineORMModule\\Yuml\\YumlController',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+        ),
+    ),
+
     'view_manager' => array(
         'template_map' => array(
             'zend-developer-tools/toolbar/doctrine-orm-queries'  => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-queries.phtml',

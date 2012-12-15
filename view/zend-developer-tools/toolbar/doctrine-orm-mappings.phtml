@@ -17,7 +17,7 @@
             Mappings for
             <span class="ddt-toolbar-info"><?php echo $this->escapeHtml($collector->getName()); ?></span>
         </span>
-        <form action="http://yuml.me/diagram/scruffy;/class/" method="post" target="_blank">
+        <form action="<?php echo $this->url('doctrine_orm_module_yuml'); ?>" method="post" target="_blank">
             <?php
                 $grapher = new \DoctrineORMModule\Yuml\MetadataGrapher();
                 $graph   = $grapher->generateFromMetadata($collector->getClasses());
