@@ -17,10 +17,6 @@
  * <http://www.doctrine-project.org>.
  */
 
-use Zend\ServiceManager\ServiceManager;
-use Zend\Mvc\Service\ServiceManagerConfig;
-use DoctrineORMModuleTest\Framework\TestCase;
-
 if  (
     !($loader = @include __DIR__ . '/../vendor/autoload.php')
     && !($loader = @include __DIR__ . '/../../../autoload.php')
@@ -36,44 +32,3 @@ if (!$config = @include __DIR__ . '/TestConfiguration.php') {
 }
 
 \DoctrineORMModuleTest\Util\ServiceManagerFactory::setConfig($config);
-
-/*
-// $configuration is loaded from TestConfiguration.php (or .dist)
-$serviceManager = new ServiceManager(new ServiceManagerConfig(
-    isset($configuration['service_manager']) ? $configuration['service_manager'] : array()
-));
-$serviceManager->setService('ApplicationConfig', $configuration);
-$serviceManager->setFactory('ServiceListener', 'Zend\Mvc\Service\ServiceListenerFactory');
-
-/** @var $moduleManager \Zend\ModuleManager\ModuleManager */ /*
-$moduleManager = $serviceManager->get('ModuleManager');
-$moduleManager->loadModules();
-$serviceManager->setAllowOverride(true);
-
-$config = $serviceManager->get('Config');
-$config['doctrine']['driver']['test'] = array(
-    'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-    'cache' => 'array',
-    'paths' => array(
-        __DIR__ . '/DoctrineORMModuleTest/Assets/Entity'
-    )
-);
-$config['doctrine']['entity_resolver']['orm_default'] = array(
-    'resolvers' => array(
-        'DoctrineORMModuleTest\Assets\Entity\TargetInterface' => 'DoctrineORMModuleTest\Assets\Entity\TargetEntity'
-    )
-);
-$config['doctrine']['driver']['orm_default']['drivers']['DoctrineORMModuleTest\Assets\Entity'] = 'test';
-$config['doctrine']['connection']['orm_default'] = array(
-    'configuration' => 'orm_default',
-    'eventmanager'  => 'orm_default',
-    'driverClass'   => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
-    'params' => array(
-        'memory' => true,
-    ),
-);
-
-$serviceManager->setService('Config', $config);
-$serviceManager->get('doctrine.entity_resolver.orm_default');
-TestCase::setServiceManager($serviceManager);
-*/

@@ -22,6 +22,7 @@ namespace DoctrineORMModule\Service;
 use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\Exception\InvalidArgumentException;
+use Doctrine\ORM\Configuration;
 
 class ConfigurationFactory extends DoctrineConfigurationFactory
 {
@@ -29,7 +30,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
     {
         /** @var $options \DoctrineORMModule\Options\Configuration */
         $options = $this->getOptions($serviceLocator);
-        $config  = new \Doctrine\ORM\Configuration();
+        $config  = new Configuration();
 
         $config->setAutoGenerateProxyClasses($options->getGenerateProxies());
         $config->setProxyDir($options->getProxyDir());

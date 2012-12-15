@@ -54,7 +54,7 @@ class CliTest extends PHPUnit_Framework_TestCase
         $application        = $serviceManager->get('Application');
         $invocations        = 0;
 
-        $sharedEventManager->attach('doctrine', 'loadCli.post', function(EventInterface $e) use (&$invocations) {
+        $sharedEventManager->attach('doctrine', 'loadCli.post', function() use (&$invocations) {
             $invocations += 1;
         });
 
