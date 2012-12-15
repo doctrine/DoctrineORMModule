@@ -115,10 +115,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
 
-        $this->assertSame(
-            '[A]<>a 1-b 1>[B],[B]<b 1-a 1<>[A]',
-            $this->grapher->generateFromMetadata(array($class1, $class2))
-        );
+        $this->assertSame('[A]<>a 1-b 1>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
     }
 
     /**
@@ -141,10 +138,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
         $class2->expects($this->any())->method('getAssociationMappedByTargetField')->will($this->returnValue('b'));
 
-        $this->assertSame(
-            '[A]<a 1-b 1<>[B],[B]<>b 1-a 1>[A]',
-            $this->grapher->generateFromMetadata(array($class1, $class2))
-        );
+        $this->assertSame('[A]<a 1-b 1<>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
     }
 
     /**
@@ -167,10 +161,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
 
-        $this->assertSame(
-            '[A]<>a 1-b *>[B],[B]<b *-a 1<>[A]',
-            $this->grapher->generateFromMetadata(array($class1, $class2))
-        );
+        $this->assertSame('[A]<>a 1-b *>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
     }
 
     /**
@@ -193,10 +184,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
 
-        $this->assertSame(
-            '[A]<>a *-b 1>[B],[B]<b 1-a *<>[A]',
-            $this->grapher->generateFromMetadata(array($class1, $class2))
-        );
+        $this->assertSame('[A]<>a *-b 1>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
     }
 
     /**
@@ -215,10 +203,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class2->expects($this->any())->method('getName')->will($this->returnValue('B'));
         $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
 
-        $this->assertSame(
-            '[A]1-b *>[B],[B]',
-            $this->grapher->generateFromMetadata(array($class1, $class2))
-        );
+        $this->assertSame('[A]1-b *>[B],[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
     }
 
     /**
@@ -237,10 +222,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
 
-        $this->assertSame(
-            '[A],[B]1-a *>[A]',
-            $this->grapher->generateFromMetadata(array($class1, $class2))
-        );
+        $this->assertSame('[A],[B]1-a *>[A]', $this->grapher->generateFromMetadata(array($class1, $class2)));
     }
 
     /**
@@ -263,10 +245,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
 
-        $this->assertSame(
-            '[A]<>a *-b *>[B],[B]<b *-a *<>[A]',
-            $this->grapher->generateFromMetadata(array($class1, $class2))
-        );
+        $this->assertSame('[A]<>a *-b *>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
     }
 
     /**
@@ -289,10 +268,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
         $class2->expects($this->any())->method('getAssociationMappedByTargetField')->will($this->returnValue('b'));
 
-        $this->assertSame(
-            '[A]<a *-b *<>[B],[B]<>b *-a *>[A]',
-            $this->grapher->generateFromMetadata(array($class1, $class2))
-        );
+        $this->assertSame('[A]<a *-b *<>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
     }
 
     /**

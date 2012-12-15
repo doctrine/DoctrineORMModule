@@ -31,6 +31,13 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 class MetadataGrapher
 {
     /**
+     * Temporary array where already visited collections are stored
+     *
+     * @var array
+     */
+    protected $visitedAssociations = array();
+
+    /**
      * Generate a YUML compatible `dsl_text` to describe a given array
      * of entities
      *
@@ -40,16 +47,23 @@ class MetadataGrapher
      */
     public function generateFromMetadata(array $metadata)
     {
+        $this->visitedAssociations = array();
         $str = array();
 
         foreach ($metadata as $class) {
-            $classText = $this->getClassString($class);
+            $associations = $class->getAssociationNames();
 
-            foreach ($class->getAssociationNames() as $associationName) {
-                $classText .= $this->getAssociationString($metadata, $class, $associationName);
+            if (empty($associations)) {
+                $str[] = $this->getClassString($class);
+
+                continue;
             }
 
-            $str[] = $classText;
+            foreach ($associations as $associationName) {
+                if ($this->visitAssociation($class->getName(), $associationName)) {
+                    $str[] = $this->getAssociationString($metadata, $class, $associationName);
+                }
+            }
         }
 
         return implode(',', $str);
@@ -63,7 +77,8 @@ class MetadataGrapher
         $class1Count     = $class1->isCollectionValuedAssociation($association) ? 2 : 1;
 
         if (null === $class2) {
-            return ($isInverse ? '<' : '<>') . '-' . $association . ' '
+            return $this->getClassString($class1)
+                . ($isInverse ? '<' : '<>') . '-' . $association . ' '
                 . ($class1Count > 1 ? '*' : ($class1Count ? '1' : ''))
                 . ($isInverse ? '<>' : '>')
                 . '[' . addslashes($targetClassName) . ']';
@@ -95,7 +110,12 @@ class MetadataGrapher
             }
         }
 
-        return ($bidirectional ? ($isInverse ? '<' : '<>') : '') // class2 side arrow
+        if ($class2SideName) {
+            $this->visitAssociation($targetClassName, $class2SideName);
+        }
+
+        return $this->getClassString($class1)
+            . ($bidirectional ? ($isInverse ? '<' : '<>') : '') // class2 side arrow
             . ($class2SideName ? $class2SideName . ' ' : '')
             . ($class2Count > 1 ? '*' : ($class2Count ? '1' : '')) // class2 side single/multi valued
             . '-'
@@ -105,6 +125,13 @@ class MetadataGrapher
             . $this->getClassString($class2);
     }
 
+    /**
+     * Build the string representing the single graph item
+     *
+     * @param ClassMetadata $class
+     *
+     * @return string
+     */
     private function getClassString(ClassMetadata $class)
     {
         $className = $class->getName();
@@ -132,6 +159,8 @@ class MetadataGrapher
     }
 
     /**
+     * Retrieve a class metadata instance by name from the given array
+     *
      * @param string          $className
      * @param ClassMetadata[] $metadata
      *
@@ -148,8 +177,26 @@ class MetadataGrapher
         return null;
     }
 
-    private function drawFields(ClassMetadata $class)
+    /**
+     * Visit a given association and mark it as visited
+     *
+     * @param string $className
+     * @param string $association
+     *
+     * @return bool true if the association was visited before
+     */
+    private function visitAssociation($className, $association)
     {
+        if (isset($this->visitedAssociations[$className][$association])) {
+            return false;
+        }
 
+        if (!isset($this->visitedAssociations[$className])) {
+            $this->visitedAssociations[$className] = array();
+        }
+
+        $this->visitedAssociations[$className][$association] = true;
+
+        return true;
     }
 }
