@@ -20,28 +20,15 @@
 namespace DoctrineORMModuleTest\Service;
 
 use DoctrineORMModuleTest\Framework\TestCase as TestCase;
-use DoctrineORMModule\Service\EntityResolverFactory;
-use Doctrine\ORM\Configuration as ORMConfiguration;
-use Zend\ServiceManager\ServiceManager;
-
 
 class EntityResolverFactoryTest extends TestCase
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
     public function testCanResolveTargetEntity()
     {
-        $em = $this->getEntityManager();
+        $em            = $this->getEntityManager();
         $classMetadata = $em->getClassMetadata('DoctrineORMModuleTest\Assets\Entity\ResolveTarget');
-        $meta = $classMetadata->associationMappings;
+        $meta          = $classMetadata->associationMappings;
 
         $this->assertSame('DoctrineORMModuleTest\Assets\Entity\TargetEntity', $meta['target']['targetEntity']);
     }
 }
-

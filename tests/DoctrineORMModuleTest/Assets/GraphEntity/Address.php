@@ -17,8 +17,41 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModuleTest\Doctrine;
+namespace DoctrineORMModuleTest\Assets\GraphEntity;
 
-class CliTest
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * Part of the test assets used to produce a demo of graphs in the ZDT integration
+ *
+ * @license MIT
+ * @link    http://www.doctrine-project.org/
+ * @author  Marco Pivetta <ocramius@gmail.com>
+ *
+ * @ORM\Entity()
+ */
+class Address
 {
+    /**
+     * @var int
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @var User
+     * @ORM\OneToOne(targetEntity="User", inversedBy="address")
+     */
+    protected $user;
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->groups = new ArrayCollection();
+    }
 }

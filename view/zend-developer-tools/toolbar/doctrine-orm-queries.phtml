@@ -1,0 +1,85 @@
+<?php /* @var $collector \DoctrineORMModule\Collector\SQLLoggerCollector */ ?>
+<div class="zdt-toolbar-entry">
+    <div class="zdt-toolbar-preview">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAaCAYAAAC3g3x9AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH3AwOFjIRE2xHhwAAAvZJREFUSMedlF9oVnUYxz/P77zzzRmruYELGhh48Qor3026sOlFUFHrQmMuvXAQZrS9r+DawkVSeCPsItmibbB3zMKSFBGLJcIuhnazaM2tZjRRr15LcP3BomKdc35PFxs7O2fnde92Lp/z/D6/7/N9nt8jRD7NPF3l4w0BO0CnHJFj0jc5RpGfiQZ8vB6gASgHedZX+drNpJ9ZM1BhWySSEGTEzaafXxNQ0NGYvA2iMuy1pvesGugk3feAWzG5SUTOetn07tUp7P7xd2d2Swo4FQtVueBlal8vGggg58/71nF6VfkGxIsWAeS8bPpQ7NllTTm8PeX7tgfhhbj/ocPCgNM32VIQuFDKR8D64oZEVeCM0z/VvKxkP5M+AgwuhUl1CtPSg2nsgMS6WI2KHPBbaztDCt3M9p2CvbLgT2Dw258gTzw1ryU/gz35Grj/xUm1in2ppP/7EaMgYHNRGAB//UFI7cEuSJQUaK7p1aYmR9xM3YuCXo616JFKTPsQUlkduPbTGHagHdy5OEtfNYLuLej5/V+xJ/ajN8YDpVt3YFq6oSQZo1P2iJ+pm1a0Zn5sS5HnmpGKx+H+bJC4fgNS3wgmGFvNz2C734C5v5cif0ko+tjiBa+0Ibv2FjUwUp3C7OvEnn5/aXiTCTUjfFsRY2iXhRICeYVHAexwP/LzbSh9GP78LcgqLcM0tsO6YN71zgz2XFeUdy+hwjTKk/NPxUW//SqcUlaB0zYYhk2NYk+9A370mcs1g8qFgiVtrMIc/RQ2bQ5g45exQ0djYAD2S+N4MgzkY6d137tIeVUA++Eq9rPjYG1c+l3Hc84YyU24qLbGKizbGMBufocd7ADPLdAgOSa5iX8Wt42bre0SpTPkyOYapOFNmM1jv/gw/nUAiH6c6Js6GFpfCuJlaz8Q5a2V9mAElnNc57DkJtzYBetl0w2qclIgtQIqD3Qm+ic/f+DGBtDjGP9e3cugDQL1CpUISVHuqHAd5aKTfOiSdI/9Gz37P6crCTosFB7sAAAAAElFTkSuQmCC" alt="Doctrine ORM (Queries)">
+        <span class="zdt-toolbar-info">
+            <?php echo $collector->getQueryCount(); ?>
+            queries in
+            <?php echo $this->zendDeveloperToolsTime($collector->getQueryTime()); ?> s
+        </span>
+    </div>
+    <div class="zdt-toolbar-detail">
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">
+            <a href="https://github.com/doctrine/DoctrineORMModule" target="_blank">
+                DoctrineORMModule
+            </a>
+        </span>
+        <span class="zdt-toolbar-info zdt-toolbar-info-heading">
+            Queries for
+            <span class="ddt-toolbar-info"> <?php echo $collector->getName() ?></span>
+        </span>
+        <span class="zdt-toolbar-info ddt-toolbar-info">
+        <?php foreach ($collector->getQueries() as $query): ?>
+            <hr/>
+            <span class="zdt-detail-label">SQL</span>
+            <span class="zdt-detail-value ddt-detail-query ddt-detail-value">
+                <?php /* highlight UPPERCASE words in the query, which should mostly match SQL keywords */ ?>
+                <?php echo preg_replace('/([A-Z]+)/', '<span class="highlight">$1</span>', $query['sql']) ?>
+            </span>
+            <span class="clear"></span>
+            <span class="zdt-detail-label">Params</span>
+            <span class="zdt-detail-value ddt-detail-value">
+                <?php if (isset($query['params']) && is_array($query['params'])): ?>
+                    <?php foreach($query['params'] as $key => $value): ?>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $key ?> => <?php \Doctrine\Common\Util\Debug::dump($value) ?><br/>
+                    <?php endforeach ?>
+                <?php endif ?>
+            </span>
+            <span class="clear"></span>
+            <span class="zdt-detail-label">Types</span>
+            <span class="zdt-detail-value ddt-detail-value">
+                <?php if (isset($query['types']) && is_array($query['types'])): ?>
+                    <?php foreach($query['types'] as $key => $value): ?>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $key ?> => <?php \Doctrine\Common\Util\Debug::dump($value) ?><br/>
+                    <?php endforeach ?>
+                <?php endif ?>
+            </span>
+            <span class="clear"></span>
+            <span class="zdt-detail-label">Time</span>
+            <span class="zdt-detail-value ddt-detail-value"><?php echo $query['executionMS'] ?></span>
+            <span class="clear"></span>
+        <?php endforeach ?>
+        </span>
+    </div>
+</div>
+<style>
+.zdt-toolbar-entry .zdt-toolbar-detail .ddt-toolbar-info {
+    font-size: 11px;
+    max-width: 600px;
+    witdh: 600px;
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.zdt-toolbar-entry .zdt-toolbar-detail .ddt-detail-query {
+    white-space: normal;
+    width: 400px;
+}
+
+.zdt-toolbar-entry .zdt-toolbar-detail .ddt-detail-query .highlight {
+    color: #80DC09;
+    font-weight: bold;
+}
+
+.zdt-toolbar-entry .zdt-toolbar-info .clear {
+    clear: both;
+    display: block;
+}
+
+.zdt-toolbar-entry .zdt-toolbar-detail .ddt-toolbar-info hr {
+    border: 0;
+    border-top: 1px solid #80DC09;
+    clear: both;
+}
+</style>

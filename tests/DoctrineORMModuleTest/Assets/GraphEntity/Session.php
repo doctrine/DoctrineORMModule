@@ -17,27 +17,32 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModuleTest\Collector;
+namespace DoctrineORMModuleTest\Assets\GraphEntity;
 
-use PHPUnit_Framework_TestCase as TestCase;
-use DoctrineORMModule\Options\Configuration;
+use Doctrine\ORM\Mapping as ORM;
 
-class ConfigurationOptionsTest extends TestCase
+/**
+ * Part of the test assets used to produce a demo of graphs in the ZDT integration
+ *
+ * @license MIT
+ * @link    http://www.doctrine-project.org/
+ * @author  Marco Pivetta <ocramius@gmail.com>
+ *
+ * @ORM\Entity()
+ */
+class Session
 {
-    public function testSetGetNamingStrategy()
-    {
-        $options = new Configuration();
-        $options->setNamingStrategy(null);
-        $this->assertNull($options->getNamingStrategy());
+    /**
+     * @var int
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
 
-        $options->setNamingStrategy('test');
-        $this->assertSame('test', $options->getNamingStrategy());
-
-        $namingStrategy = $this->getMock('Doctrine\ORM\Mapping\NamingStrategy');
-        $options->setNamingStrategy($namingStrategy);
-        $this->assertSame($namingStrategy, $options->getNamingStrategy());
-
-        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
-        $options->setNamingStrategy(new \stdClass());
-    }
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="sessions")
+     */
+    protected $user;
 }

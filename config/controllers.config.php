@@ -17,27 +17,24 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModuleTest\Collector;
+return array(
+    'factories' => array(
+        // Yuml controller, used to generate Yuml graphs since
+        // yuml.me doesn't do redirects on its own
+        'DoctrineORMModule\\Yuml\\YumlController'  => function (\Zend\ServiceManager\AbstractPluginManager $pluginManager) {
+            $config = $pluginManager->getServiceLocator()->get('Config');
 
-use PHPUnit_Framework_TestCase as TestCase;
-use DoctrineORMModule\Options\Configuration;
+            if (
+                !isset($config['zenddevelopertools']['toolbar']['enabled'])
+                || !$config['zenddevelopertools']['toolbar']['enabled']
+            ) {
+                // prevent instantiation if the toolbar is not enabled
+                return null;
+            }
 
-class ConfigurationOptionsTest extends TestCase
-{
-    public function testSetGetNamingStrategy()
-    {
-        $options = new Configuration();
-        $options->setNamingStrategy(null);
-        $this->assertNull($options->getNamingStrategy());
-
-        $options->setNamingStrategy('test');
-        $this->assertSame('test', $options->getNamingStrategy());
-
-        $namingStrategy = $this->getMock('Doctrine\ORM\Mapping\NamingStrategy');
-        $options->setNamingStrategy($namingStrategy);
-        $this->assertSame($namingStrategy, $options->getNamingStrategy());
-
-        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
-        $options->setNamingStrategy(new \stdClass());
-    }
-}
+            return new \DoctrineORMModule\Yuml\YumlController(
+                new \Zend\Http\Client('http://yuml.me/diagram/class/', array('timeout' => 30))
+            );
+        },
+    ),
+);

@@ -74,6 +74,6 @@ class Test
      */
     public function __toString()
     {
-        return (string)$this->username;
+        return (string) $this->username;
     }
 }

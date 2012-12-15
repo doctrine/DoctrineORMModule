@@ -16,40 +16,38 @@
  * and is licensed under the MIT license. For more information, see
  * <http://www.doctrine-project.org>.
  */
-
 return array(
     'doctrine' => array(
-        'configuration' => array(
-            'orm_default' => array(
-                'generate_proxies' => false,
-            ),
-        ),
-
-        'connection' => array(
-            'orm_default' => array(
-                'params' => array(
-                    'host'     => 'localhost',
-                    'port'     => '3306',
-                    'user'     => 'root',
-                    'password' => '',
-                    'dbname'   => 'travis_test'
-                )
-            )
-        ),
-
         'driver' => array(
-            'travis_driver' => array(
+            'DoctrineORMModuleTest\Assets\Entity' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => array(
-                    'vendor/doctrine/doctrine-orm-module/tests/DoctrineORMModuleTest/Assets/Entity'
-                )
+                    __DIR__ . '/DoctrineORMModuleTest/Assets/Entity'
+                ),
             ),
             'orm_default' => array(
                 'drivers' => array(
-                    'DoctrineORMModuleTest\Assets\Entity' => 'travis_driver'
-                )
-            )
-         )
+                    'DoctrineORMModuleTest\Assets\Entity' => 'DoctrineORMModuleTest\Assets\Entity',
+                ),
+            ),
+        ),
+        'entity_resolver' => array(
+            'orm_default' => array(
+                'resolvers' => array(
+                    'DoctrineORMModuleTest\Assets\Entity\TargetInterface' => 'DoctrineORMModuleTest\Assets\Entity\TargetEntity',
+                ),
+            ),
+        ),
+        'connection' => array(
+            'orm_default' => array(
+                'configuration' => 'orm_default',
+                'eventmanager'  => 'orm_default',
+                'driverClass'   => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
+                'params' => array(
+                    'memory' => true,
+                ),
+            ),
+        ),
     ),
 );

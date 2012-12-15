@@ -98,7 +98,7 @@ class Configuration extends DBALConfiguration
     /**
      * Keys must be the name of the custom filter and the value must be
      * the class name for the custom filter.
-     * 
+     *
      * @var array
      */
     protected $filters = array();
@@ -287,21 +287,23 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * 
-     * @param array $filters
+     *
+     * @param  array $filters
      * @return self
      */
-    public function setFilters($filters) {
+    public function setFilters($filters)
+    {
         $this->filters = $filters;
 
         return $this;
     }
-    
+
     /**
-     * 
+     *
      * @return array
      */
-    public function getFilters() {
+    public function getFilters()
+    {
         return $this->filters;
     }
 
@@ -382,7 +384,7 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param array $modes
+     * @param  array $modes
      * @return self
      */
     public function setCustomHydrationModes($modes)
@@ -401,9 +403,9 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param string|null|NamingStrategy $namingStrategy
+     * @param  string|null|NamingStrategy $namingStrategy
      * @return self
-     * @throws InvalidArgumentException when the provided naming strategy does not fit the expected type
+     * @throws InvalidArgumentException   when the provided naming strategy does not fit the expected type
      */
     public function setNamingStrategy($namingStrategy)
     {

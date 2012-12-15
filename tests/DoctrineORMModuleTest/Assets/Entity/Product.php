@@ -38,6 +38,7 @@ class Product
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -49,6 +50,7 @@ class Product
     public function setCategories($categories)
     {
         $this->categories = $categories;
+
         return $this;
     }
 

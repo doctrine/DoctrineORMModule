@@ -22,59 +22,50 @@ namespace DoctrineORMModuleTest\Framework;
 use PHPUnit_Framework_TestCase;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
-use Doctrine\ORM\Tools\ToolsException;
 use Zend\ServiceManager\ServiceManager;
+use DoctrineORMModuleTest\Util\ServiceManagerFactory;
 
+/**
+ * Base test case for tests using the entity manager
+ */
 class TestCase extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var ServiceManager
-     */
-    protected static $sm;
-
-    /**
      * @var boolean
      */
-    protected static $hasDb = false;
+    protected $hasDb = false;
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
 
     /**
      * Creates a database if not done already.
      */
     public function createDb()
     {
-        if (self::$hasDb) {
+        if ($this->hasDb) {
             return;
         }
 
-        $em = $this->getEntityManager();
+        $em   = $this->getEntityManager();
         $tool = new SchemaTool($em);
         $tool->updateSchema($em->getMetadataFactory()->getAllMetadata());
-        self::$hasDb = true;
+        $this->hasDb = true;
     }
 
+    /**
+     * Drops existing database
+     */
     public function dropDb()
     {
-        $em = $this->getEntityManager();
+        $em   = $this->getEntityManager();
         $tool = new SchemaTool($em);
         $tool->dropSchema($em->getMetadataFactory()->getAllMetadata());
         $em->clear();
-        self::$hasDb = false;
-    }
 
-    /**
-     * @param ServiceManager $sm
-     */
-    public static function setServiceManager(ServiceManager $sm)
-    {
-        self::$sm = $sm;
-    }
-
-    /**
-     * @return ServiceManager
-     */
-    public function getServiceManager()
-    {
-    	return self::$sm;
+        $this->hasDb = false;
     }
 
     /**
@@ -84,6 +75,14 @@ class TestCase extends PHPUnit_Framework_TestCase
      */
     public function getEntityManager()
     {
-        return $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
+        if ($this->entityManager) {
+            return $this->entityManager;
+        }
+
+        $serviceManager = ServiceManagerFactory::getServiceManager();
+        $serviceManager->get('doctrine.entity_resolver.orm_default');
+        $this->entityManager = $serviceManager->get('doctrine.entitymanager.orm_default');
+
+        return $this->entityManager;
     }
 }

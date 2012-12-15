@@ -5,19 +5,10 @@ php:
   - 5.4
 
 before_script:
-  - cd ..
-  - git clone git://github.com/zendframework/ZendSkeletonApplication.git
-  - cd ZendSkeletonApplication
-  - rm config/application.config.php && cp ../DoctrineORMModule/.travis/application.config.php config/
-  - cp ../DoctrineORMModule/.travis/composer.json ./
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --dev
-  - rm -rf vendor/doctrine/doctrine-orm-module
-  - cp -r ../DoctrineORMModule vendor/doctrine/doctrine-orm-module
-  - cp ../DoctrineORMModule/.travis/travis.local.php config/autoload/
-  - mysql -e 'create database travis_test;'
+  - composer install --dev
+  - wget http://cs.sensiolabs.org/get/php-cs-fixer.phar
 
 script:
-  - ./vendor/doctrine/doctrine-orm-module/.travis/run-cli.sh
-  - cd vendor/doctrine/doctrine-orm-module/tests
   - phpunit
+  - php coverage-checker.php clover.xml 60
+  - output=$(php php-cs-fixer.phar fix -v --dry-run --level=psr2 ./src/); if [[ $output ]]; then while read -r line; do echo -e "\e[00;31m$line\e[00m"; done <<< "$output"; false; fi;

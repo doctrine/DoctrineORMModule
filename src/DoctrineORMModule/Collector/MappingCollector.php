@@ -20,20 +20,21 @@
 namespace DoctrineORMModule\Collector;
 
 use ZendDeveloperTools\Collector\CollectorInterface;
-use ZendDeveloperTools\Collector\AutoHideInterface;
+use ZendDeveloperTools\Collector\AutoHideInterface;;
 
 use Zend\Mvc\MvcEvent;
 
-use Doctrine\DBAL\Logging\DebugStack;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
 
 /**
- * Collector to be used in ZendDeveloperTools to record and display SQL queries
+ * Collector to be used in ZendDeveloperTools to record and display mapping information
  *
  * @license MIT
  * @link    www.doctrine-project.org
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
+class MappingCollector implements CollectorInterface, AutoHideInterface, \Serializable
 {
     /**
      * Collector priority
@@ -41,23 +42,28 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
     const PRIORITY = 10;
 
     /**
-     * @var DebugStack
-     */
-    protected $sqlLogger;
-
-    /**
      * @var string
      */
     protected $name;
 
     /**
-     * @param DebugStack $sqlLogger
-     * @param string     $name
+     * @var ClassMetadataFactory|null
      */
-    public function __construct(DebugStack $sqlLogger, $name)
+    protected $classMetadataFactory = array();
+
+    /**
+     * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata[] indexed by class name
+     */
+    protected $classes = array();
+
+    /**
+     * @param ClassMetadataFactory $classMetadataFactory
+     * @param string               $name
+     */
+    public function __construct(ClassMetadataFactory $classMetadataFactory, $name)
     {
-        $this->sqlLogger = $sqlLogger;
-        $this->name = (string) $name;
+        $this->classMetadataFactory = $classMetadataFactory;
+        $this->name                 = (string) $name;
     }
 
     /**
@@ -81,6 +87,17 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
      */
     public function collect(MvcEvent $mvcEvent)
     {
+        if (!$this->classMetadataFactory) {
+            return;
+        }
+
+        /* @var $metadata \Doctrine\Common\Persistence\Mapping\ClassMetadata[] */
+        $metadata      = $this->classMetadataFactory->getAllMetadata();
+        $this->classes = array();
+
+        foreach ($metadata as $class) {
+            $this->classes[$class->getName()] = $class;
+        }
     }
 
     /**
@@ -88,36 +105,35 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
      */
     public function canHide()
     {
-        return empty($this->sqlLogger->queries);
+        return empty($this->classes);
     }
 
     /**
-     * @return int
+     * {@inheritDoc}
      */
-    public function getQueryCount()
+    public function serialize()
     {
-        return count($this->sqlLogger->queries);
+        return serialize(array(
+            'name'    => $this->name,
+            'classes' => $this->classes,
+        ));
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
-    public function getQueries()
+    public function unserialize($serialized)
     {
-        return $this->sqlLogger->queries;
+        $data          = unserialize($serialized);
+        $this->name    = $data['name'];
+        $this->classes = $data['classes'];
     }
 
     /**
-     * @return float
+     * @return \Doctrine\Common\Persistence\Mapping\ClassMetadata[]
      */
-    public function getQueryTime()
+    public function getClasses()
     {
-        $time = 0.0;
-
-        foreach ($this->sqlLogger->queries as $query) {
-            $time += $query['executionMS'];
-        }
-
-        return $time;
+        return $this->classes;
     }
 }

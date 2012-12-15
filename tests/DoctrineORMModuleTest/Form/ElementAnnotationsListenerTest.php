@@ -50,7 +50,6 @@ class ElementAnnotationsListenerTest extends PHPUnit_Framework_TestCase
 
     public function eventProvider()
     {
-
         return array(
             array('bool', 'Zend\Form\Element\Checkbox'),
             array('boolean', 'Zend\Form\Element\Checkbox'),
