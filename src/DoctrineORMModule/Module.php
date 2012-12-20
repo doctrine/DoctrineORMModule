@@ -99,14 +99,17 @@ class Module implements
             $cli = $e->getTarget();
 
             ConsoleRunner::addCommands($cli);
-            $cli->addCommands(array(
-                new DiffCommand(),
-                new ExecuteCommand(),
-                new GenerateCommand(),
-                new MigrateCommand(),
-                new StatusCommand(),
-                new VersionCommand(),
-            ));
+
+            if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
+                $cli->addCommands(array(
+                    new DiffCommand(),
+                    new ExecuteCommand(),
+                    new GenerateCommand(),
+                    new MigrateCommand(),
+                    new StatusCommand(),
+                    new VersionCommand(),
+                ));
+            }
 
             /* @var $sm ServiceLocatorInterface */
             $sm = $e->getParam('ServiceManager');

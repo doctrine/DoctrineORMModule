@@ -36,14 +36,15 @@
         "doctrine/doctrine-module": ">=0.5.1",
         "doctrine/orm": ">=2.3-dev,<2.5-dev",
         "doctrine/dbal": ">=2.3-dev,<2.5-dev",
-        "doctrine/migrations": "1.*",
         "zendframework/zendframework": "2.*"
     },
     "require-dev": {
-        "zendframework/zend-developer-tools": "dev-master"
+        "zendframework/zend-developer-tools": "dev-master",
+        "doctrine/migrations": "1.*"
     },
     "suggest": {
-        "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development"
+        "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development",
+        "doctrine/migrations": "doctrine migrations if you want to keep your schema definitions versioned"
     },
     "minimum-stability": "dev",
     "autoload": {
@@ -54,7 +55,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.6.x-dev"
+            "dev-master": "0.7.x-dev"
         }
     }
 }
