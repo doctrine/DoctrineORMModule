@@ -36,6 +36,20 @@ class EntityManagerFactory extends AbstractFactory
         $connection = $sl->get($options->getConnection());
         $config     = $sl->get($options->getConfiguration());
 
+    	// Table Prefix
+		// http://docs.doctrine-project.org/en/2.0.x/cookbook/sql-table-prefixes.html
+		$cfg = $sl->get('Config');
+		$cfg = $cfg['doctrine']['connection']['orm_default']['params'];
+
+		if (isset($cfg['tableprefix']))
+		{
+			$evm = $connection->getEventManager();
+			$tablePrefix = new TablePrefix($cfg['tableprefix']);
+			$evm->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $tablePrefix);
+			return EntityManager::create($connection, $config, $evm);
+		}
+		// Table Prefix
+
         return EntityManager::create($connection, $config);
     }
 
