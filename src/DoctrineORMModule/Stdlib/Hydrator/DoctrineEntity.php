@@ -27,7 +27,7 @@ use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineObjectHydrator;
  *
  * @license MIT
  * @link    http://www.doctrine-project.org/
- * @since   0.5.0
+ * @since   0.6.0
  * @author  Michaël Gallego <mic.gallego@gmail.com>
  */
 class DoctrineEntity extends DoctrineObjectHydrator
@@ -35,11 +35,10 @@ class DoctrineEntity extends DoctrineObjectHydrator
     /**
      * {@inheritDoc}
      */
-    protected function find($target, $identifiers)
+    protected function find($identifiers)
     {
         /* @var $entityManager \Doctrine\ORM\EntityManager */
         $entityManager = $this->objectManager;
-
-        return $entityManager->getReference($target, $identifiers);
+        return $entityManager->getReference($this->targetClass, $identifiers);
     }
 }
