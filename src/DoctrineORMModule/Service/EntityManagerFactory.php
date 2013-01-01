@@ -37,7 +37,7 @@ class EntityManagerFactory extends AbstractFactory
         $config     = $sl->get($options->getConfiguration());
 
     	// Table Prefix
-    	// Test
+    	// Test 2
 		// http://docs.doctrine-project.org/en/2.0.x/cookbook/sql-table-prefixes.html
 		$cfg = $sl->get('Config');
 		$cfg = $cfg['doctrine']['connection']['orm_default']['params'];
