@@ -93,6 +93,8 @@ return array(
                     'user'     => 'root',
                     'password' => 'root',
                     'dbname'   => 'crawler',
+		    		'tableprefix' => 'prefix_',
+		    		'nameing_strategy' => 'underscore_case_lower', // or 'UNDERSCORE_CASE_UPPER' everything else uses defaultNameingStrategy
                     'driverOptions' => array(
                         1002 => 'SET NAMES utf8'
                     ),

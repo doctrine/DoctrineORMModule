@@ -112,6 +112,8 @@ return array(
                     'user'     => 'username',
                     'password' => 'password',
                     'dbname'   => 'database',
+		  			'tableprefix' => 'prefix_',
+		  			'nameing_strategy' => 'underscore_case_lower', // or 'UNDERSCORE_CASE_UPPER' everything else uses defaultNameingStrategy
                 )
             )
         )
