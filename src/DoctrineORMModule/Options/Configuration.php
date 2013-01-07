@@ -35,6 +35,15 @@ class Configuration extends DBALConfiguration
     protected $queryCache = 'array';
 
     /**
+     * Set the cache key for the result cache. Cache key
+     * is assembled as "doctrine.cache.{key}" and pulled from
+     * service locator.
+     *
+     * @var string
+     */
+    protected $resultCache = 'array';
+
+    /**
      * Set the driver key for the metadata driver. Driver key
      * is assembeled as "doctrine.driver.{key}" and pulled from
      * service locator.
@@ -227,6 +236,25 @@ class Configuration extends DBALConfiguration
     public function getMetadataCache()
     {
         return "doctrine.cache.{$this->metadataCache}";
+    }
+
+    /**
+     * @param  string $resultCache
+     * @return self
+     */
+    public function setResultCache($resultCache)
+    {
+        $this->resultCache = $resultCache;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResultCache()
+    {
+        return "doctrine.cache.{$this->resultCache}";
     }
 
     /**
