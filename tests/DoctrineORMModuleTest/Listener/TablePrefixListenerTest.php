@@ -17,14 +17,33 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModuleTest\Service;
+namespace DoctrineORMModuleTest\Listener;
 
+use DoctrineORMModule\Listener\TablePrefixListener;
 use PHPUnit_Framework_TestCase;
 
-class EntityManagerFactoryTest extends PHPUnit_Framework_TestCase
+class TablePrefixListenerTest extends PHPUnit_Framework_TestCase
 {
-    public function testAlwaysFail()
+
+    protected $tablePrefixListener;
+    
+    public function setUp()
     {
-        $this->assertNotNull(null);
+        $this->tablePrefixListener = new TablePrefixListener('prefix');
     }
+    
+    public function testIsEventSubscriper()
+    {
+        $this->assertInstanceOf('\Doctrine\Common\EventSubscriber', $this->tablePrefixListener);
+    }
+    
+    public function testSubscribedEvents()
+    {
+         $subscribedEvents = $this->tablePrefixListener->getSubscribedEvents();
+         $count = count($subscribedEvents);
+         
+         $this->assertEquals($count,1);
+         $this->assertEquals($subscribedEvents[0], 'loadClassMetadata');
+    }
+    
 }
