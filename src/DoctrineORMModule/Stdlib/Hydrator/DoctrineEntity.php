@@ -39,6 +39,6 @@ class DoctrineEntity extends DoctrineObjectHydrator
     {
         /* @var $entityManager \Doctrine\ORM\EntityManager */
         $entityManager = $this->objectManager;
-        return $entityManager->getReference($this->targetClass, $identifiers);
+        return $entityManager->getReference($this->metadata->getName(), $identifiers);
     }
 }
