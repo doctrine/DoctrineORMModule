@@ -27,7 +27,7 @@ use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineObjectHydrator;
  *
  * @license MIT
  * @link    http://www.doctrine-project.org/
- * @since   0.6.0
+ * @since   0.7.0
  * @author  Michaël Gallego <mic.gallego@gmail.com>
  */
 class DoctrineEntity extends DoctrineObjectHydrator
