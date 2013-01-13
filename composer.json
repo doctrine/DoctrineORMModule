@@ -33,7 +33,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "doctrine/doctrine-module": "0.6.*",
+        "doctrine/doctrine-module": "0.7.*",
         "doctrine/orm": ">=2.3-dev,<2.5-dev",
         "doctrine/dbal": ">=2.3-dev,<2.5-dev",
         "zendframework/zend-stdlib": "2.*",
@@ -58,7 +58,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.7.x-dev"
+            "dev-master": "0.8.x-dev"
         }
     }
 }
