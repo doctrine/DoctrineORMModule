@@ -5,7 +5,7 @@ php:
   - 5.4
 
 before_script:
-  - composer install --dev
+  - composer install --dev --prefer-source
   - wget http://cs.sensiolabs.org/get/php-cs-fixer.phar
 
 script:
