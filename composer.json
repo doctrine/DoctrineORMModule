@@ -33,11 +33,14 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "doctrine/doctrine-module": ">=0.5.1",
+        "doctrine/doctrine-module": "0.5.*",
         "doctrine/orm": ">=2.3-dev,<2.5-dev",
         "doctrine/dbal": ">=2.3-dev,<2.5-dev",
         "doctrine/migrations": "1.*",
-        "zendframework/zendframework": "2.*"
+        "zendframework/zend-stdlib": "2.*",
+        "zendframework/zend-form": "2.*",
+        "zendframework/zend-mvc": "2.*",
+        "zendframework/zend-servicemanager": "2.*"
     },
     "require-dev": {
         "zendframework/zend-developer-tools": "dev-master"
