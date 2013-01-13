@@ -1,87 +1,55 @@
-# DoctrineORM Module for Zend Framework 2
+# Doctrine 2 ORM Module for Zend Framework 2
 
-Master: [![Build Status](https://secure.travis-ci.org/doctrine/DoctrineORMModule.png?branch=master)](http://travis-ci.org/doctrine/DoctrineORMModule)
+[![Master branch build status](https://secure.travis-ci.org/doctrine/DoctrineORMModule.png?branch=master)](http://travis-ci.org/doctrine/DoctrineORMModule)
 
-The DoctrineORMModule module intends to integrate Doctrine 2 ORM with Zend Framework 2 quickly
-and easily. The following features are intended to work out of the box:
+DoctrineORMModule integrates Doctrine 2 ORM with Zend Framework 2 quickly and easily.
 
-  - Doctrine ORM support
+  - Doctrine 2 ORM support
   - Multiple ORM entity managers
   - Multiple DBAL connections
-  - Support reuse existing PDO connections in DBAL
-
-## Requirements
-[Zend Framework 2](http://www.github.com/zendframework/zf2)
+  - Reuse existing PDO connections in DBAL connection
 
 ## Installation
 
 Installation of this module uses composer. For composer documentation, please refer to
 [getcomposer.org](http://getcomposer.org/).
 
-#### Installation steps
+```sh
+php composer.phar require doctrine/doctrine-orm-module
+# (When asked for a version, type `0.*`)
+```
 
-  1. `cd my/project/directory`
-  2. create a `composer.json` file with following contents (minimum stability is required since the module still has
-     frequent updates):
+Then add `DoctrineModule` and `DoctrineORMModule` to your `config/application.config.php` and create directory
+`data/DoctrineORMModule/Proxy` and make sure your application has write access to it.
 
-     ```json
-     {
-         "minimum-stability": "alpha",
-         "require": {
-             "doctrine/doctrine-orm-module": "0.*"
-         }
-     }
-     ```
-  3. run `php composer.phar install`
-  4. open `my/project/directory/config/application.config.php` and add `DoctrineModule` and `DoctrineORMModule` to your `modules`
-  5. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
-     access to it. This directory can be changed using the module options.
+Installation without composer is not officially supported and requires you to manually install all dependencies
+that are listed in `composer.json`
 
+## Entities settings
 
-
-#### Installation steps (without composer)
-
-  1. install [DoctrineModule](http://github.com/doctrine/DoctrineModule)
-  2. clone this module to `vendor/DoctrineORMModule`
-  3. setup PSR-0 autoloading for namespace `DoctrineORMModule` (the directory where the classes in this namespace live 
-     is `vendor/DoctrineORMModule/src/DoctrineORMModule`.
-  4. The module depends on [Doctrine ORM 2.3.*](https://github.com/doctrine/orm), 
-     [Doctrine DBAL 2.3.*](https://github.com/doctrine/dbal), 
-     [Doctrine Migrations](https://github.com/doctrine/migrations). You have to download/install those
-     packages and have them autoloaded.
-  5. open `my/project/directory/config/application.config.php` and add `DoctrineModule` and `DoctrineORMModule` to your `modules`
-  6. create directory `my/project/directory/data/DoctrineORMModule/Proxy` and make sure your application has write
-     access to it. This directory can be changed using the module options.
-
-#### Registering drivers with the DriverChain
-
-To register drivers with Doctrine module simply add the drivers to the doctrine.driver key in your configuration.
+To register your entities with the ORM, add following metadata driver configurations to your application
+config for each of your entities namespaces:
 
 ```php
 <?php
 return array(
     'doctrine' => array(
         'driver' => array(
+            // defines an annotation driver with to paths, and names it `my_annotation_driver`
             'my_annotation_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array('path/to/my/entities', 'another/path/if/i/want')
-            )
-        )
-    )
-);
-```
+                'paths' => array(
+                    'path/to/my/entities',
+                    'another/path'
+                ),
+            ),
 
-By default, this module ships with a DriverChain so that modules can add their entities to the chain. Once you have setup
-your driver you should add it to the chain as follows:
-
-```php
-<?php
-return array(
-    'doctrine' => array(
-        'driver' => array(
+            // default metadata driver, aggregates all other drivers into a single one.
+            // Override `orm_default` only if you know what you're doing
             'orm_default' => array(
                 'drivers' => array(
+                    // register `my_annotation_driver` for any entity under namespace `My\Namespace`
                     'My\Namespace' => 'my_annotation_driver'
                 )
             )
@@ -90,20 +58,16 @@ return array(
 );
 ```
 
-You also have access to the chain directly via the `doctrine.driver.orm_default` service and you can manipulate the
-chain however you wish and/or add drivers to it directly without using the driver factory and configuration array. A
-good place to do this is the `onBootstrap()` method of your `Module.php` file or in another service.
+## Connection settings
 
-#### Setting up your connection
-
-Setup your connection by adding the module configuration to any valid ZF2 config file. This can be any file in autoload/
-or a module configuration (such as the Application/config/module.config.php file).
+Connection parameters can be defined in the application configuration:
 
 ```php
 <?php
 return array(
     'doctrine' => array(
         'connection' => array(
+            // default connection name
             'orm_default' => array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
                 'params' => array(
@@ -119,24 +83,27 @@ return array(
 );
 ```
 
-You can add more connections by adding additional keys to the `connection` and specifying your parameters.
-
 #### Full configuration options
 
 An exhaustive list of configuration options can be found directly in the Options classes of each module.
 
- * [Common configuration](https://github.com/Doctrine/DoctrineModule/tree/master/src/DoctrineModule/Options)
- * [ORM Configuration](https://github.com/Doctrine/DoctrineORMModule/tree/master/src/DoctrineORMModule/Options)
+ * [DoctrineModule configuration](https://github.com/Doctrine/DoctrineModule/tree/master/src/DoctrineModule/Options)
+ * [ORM Module Configuration](https://github.com/Doctrine/DoctrineORMModule/tree/master/src/DoctrineORMModule/Options)
+ * [ORM Module Defaults](https://github.com/Doctrine/DoctrineORMModule/tree/master/config/module.config.php)
 
-## Usage
+You can find documentation about the module's features at the following links:
 
-#### Registered Services
+ * [DoctrineModule documentation](https://github.com/Doctrine/DoctrineModule/tree/master/docs)
+ * [DoctrineORMModule documentation](https://github.com/Doctrine/DoctrineORMModule/tree/master/docs)
 
- * doctrine.connection.orm_default
- * doctrine.configuration.orm_default
- * doctrine.driver.orm_default
- * doctrine.entitymanager.orm_default
- * doctrine.eventmanager.orm_default
+## Registered Service names
+
+ * `doctrine.connection.orm_default`: a `Doctrine\DBAL\Connection` instance
+ * `doctrine.configuration.orm_default`: a `Doctrine\ORM\Configuration` instance
+ * `doctrine.driver.orm_default`: default mapping driver instance
+ * `doctrine.entitymanager.orm_default`: the `Doctrine\ORM\EntityManager` instance
+ * `Doctrine\ORM\EntityManager`: an alias of `doctrine.entitymanager.orm_default`
+ * `doctrine.eventmanager.orm_default`: the `Doctrine\Common\EventManager` instance
 
 #### Command Line
 Access the Doctrine command line as following
@@ -146,43 +113,10 @@ Access the Doctrine command line as following
 ```
 
 #### Service Locator
-Access the entity manager using the following alias:
+To access the entity manager, use the main service locator:
 
 ```php
-<?php
+// for example, in a controller:
 $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+$em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
 ```
-
-#### Injection
-You can also inject the `EntityManager` directly in your controllers/services by using a controller factory. Please
-refer to the official ServiceManager documentation for more information.
-
-Example implementation using `Boostrap` event that you can add into you module class:
-```php
-<?php
-
-namespace MyModule;
-
-class Module
-{
-    //..
-
-    public function onBootstrap(\Zend\EventManager\EventInterface $e)
-    {
-        $application = $e->getApplication();
-        $serviceManager = $application->getServiceManager();
-
-        $controllerLoader = $serviceManager->get('ControllerLoader');
-
-        // Add initializer to Controller Service Manager that check if controllers needs entity manager injection
-        $controllerLoader->addInitializer(function ($instance) use ($serviceManager) {
-            if (method_exists($instance, 'setEntityManager')) {
-                $instance->setEntityManager($serviceManager->get('doctrine.entitymanager.orm_default'));
-            }
-        });
-    }
-}
-```
-
-#### Implementing EntityManagerAware interface
-Coming soon!
