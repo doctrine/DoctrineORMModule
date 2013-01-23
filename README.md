@@ -35,7 +35,7 @@ config for each of your entities namespaces:
 return array(
     'doctrine' => array(
         'driver' => array(
-            // defines an annotation driver with to paths, and names it `my_annotation_driver`
+            // defines an annotation driver with two paths, and names it `my_annotation_driver`
             'my_annotation_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
