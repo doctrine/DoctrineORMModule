@@ -34,7 +34,7 @@ class EntityManagerInitializer implements InitializerInterface
     /**
      * @param string $entityManagerServiceName
      */
-    public function __construct( $entityManagerServiceName )
+    public function __construct($entityManagerServiceName )
     {
         $this->setEntityManagerServiceName($entityManagerServiceName);
     }
