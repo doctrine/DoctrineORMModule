@@ -19,25 +19,35 @@
 
 namespace DoctrineORMModuleTest\Service;
 
+use DoctrineORMModuleTest\Framework\TestCase;
+use DoctrineORMModule\Service\EntityManagerInitializer;
 use PHPUnit_Framework_TestCase;
 use Doctrine\ORM\EntityManager;
 use Zend\ServiceManager\ServiceManager;
 use DoctrineORMModuleTest\Util\ServiceManagerFactory;
 
-/**
- * Base test case for tests using the entity manager
- */
-class EntityManagerInitializerTest extends PHPUnit_Framework_TestCase
+class EntityManagerInitializerTest extends TestCase
 {
-    public function testServiceManagerWillInitializeEntityManager()
-    {
+    public function testActualServiceManagerWillInitializeEntityManager()
+    {        
         $serviceManager = ServiceManagerFactory::getServiceManager();
         $serviceManager->get('doctrine.entity_resolver.orm_default');
+        $serviceManager->setInvokableClass('object-manager-aware', 'DoctrineORMModuleTest\Service\ObjectManagerAwareDummy');
         
-        $entityManager = $serviceManager->get('doctrine.entitymanager.orm_default');
+        $entityManager = $serviceManager->get('doctrine.entitymanager.orm_default');        
         
-        $serviceManager->setInvokableClass('test', 'DoctrineORMModuleTest\Service\ObjectManagerAwareDummy');
+        $this->assertSame($entityManager, $serviceManager->get('object-manager-aware')->getObjectManager());
+    }
+    
+    public function testServiceManagerWillInitializeEntityManager()
+    {
+        $entityManager = $this->getEntityManager();
         
-        $this->assertSame($entityManager, $serviceManager->get('test')->getObjectManager());
+        $serviceManager = new ServiceManager();
+        $serviceManager->setService('entity-manager', $entityManager);
+        $serviceManager->setInvokableClass('object-manager-aware', 'DoctrineORMModuleTest\Service\ObjectManagerAwareDummy');
+        $serviceManager->addInitializer(new EntityManagerInitializer('entity-manager'));
+    
+        $this->assertSame($entityManager, $serviceManager->get('object-manager-aware')->getObjectManager());
     }
 }
