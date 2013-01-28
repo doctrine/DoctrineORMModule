@@ -22,7 +22,7 @@ return array(
         'Doctrine\ORM\EntityManager' => 'doctrine.entitymanager.orm_default',
     ),
     'initializers' => array(
-        'doctrine.initializers.entity_manager' => new \DoctrineORMModule\Service\EntityManagerInitialize('doctrine.entitymanager.orm_default'),
+        'doctrine.initializers.entity_manager' => new \DoctrineORMModule\Service\EntityManagerInitializer('doctrine.entitymanager.orm_default'),
     ),
     'factories' => array(
 
