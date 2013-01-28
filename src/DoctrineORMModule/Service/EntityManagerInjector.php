@@ -26,6 +26,19 @@ use Zend\ServiceManager\ServiceLocatorInterface,
 
 class EntityManagerInitializer implements InitializerInterface
 {
+    /**
+     * @var string
+     */
+    protected $entityManagerServiceName;
+    
+    /**
+     * @param string $entityManagerServiceName
+     */
+    public function __construct( $entityManagerServiceName )
+    {
+        $this->setEntityManagerServiceName($entityManagerServiceName);
+    }
+
     /*
      * Inject the entity manager into classes implementing the ObjectManagerAwareInterface
      * interface.
@@ -34,9 +47,25 @@ class EntityManagerInitializer implements InitializerInterface
      */
     public function initialize($instance, ServiceLocatorInterface $serviceLocator)
     {
-        if( !$instance instanceof ObjectManagerAwareInterface )
+        if(!$instance instanceof ObjectManagerAwareInterface)
             return;
         
-        $instance->setObjectManager($serviceLocator->get('doctrine.entitymanager.orm_default'));
+        $instance->setObjectManager($serviceLocator->get($this->getEntityManagerServiceName()));
     }
+    
+    /**
+     * @return string $entityManagerServiceName
+     */
+    public function getEntityManagerServiceName()
+    {
+        return $this->entityManagerServiceName;
+    }
+
+    /**
+     * @param string $entityManagerServiceName
+     */
+    public function setEntityManagerServiceName($entityManagerServiceName)
+    {
+        $this->entityManagerServiceName = $entityManagerServiceName;
+    } 
 }
