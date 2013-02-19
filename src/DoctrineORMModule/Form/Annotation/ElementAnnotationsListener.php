@@ -1,6 +1,7 @@
 <?php
 namespace DoctrineORMModule\Form\Annotation;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Zend\EventManager\EventManagerInterface;
@@ -13,6 +14,21 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
      * @var \Zend\Stdlib\CallbackHandler[]
      */
     protected $listeners = array();
+
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $em;
+
+    /**
+     * Constructor. Ensures EntityManager is present.
+     *
+     * @param \Doctrine\ORM\EntityManager $em
+     */
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
 
     /**
      * Detach listeners
@@ -42,6 +58,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         $this->listeners[] = $events->attach('configureElement', array($this, 'handleRequiredAnnotation'));
         $this->listeners[] = $events->attach('configureElement', array($this, 'handleTypeAnnotation'));
         $this->listeners[] = $events->attach('configureElement', array($this, 'handleValidatorAnnotation'));
+        $this->listeners[] = $events->attach('configureElement', array($this, 'handleLinkedFormElements'));
 
         $this->listeners[] = $events->attach('checkForExclude', array($this, 'handleExcludeAnnotation'));
     }
@@ -233,5 +250,34 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
                 }
                 break;
         }
+    }
+
+    /**
+     * Handle the form elements which require the doctrine entity manager to populate.
+     *
+     * @param  \Zend\EventManager\EventInterface $e
+     * @return void
+     */
+    public function handleLinkedFormElements($e)
+    {
+        $annotation = $e->getParam('annotation');
+        if (!$annotation instanceof \Zend\Form\Annotation\Type) {
+            return;
+        }
+
+        if (!in_array(
+            $annotation->getType(),
+            array(
+                'DoctrineORMModule\Form\Element\EntityMultiCheckbox',
+                'DoctrineORMModule\Form\Element\EntityRadio',
+                'DoctrineORMModule\Form\Element\EntitySelect',
+            )
+        )) {
+            return;
+        }
+
+        $elementSpec = $e->getParam('elementSpec');
+
+        $elementSpec['spec']['options']['object_manager'] = $this->em;
     }
 }
