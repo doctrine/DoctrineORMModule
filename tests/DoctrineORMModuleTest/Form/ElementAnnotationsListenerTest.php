@@ -9,13 +9,25 @@ use DoctrineORMModule\Form\Annotation\ElementAnnotationsListener;
  */
 class ElementAnnotationsListenerTest extends PHPUnit_Framework_TestCase
 {
+    protected $listener;
+
+    protected $entityManager;
+
+    protected function setUp()
+    {
+        $this->entityManager = $this->getMockBuilder('Doctrine\ORM\EntityManager')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->listener = new ElementAnnotationsListener($this->entityManager);
+    }
 
     /**
      * @dataProvider eventProvider
      */
     public function testHandleAnnotationType($type, $expectedType)
     {
-        $listener = new ElementAnnotationsListener();
+        $listener = $this->listener;
         $event = new Zend\EventManager\Event();
         $checkboxAnnotation = new Doctrine\ORM\Mapping\Column();
         $checkboxAnnotation->type = $type;
@@ -30,7 +42,7 @@ class ElementAnnotationsListenerTest extends PHPUnit_Framework_TestCase
 
     public function testHandleAnnotationAttributesShallAppent()
     {
-        $listener = new ElementAnnotationsListener();
+        $listener = $this->listener;
         $event = new Zend\EventManager\Event();
         $annotation = new Doctrine\ORM\Mapping\Column();
 
@@ -54,6 +66,44 @@ class ElementAnnotationsListenerTest extends PHPUnit_Framework_TestCase
             array('bool', 'Zend\Form\Element\Checkbox'),
             array('boolean', 'Zend\Form\Element\Checkbox'),
             array('string', 'Zend\Form\Element'),
+        );
+    }
+
+    /**
+     * @covers DoctrineORMModule\Form\Annotation\ElemenetAnnotationsListener::handleLinkedFormElements
+     * @dataProvider linkedElementTypeProvider
+     */
+    public function testHandleLinkedFormElements($type, $requiresEntityManager)
+    {
+        $listener = $this->listener;
+        $event = new \Zend\EventManager\Event();
+        $annotation = new \Zend\Form\Annotation\Type(array('value' => $type));
+
+        $event->setParam('annotation', $annotation);
+        $event->setParam('elementSpec', new ArrayObject(array(
+            'spec' => array('options' => array()),
+        )));
+
+        $listener->handleLinkedFormElements($event);
+        $spec = $event->getParam('elementSpec');
+
+        if ($requiresEntityManager) {
+            $this->assertArrayHasKey('object_manager', $spec['spec']['options']);
+            $this->assertEquals($this->entityManager, $spec['spec']['options']['object_manager']);
+            return;
+        }
+
+        $this->assertArrayNotHasKey('object_manager', $spec['spec']['options']);
+
+    }
+
+    public function linkedElementTypeProvider()
+    {
+        return array(
+            array('DoctrineORMModule\Form\Element\EntityMultiCheckbox', true),
+            array('DoctrineORMModule\Form\Element\EntityRadio',         true),
+            array('DoctrineORMModule\Form\Element\EntitySelect',        true),
+            array('Zend\Form\Element',                                  false),
         );
     }
 }
