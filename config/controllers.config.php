@@ -37,4 +37,8 @@ return array(
             );
         },
     ),
+
+	'invokables' => array(
+		'DoctrineORMModule\Controller\Index' => 'DoctrineORMModule\Controller\IndexController'
+	)
 );

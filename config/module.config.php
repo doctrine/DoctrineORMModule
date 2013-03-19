@@ -135,6 +135,13 @@ return array(
                 //'credentialProperty' => 'password'
             ),
         ),
+
+		// migrations configuration
+		'migrations' => array(
+			'directory' => 'data/DoctrineORMModule/Migrations',
+			'namespace' => 'DoctrineORMModule\Migrations',
+			'table' => 'migrations'
+		)
     ),
 
     ////////////////////////////////////////////////////////////////////
@@ -179,4 +186,26 @@ return array(
             ),
         ),
     ),
+
+	'route_manager' => array(
+		'invokables' => array(
+			'symfonycli' => 'DoctrineORMModule\Mvc\Router\Console\SymfonyCli',
+		),
+	),
+
+	'console' => array(
+		'router' => array(
+			'routes' => array(
+				'cliapp' => array(
+					'type' => 'symfonycli',
+					'options' => array(
+						'defaults' => array(
+							'controller' => 'DoctrineORMModule\Controller\Index',
+							'action' => 'index'
+						)
+					)
+				)
+			)
+		)
+	),
 );

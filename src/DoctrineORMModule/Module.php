@@ -30,6 +30,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Loader\AutoloaderFactory;
 use Zend\Loader\StandardAutoloader;
 use Zend\EventManager\EventInterface;
+use Zend\Console\Adapter\AdapterInterface as Console;
+use Zend\Mvc\MvcEvent;
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Symfony\Component\Console\Helper\DialogHelper;
@@ -41,6 +43,9 @@ use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
+
+use DoctrineORMModule\Component\Console\Input\StringInput;
+use DoctrineORMModule\Component\Console\Output\PropertyOutput;
 
 /**
  * Base module for Doctrine ORM.
@@ -58,7 +63,9 @@ class Module implements
     ConfigProviderInterface,
     InitProviderInterface
 {
-    /**
+	private $serviceManager;
+
+	/**
      * {@inheritDoc}
      */
     public function init(ModuleManagerInterface $manager)
@@ -122,6 +129,8 @@ class Module implements
         });
 
         $app->getServiceManager()->get('doctrine.entity_resolver.orm_default');
+
+		$this->serviceManager = $e->getApplication()->getServiceManager();
     }
 
     /**
@@ -147,4 +156,18 @@ class Module implements
     {
         return include __DIR__ . '/../../config/controllers.config.php';
     }
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getConsoleUsage(Console $console) {
+		$input = new StringInput('list');
+		$output = new PropertyOutput();
+
+		$cli = $this->serviceManager->get('doctrine.cliapp');
+
+		$cli->run($input, $output);
+
+		return $output->getMessage();
+	}
 }
