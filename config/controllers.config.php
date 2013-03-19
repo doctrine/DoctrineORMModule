@@ -42,5 +42,5 @@ return array(
                 new Client('http://yuml.me/diagram/class/', array('timeout' => 30))
             );
         },
-    ),
+    )
 );

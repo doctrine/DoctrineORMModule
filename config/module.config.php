@@ -142,6 +142,13 @@ return array(
                 //'credentialProperty' => 'password'
             ),
         ),
+
+        // migrations configuration
+        'migrations' => array(
+            'directory' => 'data/DoctrineORMModule/Migrations',
+            'namespace' => 'DoctrineORMModule\Migrations',
+            'table' => 'migrations'
+        )
     ),
 
     ////////////////////////////////////////////////////////////////////

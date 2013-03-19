@@ -30,16 +30,9 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Loader\StandardAutoloader;
 use Zend\EventManager\EventInterface;
 
-use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Symfony\Component\Console\Helper\DialogHelper;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
-use Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand;
-use Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand;
-use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
-use Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand;
-use Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand;
-use Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
 
 /**
  * Base module for Doctrine ORM.
@@ -80,42 +73,56 @@ class Module implements
         /* @var $app \Zend\Mvc\ApplicationInterface */
         $app    = $e->getTarget();
         $events = $app->getEventManager()->getSharedManager();
+        $serviceManager = $app->getServiceManager();
 
         // Attach to helper set event and load the entity manager helper.
-        $events->attach(
-            'doctrine',
-            'loadCli.post',
-            function (EventInterface $e) {
-                /* @var $cli \Symfony\Component\Console\Application */
-                $cli = $e->getTarget();
+        $events->attach('doctrine', 'loadCli.post', function (EventInterface $e) {
+            /* @var $cli \Symfony\Component\Console\Application */
+            $cli = $e->getTarget();
 
-                ConsoleRunner::addCommands($cli);
+            /* @var $sm ServiceLocatorInterface */
+            $sm = $e->getParam('ServiceManager');
 
-                if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
-                    $cli->addCommands(
-                        array(
-                            new DiffCommand(),
-                            new ExecuteCommand(),
-                            new GenerateCommand(),
-                            new MigrateCommand(),
-                            new StatusCommand(),
-                            new VersionCommand(),
-                        )
-                    );
-                }
+            $ORMCommands = array(
+                $sm->get('doctrine.cmd.dbal.runsql'),
+                $sm->get('doctrine.cmd.dbal.import'),
+                $sm->get('doctrine.cmd.orm.clear-cache.metadata'),
+                $sm->get('doctrine.cmd.orm.clear-cache.result'),
+                $sm->get('doctrine.cmd.orm.clear-cache.query'),
+                $sm->get('doctrine.cmd.orm.schema-tool.create'),
+                $sm->get('doctrine.cmd.orm.schema-tool.update'),
+                $sm->get('doctrine.cmd.orm.schema-tool.drop'),
+                $sm->get('doctrine.cmd.orm.ensure-production-settings'),
+                $sm->get('doctrine.cmd.orm.convert-d1-schema'),
+                $sm->get('doctrine.cmd.orm.generate-repositories'),
+                $sm->get('doctrine.cmd.orm.generate-entities'),
+                $sm->get('doctrine.cmd.orm.generate-proxies'),
+                $sm->get('doctrine.cmd.orm.convert-mapping'),
+                $sm->get('doctrine.cmd.orm.run-dql'),
+                $sm->get('doctrine.cmd.orm.validate-schema'),
+                $sm->get('doctrine.cmd.orm.info'),
+            );
 
-                /* @var $sm ServiceLocatorInterface */
-                $sm = $e->getParam('ServiceManager');
-                /* @var $em \Doctrine\ORM\EntityManager */
-                $em = $sm->get('doctrine.entitymanager.orm_default');
-                $helperSet = $cli->getHelperSet();
-                $helperSet->set(new DialogHelper(), 'dialog');
-                $helperSet->set(new ConnectionHelper($em->getConnection()), 'db');
-                $helperSet->set(new EntityManagerHelper($em), 'em');
+            if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
+                $ORMCommands[] = $sm->get('doctrine.cmd.migrations.execute');
+                $ORMCommands[] = $sm->get('doctrine.cmd.migrations.generate');
+                $ORMCommands[] = $sm->get('doctrine.cmd.migrations.migrate');
+                $ORMCommands[] = $sm->get('doctrine.cmd.migrations.status');
+                $ORMCommands[] = $sm->get('doctrine.cmd.migrations.version');
+                $ORMCommands[] = $sm->get('doctrine.cmd.migrations.diff');
             }
-        );
 
-        $app->getServiceManager()->get('doctrine.entity_resolver.orm_default');
+            $cli->addCommands($ORMCommands);
+
+            /* @var $em \Doctrine\ORM\EntityManager */
+            $em = $sm->get('doctrine.entitymanager.orm_default');
+            $helperSet = $cli->getHelperSet();
+            $helperSet->set(new DialogHelper(), 'dialog');
+            $helperSet->set(new ConnectionHelper($em->getConnection()), 'db');
+            $helperSet->set(new EntityManagerHelper($em), 'em');
+        });
+
+        $serviceManager->get('doctrine.entity_resolver.orm_default');
     }
 
     /**
