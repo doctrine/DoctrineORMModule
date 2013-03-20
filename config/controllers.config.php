@@ -36,9 +36,5 @@ return array(
                 new \Zend\Http\Client('http://yuml.me/diagram/class/', array('timeout' => 30))
             );
         },
-    ),
-
-	'invokables' => array(
-		'DoctrineORMModule\Controller\Index' => 'DoctrineORMModule\Controller\IndexController'
-	)
+    )
 );
