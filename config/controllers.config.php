@@ -36,5 +36,5 @@ return array(
                 new \Zend\Http\Client('http://yuml.me/diagram/class/', array('timeout' => 30))
             );
         },
-    ),
+    )
 );

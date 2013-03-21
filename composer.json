@@ -39,7 +39,8 @@
         "zendframework/zend-stdlib": "2.*",
         "zendframework/zend-form": "2.*",
         "zendframework/zend-mvc": "2.*",
-        "zendframework/zend-servicemanager": "2.*"
+        "zendframework/zend-servicemanager": "2.*",
+		"zendframework/zend-config": "2.*"
     },
     "require-dev": {
         "zendframework/zend-developer-tools": "dev-master",

@@ -28,16 +28,16 @@ return array(
 
                 // event manager instance to use. The retrieved service name will
                 // be `doctrine.eventmanager.$thisSetting`
-                'eventmanager'  => 'orm_default',
+                'eventmanager' => 'orm_default',
 
                 // connection parameters, see
                 // http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
                 'params' => array(
-                    'host'     => 'localhost',
-                    'port'     => '3306',
-                    'user'     => 'username',
+                    'host' => 'localhost',
+                    'port' => '3306',
+                    'user' => 'username',
                     'password' => 'password',
-                    'dbname'   => 'database',
+                    'dbname' => 'database',
                 )
             ),
         ),
@@ -49,33 +49,33 @@ return array(
             'orm_default' => array(
                 // metadata cache instance to use. The retrieved service name will
                 // be `doctrine.cache.$thisSetting`
-                'metadata_cache'    => 'array',
+                'metadata_cache' => 'array',
 
                 // DQL queries parsing cache instance to use. The retrieved service
                 // name will be `doctrine.cache.$thisSetting`
-                'query_cache'       => 'array',
+                'query_cache' => 'array',
 
                 // ResultSet cache to use.  The retrieved service name will be
                 // `doctrine.cache.$thisSetting`
-                'result_cache'      => 'array',
+                'result_cache' => 'array',
 
                 // Mapping driver instance to use. Change this only if you don't want
                 // to use the default chained driver. The retrieved service name will
                 // be `doctrine.driver.$thisSetting`
-                'driver'            => 'orm_default',
+                'driver' => 'orm_default',
 
                 // Generate proxies automatically (turn off for production)
-                'generate_proxies'  => true,
+                'generate_proxies' => true,
 
                 // directory where proxies will be stored. By default, this is in
                 // the `data` directory of your application
-                'proxy_dir'         => 'data/DoctrineORMModule/Proxy',
+                'proxy_dir' => 'data/DoctrineORMModule/Proxy',
 
                 // namespace for generated proxy classes
-                'proxy_namespace'   => 'DoctrineORMModule\Proxy',
+                'proxy_namespace' => 'DoctrineORMModule\Proxy',
 
                 // SQL filters. See http://docs.doctrine-project.org/en/latest/reference/filters.html
-                'filters'           => array()
+                'filters' => array()
             )
         ),
 
@@ -85,7 +85,7 @@ return array(
             'orm_default' => array(
                 // By default, the ORM module uses a driver chain. This allows multiple
                 // modules to define their own entities
-                'class'   => 'Doctrine\ORM\Mapping\Driver\DriverChain',
+                'class' => 'Doctrine\ORM\Mapping\Driver\DriverChain',
 
                 // Map of driver names to be used within this driver chain, indexed by
                 // entity namespace
@@ -99,7 +99,7 @@ return array(
             'orm_default' => array(
                 // connection instance to use. The retrieved service name will
                 // be `doctrine.connection.$thisSetting`
-                'connection'    => 'orm_default',
+                'connection' => 'orm_default',
 
                 // configuration instance to use. The retrieved service name will
                 // be `doctrine.configuration.$thisSetting`
@@ -135,6 +135,13 @@ return array(
                 //'credentialProperty' => 'password'
             ),
         ),
+
+        // migrations configuration
+        'migrations' => array(
+            'directory' => 'data/DoctrineORMModule/Migrations',
+            'namespace' => 'DoctrineORMModule\Migrations',
+            'table' => 'migrations'
+        )
     ),
 
     ////////////////////////////////////////////////////////////////////
@@ -151,7 +158,7 @@ return array(
                     'route' => '/ocra_service_manager_yuml',
                     'defaults' => array(
                         'controller' => 'DoctrineORMModule\\Yuml\\YumlController',
-                        'action'     => 'index',
+                        'action' => 'index',
                     ),
                 ),
             ),
@@ -160,7 +167,7 @@ return array(
 
     'view_manager' => array(
         'template_map' => array(
-            'zend-developer-tools/toolbar/doctrine-orm-queries'  => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-queries.phtml',
+            'zend-developer-tools/toolbar/doctrine-orm-queries' => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-queries.phtml',
             'zend-developer-tools/toolbar/doctrine-orm-mappings' => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-mappings.phtml',
         ),
     ),
@@ -168,13 +175,13 @@ return array(
     'zenddevelopertools' => array(
         'profiler' => array(
             'collectors' => array(
-                'orm_default'  => 'doctrine.sql_logger_collector.orm_default',
+                'orm_default' => 'doctrine.sql_logger_collector.orm_default',
                 'orm_default_mappings' => 'doctrine.mapping_collector.orm_default',
             ),
         ),
         'toolbar' => array(
             'entries' => array(
-                'orm_default'  => 'zend-developer-tools/toolbar/doctrine-orm-queries',
+                'orm_default' => 'zend-developer-tools/toolbar/doctrine-orm-queries',
                 'orm_default_mappings' => 'zend-developer-tools/toolbar/doctrine-orm-mappings',
             ),
         ),
