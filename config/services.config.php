@@ -23,69 +23,69 @@ return array(
     ),
     'factories' => array(
 
-        'doctrine.authenticationadapter.orm_default'  => new DoctrineModule\Service\Authentication\AdapterFactory('orm_default'),
-        'doctrine.authenticationstorage.orm_default'  => new DoctrineModule\Service\Authentication\StorageFactory('orm_default'),
-        'doctrine.authenticationservice.orm_default'  => new DoctrineModule\Service\Authentication\AuthenticationServiceFactory('orm_default'),
+        'doctrine.authenticationadapter.orm_default' => new DoctrineModule\Service\Authentication\AdapterFactory('orm_default'),
+        'doctrine.authenticationstorage.orm_default' => new DoctrineModule\Service\Authentication\StorageFactory('orm_default'),
+        'doctrine.authenticationservice.orm_default' => new DoctrineModule\Service\Authentication\AuthenticationServiceFactory('orm_default'),
 
-        'doctrine.connection.orm_default'             => new DoctrineORMModule\Service\DBALConnectionFactory('orm_default'),
-        'doctrine.configuration.orm_default'          => new DoctrineORMModule\Service\ConfigurationFactory('orm_default'),
-        'doctrine.entitymanager.orm_default'          => new DoctrineORMModule\Service\EntityManagerFactory('orm_default'),
+        'doctrine.connection.orm_default' => new DoctrineORMModule\Service\DBALConnectionFactory('orm_default'),
+        'doctrine.configuration.orm_default' => new DoctrineORMModule\Service\ConfigurationFactory('orm_default'),
+        'doctrine.entitymanager.orm_default' => new DoctrineORMModule\Service\EntityManagerFactory('orm_default'),
 
-        'doctrine.driver.orm_default'                 => new DoctrineModule\Service\DriverFactory('orm_default'),
-        'doctrine.eventmanager.orm_default'           => new DoctrineModule\Service\EventManagerFactory('orm_default'),
-        'doctrine.entity_resolver.orm_default'        => new DoctrineORMModule\Service\EntityResolverFactory('orm_default'),
-        'doctrine.sql_logger_collector.orm_default'   => new DoctrineORMModule\Service\SQLLoggerCollectorFactory('orm_default'),
-        'doctrine.mapping_collector.orm_default'      => function (Zend\ServiceManager\ServiceLocatorInterface $sl) {
+        'doctrine.driver.orm_default' => new DoctrineModule\Service\DriverFactory('orm_default'),
+        'doctrine.eventmanager.orm_default' => new DoctrineModule\Service\EventManagerFactory('orm_default'),
+        'doctrine.entity_resolver.orm_default' => new DoctrineORMModule\Service\EntityResolverFactory('orm_default'),
+        'doctrine.sql_logger_collector.orm_default' => new DoctrineORMModule\Service\SQLLoggerCollectorFactory('orm_default'),
+        'doctrine.mapping_collector.orm_default' => function (Zend\ServiceManager\ServiceLocatorInterface $sl) {
             $em = $sl->get('doctrine.entitymanager.orm_default');
 
             return new DoctrineORMModule\Collector\MappingCollector($em->getMetadataFactory(), 'orm_default_mappings');
         },
-        'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function(Zend\ServiceManager\ServiceLocatorInterface $sl) {
+        'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function (Zend\ServiceManager\ServiceLocatorInterface $sl) {
             return new DoctrineORMModule\Form\Annotation\AnnotationBuilder($sl->get('doctrine.entitymanager.orm_default'));
         },
 
-		'doctrine.migrations_configuration' => function ($serviceManager) {
-			$connection = $serviceManager->get('doctrine.connection.orm_default');
+        'doctrine.migrations_configuration' => function ($serviceManager) {
+            $connection = $serviceManager->get('doctrine.connection.orm_default');
 
-			$appConfig = $serviceManager->get('Config');
-			$migrationsConfig = $appConfig['doctrine']['migrations'];
+            $appConfig = $serviceManager->get('Config');
+            $migrationsConfig = $appConfig['doctrine']['migrations'];
 
-			$configuration = new \Doctrine\DBAL\Migrations\Configuration\Configuration($connection);
-			$configuration->setMigrationsDirectory($migrationsConfig['directory']);
-			$configuration->setMigrationsNamespace($migrationsConfig['namespace']);
-			$configuration->setMigrationsTableName($migrationsConfig['table']);
-			$configuration->registerMigrationsFromDirectory($migrationsConfig['directory']);
+            $configuration = new \Doctrine\DBAL\Migrations\Configuration\Configuration($connection);
+            $configuration->setMigrationsDirectory($migrationsConfig['directory']);
+            $configuration->setMigrationsNamespace($migrationsConfig['namespace']);
+            $configuration->setMigrationsTableName($migrationsConfig['table']);
+            $configuration->registerMigrationsFromDirectory($migrationsConfig['directory']);
 
-			return $configuration;
-		},
-		// Migrations commands
-		'doctrine.cmd.migrations.generate' => new \DoctrineORMModule\Service\MigrationsCommandFactory('generate'),
-		'doctrine.cmd.migrations.execute' => new \DoctrineORMModule\Service\MigrationsCommandFactory('execute'),
-		'doctrine.cmd.migrations.migrate' => new \DoctrineORMModule\Service\MigrationsCommandFactory('migrate'),
-		'doctrine.cmd.migrations.status' => new \DoctrineORMModule\Service\MigrationsCommandFactory('status'),
-		'doctrine.cmd.migrations.version' => new \DoctrineORMModule\Service\MigrationsCommandFactory('version'),
-		'doctrine.cmd.migrations.diff' => new \DoctrineORMModule\Service\MigrationsCommandFactory('diff'),
+            return $configuration;
+        },
+        // Migrations commands
+        'doctrine.cmd.migrations.generate' => new \DoctrineORMModule\Service\MigrationsCommandFactory('generate'),
+        'doctrine.cmd.migrations.execute' => new \DoctrineORMModule\Service\MigrationsCommandFactory('execute'),
+        'doctrine.cmd.migrations.migrate' => new \DoctrineORMModule\Service\MigrationsCommandFactory('migrate'),
+        'doctrine.cmd.migrations.status' => new \DoctrineORMModule\Service\MigrationsCommandFactory('status'),
+        'doctrine.cmd.migrations.version' => new \DoctrineORMModule\Service\MigrationsCommandFactory('version'),
+        'doctrine.cmd.migrations.diff' => new \DoctrineORMModule\Service\MigrationsCommandFactory('diff'),
     ),
 
-	'invokables' => array(
-		// DBAL commands
-		'doctrine.cmd.dbal.runsql' => '\Doctrine\DBAL\Tools\Console\Command\RunSqlCommand',
-		'doctrine.cmd.dbal.import' => '\Doctrine\DBAL\Tools\Console\Command\ImportCommand',
-		// ORM Commands
-		'doctrine.cmd.orm.clear-cache.metadata' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand',
-		'doctrine.cmd.orm.clear-cache.result' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand',
-		'doctrine.cmd.orm.clear-cache.query' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand',
-		'doctrine.cmd.orm.schema-tool.create' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand',
-		'doctrine.cmd.orm.schema-tool.update' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand',
-		'doctrine.cmd.orm.schema-tool.drop' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand',
-		'doctrine.cmd.orm.ensure-production-settings' => '\Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand',
-		'doctrine.cmd.orm.convert-d1-schema' => '\Doctrine\ORM\Tools\Console\Command\ConvertDoctrine1SchemaCommand',
-		'doctrine.cmd.orm.generate-repositories' => '\Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand',
-		'doctrine.cmd.orm.generate-entities' => '\Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand',
-		'doctrine.cmd.orm.generate-proxies' => '\Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand',
-		'doctrine.cmd.orm.convert-mapping' => '\Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand',
-		'doctrine.cmd.orm.run-dql' => '\Doctrine\ORM\Tools\Console\Command\RunDqlCommand',
-		'doctrine.cmd.orm.validate-schema' => '\Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand',
-		'doctrine.cmd.orm.info' => '\Doctrine\ORM\Tools\Console\Command\InfoCommand',
-	)
+    'invokables' => array(
+        // DBAL commands
+        'doctrine.cmd.dbal.runsql' => '\Doctrine\DBAL\Tools\Console\Command\RunSqlCommand',
+        'doctrine.cmd.dbal.import' => '\Doctrine\DBAL\Tools\Console\Command\ImportCommand',
+        // ORM Commands
+        'doctrine.cmd.orm.clear-cache.metadata' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand',
+        'doctrine.cmd.orm.clear-cache.result' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand',
+        'doctrine.cmd.orm.clear-cache.query' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand',
+        'doctrine.cmd.orm.schema-tool.create' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand',
+        'doctrine.cmd.orm.schema-tool.update' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand',
+        'doctrine.cmd.orm.schema-tool.drop' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand',
+        'doctrine.cmd.orm.ensure-production-settings' => '\Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand',
+        'doctrine.cmd.orm.convert-d1-schema' => '\Doctrine\ORM\Tools\Console\Command\ConvertDoctrine1SchemaCommand',
+        'doctrine.cmd.orm.generate-repositories' => '\Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand',
+        'doctrine.cmd.orm.generate-entities' => '\Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand',
+        'doctrine.cmd.orm.generate-proxies' => '\Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand',
+        'doctrine.cmd.orm.convert-mapping' => '\Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand',
+        'doctrine.cmd.orm.run-dql' => '\Doctrine\ORM\Tools\Console\Command\RunDqlCommand',
+        'doctrine.cmd.orm.validate-schema' => '\Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand',
+        'doctrine.cmd.orm.info' => '\Doctrine\ORM\Tools\Console\Command\InfoCommand',
+    )
 );

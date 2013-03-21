@@ -51,14 +51,15 @@ class Module implements
     ConfigProviderInterface,
     InitProviderInterface
 {
-	/**
+
+    /**
      * {@inheritDoc}
      */
     public function init(ModuleManagerInterface $manager)
     {
         $events = $manager->getEventManager();
         // Initialize logger collector once the profiler is initialized itself
-        $events->attach('profiler_init', function() use ($manager) {
+        $events->attach('profiler_init', function () use ($manager) {
             $manager->getEvent()->getParam('ServiceManager')->get('doctrine.sql_logger_collector.orm_default');
         });
     }
@@ -83,48 +84,48 @@ class Module implements
     public function onBootstrap(EventInterface $e)
     {
         /* @var $app \Zend\Mvc\ApplicationInterface */
-        $app    = $e->getTarget();
+        $app = $e->getTarget();
         $events = $app->getEventManager()->getSharedManager();
-		$serviceManager = $app->getServiceManager();
+        $serviceManager = $app->getServiceManager();
 
         // Attach to helper set event and load the entity manager helper.
-        $events->attach('doctrine', 'loadCli.post', function(EventInterface $e) {
+        $events->attach('doctrine', 'loadCli.post', function (EventInterface $e) {
             /* @var $cli \Symfony\Component\Console\Application */
             $cli = $e->getTarget();
 
-			/* @var $sm ServiceLocatorInterface */
-			$sm = $e->getParam('ServiceManager');
+            /* @var $sm ServiceLocatorInterface */
+            $sm = $e->getParam('ServiceManager');
 
-			$ORMCommands = array(
-				$sm->get('doctrine.cmd.dbal.runsql'),
-				$sm->get('doctrine.cmd.dbal.import'),
-				$sm->get('doctrine.cmd.orm.clear-cache.metadata'),
-				$sm->get('doctrine.cmd.orm.clear-cache.result'),
-				$sm->get('doctrine.cmd.orm.clear-cache.query'),
-				$sm->get('doctrine.cmd.orm.schema-tool.create'),
-				$sm->get('doctrine.cmd.orm.schema-tool.update'),
-				$sm->get('doctrine.cmd.orm.schema-tool.drop'),
-				$sm->get('doctrine.cmd.orm.ensure-production-settings'),
-				$sm->get('doctrine.cmd.orm.convert-d1-schema'),
-				$sm->get('doctrine.cmd.orm.generate-repositories'),
-				$sm->get('doctrine.cmd.orm.generate-entities'),
-				$sm->get('doctrine.cmd.orm.generate-proxies'),
-				$sm->get('doctrine.cmd.orm.convert-mapping'),
-				$sm->get('doctrine.cmd.orm.run-dql'),
-				$sm->get('doctrine.cmd.orm.validate-schema'),
-				$sm->get('doctrine.cmd.orm.info'),
-			);
+            $ORMCommands = array(
+                $sm->get('doctrine.cmd.dbal.runsql'),
+                $sm->get('doctrine.cmd.dbal.import'),
+                $sm->get('doctrine.cmd.orm.clear-cache.metadata'),
+                $sm->get('doctrine.cmd.orm.clear-cache.result'),
+                $sm->get('doctrine.cmd.orm.clear-cache.query'),
+                $sm->get('doctrine.cmd.orm.schema-tool.create'),
+                $sm->get('doctrine.cmd.orm.schema-tool.update'),
+                $sm->get('doctrine.cmd.orm.schema-tool.drop'),
+                $sm->get('doctrine.cmd.orm.ensure-production-settings'),
+                $sm->get('doctrine.cmd.orm.convert-d1-schema'),
+                $sm->get('doctrine.cmd.orm.generate-repositories'),
+                $sm->get('doctrine.cmd.orm.generate-entities'),
+                $sm->get('doctrine.cmd.orm.generate-proxies'),
+                $sm->get('doctrine.cmd.orm.convert-mapping'),
+                $sm->get('doctrine.cmd.orm.run-dql'),
+                $sm->get('doctrine.cmd.orm.validate-schema'),
+                $sm->get('doctrine.cmd.orm.info'),
+            );
 
             if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
-				$ORMCommands[] = $sm->get('doctrine.cmd.migrations.execute');
-				$ORMCommands[] = $sm->get('doctrine.cmd.migrations.generate');
-				$ORMCommands[] = $sm->get('doctrine.cmd.migrations.migrate');
-				$ORMCommands[] = $sm->get('doctrine.cmd.migrations.status');
-				$ORMCommands[] = $sm->get('doctrine.cmd.migrations.version');
-				$ORMCommands[] = $sm->get('doctrine.cmd.migrations.diff');
+                $ORMCommands[] = $sm->get('doctrine.cmd.migrations.execute');
+                $ORMCommands[] = $sm->get('doctrine.cmd.migrations.generate');
+                $ORMCommands[] = $sm->get('doctrine.cmd.migrations.migrate');
+                $ORMCommands[] = $sm->get('doctrine.cmd.migrations.status');
+                $ORMCommands[] = $sm->get('doctrine.cmd.migrations.version');
+                $ORMCommands[] = $sm->get('doctrine.cmd.migrations.diff');
             }
 
-			$cli->addCommands($ORMCommands);
+            $cli->addCommands($ORMCommands);
 
             /* @var $em \Doctrine\ORM\EntityManager */
             $em = $sm->get('doctrine.entitymanager.orm_default');
@@ -134,7 +135,7 @@ class Module implements
             $helperSet->set(new EntityManagerHelper($em), 'em');
         });
 
-		$serviceManager->get('doctrine.entity_resolver.orm_default');
+        $serviceManager->get('doctrine.entity_resolver.orm_default');
     }
 
     /**
