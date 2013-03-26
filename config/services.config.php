@@ -19,7 +19,8 @@
 
 return array(
     'aliases' => array(
-        'Doctrine\ORM\EntityManager' => 'doctrine.entitymanager.orm_default',
+        'Doctrine\ORM\EntityManager'                => 'doctrine.entitymanager.orm_default',
+        'Zend\Authentication\AuthenticationService' => 'doctrine.authenticationservice.orm_default'
     ),
     'factories' => array(
 
