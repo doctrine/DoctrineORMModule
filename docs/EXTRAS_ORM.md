@@ -141,5 +141,5 @@ class UserRepository extends EntityRepository {
     }
 }
 ```
-Now your methode findUsersPaginate() return a Paginor. You can use this like a normal paginator to set 
+Now your method findUsersPaginate() return a Paginor. You can use this like a normal paginator to set 
 itemCountPerPage and currentPageNumber
