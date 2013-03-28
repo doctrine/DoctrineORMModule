@@ -115,7 +115,7 @@ Now using Schema-Tool, whenever it detects a column having the "tinyint" it will
 Doctrine Type instance for Schema representation. Keep in mind that you can easily produce clashes this 
 way, each database type can only map to exactly one Doctrine mapping type.
 
-## Custom Paginator Adapter
+## Doctrine Paginator Adapter
 You can use DoctrinePaginator to lazy-loading your datas. You can use it like this in your Repository class
 
 ```php
