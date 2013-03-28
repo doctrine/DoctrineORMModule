@@ -1,6 +1,12 @@
 <?php
 
+namespace DoctrineORMModuleTest\Form;
+
+use ArrayObject;
+use Doctrine\ORM\Mapping\Column;
 use DoctrineORMModule\Form\Annotation\ElementAnnotationsListener;
+use PHPUnit_Framework_TestCase;
+use Zend\EventManager\Event;
 
 /**
  * Description of ElementAnnotationsListenerTest
@@ -9,39 +15,42 @@ use DoctrineORMModule\Form\Annotation\ElementAnnotationsListener;
  */
 class ElementAnnotationsListenerTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @dataProvider eventProvider
      */
     public function testHandleAnnotationType($type, $expectedType)
     {
-        $listener = new ElementAnnotationsListener();
-        $event = new Zend\EventManager\Event();
-        $checkboxAnnotation = new Doctrine\ORM\Mapping\Column();
+        $listener                 = new ElementAnnotationsListener();
+        $event                    = new Event();
+        $checkboxAnnotation       = new Column();
         $checkboxAnnotation->type = $type;
+
         $event->setParam('annotation', $checkboxAnnotation);
-        $event->setParam('elementSpec', new ArrayObject(array(
-            'spec' => array(),
-        )));
+        $event->setParam('elementSpec', new ArrayObject(array('spec' => array())));
         $listener->handleTypeAnnotation($event);
+
         $spec = $event->getParam('elementSpec');
+
         $this->assertEquals($expectedType, $spec['spec']['type']);
     }
 
-    public function testHandleAnnotationAttributesShallAppent()
+    public function testHandleAnnotationAttributesShallAppend()
     {
-        $listener = new ElementAnnotationsListener();
-        $event = new Zend\EventManager\Event();
-        $annotation = new Doctrine\ORM\Mapping\Column();
-
+        $listener         = new ElementAnnotationsListener();
+        $event            = new Event();
+        $annotation       = new Column();
         $annotation->type = 'text';
+
         $event->setParam('annotation', $annotation);
-        $event->setParam('elementSpec', new ArrayObject(array(
-            'spec' => array('attributes' => array('attr1' => 'value')),
-        )));
+        $event->setParam(
+            'elementSpec',
+            new ArrayObject(array('spec' => array('attributes' => array('attr1' => 'value'))))
+        );
 
         $listener->handleAttributesAnnotation($event);
+
         $spec = $event->getParam('elementSpec');
+
         $this->assertCount(2, $spec['spec']['attributes']);
         $this->assertArrayHasKey('attr1', $spec['spec']['attributes']);
         $this->assertEquals('textarea', $spec['spec']['attributes']['type']);

@@ -65,9 +65,12 @@ class Module implements
     {
         $events = $manager->getEventManager();
         // Initialize logger collector once the profiler is initialized itself
-        $events->attach('profiler_init', function() use ($manager) {
-            $manager->getEvent()->getParam('ServiceManager')->get('doctrine.sql_logger_collector.orm_default');
-        });
+        $events->attach(
+            'profiler_init',
+            function () use ($manager) {
+                $manager->getEvent()->getParam('ServiceManager')->get('doctrine.sql_logger_collector.orm_default');
+            }
+        );
     }
 
     /**
@@ -94,32 +97,38 @@ class Module implements
         $events = $app->getEventManager()->getSharedManager();
 
         // Attach to helper set event and load the entity manager helper.
-        $events->attach('doctrine', 'loadCli.post', function(EventInterface $e) {
-            /* @var $cli \Symfony\Component\Console\Application */
-            $cli = $e->getTarget();
+        $events->attach(
+            'doctrine',
+            'loadCli.post',
+            function (EventInterface $e) {
+                /* @var $cli \Symfony\Component\Console\Application */
+                $cli = $e->getTarget();
 
-            ConsoleRunner::addCommands($cli);
+                ConsoleRunner::addCommands($cli);
 
-            if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
-                $cli->addCommands(array(
-                    new DiffCommand(),
-                    new ExecuteCommand(),
-                    new GenerateCommand(),
-                    new MigrateCommand(),
-                    new StatusCommand(),
-                    new VersionCommand(),
-                ));
+                if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
+                    $cli->addCommands(
+                        array(
+                            new DiffCommand(),
+                            new ExecuteCommand(),
+                            new GenerateCommand(),
+                            new MigrateCommand(),
+                            new StatusCommand(),
+                            new VersionCommand(),
+                        )
+                    );
+                }
+
+                /* @var $sm ServiceLocatorInterface */
+                $sm = $e->getParam('ServiceManager');
+                /* @var $em \Doctrine\ORM\EntityManager */
+                $em = $sm->get('doctrine.entitymanager.orm_default');
+                $helperSet = $cli->getHelperSet();
+                $helperSet->set(new DialogHelper(), 'dialog');
+                $helperSet->set(new ConnectionHelper($em->getConnection()), 'db');
+                $helperSet->set(new EntityManagerHelper($em), 'em');
             }
-
-            /* @var $sm ServiceLocatorInterface */
-            $sm = $e->getParam('ServiceManager');
-            /* @var $em \Doctrine\ORM\EntityManager */
-            $em = $sm->get('doctrine.entitymanager.orm_default');
-            $helperSet = $cli->getHelperSet();
-            $helperSet->set(new DialogHelper(), 'dialog');
-            $helperSet->set(new ConnectionHelper($em->getConnection()), 'db');
-            $helperSet->set(new EntityManagerHelper($em), 'em');
-        });
+        );
 
         $app->getServiceManager()->get('doctrine.entity_resolver.orm_default');
     }

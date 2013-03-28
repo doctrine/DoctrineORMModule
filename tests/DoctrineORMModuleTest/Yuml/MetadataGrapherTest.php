@@ -68,9 +68,13 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class->expects($this->any())->method('getName')->will($this->returnValue('Simple\\Entity'));
         $class->expects($this->any())->method('getFieldNames')->will($this->returnValue(array('a', 'b', 'c')));
         $class->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
-        $class->expects($this->any())->method('isIdentifier')->will($this->returnCallback(function ($field) {
-            return $field === 'a';
-        }));
+        $class->expects($this->any())->method('isIdentifier')->will(
+            $this->returnCallback(
+                function ($field) {
+                    return $field === 'a';
+                }
+            )
+        );
 
         $this->assertSame('[Simple.Entity|+a;b;c]', $this->grapher->generateFromMetadata(array($class)));
     }
@@ -371,9 +375,13 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class2
             ->expects($this->any())
             ->method('getAssociationTargetClass')
-            ->will($this->returnCallback(function ($assoc) {
-                return strtoupper($assoc);
-            }));
+            ->will(
+                $this->returnCallback(
+                    function ($assoc) {
+                        return strtoupper($assoc);
+                    }
+                )
+            );
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
         $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));

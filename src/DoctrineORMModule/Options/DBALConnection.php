@@ -65,7 +65,7 @@ class DBALConnection extends AbstractOptions
     protected $driverClass = 'Doctrine\DBAL\Driver\PDOMySql\Driver';
 
     /**
-     * Set the wrapper class for the driver. In general, this shouldn't
+     * Set the wrapper class for the driver. In general, this should not
      * need to be changed.
      *
      * @var string|null
