@@ -36,6 +36,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
         parent::setAnnotationManager($annotationManager);
 
         $parser = new DoctrineAnnotationParser($this->entityManager);
+
         $parser->registerAnnotation('Doctrine\ORM\Mapping\Column');
         $parser->registerAnnotation('Doctrine\ORM\Mapping\GeneratedValue');
         $parser->registerAnnotation('Doctrine\ORM\Mapping\OneToMany');
