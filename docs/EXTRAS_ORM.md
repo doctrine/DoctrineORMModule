@@ -116,7 +116,7 @@ Doctrine Type instance for Schema representation. Keep in mind that you can easi
 way, each database type can only map to exactly one Doctrine mapping type.
 
 ## Doctrine Paginator Adapter
-You can use DoctrinePaginator to lazy-loading your datas. You can use it like this in your Repository class
+You can use DoctrinePaginator to lazy-loading your data. You can use it like this in your Repository class
 
 ```php
 <?php
@@ -127,8 +127,10 @@ use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as PaginatorAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 use Zend\Paginator\Paginator
 
-class UserRepository extends EntityRepository {
-    public function findUsersPaginate() {
+class UserRepository extends EntityRepository
+{
+    public function findUsersPaginate()
+    {
         $qb = $this->getEntityManager()->createQueryBuilder();
         // exemple of DQL
         $qb->select('u')->from('Application\Entity\User', 'u');
