@@ -22,6 +22,7 @@ return array(
         'Doctrine\ORM\EntityManager' => 'doctrine.entitymanager.orm_default',
     ),
     'factories' => array(
+        'doctrine'                                    => new DoctrineORMModule\Service\RegistryFactory(),
 
         'doctrine.authenticationadapter.orm_default'  => new DoctrineModule\Service\Authentication\AdapterFactory('orm_default'),
         'doctrine.authenticationstorage.orm_default'  => new DoctrineModule\Service\Authentication\StorageFactory('orm_default'),
