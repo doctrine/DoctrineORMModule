@@ -75,7 +75,14 @@ return array(
                 'proxy_namespace'   => 'DoctrineORMModule\Proxy',
 
                 // SQL filters. See http://docs.doctrine-project.org/en/latest/reference/filters.html
-                'filters'           => array()
+                'filters'           => array(),
+                
+                // Custom DQL functions.
+                // You can grab common MySQL ones at https://github.com/beberlei/DoctrineExtensions
+                // Further docs at http://docs.doctrine-project.org/en/latest/cookbook/dql-user-defined-functions.html
+                'datetime_functions' => array(),
+                'string_functions' => array(),
+                'numeric_functions' => array(),
             )
         ),
 
