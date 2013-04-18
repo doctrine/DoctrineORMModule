@@ -32,28 +32,30 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
-        "doctrine/doctrine-module": "0.7.*",
-        "doctrine/orm": ">=2.3-dev,<2.5-dev",
-        "doctrine/dbal": ">=2.3-dev,<2.5-dev",
-        "zendframework/zend-stdlib": "2.*",
-        "zendframework/zend-form": "2.*",
-        "zendframework/zend-mvc": "2.*",
-        "zendframework/zend-servicemanager": "2.*"
+        "php":                               ">=5.3.3",
+        "doctrine/doctrine-module":          "0.8.*",
+        "doctrine/orm":                      ">=2.3,<2.5-dev",
+        "doctrine/dbal":                     ">=2.3,<2.5-dev",
+        "zendframework/zend-stdlib":         ">=2.1",
+        "zendframework/zend-form":           ">=2.1",
+        "zendframework/zend-mvc":            ">=2.1",
+        "zendframework/zend-servicemanager": ">=2.1"
     },
     "require-dev": {
-        "zendframework/zend-developer-tools": "dev-master",
-        "doctrine/migrations": "1.*"
+        "doctrine/data-fixtures":             "1.0.*@ALPHA",
+        "zendframework/zend-developer-tools": "*",
+        "doctrine/migrations":                "1.*",
+        "phpunit/phpunit":                    ">=3.7",
+        "squizlabs/php_codesniffer":          "1.4.*"
     },
     "suggest": {
         "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development",
-        "doctrine/migrations": "doctrine migrations if you want to keep your schema definitions versioned"
+        "doctrine/migrations":                "doctrine migrations if you want to keep your schema definitions versioned"
     },
     "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
-            "DoctrineORMModule\\": "src/",
-            "DoctrineORMModuleTest\\": "tests/"
+            "DoctrineORMModule\\": "src/"
         }
     },
     "extra": {
