@@ -48,13 +48,13 @@ class TestFixture extends AbstractFixture
             $manager->persist($instance);
         }
 
-        for ($i = 0 ; $i < self::INSTANCES_COUNT ; $i += 1) {
+        for ($i = 0; $i < self::INSTANCES_COUNT; $i += 1) {
             $instance = new Category();
             $instance->setName('category');
             $manager->persist($instance);
         }
 
-        for ($i = 0 ; $i < self::INSTANCES_COUNT ; $i += 1) {
+        for ($i = 0; $i < self::INSTANCES_COUNT; $i += 1) {
             $instance = new Country();
             $instance->setName('country');
             $manager->persist($instance);

@@ -45,7 +45,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * Set the driver key for the metadata driver. Driver key
-     * is assembeled as "doctrine.driver.{key}" and pulled from
+     * is assembled as "doctrine.driver.{key}" and pulled from
      * service locator.
      *
      * @var string
@@ -447,11 +447,13 @@ class Configuration extends DBALConfiguration
             return $this;
         }
 
-        throw new InvalidArgumentException(sprintf(
-            'namingStrategy must be either a string, a Doctrine\ORM\Mapping\NamingStrategy '
+        throw new InvalidArgumentException(
+            sprintf(
+                'namingStrategy must be either a string, a Doctrine\ORM\Mapping\NamingStrategy '
                 . 'instance or null, %s given',
-            is_object($namingStrategy) ? get_class($namingStrategy) : gettype($namingStrategy)
-        ));
+                is_object($namingStrategy) ? get_class($namingStrategy) : gettype($namingStrategy)
+            )
+        );
     }
 
     /**

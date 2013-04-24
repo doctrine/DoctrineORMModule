@@ -116,7 +116,7 @@ class MetadataGrapher
             foreach ($class2->getAssociationNames() as $class2Side) {
                 if (
                     $class2->isAssociationInverseSide($class2Side)
-                    && ($class2->getAssociationMappedByTargetField($class2Side) === $association)
+                    && ($association === $class2->getAssociationMappedByTargetField($class2Side))
                 ) {
                     $class2SideName = $class2Side;
                     $class2Count    = $class2->isCollectionValuedAssociation($class2SideName) ? 2 : 1;

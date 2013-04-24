@@ -19,8 +19,10 @@
 
 namespace DoctrineORMModule\Collector;
 
+use Serializable;
+
 use ZendDeveloperTools\Collector\CollectorInterface;
-use ZendDeveloperTools\Collector\AutoHideInterface;;
+use ZendDeveloperTools\Collector\AutoHideInterface;
 
 use Zend\Mvc\MvcEvent;
 
@@ -34,7 +36,7 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
  * @link    www.doctrine-project.org
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class MappingCollector implements CollectorInterface, AutoHideInterface, \Serializable
+class MappingCollector implements CollectorInterface, AutoHideInterface, Serializable
 {
     /**
      * Collector priority
@@ -113,10 +115,12 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, \Serial
      */
     public function serialize()
     {
-        return serialize(array(
-            'name'    => $this->name,
-            'classes' => $this->classes,
-        ));
+        return serialize(
+            array(
+                'name'    => $this->name,
+                'classes' => $this->classes,
+            )
+        );
     }
 
     /**
