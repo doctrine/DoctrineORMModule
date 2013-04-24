@@ -19,15 +19,14 @@
 
 namespace DoctrineORMModule;
 
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
+use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Loader\AutoloaderFactory;
 use Zend\Loader\StandardAutoloader;
 use Zend\EventManager\EventInterface;
 
@@ -51,12 +50,12 @@ use Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class Module implements
-    AutoloaderProviderInterface,
     ControllerProviderInterface,
     BootstrapListenerInterface,
     ServiceProviderInterface,
     ConfigProviderInterface,
-    InitProviderInterface
+    InitProviderInterface,
+    DependencyIndicatorInterface
 {
     /**
      * {@inheritDoc}
@@ -70,20 +69,6 @@ class Module implements
             function () use ($manager) {
                 $manager->getEvent()->getParam('ServiceManager')->get('doctrine.sql_logger_collector.orm_default');
             }
-        );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAutoloaderConfig()
-    {
-        return array(
-            AutoloaderFactory::STANDARD_AUTOLOADER => array(
-                StandardAutoloader::LOAD_NS => array(
-                    __NAMESPACE__ => __DIR__,
-                ),
-            ),
         );
     }
 
@@ -155,5 +140,13 @@ class Module implements
     public function getControllerConfig()
     {
         return include __DIR__ . '/../../config/controllers.config.php';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getModuleDependencies()
+    {
+        return array('DoctrineModule');
     }
 }
