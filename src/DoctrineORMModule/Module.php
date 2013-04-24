@@ -24,6 +24,7 @@ use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
+use Zend\ModuleManager\Feature\FormElementProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -55,6 +56,7 @@ class Module implements
     ServiceProviderInterface,
     ConfigProviderInterface,
     InitProviderInterface,
+    FormElementProviderInterface,
     DependencyIndicatorInterface
 {
     /**
@@ -140,6 +142,15 @@ class Module implements
     public function getControllerConfig()
     {
         return include __DIR__ . '/../../config/controllers.config.php';
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFormElementConfig()
+    {
+        return include __DIR__ . '/../../config/formelements.config.php';
     }
 
     /**
