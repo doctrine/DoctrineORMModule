@@ -13,21 +13,23 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
- * <http://www.doctrine-project.org>.
+ * and is licensed under the MIT license.
  */
 
-namespace DoctrineORMModule;
+namespace DoctrineORMModule\Service;
 
-/**
- * Version
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @since   0.1.0
- * @author  Kyle Spraggs <theman@spiffyjr.me>
- */
-class Version
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+
+class DoctrineObjectHydratorFactory implements FactoryInterface
 {
-    const VERSION = '0.8.0';
+    /**
+     * {@inheritDoc}
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $parentLocator = $serviceLocator->getServiceLocator();
+        return new DoctrineObject($parentLocator->get('doctrine.entitymanager.orm_default'));
+    }
 }

@@ -76,7 +76,7 @@ return array(
 
                 // SQL filters. See http://docs.doctrine-project.org/en/latest/reference/filters.html
                 'filters'           => array(),
-                
+
                 // Custom DQL functions.
                 // You can grab common MySQL ones at https://github.com/beberlei/DoctrineExtensions
                 // Further docs at http://docs.doctrine-project.org/en/latest/cookbook/dql-user-defined-functions.html
@@ -144,11 +144,11 @@ return array(
         ),
     ),
 
-    ////////////////////////////////////////////////////////////////////
-    // `zendframework/zend-developer-tools` specific settings         //
-    // ignore these if you're not developing additional features for  //
-    // zend developer tools                                           //
-    ////////////////////////////////////////////////////////////////////
+    'hydrators' => array(
+        'factories' => array(
+            'DoctrineModule\Stdlib\Hydrator\DoctrineObject' => 'DoctrineORMModule\Service\DoctrineObjectHydratorFactory'
+        )
+    ),
 
     'router' => array(
         'routes' => array(
@@ -164,6 +164,12 @@ return array(
             ),
         ),
     ),
+
+    ////////////////////////////////////////////////////////////////////
+    // `zendframework/zend-developer-tools` specific settings         //
+    // ignore these if you're not developing additional features for  //
+    // zend developer tools                                           //
+    ////////////////////////////////////////////////////////////////////
 
     'view_manager' => array(
         'template_map' => array(
