@@ -44,6 +44,7 @@ return array(
             return new DoctrineORMModule\Form\Annotation\AnnotationBuilder($sl->get('doctrine.entitymanager.orm_default'));
         },
     ),
+
     'initializers' => array(
         'doctrine.entitymanager' => function($service,Zend\ServiceManager\ServiceLocatorInterface $sl) {
             if ($service instanceof DoctrineORMModule\Service\EntityManagerAwareInterface) {
