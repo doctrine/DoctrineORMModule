@@ -38,33 +38,5 @@ return array(
 
             return $configuration;
         },
-        // Migrations commands
-        'doctrine.cmd.migrations.generate' => new \DoctrineORMModule\Service\MigrationsCommandFactory('generate'),
-        'doctrine.cmd.migrations.execute' => new \DoctrineORMModule\Service\MigrationsCommandFactory('execute'),
-        'doctrine.cmd.migrations.migrate' => new \DoctrineORMModule\Service\MigrationsCommandFactory('migrate'),
-        'doctrine.cmd.migrations.status' => new \DoctrineORMModule\Service\MigrationsCommandFactory('status'),
-        'doctrine.cmd.migrations.version' => new \DoctrineORMModule\Service\MigrationsCommandFactory('version'),
-        'doctrine.cmd.migrations.diff' => new \DoctrineORMModule\Service\MigrationsCommandFactory('diff'),
     ),
-    'invokables' => array(
-        // DBAL commands
-        'doctrine.cmd.dbal.runsql' => '\Doctrine\DBAL\Tools\Console\Command\RunSqlCommand',
-        'doctrine.cmd.dbal.import' => '\Doctrine\DBAL\Tools\Console\Command\ImportCommand',
-        // ORM Commands
-        'doctrine.cmd.orm.clear-cache.metadata' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand',
-        'doctrine.cmd.orm.clear-cache.result' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand',
-        'doctrine.cmd.orm.clear-cache.query' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand',
-        'doctrine.cmd.orm.schema-tool.create' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand',
-        'doctrine.cmd.orm.schema-tool.update' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand',
-        'doctrine.cmd.orm.schema-tool.drop' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand',
-        'doctrine.cmd.orm.ensure-production-settings' => '\Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand',
-        'doctrine.cmd.orm.convert-d1-schema' => '\Doctrine\ORM\Tools\Console\Command\ConvertDoctrine1SchemaCommand',
-        'doctrine.cmd.orm.generate-repositories' => '\Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand',
-        'doctrine.cmd.orm.generate-entities' => '\Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand',
-        'doctrine.cmd.orm.generate-proxies' => '\Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand',
-        'doctrine.cmd.orm.convert-mapping' => '\Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand',
-        'doctrine.cmd.orm.run-dql' => '\Doctrine\ORM\Tools\Console\Command\RunDqlCommand',
-        'doctrine.cmd.orm.validate-schema' => '\Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand',
-        'doctrine.cmd.orm.info' => '\Doctrine\ORM\Tools\Console\Command\InfoCommand',
-    )
 );

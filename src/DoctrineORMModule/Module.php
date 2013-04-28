@@ -118,35 +118,35 @@ class Module implements
         $serviceLocator = $event->getParam('ServiceManager');
 
         $commands = array(
-            'doctrine.cmd.dbal.runsql',
-            'doctrine.cmd.dbal.import',
-            'doctrine.cmd.orm.clear-cache.metadata',
-            'doctrine.cmd.orm.clear-cache.result',
-            'doctrine.cmd.orm.clear-cache.query',
-            'doctrine.cmd.orm.schema-tool.create',
-            'doctrine.cmd.orm.schema-tool.update',
-            'doctrine.cmd.orm.schema-tool.drop',
-            'doctrine.cmd.orm.ensure-production-settings',
-            'doctrine.cmd.orm.convert-d1-schema',
-            'doctrine.cmd.orm.generate-repositories',
-            'doctrine.cmd.orm.generate-entities',
-            'doctrine.cmd.orm.generate-proxies',
-            'doctrine.cmd.orm.convert-mapping',
-            'doctrine.cmd.orm.run-dql',
-            'doctrine.cmd.orm.validate-schema',
-            'doctrine.cmd.orm.info',
+            'doctrine.dbal_cmd.runsql',
+            'doctrine.dbal_cmd.import',
+            'doctrine.orm_cmd.clear_cache_metadata',
+            'doctrine.orm_cmd.clear_cache_result',
+            'doctrine.orm_cmd.clear_cache_query',
+            'doctrine.orm_cmd.schema_tool_create',
+            'doctrine.orm_cmd.schema_tool_update',
+            'doctrine.orm_cmd.schema_tool_drop',
+            'doctrine.orm_cmd.ensure_production_settings',
+            'doctrine.orm_cmd.convert_d1_schema',
+            'doctrine.orm_cmd.generate_repositories',
+            'doctrine.orm_cmd.generate_entities',
+            'doctrine.orm_cmd.generate_proxies',
+            'doctrine.orm_cmd.convert_mapping',
+            'doctrine.orm_cmd.run_dql',
+            'doctrine.orm_cmd.validate_schema',
+            'doctrine.orm_cmd.info',
         );
 
         if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
             $commands = ArrayUtils::merge(
                 $commands,
                 array(
-                    'doctrine.cmd.migrations.execute',
-                    'doctrine.cmd.migrations.generate',
-                    'doctrine.cmd.migrations.migrate',
-                    'doctrine.cmd.migrations.status',
-                    'doctrine.cmd.migrations.version',
-                    'doctrine.cmd.migrations.diff',
+                    'doctrine.migrations_cmd.execute',
+                    'doctrine.migrations_cmd.generate',
+                    'doctrine.migrations_cmd.migrate',
+                    'doctrine.migrations_cmd.status',
+                    'doctrine.migrations_cmd.version',
+                    'doctrine.migrations_cmd.diff',
                 )
             );
         }
