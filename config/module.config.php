@@ -144,10 +144,12 @@ return array(
         ),
 
         // migrations configuration
-        'migrations' => array(
-            'directory' => 'data/DoctrineORMModule/Migrations',
-            'namespace' => 'DoctrineORMModule\Migrations',
-            'table' => 'migrations'
+        'migrations_configuration' => array(
+            'orm_default' => array(
+                'directory' => 'data/DoctrineORMModule/Migrations',
+                'namespace' => 'DoctrineORMModule\Migrations',
+                'table'     => 'migrations',
+            ),
         ),
 
         // migrations commands base config
@@ -162,6 +164,9 @@ return array(
     ),
 
     'service_manager' => array(
+        'factories' => array(
+            'Doctrine\ORM\EntityManager' => 'DoctrineORMModule\Service\EntityManagerAliasCompatFactory',
+        ),
         'invokables' => array(
             // DBAL commands
             'doctrine.dbal_cmd.runsql' => '\Doctrine\DBAL\Tools\Console\Command\RunSqlCommand',

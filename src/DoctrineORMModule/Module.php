@@ -46,7 +46,6 @@ use Zend\Stdlib\ArrayUtils;
 class Module implements
     ControllerProviderInterface,
     BootstrapListenerInterface,
-    ServiceProviderInterface,
     ConfigProviderInterface,
     InitProviderInterface,
     DependencyIndicatorInterface
@@ -84,14 +83,6 @@ class Module implements
     public function getConfig()
     {
         return include __DIR__ . '/../../config/module.config.php';
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getServiceConfig()
-    {
-        return include __DIR__ . '/../../config/services.config.php';
     }
 
     /**

@@ -19,46 +19,29 @@
 
 namespace DoctrineORMModule\Service;
 
-use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Migrations\Configuration\Configuration;
-use DoctrineModule\Service\AbstractFactory;
+use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * DBAL Connection ServiceManager factory
+ * Factory that provides the `Doctrine\ORM\EntityManager` alias for `doctrine.entitymanager.orm_default`
  *
  * @license MIT
  * @link    http://www.doctrine-project.org/
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class MigrationsConfigurationFactory extends AbstractFactory
+class EntityManagerAliasCompatFactory implements FactoryInterface
 {
+
     /**
      * {@inheritDoc}
      *
-     * @return \Doctrine\DBAL\Migrations\Configuration\Configuration
+     * @return \Doctrine\ORM\EntityManager
+     *
+     * @deprecated this method was introduced to allow aliasing of service `Doctrine\ORM\EntityManager`
+     *             from `doctrine.entitymanager.orm_default`
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $name             = $this->getName();
-        /* @var $connection \Doctrine\DBAL\Connection */
-        $connection       = $serviceLocator->get('doctrine.connection.' . $name);
-        $appConfig        = $serviceLocator->get('Config');
-        $migrationsConfig = $appConfig['doctrine']['migrations_configuration'][$name];
-        $configuration    = new Configuration($connection);
-
-        $configuration->setMigrationsDirectory($migrationsConfig['directory']);
-        $configuration->setMigrationsNamespace($migrationsConfig['namespace']);
-        $configuration->setMigrationsTableName($migrationsConfig['table']);
-        $configuration->registerMigrationsFromDirectory($migrationsConfig['directory']);
-
-        return $configuration;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getOptionsClass()
-    {
+        return $serviceLocator->get('doctrine.entitymanager.orm_default');
     }
 }
