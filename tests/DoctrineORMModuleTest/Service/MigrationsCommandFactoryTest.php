@@ -18,15 +18,23 @@
 
 namespace DoctrineORMModuleTest\Service;
 
+use DoctrineORMModule\Service\MigrationsCommandFactory;
 use PHPUnit_Framework_TestCase as TestCase;
 use Zend\ServiceManager\ServiceManager;
 use DoctrineORMModuleTest\Util\ServiceManagerFactory;
 
+/**
+ * Tests for {@see \DoctrineORMModule\Service\MigrationsCommandFactory}
+ *
+ * @license MIT
+ * @author Aleksandr Sandrovskiy <a.sandrovsky@gmail.com>
+ *
+ * @covers \DoctrineORMModule\Service\MigrationsCommandFactory
+ */
 class MigrationsCommandFactoryTest extends TestCase
 {
-
     /**
-     * @var
+     * @var \Zend\ServiceManager\ServiceManager
      */
     private $serviceLocator;
 
@@ -36,36 +44,33 @@ class MigrationsCommandFactoryTest extends TestCase
     public function setUp()
     {
         $this->serviceLocator = ServiceManagerFactory::getServiceManager();
-        parent::setUp();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function tearDown()
-    {
-        $this->serviceLocator = null;
-        parent::tearDown();
     }
 
     public function testExecuteFactory()
     {
-        $factory = new \DoctrineORMModule\Service\MigrationsCommandFactory('execute');
-        $command = $factory->createService($this->serviceLocator);
-        $this->assertInstanceOf('\Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand', $command);
+        $factory = new MigrationsCommandFactory('execute');
+
+        $this->assertInstanceOf(
+            'Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand',
+            $factory->createService($this->serviceLocator)
+        );
     }
 
     public function testDiffFactory()
     {
-        $factory = new \DoctrineORMModule\Service\MigrationsCommandFactory('diff');
-        $command = $factory->createService($this->serviceLocator);
-        $this->assertInstanceOf('\Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand', $command);
+        $factory = new MigrationsCommandFactory('diff');
+
+        $this->assertInstanceOf(
+            'Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand',
+            $factory->createService($this->serviceLocator)
+        );
     }
 
     public function testThrowException()
     {
+        $factory = new MigrationsCommandFactory('unknowncommand');
+
         $this->setExpectedException('InvalidArgumentException');
-        $factory = new \DoctrineORMModule\Service\MigrationsCommandFactory('unknowncommand');
-        $command = $factory->createService($this->serviceLocator);
+        $factory->createService($this->serviceLocator);
     }
 }

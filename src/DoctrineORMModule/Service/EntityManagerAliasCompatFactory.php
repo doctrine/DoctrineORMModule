@@ -31,7 +31,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class EntityManagerAliasCompatFactory implements FactoryInterface
 {
-
     /**
      * {@inheritDoc}
      *

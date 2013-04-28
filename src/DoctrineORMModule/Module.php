@@ -101,6 +101,13 @@ class Module implements
         return array('DoctrineModule');
     }
 
+    /**
+     * Initializes the console with additional commands from the ORM, DBAL and (optionally) DBAL\Migrations
+     *
+     * @param \Zend\EventManager\EventInterface $event
+     *
+     * @return void
+     */
     public function initializeConsole(EventInterface $event)
     {
         /* @var $cli \Symfony\Component\Console\Application */

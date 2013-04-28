@@ -46,6 +46,8 @@ class ServiceManagerFactory
 
     /**
      * Builds a new service manager
+     *
+     * @return \Zend\ServiceManager\ServiceManager
      */
     public static function getServiceManager()
     {

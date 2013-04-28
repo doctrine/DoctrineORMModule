@@ -29,7 +29,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class MigrationsCommandFactory implements FactoryInterface
 {
-
     /**
      * @var string
      */
@@ -50,7 +49,7 @@ class MigrationsCommandFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $className = '\Doctrine\DBAL\Migrations\Tools\Console\Command\\' . $this->name . 'Command';
+        $className = 'Doctrine\DBAL\Migrations\Tools\Console\Command\\' . $this->name . 'Command';
 
         if (! class_exists($className)) {
             throw new \InvalidArgumentException();
