@@ -64,20 +64,18 @@ class Module implements
                 $manager->getEvent()->getParam('ServiceManager')->get('doctrine.sql_logger_collector.orm_default');
             }
         );
+        $events->getSharedManager()->attach('doctrine', 'loadCli.post', array($this, 'initializeConsole'));
     }
 
     /**
      * {@inheritDoc}
      */
-    public function onBootstrap(EventInterface $e)
+    public function onBootstrap(EventInterface $event)
     {
         /* @var $application \Zend\Mvc\ApplicationInterface */
-        $application    = $e->getTarget();
-        $events         = $application->getEventManager()->getSharedManager();
-        $serviceManager = $application->getServiceManager();
+        $application = $event->getTarget();
 
-        $events->attach('doctrine', 'loadCli.post', array($this, 'initializeConsole'));
-        $serviceManager->get('doctrine.entity_resolver.orm_default');
+        $application->getServiceManager()->get('doctrine.entity_resolver.orm_default');
     }
 
     /**
