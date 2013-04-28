@@ -29,8 +29,7 @@ return array(
         'DoctrineORMModule\\Yuml\\YumlController'  => function (AbstractPluginManager $pluginManager) {
             $config = $pluginManager->getServiceLocator()->get('Config');
 
-            if (
-                !isset($config['zenddevelopertools']['toolbar']['enabled'])
+            if (! isset($config['zenddevelopertools']['toolbar']['enabled'])
                 || !$config['zenddevelopertools']['toolbar']['enabled']
             ) {
                 throw new ServiceNotFoundException(

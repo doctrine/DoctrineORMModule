@@ -114,8 +114,7 @@ class MetadataGrapher
             }
         } else {
             foreach ($class2->getAssociationNames() as $class2Side) {
-                if (
-                    $class2->isAssociationInverseSide($class2Side)
+                if ($class2->isAssociationInverseSide($class2Side)
                     && ($association === $class2->getAssociationMappedByTargetField($class2Side))
                 ) {
                     $class2SideName = $class2Side;
