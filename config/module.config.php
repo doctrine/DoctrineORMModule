@@ -151,6 +151,19 @@ return array(
         )
     ),
 
+    // Factory mappings - used to define which factory to use to instantiate a particular doctrine
+    // service type
+    'doctrine_factories' => array(
+        'connection'               => 'DoctrineORMModule\Service\DBALConnectionFactory',
+        'configuration'            => 'DoctrineORMModule\Service\ConfigurationFactory',
+        'entitymanager'            => 'DoctrineORMModule\Service\EntityManagerFactory',
+        'entity_resolver'          => 'DoctrineORMModule\Service\EntityResolverFactory',
+        'sql_logger_collector'     => 'DoctrineORMModule\Service\SQLLoggerCollectorFactory',
+        'mapping_collector'        => 'DoctrineModule\Service\Authentication\AuthenticationServiceFactory',
+        'formannotationbuilder'    => 'DoctrineORMModule\Service\FormAnnotationBuilderFactory',
+        'migrations_configuration' => 'DoctrineORMModule\Service\MigrationsConfigurationFactory',
+    ),
+
     ////////////////////////////////////////////////////////////////////
     // `zendframework/zend-developer-tools` specific settings         //
     // ignore these if you're not developing additional features for  //
@@ -174,22 +187,24 @@ return array(
 
     'view_manager' => array(
         'template_map' => array(
-            'zend-developer-tools/toolbar/doctrine-orm-queries'  => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-queries.phtml',
-            'zend-developer-tools/toolbar/doctrine-orm-mappings' => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-mappings.phtml',
+            'zend-developer-tools/toolbar/doctrine-orm-queries'
+                => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-queries.phtml',
+            'zend-developer-tools/toolbar/doctrine-orm-mappings'
+                => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-mappings.phtml',
         ),
     ),
 
     'zenddevelopertools' => array(
         'profiler' => array(
             'collectors' => array(
-                'orm_default'  => 'doctrine.sql_logger_collector.orm_default',
-                'orm_default_mappings' => 'doctrine.mapping_collector.orm_default',
+                'doctrine.sql_logger_collector.orm_default' => 'doctrine.sql_logger_collector.orm_default',
+                'doctrine.mapping_collector.orm_default'    => 'doctrine.mapping_collector.orm_default',
             ),
         ),
         'toolbar' => array(
             'entries' => array(
-                'orm_default'  => 'zend-developer-tools/toolbar/doctrine-orm-queries',
-                'orm_default_mappings' => 'zend-developer-tools/toolbar/doctrine-orm-mappings',
+                'doctrine.sql_logger_collector.orm_default' => 'zend-developer-tools/toolbar/doctrine-orm-queries',
+                'doctrine.mapping_collector.orm_default'    => 'zend-developer-tools/toolbar/doctrine-orm-mappings',
             ),
         ),
     ),
