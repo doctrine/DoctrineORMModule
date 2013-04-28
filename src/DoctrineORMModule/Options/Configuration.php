@@ -437,8 +437,7 @@ class Configuration extends DBALConfiguration
      */
     public function setNamingStrategy($namingStrategy)
     {
-        if (
-            null === $namingStrategy
+        if (null === $namingStrategy
             || is_string($namingStrategy)
             || $namingStrategy instanceof NamingStrategy
         ) {

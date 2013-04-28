@@ -142,6 +142,68 @@ return array(
                 //'credentialProperty' => 'password'
             ),
         ),
+
+        // migrations configuration
+        'migrations_configuration' => array(
+            'orm_default' => array(
+                'directory' => 'data/DoctrineORMModule/Migrations',
+                'namespace' => 'DoctrineORMModule\Migrations',
+                'table'     => 'migrations',
+            ),
+        ),
+
+        // migrations commands base config
+        'migrations_cmd' => array(
+            'generate' => array(),
+            'execute'  => array(),
+            'migrate'  => array(),
+            'status'   => array(),
+            'version'  => array(),
+            'diff'     => array(),
+        ),
+    ),
+
+    'service_manager' => array(
+        'factories' => array(
+            'Doctrine\ORM\EntityManager' => 'DoctrineORMModule\Service\EntityManagerAliasCompatFactory',
+        ),
+        'invokables' => array(
+            // DBAL commands
+            'doctrine.dbal_cmd.runsql' => '\Doctrine\DBAL\Tools\Console\Command\RunSqlCommand',
+            'doctrine.dbal_cmd.import' => '\Doctrine\DBAL\Tools\Console\Command\ImportCommand',
+            // ORM Commands
+            'doctrine.orm_cmd.clear_cache_metadata' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand',
+            'doctrine.orm_cmd.clear_cache_result' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand',
+            'doctrine.orm_cmd.clear_cache_query' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand',
+            'doctrine.orm_cmd.schema_tool_create' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand',
+            'doctrine.orm_cmd.schema_tool_update' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand',
+            'doctrine.orm_cmd.schema_tool_drop' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand',
+            'doctrine.orm_cmd.convert_d1_schema' => '\Doctrine\ORM\Tools\Console\Command\ConvertDoctrine1SchemaCommand',
+            'doctrine.orm_cmd.generate_entities' => '\Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand',
+            'doctrine.orm_cmd.generate_proxies' => '\Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand',
+            'doctrine.orm_cmd.convert_mapping' => '\Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand',
+            'doctrine.orm_cmd.run_dql' => '\Doctrine\ORM\Tools\Console\Command\RunDqlCommand',
+            'doctrine.orm_cmd.validate_schema' => '\Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand',
+            'doctrine.orm_cmd.info' => '\Doctrine\ORM\Tools\Console\Command\InfoCommand',
+            'doctrine.orm_cmd.ensure_production_settings'
+                => '\Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand',
+            'doctrine.orm_cmd.generate_repositories'
+                => '\Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand',
+        ),
+    ),
+
+    // Factory mappings - used to define which factory to use to instantiate a particular doctrine
+    // service type
+    'doctrine_factories' => array(
+        'connection'               => 'DoctrineORMModule\Service\DBALConnectionFactory',
+        'configuration'            => 'DoctrineORMModule\Service\ConfigurationFactory',
+        'entitymanager'            => 'DoctrineORMModule\Service\EntityManagerFactory',
+        'entity_resolver'          => 'DoctrineORMModule\Service\EntityResolverFactory',
+        'sql_logger_collector'     => 'DoctrineORMModule\Service\SQLLoggerCollectorFactory',
+        'mapping_collector'        => 'DoctrineModule\Service\Authentication\AuthenticationServiceFactory',
+        'formannotationbuilder'    => 'DoctrineORMModule\Service\FormAnnotationBuilderFactory',
+        'migrations_configuration' => 'DoctrineORMModule\Service\MigrationsConfigurationFactory',
+        'migrations_cmd'           => 'DoctrineORMModule\Service\MigrationsCommandFactory',
     ),
 
     ////////////////////////////////////////////////////////////////////
@@ -167,22 +229,24 @@ return array(
 
     'view_manager' => array(
         'template_map' => array(
-            'zend-developer-tools/toolbar/doctrine-orm-queries'  => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-queries.phtml',
-            'zend-developer-tools/toolbar/doctrine-orm-mappings' => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-mappings.phtml',
+            'zend-developer-tools/toolbar/doctrine-orm-queries'
+                => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-queries.phtml',
+            'zend-developer-tools/toolbar/doctrine-orm-mappings'
+                => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-mappings.phtml',
         ),
     ),
 
     'zenddevelopertools' => array(
         'profiler' => array(
             'collectors' => array(
-                'orm_default'  => 'doctrine.sql_logger_collector.orm_default',
-                'orm_default_mappings' => 'doctrine.mapping_collector.orm_default',
+                'doctrine.sql_logger_collector.orm_default' => 'doctrine.sql_logger_collector.orm_default',
+                'doctrine.mapping_collector.orm_default'    => 'doctrine.mapping_collector.orm_default',
             ),
         ),
         'toolbar' => array(
             'entries' => array(
-                'orm_default'  => 'zend-developer-tools/toolbar/doctrine-orm-queries',
-                'orm_default_mappings' => 'zend-developer-tools/toolbar/doctrine-orm-mappings',
+                'doctrine.sql_logger_collector.orm_default' => 'zend-developer-tools/toolbar/doctrine-orm-queries',
+                'doctrine.mapping_collector.orm_default'    => 'zend-developer-tools/toolbar/doctrine-orm-mappings',
             ),
         ),
     ),
