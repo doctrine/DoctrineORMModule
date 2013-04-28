@@ -39,7 +39,7 @@ return array(
     ),
 
     'initializers' => array(
-        function($service,Zend\Mvc\Controller\ControllerManager $sl) {
+        'doctrine.entitymanager' => function($service,Zend\Mvc\Controller\ControllerManager $sl) {
             if ($service instanceof DoctrineORMModule\Service\EntityManagerAwareInterface) {
                 $em = $sl->getServiceLocator()->get('doctrine.entitymanager.orm_default');
                 $service->setEntityManager($em);
