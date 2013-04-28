@@ -17,12 +17,15 @@
  * <http://www.doctrine-project.org>.
  */
 
+use Zend\ServiceManager\ServiceLocatorInterface;
+
 return array(
-    'aliases' => array(
-        //'Doctrine\ORM\EntityManager' => 'doctrine.entitymanager.orm_default',
-    ),
     'factories' => array(
-        'doctrine.migrations_configuration.orm_default' => function ($serviceManager) {
+        // fix to allow removal of this alias since the abstract doctrine service factory was introduced
+        'Doctrine\ORM\EntityManager' => function (ServiceLocatorInterface $serviceLocator) {
+            return $serviceLocator->get('doctrine.entitymanager.orm_default');
+        },
+        'doctrine.migrations_configuration' => function ($serviceManager) {
             $connection       = $serviceManager->get('doctrine.connection.orm_default');
             $appConfig        = $serviceManager->get('Config');
             $migrationsConfig = $appConfig['doctrine']['migrations'];
