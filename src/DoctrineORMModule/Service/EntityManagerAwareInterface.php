@@ -21,18 +21,20 @@
 namespace DoctrineORMModule\Service;
 
 
+use Doctrine\ORM\EntityManager;
+
 interface EntityManagerAwareInterface {
     /**
      * Set entity manager
      *
-     * @param Doctrine\ORM\EntityManager $entityManager
+     * @param EntityManager $entityManager
      */
-    public function setEntityManager(Doctrine\ORM\EntityManager $entityManager);
+    public function setEntityManager(EntityManager $entityManager);
 
     /**
      * Get entity manager
      *
-     * @return Doctrine\ORM\EntityManager
+     * @return EntityManager
      */
     public function getEntityManager();
 }
