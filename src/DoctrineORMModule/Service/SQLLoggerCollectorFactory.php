@@ -78,7 +78,7 @@ class SQLLoggerCollectorFactory implements FactoryInterface
             $configuration->setSQLLogger($debugStackLogger);
         }
 
-        return new SQLLoggerCollector($debugStackLogger, $options->getName());
+        return new SQLLoggerCollector($debugStackLogger, 'doctrine.sql_logger_collector.' . $options->getName());
     }
 
     /**

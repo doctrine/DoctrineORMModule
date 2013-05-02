@@ -119,8 +119,14 @@ return array(
             'orm_default' => array()
         ),
 
-        // collector SQL logger, used when ZendDeveloperTools and its toolbar are active
+        // SQL logger collector, used when ZendDeveloperTools and its toolbar are active
         'sql_logger_collector' => array(
+            // configuration for the `doctrine.sql_logger_collector.orm_default` service
+            'orm_default' => array(),
+        ),
+
+        // mappings collector, used when ZendDeveloperTools and its toolbar are active
+        'mapping_collector' => array(
             // configuration for the `doctrine.sql_logger_collector.orm_default` service
             'orm_default' => array(),
         ),
@@ -200,7 +206,7 @@ return array(
         'entitymanager'            => 'DoctrineORMModule\Service\EntityManagerFactory',
         'entity_resolver'          => 'DoctrineORMModule\Service\EntityResolverFactory',
         'sql_logger_collector'     => 'DoctrineORMModule\Service\SQLLoggerCollectorFactory',
-        'mapping_collector'        => 'DoctrineModule\Service\Authentication\AuthenticationServiceFactory',
+        'mapping_collector'        => 'DoctrineORMModule\Service\MappingCollectorFactory',
         'formannotationbuilder'    => 'DoctrineORMModule\Service\FormAnnotationBuilderFactory',
         'migrations_configuration' => 'DoctrineORMModule\Service\MigrationsConfigurationFactory',
         'migrations_cmd'           => 'DoctrineORMModule\Service\MigrationsCommandFactory',
