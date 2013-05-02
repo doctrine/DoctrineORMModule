@@ -44,7 +44,7 @@ class MappingCollectorFactory extends AbstractFactory
         /* @var $objectManager \Doctrine\Common\Persistence\ObjectManager */
         $objectManager = $serviceLocator->get('doctrine.entitymanager.' . $name);
 
-        return new MappingCollector($objectManager->getMetadataFactory(), $name);
+        return new MappingCollector($objectManager->getMetadataFactory(), 'doctrine.mapping_collector.' . $name);
     }
 
     /**
