@@ -76,7 +76,7 @@ return array(
 
                 // SQL filters. See http://docs.doctrine-project.org/en/latest/reference/filters.html
                 'filters'           => array(),
-                
+
                 // Custom DQL functions.
                 // You can grab common MySQL ones at https://github.com/beberlei/DoctrineExtensions
                 // Further docs at http://docs.doctrine-project.org/en/latest/cookbook/dql-user-defined-functions.html
@@ -210,6 +210,20 @@ return array(
         'formannotationbuilder'    => 'DoctrineORMModule\Service\FormAnnotationBuilderFactory',
         'migrations_configuration' => 'DoctrineORMModule\Service\MigrationsConfigurationFactory',
         'migrations_cmd'           => 'DoctrineORMModule\Service\MigrationsCommandFactory',
+    ),
+
+    // Zend\Form\FormElementManager configuration
+    'form_elements' => array(
+        'aliases' => array(
+            'objectselect'        => 'DoctrineModule\Form\Element\ObjectSelect',
+            'objectradio'         => 'DoctrineModule\Form\Element\ObjectRadio',
+            'objectmulticheckbox' => 'DoctrineModule\Form\Element\ObjectMultiCheckbox',
+        ),
+        'factories' => array(
+            'DoctrineModule\Form\Element\ObjectSelect'        => 'DoctrineORMModule\Service\ObjectSelectFactory',
+            'DoctrineModule\Form\Element\ObjectRadio'         => 'DoctrineORMModule\Service\ObjectRadioFactory',
+            'DoctrineModule\Form\Element\ObjectMultiCheckbox' => 'DoctrineORMModule\Service\ObjectMultiCheckboxFactory',
+        ),
     ),
 
     ////////////////////////////////////////////////////////////////////
