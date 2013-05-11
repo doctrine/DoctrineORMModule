@@ -131,6 +131,12 @@ return array(
             'orm_default' => array(),
         ),
 
+        // form annotation builder configuration
+        'formannotationbuilder' => array(
+            // Configuration for service `doctrine.formannotation.orm_default` service
+            'orm_default' => array(),
+        ),
+
         // entity resolver configuration, allows mapping associations to interfaces
         'entity_resolver' => array(
             // configuration for the `doctrine.entity_resolver.orm_default` service
