@@ -176,6 +176,12 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             case 'boolean':
                 $type = 'Zend\Form\Element\Checkbox';
                 break;
+            case 'date':
+                $type = 'Zend\Form\Element\Date';
+                break;
+            case 'datetime':
+                $type = 'Zend\Form\Element\DateTime';
+                break;
             default:
                 $type = 'Zend\Form\Element';
                 break;
@@ -220,9 +226,6 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             case 'integer':
             case 'smallint':
                 $inputSpec['validators'][] = array('name' => 'Int');
-                break;
-            case 'date':
-                $inputSpec['validators'][] = array('name' => 'Date');
                 break;
             case 'string':
                 if ($annotation->length) {
