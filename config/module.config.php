@@ -150,6 +150,12 @@ return array(
         )
     ),
 
+    ////////////////////////////////////////////////////////////////////
+    // `zendframework/zend-developer-tools` specific settings         //
+    // ignore these if you're not developing additional features for  //
+    // zend developer tools                                           //
+    ////////////////////////////////////////////////////////////////////
+
     'router' => array(
         'routes' => array(
             'doctrine_orm_module_yuml' => array(
@@ -164,12 +170,6 @@ return array(
             ),
         ),
     ),
-
-    ////////////////////////////////////////////////////////////////////
-    // `zendframework/zend-developer-tools` specific settings         //
-    // ignore these if you're not developing additional features for  //
-    // zend developer tools                                           //
-    ////////////////////////////////////////////////////////////////////
 
     'view_manager' => array(
         'template_map' => array(
