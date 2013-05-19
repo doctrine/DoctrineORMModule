@@ -232,6 +232,12 @@ return array(
         ),
     ),
 
+    'hydrators' => array(
+        'factories' => array(
+            'DoctrineModule\Stdlib\Hydrator\DoctrineObject' => 'DoctrineORMModule\Service\DoctrineObjectHydratorFactory'
+        )
+    ),
+
     ////////////////////////////////////////////////////////////////////
     // `zendframework/zend-developer-tools` specific settings         //
     // ignore these if you're not developing additional features for  //
