@@ -4,7 +4,7 @@ namespace DoctrineORMModule\Form\Annotation;
 
 use Doctrine\ORM\EntityManager;
 use Zend\Code\Annotation\AnnotationManager;
-use Zend\Code\Annotation\Parser;
+use Zend\Code\Annotation\Parser\DoctrineAnnotationParser;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
 
@@ -13,16 +13,16 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     /**
      * @var \Doctrine\ORM\EntityManager
      */
-    protected $em;
+    protected $entityManager;
 
     /**
      * Constructor. Ensures EntityManager is present.
      *
-     * @param \Doctrine\ORM\EntityManager $em
+     * @param \Doctrine\ORM\EntityManager $entityManager
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -35,9 +35,14 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     {
         parent::setAnnotationManager($annotationManager);
 
-        $parser = new Parser\DoctrineAnnotationParser();
+        $parser = new DoctrineAnnotationParser($this->entityManager);
+
         $parser->registerAnnotation('Doctrine\ORM\Mapping\Column');
         $parser->registerAnnotation('Doctrine\ORM\Mapping\GeneratedValue');
+        $parser->registerAnnotation('Doctrine\ORM\Mapping\OneToMany');
+        $parser->registerAnnotation('Doctrine\ORM\Mapping\OneToOne');
+        $parser->registerAnnotation('Doctrine\ORM\Mapping\ManyToMany');
+        $parser->registerAnnotation('Doctrine\ORM\Mapping\ManyToOne');
 
         $this->annotationManager->attach($parser);
 
@@ -54,7 +59,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     {
         parent::setEventManager($events);
 
-        $this->getEventManager()->attach(new ElementAnnotationsListener);
+        $this->getEventManager()->attach(new ElementAnnotationsListener($this->entityManager));
 
         return $this;
     }
