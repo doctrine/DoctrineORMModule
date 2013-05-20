@@ -45,13 +45,10 @@ class ElementAnnotationsListenerTest extends TestCase
         $annotation->targetEntity = 'DoctrineORMModuleTest\Assets\Entity\Category';
 
         $event->setParam('annotation', $annotation);
-        $event->setParam('elementSpec', new ArrayObject(array(
-                                                             'spec' => array(
-                                                                 'attributes' => array(
-                                                                     'class' => 'foo'
-                                                                 )
-                                                             )
-                                                        )));
+        $event->setParam(
+            'elementSpec',
+            new ArrayObject(array('spec' => array('attributes' => array('class' => 'foo'))))
+        );
 
         $listener->handleToOneAnnotation($event);
         $spec = $event->getParam('elementSpec');
