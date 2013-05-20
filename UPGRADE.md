@@ -1,5 +1,7 @@
 # 0.8.0
 
+ * [`DoctrineORMModule\Form\Annotation\AnnotationBuilder`](https://github.com/doctrine/DoctrineORMModule/blob/master/src/DoctrineORMModule/Form/Annotation/AnnotationBuilder.php)
+   does now also handle associations [#193](https://github.com/doctrine/DoctrineORMModule/pull/193)
  * `DoctrineORMModule\Module` does not implement `Zend\ModuleManager\Feature\AutoloaderProviderInterface` anymore.
    Please switch to composer autoloading.
 

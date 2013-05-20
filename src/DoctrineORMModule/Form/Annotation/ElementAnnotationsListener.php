@@ -1,23 +1,43 @@
 <?php
 namespace DoctrineORMModule\Form\Annotation;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
+use DoctrineModule\Form\Element;
+use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 
 class ElementAnnotationsListener implements ListenerAggregateInterface
 {
-
     /**
      * @var \Zend\Stdlib\CallbackHandler[]
      */
     protected $listeners = array();
 
     /**
+     * @var \Doctrine\Common\Persistence\ObjectManager
+     */
+    protected $objectManager;
+
+    /**
+     * @param \Doctrine\Common\Persistence\ObjectManager $objectManager
+     */
+    public function __construct(ObjectManager $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
+
+    /**
      * Detach listeners
      *
      * @param  EventManagerInterface $events
+     *
      * @return void
      */
     public function detach(EventManagerInterface $events)
@@ -32,7 +52,8 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     /**
      * Attach listeners
      *
-     * @param  EventManagerInterface $events
+     * @param  \Zend\EventManager\EventManagerInterface $events
+     *
      * @return void
      */
     public function attach(EventManagerInterface $events)
@@ -42,8 +63,55 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         $this->listeners[] = $events->attach('configureElement', array($this, 'handleRequiredAnnotation'));
         $this->listeners[] = $events->attach('configureElement', array($this, 'handleTypeAnnotation'));
         $this->listeners[] = $events->attach('configureElement', array($this, 'handleValidatorAnnotation'));
-
+        $this->listeners[] = $events->attach('configureElement', array($this, 'handleToManyAnnotation'));
         $this->listeners[] = $events->attach('checkForExclude', array($this, 'handleExcludeAnnotation'));
+    }
+
+    /**
+     * Handle ToOne relationships.
+     *
+     * @param \Zend\EventManager\EventInterface $event
+     *
+     * @return void
+     */
+    public function handleToOneAnnotation(EventInterface $event)
+    {
+        $annotation = $event->getParam('annotation');
+
+        if (!($annotation instanceof ManyToOne || $annotation instanceof OneToOne)) {
+            return;
+        }
+
+        $elementSpec                    = $event->getParam('elementSpec');
+        $elementSpec['spec']['type']    = 'DoctrineORMModule\Form\Element\EntitySelect';
+        $elementSpec['spec']['options'] = array(
+            'object_manager' => $this->objectManager,
+            'target_class'   => $annotation->targetEntity
+        );
+    }
+
+    /**
+     * Handle ToMany relationships.
+     *
+     * @param \Zend\EventManager\EventInterface $event
+     *
+     * @return void
+     */
+    public function handleToManyAnnotation(EventInterface $event)
+    {
+        $annotation = $event->getParam('annotation');
+
+        if (!($annotation instanceof ManyToMany || $annotation instanceof OneToMany)) {
+            return;
+        }
+
+        $elementSpec                                   = $event->getParam('elementSpec');
+        $elementSpec['spec']['type']                   = 'DoctrineORMModule\Form\Element\EntitySelect';
+        $elementSpec['spec']['attributes']['multiple'] = true;
+        $elementSpec['spec']['options']                = array(
+            'object_manager' => $this->objectManager,
+            'target_class'   => $annotation->targetEntity
+        );
     }
 
     /**
@@ -51,17 +119,18 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
      *
      * Sets the attributes array of the element specification.
      *
-     * @param  \Zend\EventManager\EventInterface $e
+     * @param  \Zend\EventManager\EventInterface $event
+     *
      * @return void
      */
-    public function handleAttributesAnnotation($e)
+    public function handleAttributesAnnotation(EventInterface $event)
     {
-        $annotation = $e->getParam('annotation');
+        $annotation = $event->getParam('annotation');
         if (!$annotation instanceof Column) {
             return;
         }
 
-        $elementSpec = $e->getParam('elementSpec');
+        $elementSpec = $event->getParam('elementSpec');
         switch ($annotation->type) {
             case 'bool':
             case 'boolean':
@@ -78,15 +147,17 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
      *
      * Sets the allow_empty flag on the input specification array.
      *
-     * @param  \Zend\EventManager\EventInterface $e
+     * @param  \Zend\EventManager\EventInterface $event
+     *
      * @return bool
      */
-    public function handleExcludeAnnotation($e)
+    public function handleExcludeAnnotation(EventInterface $event)
     {
-        $annotations = $e->getParam('annotations');
+        $annotations = $event->getParam('annotations');
+
         foreach ($annotations as $annotation) {
             if ($annotation instanceof GeneratedValue) {
-                if ($annotation->strategy == 'AUTO') {
+                if ('AUTO' === $annotation->strategy) {
                     return true;
                 }
             }
@@ -100,17 +171,20 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
      *
      * Adds a filter to the filter chain specification for the input.
      *
-     * @param  \Zend\EventManager\EventInterface $e
+     * @param  \Zend\EventManager\EventInterface $event
+     *
      * @return void
      */
-    public function handleFilterAnnotation($e)
+    public function handleFilterAnnotation(EventInterface $event)
     {
-        $annotation = $e->getParam('annotation');
+        $annotation = $event->getParam('annotation');
+
         if (!$annotation instanceof Column) {
             return;
         }
 
-        $inputSpec = $e->getParam('inputSpec');
+        $inputSpec = $event->getParam('inputSpec');
+
         if (!isset($inputSpec['filters'])) {
             $inputSpec['filters'] = array();
         }
@@ -141,17 +215,18 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
      *
      * Sets the required flag on the input based on the annotation value.
      *
-     * @param  \Zend\EventManager\EventInterface $e
+     * @param  \Zend\EventManager\EventInterface $event
+     *
      * @return void
      */
-    public function handleRequiredAnnotation($e)
+    public function handleRequiredAnnotation(EventInterface $event)
     {
-        $annotation = $e->getParam('annotation');
+        $annotation = $event->getParam('annotation');
         if (!$annotation instanceof Column) {
             return;
         }
 
-        $inputSpec = $e->getParam('inputSpec');
+        $inputSpec = $event->getParam('inputSpec');
         $inputSpec['required'] = (bool) !$annotation->nullable;
     }
 
@@ -160,12 +235,14 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
      *
      * Sets the element class type to use in the element specification.
      *
-     * @param  \Zend\EventManager\EventInterface $e
+     * @param  \Zend\EventManager\EventInterface $event
+     *
      * @return void
      */
-    public function handleTypeAnnotation($e)
+    public function handleTypeAnnotation(EventInterface $event)
     {
-        $annotation = $e->getParam('annotation');
+        $annotation = $event->getParam('annotation');
+
         if (!$annotation instanceof Column) {
             return;
         }
@@ -187,7 +264,8 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
                 break;
         }
 
-        $elementSpec = $e->getParam('elementSpec');
+        $elementSpec = $event->getParam('elementSpec');
+
         $elementSpec['spec']['type'] = $type;
     }
 
@@ -196,17 +274,20 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
      *
      * Adds a validator to the validator chain of the input specification.
      *
-     * @param  \Zend\EventManager\EventInterface $e
+     * @param  \Zend\EventManager\EventInterface $event
+     *
      * @return void
      */
-    public function handleValidatorAnnotation($e)
+    public function handleValidatorAnnotation(EventInterface $event)
     {
-        $annotation = $e->getParam('annotation');
+        $annotation = $event->getParam('annotation');
+
         if (!$annotation instanceof Column) {
             return;
         }
 
-        $inputSpec = $e->getParam('inputSpec');
+        $inputSpec = $event->getParam('inputSpec');
+
         if (!isset($inputSpec['validators'])) {
             $inputSpec['validators'] = array();
         }
@@ -215,7 +296,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             case 'bool':
             case 'boolean':
                 $inputSpec['validators'][] = array(
-                    'name' => 'InArray',
+                    'name'    => 'InArray',
                     'options' => array('haystack' => array('0', '1'))
                 );
                 break;
@@ -230,7 +311,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             case 'string':
                 if ($annotation->length) {
                     $inputSpec['validators'][] = array(
-                        'name' => 'StringLength',
+                        'name'    => 'StringLength',
                         'options' => array('max' => $annotation->length)
                     );
                 }
