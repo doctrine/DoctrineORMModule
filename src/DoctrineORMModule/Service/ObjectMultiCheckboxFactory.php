@@ -41,7 +41,7 @@ class ObjectMultiCheckboxFactory implements FactoryInterface
         $entityManager = $services->get('Doctrine\ORM\EntityManager');
         $element       = new ObjectMultiCheckbox;
 
-        $element->setObjectManager($entityManager);
+        $element->getProxy()->setObjectManager($entityManager);
 
         return $element;
     }
