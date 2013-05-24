@@ -41,7 +41,7 @@ class ObjectRadioFactory implements FactoryInterface
         $entityManager = $services->get('Doctrine\ORM\EntityManager');
         $element       = new ObjectRadio;
 
-        $element->setObjectManager($entityManager);
+        $element->getProxy()->setObjectManager($entityManager);
 
         return $element;
     }
