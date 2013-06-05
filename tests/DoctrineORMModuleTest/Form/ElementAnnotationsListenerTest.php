@@ -6,7 +6,9 @@ use ArrayObject;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\ManyToMany;
+use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use DoctrineORMModule\Form\Annotation\ElementAnnotationsListener;
+use DoctrineORMModuleTest\Assets\Entity\ResolveTarget;
 use DoctrineORMModuleTest\Framework\TestCase;
 use PHPUnit_Framework_TestCase;
 use Zend\EventManager\Event;
@@ -23,7 +25,7 @@ class ElementAnnotationsListenerTest extends TestCase
      */
     public function testHandleAnnotationType($type, $expectedType)
     {
-        $listener                 = new ElementAnnotationsListener($this->getEntityManager());
+        $listener                 = $this->getListener();
         $event                    = new Event();
         $checkboxAnnotation       = new Column();
         $checkboxAnnotation->type = $type;
@@ -36,15 +38,94 @@ class ElementAnnotationsListenerTest extends TestCase
 
         $this->assertEquals($expectedType, $spec['spec']['type']);
     }
+
+    public function testToOneMergesOptions()
+    {
+        $listener = $this->getListener();
+        $builder  = $listener->getBuilder();
+
+        // binds the entity to the form
+        $builder->getFormSpecification(new ResolveTarget());
+
+        $event      = new Event();
+        $annotation = new ManyToOne();
+        $annotation->targetEntity = 'DoctrineORMModuleTest\Assets\Entity\ResolveTarget';
+
+        $event->setParam('annotation', $annotation);
+        $event->setParam('name', 'target');
+        $event->setParam(
+            'elementSpec',
+            new ArrayObject(array('spec' => array('type' => 'overridden', 'options' => array('foo' => 'bar'))))
+        );
+
+        $expectedOptions = array(
+            'foo'            => 'bar',
+            'object_manager' => $this->getEntityManager(),
+            'target_class'   => 'DoctrineORMModuleTest\Assets\Entity\TargetEntity'
+        );
+
+        $listener->handleToOneAnnotation($event);
+
+        $spec = $event->getParam('elementSpec');
+        $this->assertEquals('DoctrineORMModule\Form\Element\EntitySelect', $spec['spec']['type']);
+        $this->assertEquals($expectedOptions, $spec['spec']['options']);
+    }
+
+    public function testToManyMergesOptionsAndOverridesMultipleAttribute()
+    {
+        $listener = $this->getListener();
+        $builder  = $listener->getBuilder();
+
+        // binds the entity to the form
+        $builder->getFormSpecification(new ResolveTarget());
+
+        $event      = new Event();
+        $annotation = new ManyToMany();
+        $annotation->targetEntity = 'DoctrineORMModuleTest\Assets\Entity\ResolveTarget';
+
+        $event->setParam('annotation', $annotation);
+        $event->setParam('name', 'target');
+        $event->setParam(
+            'elementSpec',
+            new ArrayObject(array(
+                'spec' => array(
+                    'type' => 'overridden',
+                    'options' => array('foo' => 'bar'),
+                    'attributes' => array(
+                        'multiple' => false
+                    )
+                )
+            ))
+        );
+
+        $expectedOptions = array(
+            'foo'            => 'bar',
+            'object_manager' => $this->getEntityManager(),
+            'target_class'   => 'DoctrineORMModuleTest\Assets\Entity\TargetEntity'
+        );
+
+        $listener->handleToManyAnnotation($event);
+
+        $spec = $event->getParam('elementSpec');
+        $this->assertEquals('DoctrineORMModule\Form\Element\EntitySelect', $spec['spec']['type']);
+        $this->assertEquals($expectedOptions, $spec['spec']['options']);
+        $this->assertTrue($spec['spec']['attributes']['multiple']);
+    }
     
     public function testToOneReturnsEntitySelect()
     {
-        $listener   = new ElementAnnotationsListener($this->getEntityManager());
+        $listener = $this->getListener();
+        $builder  = $listener->getBuilder();
+
+        // binds the entity to the form
+        $builder->getFormSpecification(new ResolveTarget());
+
         $event      = new Event();
         $annotation = new ManyToOne();
-        $annotation->targetEntity = 'DoctrineORMModuleTest\Assets\Entity\Category';
+        $annotation->targetEntity = 'DoctrineORMModuleTest\Assets\Entity\ResolveTarget';
 
         $event->setParam('annotation', $annotation);
+        $event->setParam('name', 'target');
         $event->setParam(
             'elementSpec',
             new ArrayObject(array('spec' => array('attributes' => array('class' => 'foo'))))
@@ -54,29 +135,35 @@ class ElementAnnotationsListenerTest extends TestCase
         $spec = $event->getParam('elementSpec');
         $this->assertArrayNotHasKey('multiple', $spec['spec']['attributes']);
         $this->assertEquals('DoctrineORMModule\Form\Element\EntitySelect', $spec['spec']['type']);
-        $this->assertEquals('DoctrineORMModuleTest\Assets\Entity\Category', $spec['spec']['options']['target_class']);
+        $this->assertEquals('DoctrineORMModuleTest\Assets\Entity\TargetEntity', $spec['spec']['options']['target_class']);
     }
 
     public function testToManyReturnsEntitySelect()
     {
-        $listener   = new ElementAnnotationsListener($this->getEntityManager());
+        $listener = $this->getListener();
+        $builder  = $listener->getBuilder();
+
+        // binds the entity to the form
+        $builder->getFormSpecification(new ResolveTarget());
+
         $event      = new Event();
         $annotation = new ManyToMany();
-        $annotation->targetEntity = 'DoctrineORMModuleTest\Assets\Entity\Category';
+        $annotation->targetEntity = 'DoctrineORMModuleTest\Assets\Entity\ResolveTarget';
 
         $event->setParam('annotation', $annotation);
+        $event->setParam('name', 'target');
         $event->setParam('elementSpec', new ArrayObject());
 
         $listener->handleToManyAnnotation($event);
         $spec = $event->getParam('elementSpec');
-        $this->assertArrayHasKey('multiple', $spec['spec']['attributes']);
+        $this->assertTrue($spec['spec']['attributes']['multiple']);
         $this->assertEquals('DoctrineORMModule\Form\Element\EntitySelect', $spec['spec']['type']);
-        $this->assertEquals('DoctrineORMModuleTest\Assets\Entity\Category', $spec['spec']['options']['target_class']);
+        $this->assertEquals('DoctrineORMModuleTest\Assets\Entity\TargetEntity', $spec['spec']['options']['target_class']);
     }
 
     public function testHandleAnnotationAttributesShallAppend()
     {
-        $listener         = new ElementAnnotationsListener($this->getEntityManager());
+        $listener         = $this->getListener();
         $event            = new Event();
         $annotation       = new Column();
         $annotation->type = 'text';
@@ -104,5 +191,13 @@ class ElementAnnotationsListenerTest extends TestCase
             array('boolean', 'Zend\Form\Element\Checkbox'),
             array('string', 'Zend\Form\Element'),
         );
+    }
+
+    protected function getListener()
+    {
+        $builder  = new AnnotationBuilder($this->getEntityManager());
+        $listener = new ElementAnnotationsListener($builder);
+
+        return $listener;
     }
 }

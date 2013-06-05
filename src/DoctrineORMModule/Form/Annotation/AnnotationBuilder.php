@@ -2,7 +2,7 @@
 
 namespace DoctrineORMModule\Form\Annotation;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Persistence\ObjectManager;
 use Zend\Code\Annotation\AnnotationManager;
 use Zend\Code\Annotation\Parser\DoctrineAnnotationParser;
 use Zend\EventManager\EventManagerInterface;
@@ -11,18 +11,26 @@ use Zend\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
 class AnnotationBuilder extends ZendAnnotationBuilder
 {
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var \Doctrine\Common\Persistence\ObjectManager
      */
-    protected $entityManager;
+    protected $objectManager;
 
     /**
-     * Constructor. Ensures EntityManager is present.
+     * Constructor. Ensures ObjectManager is present.
      *
-     * @param \Doctrine\ORM\EntityManager $entityManager
+     * @param \Doctrine\Common\Persistence\ObjectManager $objectManager
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(ObjectManager $objectManager)
     {
-        $this->entityManager = $entityManager;
+        $this->objectManager = $objectManager;
+    }
+
+    /**
+     * @return \Doctrine\Common\Persistence\ObjectManager
+     */
+    public function getObjectManager()
+    {
+        return $this->objectManager;
     }
 
     /**
@@ -35,7 +43,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     {
         parent::setAnnotationManager($annotationManager);
 
-        $parser = new DoctrineAnnotationParser($this->entityManager);
+        $parser = new DoctrineAnnotationParser();
 
         $parser->registerAnnotation('Doctrine\ORM\Mapping\Column');
         $parser->registerAnnotation('Doctrine\ORM\Mapping\GeneratedValue');
@@ -59,7 +67,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     {
         parent::setEventManager($events);
 
-        $this->getEventManager()->attach(new ElementAnnotationsListener($this->entityManager));
+        $this->getEventManager()->attach(new ElementAnnotationsListener($this));
 
         return $this;
     }

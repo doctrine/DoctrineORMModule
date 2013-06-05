@@ -16,21 +16,24 @@ use Zend\EventManager\ListenerAggregateInterface;
 class ElementAnnotationsListener implements ListenerAggregateInterface
 {
     /**
+     * @var AnnotationBuilder
+     */
+    protected $builder;
+
+    /**
      * @var \Zend\Stdlib\CallbackHandler[]
      */
     protected $listeners = array();
 
     /**
-     * @var \Doctrine\Common\Persistence\ObjectManager
+     * Constructor. AnnotationBuilder is required for access to the ObjectManager
+     * and the entity to retrieve class metadata.
+     *
+     * @param AnnotationBuilder $builder
      */
-    protected $objectManager;
-
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $objectManager
-     */
-    public function __construct(ObjectManager $objectManager)
+    public function __construct(AnnotationBuilder $builder)
     {
-        $this->objectManager = $objectManager;
+        $this->builder = $builder;
     }
 
     /**
@@ -82,12 +85,30 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             return;
         }
 
-        $elementSpec                    = $event->getParam('elementSpec');
-        $elementSpec['spec']['type']    = 'DoctrineORMModule\Form\Element\EntitySelect';
-        $elementSpec['spec']['options'] = array(
-            'object_manager' => $this->objectManager,
-            'target_class'   => $annotation->targetEntity
+        $targetClass = $this->getTargetClass($event);
+
+        if (!$targetClass) {
+            return;
+        }
+
+        /** @var \ArrayObject $elementSpec */
+        $elementSpec = $event->getParam('elementSpec');
+
+        if (!isset($elementSpec['spec'])) {
+            $elementSpec['spec'] = array();
+        }
+
+        $options = isset($elementSpec['spec']['options']) ? $elementSpec['spec']['options'] : array();
+        $options = array_merge(
+            array(
+                'object_manager' => $this->getObjectManager(),
+                'target_class'   => $targetClass
+            ),
+            $options
         );
+
+        $elementSpec['spec']['type']    = 'DoctrineORMModule\Form\Element\EntitySelect';
+        $elementSpec['spec']['options'] = $options;
     }
 
     /**
@@ -105,13 +126,31 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             return;
         }
 
-        $elementSpec                                   = $event->getParam('elementSpec');
-        $elementSpec['spec']['type']                   = 'DoctrineORMModule\Form\Element\EntitySelect';
-        $elementSpec['spec']['attributes']['multiple'] = true;
-        $elementSpec['spec']['options']                = array(
-            'object_manager' => $this->objectManager,
-            'target_class'   => $annotation->targetEntity
+        $targetClass = $this->getTargetClass($event);
+
+        if (!$targetClass) {
+            return;
+        }
+
+        /** @var \ArrayObject $elementSpec */
+        $elementSpec = $event->getParam('elementSpec');
+
+        if (!isset($elementSpec['spec'])) {
+            $elementSpec['spec'] = array();
+        }
+
+        $options = isset($elementSpec['spec']['options']) ? $elementSpec['spec']['options'] : array();
+        $options = array_merge(
+            array(
+                'object_manager' => $this->getObjectManager(),
+                'target_class'   => $targetClass
+            ),
+            $options
         );
+
+        $elementSpec['spec']['type']                   = 'DoctrineORMModule\Form\Element\EntitySelect';
+        $elementSpec['spec']['options']                = $options;
+        $elementSpec['spec']['attributes']['multiple'] = true;
     }
 
     /**
@@ -317,5 +356,42 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
                 }
                 break;
         }
+    }
+
+    /**
+     * @return \DoctrineORMModule\Form\Annotation\AnnotationBuilder
+     */
+    public function getBuilder()
+    {
+        return $this->builder;
+    }
+
+    /**
+     * @return \Doctrine\Common\Persistence\ObjectManager
+     */
+    public function getObjectManager()
+    {
+        return $this->getBuilder()->getObjectManager();
+    }
+
+    /**
+     * Gets a targetClass from class metadata so that the FQCN can be resolved.
+     *
+     * @param EventInterface $event
+     * @return null|string
+     */
+    protected function getTargetClass(EventInterface $event)
+    {
+        $entityClass  = get_class($this->builder->getEntity());
+
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $metadata = $this->getObjectManager()->getClassMetadata($entityClass);
+        $mappings = $metadata->associationMappings;
+        $name     = $event->getParam('name');
+
+        if (!isset($mappings[$name]['targetEntity'])) {
+            return null;
+        }
+        return $mappings[$name]['targetEntity'];
     }
 }
