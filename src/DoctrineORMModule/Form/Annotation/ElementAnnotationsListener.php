@@ -67,6 +67,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         $this->listeners[] = $events->attach('configureElement', array($this, 'handleTypeAnnotation'));
         $this->listeners[] = $events->attach('configureElement', array($this, 'handleValidatorAnnotation'));
         $this->listeners[] = $events->attach('configureElement', array($this, 'handleToManyAnnotation'));
+        $this->listeners[] = $events->attach('configureElement', array($this, 'handleToOneAnnotation'));
         $this->listeners[] = $events->attach('checkForExclude', array($this, 'handleExcludeAnnotation'));
     }
 
