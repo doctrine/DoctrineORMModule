@@ -86,14 +86,14 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             return;
         }
 
-        $targetClass = $this->getTargetClass($event);
-
-        if (!$targetClass) {
+        $metadata = $this->getMetadataAssocationMappings($event);
+        if (!$metadata) {
             return;
         }
 
         /** @var \ArrayObject $elementSpec */
         $elementSpec = $event->getParam('elementSpec');
+        $inputSpec   = $event->getParam('inputSpec');
 
         if (!isset($elementSpec['spec'])) {
             $elementSpec['spec'] = array();
@@ -103,10 +103,21 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         $options = array_merge(
             array(
                 'object_manager' => $this->getObjectManager(),
-                'target_class'   => $targetClass
+                'target_class'   => $metadata['targetEntity']
             ),
             $options
         );
+
+        foreach ($metadata['joinColumns'] as $joinColumn) {
+            if ($joinColumn['nullable']) {
+                $inputSpec['required'] = false;
+
+                if (!isset($options['empty_option'])) {
+                    $options['empty_option'] = 'NULL';
+                }
+                break;
+            }
+        }
 
         $elementSpec['spec']['type']    = 'DoctrineORMModule\Form\Element\EntitySelect';
         $elementSpec['spec']['options'] = $options;
@@ -127,14 +138,15 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             return;
         }
 
-        $targetClass = $this->getTargetClass($event);
-
-        if (!$targetClass) {
+        $metadata = $this->getMetadataAssocationMappings($event);
+        if (!$metadata) {
             return;
         }
 
         /** @var \ArrayObject $elementSpec */
         $elementSpec = $event->getParam('elementSpec');
+        $inputSpec   = $event->getParam('inputSpec');
+        $inputSpec['required'] = false;
 
         if (!isset($elementSpec['spec'])) {
             $elementSpec['spec'] = array();
@@ -144,7 +156,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         $options = array_merge(
             array(
                 'object_manager' => $this->getObjectManager(),
-                'target_class'   => $targetClass
+                'target_class'   => $metadata['targetEntity']
             ),
             $options
         );
@@ -376,23 +388,21 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     }
 
     /**
-     * Gets a targetClass from class metadata so that the FQCN can be resolved.
+     * Gets class metadata for the bound entity.
      *
      * @param EventInterface $event
-     * @return null|string
+     * @return null|\Doctrine\ORM\Mapping\ClassMetadata
      */
-    protected function getTargetClass(EventInterface $event)
+    protected function getMetadataAssocationMappings(EventInterface $event)
     {
-        $entityClass  = get_class($this->builder->getEntity());
-
+        $entityClass = get_class($this->builder->getEntity());
         /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $metadata = $this->getObjectManager()->getClassMetadata($entityClass);
         $mappings = $metadata->associationMappings;
-        $name     = $event->getParam('name');
 
-        if (!isset($mappings[$name]['targetEntity'])) {
-            return null;
+        if (isset($mappings[$event->getParam('name')])) {
+            return $mappings[$event->getParam('name')];
         }
-        return $mappings[$name]['targetEntity'];
+        return null;
     }
 }
