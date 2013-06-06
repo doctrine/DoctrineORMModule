@@ -53,12 +53,13 @@ class FormEntity
     protected $targetMany;
 
     /**
-     * @param boolean $checkbox
+     * @param  boolean    $checkbox
      * @return FormEntity
      */
     public function setCheckbox($checkbox)
     {
         $this->checkbox = $checkbox;
+
         return $this;
     }
 
@@ -71,12 +72,13 @@ class FormEntity
     }
 
     /**
-     * @param int $id
+     * @param  int        $id
      * @return FormEntity
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -89,12 +91,13 @@ class FormEntity
     }
 
     /**
-     * @param string $name
+     * @param  string     $name
      * @return FormEntity
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
