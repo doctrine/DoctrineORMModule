@@ -1,6 +1,7 @@
 <?php
 namespace DoctrineORMModule\Form\Annotation;
 
+use ArrayObject;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -99,28 +100,20 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             $elementSpec['spec'] = array();
         }
 
-        $options = isset($elementSpec['spec']['options']) ? $elementSpec['spec']['options'] : array();
-        $options = array_merge(
-            array(
-                'object_manager' => $this->getObjectManager(),
-                'target_class'   => $metadata['targetEntity']
-            ),
-            $options
-        );
+        $this->mergeElementOptions($elementSpec, $metadata['targetEntity']);
 
         foreach ($metadata['joinColumns'] as $joinColumn) {
-            if ($joinColumn['nullable']) {
+            if (isset($joinColumn['nullable']) && $joinColumn['nullable']) {
                 $inputSpec['required'] = false;
 
-                if (!isset($options['empty_option'])) {
-                    $options['empty_option'] = 'NULL';
+                if (!isset($elementSpec['spec']['options']['empty_option'])) {
+                    $elementSpec['spec']['options']['empty_option'] = 'NULL';
                 }
                 break;
             }
         }
 
-        $elementSpec['spec']['type']    = 'DoctrineORMModule\Form\Element\EntitySelect';
-        $elementSpec['spec']['options'] = $options;
+        $elementSpec['spec']['type'] = 'DoctrineORMModule\Form\Element\EntitySelect';
     }
 
     /**
@@ -152,17 +145,9 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             $elementSpec['spec'] = array();
         }
 
-        $options = isset($elementSpec['spec']['options']) ? $elementSpec['spec']['options'] : array();
-        $options = array_merge(
-            array(
-                'object_manager' => $this->getObjectManager(),
-                'target_class'   => $metadata['targetEntity']
-            ),
-            $options
-        );
+        $this->mergeElementOptions($elementSpec, $metadata['targetEntity']);
 
         $elementSpec['spec']['type']                   = 'DoctrineORMModule\Form\Element\EntitySelect';
-        $elementSpec['spec']['options']                = $options;
         $elementSpec['spec']['attributes']['multiple'] = true;
     }
 
@@ -404,5 +389,22 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             return $mappings[$event->getParam('name')];
         }
         return null;
+    }
+
+    /**
+     * @param ArrayObject $elementSpec
+     * @param string $targetEntity
+     */
+    protected function mergeElementOptions(ArrayObject $elementSpec, $targetEntity)
+    {
+        $options = isset($elementSpec['spec']['options']) ? $elementSpec['spec']['options'] : array();
+        $options = array_merge(
+            array(
+                'object_manager' => $this->getObjectManager(),
+                'target_class'   => $targetEntity
+            ),
+            $options
+        );
+        $elementSpec['spec']['options'] = $options;
     }
 }
