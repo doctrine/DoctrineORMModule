@@ -36,7 +36,7 @@ class ElementAnnotationsListenerTest extends TestCase
 
         $this->assertEquals($expectedType, $spec['spec']['type']);
     }
-    
+
     public function testToOneReturnsEntitySelect()
     {
         $listener   = new ElementAnnotationsListener($this->getEntityManager());
