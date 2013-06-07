@@ -71,7 +71,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
                 'metadata'    => $metadata,
                 'name'        => $name,
                 'elementSpec' => $elementSpec,
-                'inputSpec'   => $inputSpec[$name]
+                'inputSpec'   => isset($inputSpec[$name]) ? $inputSpec[$name] : new \ArrayObject()
             );
 
             if ($this->excludeElementFromMetadata($metadata, $name)) {
