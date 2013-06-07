@@ -180,6 +180,9 @@ return array(
             'Doctrine\ORM\EntityManager' => 'DoctrineORMModule\Service\EntityManagerAliasCompatFactory',
         ),
         'invokables' => array(
+            // naming stragegies
+            'doctrine.naming_strategy.underscore' => 'Doctrine\ORM\Mapping\UnderscoreNamingStrategy',
+            'doctrine.naming_strategy.default' => 'Doctrine\ORM\Mapping\DefaultNamingStrategy',
             // DBAL commands
             'doctrine.dbal_cmd.runsql' => '\Doctrine\DBAL\Tools\Console\Command\RunSqlCommand',
             'doctrine.dbal_cmd.import' => '\Doctrine\DBAL\Tools\Console\Command\ImportCommand',
