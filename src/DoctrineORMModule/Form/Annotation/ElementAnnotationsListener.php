@@ -48,19 +48,15 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function attach(EventManagerInterface $events)
     {
         $this->listeners[] = $events->attach('configureElementField', array($this, 'handleFilterField'));
-
         $this->listeners[] = $events->attach('configureElementField', array($this, 'handleTypeField'));
-
         $this->listeners[] = $events->attach('configureElementField', array($this, 'handleValidatorField'));
-
         $this->listeners[] = $events->attach('configureElementField', array($this, 'handleRequiredField'));
-        $this->listeners[] = $events->attach('configureElementAssociation', array($this, 'handleRequiredAssociation'));
-
         $this->listeners[] = $events->attach('checkForExcludeField', array($this, 'handleExcludeField'));
-        $this->listeners[] = $events->attach('checkForExcludeAssociation', array($this, 'handleExcludeAssociation'));
 
         $this->listeners[] = $events->attach('configureElementAssociation', array($this, 'handleToOne'));
         $this->listeners[] = $events->attach('configureElementAssociation', array($this, 'handleToMany'));
+        $this->listeners[] = $events->attach('configureElementAssociation', array($this, 'handleRequiredAssociation'));
+        $this->listeners[] = $events->attach('checkForExcludeAssociation', array($this, 'handleExcludeAssociation'));
     }
 
 
@@ -71,27 +67,8 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             return;
         }
 
-        $elementSpec = $event->getParam('elementSpec');
-        $inputSpec   = $event->getParam('inputSpec');
-
-        if (!isset($elementSpec['spec'])) {
-            $elementSpec['spec'] = array();
-        }
-
-        $this->mergeElementOptions($elementSpec, $metadata['targetEntity']);
-
-        foreach ($metadata['joinColumns'] as $joinColumn) {
-            if (isset($joinColumn['nullable']) && $joinColumn['nullable']) {
-                $inputSpec['required'] = false;
-
-                if (!isset($elementSpec['spec']['options']['empty_option'])) {
-                    $elementSpec['spec']['options']['empty_option'] = 'NULL';
-                }
-                break;
-            }
-        }
-
-        $elementSpec['spec']['type'] = 'DoctrineORMModule\Form\Element\EntitySelect';
+        $this->prepareEvent($event);
+        $this->mergeAssociationOptions($event->getParam('elementSpec'), $metadata['targetEntity']);
     }
 
     public function handleToMany(EventInterface $event)
@@ -101,18 +78,15 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             return;
         }
 
+        $this->prepareEvent($event);
+
         /** @var \ArrayObject $elementSpec */
         $elementSpec = $event->getParam('elementSpec');
         $inputSpec   = $event->getParam('inputSpec');
         $inputSpec['required'] = false;
 
-        if (!isset($elementSpec['spec'])) {
-            $elementSpec['spec'] = array();
-        }
+        $this->mergeAssociationOptions($elementSpec, $metadata['targetEntity']);
 
-        $this->mergeElementOptions($elementSpec, $metadata['targetEntity']);
-
-        $elementSpec['spec']['type']                   = 'DoctrineORMModule\Form\Element\EntitySelect';
         $elementSpec['spec']['attributes']['multiple'] = true;
     }
 
@@ -120,7 +94,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
         $metadata = $event->getParam('metadata');
-        if ($metadata->isAssociationInverseSide($event->getParam('name'))) {
+        if ($metadata && $metadata->isAssociationInverseSide($event->getParam('name'))) {
             return true;
         }
         return false;
@@ -145,12 +119,15 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
 
     public function handleFilterField(EventInterface $event)
     {
-        $metadata  = $this->getFieldMetdata($event);
-        $inputSpec = $event->getParam('inputSpec');
+        $metadata = $this->getFieldMetdata($event);
 
-        if (!isset($inputSpec['filters'])) {
-            $inputSpec['filters'] = array();
+        if (!$metadata) {
+            return;
         }
+
+        $this->prepareEvent($event);
+
+        $inputSpec = $event->getParam('inputSpec');
 
         switch ($metadata['type']) {
             case 'bool':
@@ -175,47 +152,89 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
 
     public function handleRequiredAssociation(EventInterface $event)
     {
-        $metadata  = $this->getAssociationMetadata($event);
-        $inputSpec = $event->getParam('inputSpec');
+        $metadata = $this->getAssociationMetadata($event);
+
+        if (!$metadata) {
+            return;
+        }
+
+        $this->prepareEvent($event);
+
+        $inputSpec   = $event->getParam('inputSpec');
+        $elementSpec = $event->getParam('elementSpec');
 
         if ($metadata['type'] & ClassMetadataInfo::TO_MANY) {
             $inputSpec['required'] = false;
-        } else if (isset($metadata['joinColumns'])) {
+        } elseif (isset($metadata['joinColumns'])) {
+            $required = true;
             foreach ($metadata['joinColumns'] as $joinColumn) {
                 if (isset($joinColumn['nullable']) && $joinColumn['nullable']) {
-                    $inputSpec['required'] = false;
+                    $required = false;
+
+                    if (!isset($elementSpec['spec']['options']['empty_option'])) {
+                        $elementSpec['spec']['options']['empty_option'] = 'NULL';
+                    }
                     break;
                 }
             }
+
+            $inputSpec['required'] = $required;
         }
     }
 
     public function handleRequiredField(EventInterface $event)
     {
-        $metadata  = $this->getFieldMetdata($event);
-        $inputSpec = $event->getParam('inputSpec');
+        $metadata = $this->getFieldMetdata($event);
 
-        if (!isset($metadata['nullable'])) {
+        if (!$metadata) {
             return;
         }
-        $inputSpec['required'] = (bool) !$metadata['nullable'];
+
+        $this->prepareEvent($event);
+
+        $inputSpec = $event->getParam('inputSpec');
+
+        if (isset($metadata['nullable'])) {
+            $inputSpec['required'] = (bool) !$metadata['nullable'];
+        } else {
+            $inputSpec['required'] = true;
+        }
     }
 
     public function handleTypeField(EventInterface $event)
     {
-        $metadata    = $this->getFieldMetdata($event);
+        $metadata = $this->getFieldMetdata($event);
+
+        if (!$metadata) {
+            return;
+        }
+
+        $this->prepareEvent($event);
+
         $elementSpec = $event->getParam('elementSpec');
 
         switch ($metadata['type']) {
+            case 'bigint':
+            case 'integer':
+            case 'smallint':
+                $type = 'Zend\Form\Element\Number';
+                break;
             case 'bool':
             case 'boolean':
                 $type = 'Zend\Form\Element\Checkbox';
                 break;
             case 'date':
-                $type = 'Zend\Form\Element\Date';
+                $type = 'Zend\Form\Element\DateSelect';
                 break;
+            case 'datetimetz':
             case 'datetime':
-                $type = 'Zend\Form\Element\DateTime';
+                $type = 'Zend\Form\Element\DateTimeSelect';
+                break;
+            case 'time':
+                $type = 'Zend\Form\Element\Time';
+                break;
+            case 'text':
+                $type = 'Zend\Form\Element\Text';
                 break;
             default:
                 $type = 'Zend\Form\Element';
@@ -227,12 +246,15 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
 
     public function handleValidatorField(EventInterface $event)
     {
-        $metadata  = $this->getFieldMetdata($event);
-        $inputSpec = $event->getParam('inputSpec');
+        $metadata = $this->getFieldMetdata($event);
 
-        if (!isset($inputSpec['validators'])) {
-            $inputSpec['validators'] = array();
+        if (!$metadata) {
+            return;
         }
+
+        $this->prepareEvent($event);
+
+        $inputSpec = $event->getParam('inputSpec');
 
         switch ($metadata['type']) {
             case 'bool':
@@ -277,7 +299,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
         $metadata = $event->getParam('metadata');
-        if (!$metadata) {
+        if (!$metadata || !$metadata->hasField($event->getParam('name'))) {
             return null;
         }
         return $metadata->getFieldMapping($event->getParam('name'));
@@ -291,7 +313,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
         $metadata = $event->getParam('metadata');
-        if (!$metadata) {
+        if (!$metadata || !$metadata->hasAssociation($event->getParam('name'))) {
             return null;
         }
         return $metadata->getAssociationMapping($event->getParam('name'));
@@ -301,7 +323,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
      * @param ArrayObject $elementSpec
      * @param string $targetEntity
      */
-    protected function mergeElementOptions(ArrayObject $elementSpec, $targetEntity)
+    protected function mergeAssociationOptions(ArrayObject $elementSpec, $targetEntity)
     {
         $options = isset($elementSpec['spec']['options']) ? $elementSpec['spec']['options'] : array();
         $options = array_merge(
@@ -311,6 +333,35 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
             ),
             $options
         );
+
         $elementSpec['spec']['options'] = $options;
+        $elementSpec['spec']['type']    = 'DoctrineORMModule\Form\Element\EntitySelect';
+    }
+
+    /**
+     * Normalizes event setting all expected parameters.
+     *
+     * @param EventInterface $event
+     */
+    protected function prepareEvent(EventInterface $event)
+    {
+        foreach (array('elementSpec', 'inputSpec') as $type) {
+            if (!$event->getParam($type)) {
+                $event->setParam($type, new ArrayObject());
+            }
+        }
+
+        $elementSpec = $event->getParam('elementSpec');
+        $inputSpec   = $event->getParam('inputSpec');
+
+        if (!isset($elementSpec['spec'])) {
+            $elementSpec['spec'] = array();
+        }
+        if (!isset($inputSpec['filters'])) {
+            $inputSpec['filters'] = array();
+        }
+        if (!isset($inputSpec['validators'])) {
+            $inputSpec['validators'] = array();
+        }
     }
 }

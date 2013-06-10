@@ -82,7 +82,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
 
             if ($metadata->hasField($name)) {
                 $this->getEventManager()->trigger('configureElementField', $this, $params);
-            } else if ($metadata->hasAssociation($name)) {
+            } elseif ($metadata->hasAssociation($name)) {
                 $this->getEventManager()->trigger('configureElementAssociation', $this, $params);
             }
         }
@@ -98,7 +98,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
 
         if ($metadata->hasField($name)) {
             $result = $this->getEventManager()->trigger('checkForExcludeField', $this, $params, $test);
-        } else if ($metadata->hasAssociation($name)) {
+        } elseif ($metadata->hasAssociation($name)) {
             $result = $this->getEventManager()->trigger('checkForExcludeAssociation', $this, $params, $test);
         }
 

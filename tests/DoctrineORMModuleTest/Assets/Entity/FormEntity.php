@@ -12,100 +12,89 @@ use Zend\Form\Annotation as Form;
 class FormEntity
 {
     /**
-     * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
     protected $id;
 
     /**
-     * @var bool
-     *
+     * @ORM\Column(type="bool")
+     */
+    protected $bool;
+
+    /**
      * @ORM\Column(type="boolean")
      */
-    protected $checkbox;
+    protected $boolean;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="float")
      */
-    protected $name;
+    protected $float;
 
     /**
-     * @Form\Options({"property":"name"})
+     * @ORM\Column(type="bigint")
+     */
+    protected $bigint;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $integer;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $smallint;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $datetime;
+
+    /**
+     * @ORM\Column(type="datetimetz")
+     */
+    protected $datetimetz;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    protected $date;
+
+    /**
+     * @ORM\Column(type="time")
+     */
+    protected $time;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $text;
+
+    /**
+     * @ORM\Column(type="string", nullable=false, length=20)
+     */
+    protected $string;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $stringNullable;
+
+    /**
      * @ORM\OneToOne(targetEntity="TargetInterface")
      */
     protected $targetOne;
 
     /**
-     * @Form\Options({"property":"name"})
      * @ORM\OneToOne(targetEntity="TargetInterface")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $targetOneNullable;
 
     /**
-     * @Form\Options({"property":"name"})
      * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntity")
      */
     protected $targetMany;
-
-    /**
-     * @param  boolean    $checkbox
-     * @return FormEntity
-     */
-    public function setCheckbox($checkbox)
-    {
-        $this->checkbox = $checkbox;
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getCheckbox()
-    {
-        return $this->checkbox;
-    }
-
-    /**
-     * @param  int        $id
-     * @return FormEntity
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param  string     $name
-     * @return FormEntity
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
 }
