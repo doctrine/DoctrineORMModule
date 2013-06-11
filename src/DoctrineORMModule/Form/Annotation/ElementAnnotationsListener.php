@@ -1,32 +1,45 @@
 <?php
+/*
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license. For more information, see
+ * <http://www.doctrine-project.org>.
+ */
+
 namespace DoctrineORMModule\Form\Annotation;
 
+use ArrayObject;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use DoctrineModule\Form\Element;
+use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\ListenerAggregateInterface;
 
-class ElementAnnotationsListener implements ListenerAggregateInterface
+/**
+ * @author Kyle Spraggs <theman@spiffyjr.me>
+ */
+class ElementAnnotationsListener extends AbstractListenerAggregate
 {
-    /**
-     * @var \Zend\Stdlib\CallbackHandler[]
-     */
-    protected $listeners = array();
-
     /**
      * @var \Doctrine\Common\Persistence\ObjectManager
      */
     protected $objectManager;
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $objectManager
+     * @param ObjectManager $objectManager
      */
     public function __construct(ObjectManager $objectManager)
     {
@@ -34,162 +47,108 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     }
 
     /**
-     * Detach listeners
-     *
-     * @param  EventManagerInterface $events
-     *
-     * @return void
-     */
-    public function detach(EventManagerInterface $events)
-    {
-        foreach ($this->listeners as $index => $listener) {
-            if (false !== $events->detach($listener)) {
-                unset($this->listeners[$index]);
-            }
-        }
-    }
-
-    /**
-     * Attach listeners
-     *
-     * @param  \Zend\EventManager\EventManagerInterface $events
-     *
-     * @return void
+     * {@inheritDoc}
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->attach('configureElement', array($this, 'handleAttributesAnnotation'));
-        $this->listeners[] = $events->attach('configureElement', array($this, 'handleFilterAnnotation'));
-        $this->listeners[] = $events->attach('configureElement', array($this, 'handleRequiredAnnotation'));
-        $this->listeners[] = $events->attach('configureElement', array($this, 'handleTypeAnnotation'));
-        $this->listeners[] = $events->attach('configureElement', array($this, 'handleValidatorAnnotation'));
-        $this->listeners[] = $events->attach('configureElement', array($this, 'handleToManyAnnotation'));
-        $this->listeners[] = $events->attach('checkForExclude', array($this, 'handleExcludeAnnotation'));
+        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_FIELD, array($this, 'handleFilterField'));
+        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_FIELD, array($this, 'handleTypeField'));
+        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_FIELD, array($this, 'handleValidatorField'));
+        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_FIELD, array($this, 'handleRequiredField'));
+        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_EXCLUDE_FIELD, array($this, 'handleExcludeField'));
+
+        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_ASSOCIATION, array($this, 'handleToOne'));
+        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_ASSOCIATION, array($this, 'handleToMany'));
+        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_ASSOCIATION, array($this, 'handleRequiredAssociation'));
+        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_EXCLUDE_ASSOCIATION, array($this, 'handleExcludeAssociation'));
     }
 
     /**
-     * Handle ToOne relationships.
-     *
-     * @param \Zend\EventManager\EventInterface $event
-     *
-     * @return void
+     * @param EventInterface $event
+     * @internal
      */
-    public function handleToOneAnnotation(EventInterface $event)
+    public function handleToOne(EventInterface $event)
     {
-        $annotation = $event->getParam('annotation');
-
-        if (!($annotation instanceof ManyToOne || $annotation instanceof OneToOne)) {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $metadata = $event->getParam('metadata');
+        $mapping  = $this->getAssociationMapping($event);
+        if (!$mapping || !$metadata->isSingleValuedAssociation($event->getParam('name'))) {
             return;
         }
 
-        $elementSpec                    = $event->getParam('elementSpec');
-        $elementSpec['spec']['type']    = 'DoctrineORMModule\Form\Element\EntitySelect';
-        $elementSpec['spec']['options'] = array(
-            'object_manager' => $this->objectManager,
-            'target_class'   => $annotation->targetEntity
-        );
+        $this->prepareEvent($event);
+        $this->mergeAssociationOptions($event->getParam('elementSpec'), $mapping['targetEntity']);
     }
 
     /**
-     * Handle ToMany relationships.
-     *
-     * @param \Zend\EventManager\EventInterface $event
-     *
-     * @return void
+     * @param EventInterface $event
+     * @internal
      */
-    public function handleToManyAnnotation(EventInterface $event)
+    public function handleToMany(EventInterface $event)
     {
-        $annotation = $event->getParam('annotation');
-
-        if (!($annotation instanceof ManyToMany || $annotation instanceof OneToMany)) {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $metadata = $event->getParam('metadata');
+        $mapping  = $this->getAssociationMapping($event);
+        if (!$mapping || !$metadata->isCollectionValuedAssociation($event->getParam('name'))) {
             return;
         }
 
-        $elementSpec                                   = $event->getParam('elementSpec');
-        $elementSpec['spec']['type']                   = 'DoctrineORMModule\Form\Element\EntitySelect';
-        $elementSpec['spec']['attributes']['multiple'] = true;
-        $elementSpec['spec']['options']                = array(
-            'object_manager' => $this->objectManager,
-            'target_class'   => $annotation->targetEntity
-        );
-    }
+        $this->prepareEvent($event);
 
-    /**
-     * Handle the Attributes annotation
-     *
-     * Sets the attributes array of the element specification.
-     *
-     * @param  \Zend\EventManager\EventInterface $event
-     *
-     * @return void
-     */
-    public function handleAttributesAnnotation(EventInterface $event)
-    {
-        $annotation = $event->getParam('annotation');
-        if (!$annotation instanceof Column) {
-            return;
-        }
-
+        /** @var \ArrayObject $elementSpec */
         $elementSpec = $event->getParam('elementSpec');
-        switch ($annotation->type) {
-            case 'bool':
-            case 'boolean':
-                $elementSpec['spec']['attributes']['type'] = 'checkbox';
-                break;
-            case 'text':
-                $elementSpec['spec']['attributes']['type'] = 'textarea';
-                break;
-        }
+        $inputSpec   = $event->getParam('inputSpec');
+        $inputSpec['required'] = false;
+
+        $this->mergeAssociationOptions($elementSpec, $mapping['targetEntity']);
+
+        $elementSpec['spec']['attributes']['multiple'] = true;
     }
 
     /**
-     * Handle the AllowEmpty annotation
-     *
-     * Sets the allow_empty flag on the input specification array.
-     *
-     * @param  \Zend\EventManager\EventInterface $event
-     *
+     * @param EventInterface $event
+     * @internal
      * @return bool
      */
-    public function handleExcludeAnnotation(EventInterface $event)
+    public function handleExcludeAssociation(EventInterface $event)
     {
-        $annotations = $event->getParam('annotations');
-
-        foreach ($annotations as $annotation) {
-            if ($annotation instanceof GeneratedValue) {
-                if ('AUTO' === $annotation->strategy) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
+        $metadata = $event->getParam('metadata');
+        return $metadata && $metadata->isAssociationInverseSide($event->getParam('name'));
     }
 
     /**
-     * Handle the Filter annotation
-     *
-     * Adds a filter to the filter chain specification for the input.
-     *
-     * @param  \Zend\EventManager\EventInterface $event
-     *
-     * @return void
+     * @param EventInterface $event
+     * @internal
+     * @return bool
      */
-    public function handleFilterAnnotation(EventInterface $event)
+    public function handleExcludeField(EventInterface $event)
     {
-        $annotation = $event->getParam('annotation');
+        /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
+        $metadata    = $event->getParam('metadata');
+        $identifiers = $metadata->getIdentifierFieldNames();
 
-        if (!$annotation instanceof Column) {
+        return in_array($event->getParam('name'), $identifiers) &&
+               $metadata->generatorType === ClassMetadata::GENERATOR_TYPE_IDENTITY;
+    }
+
+    /**
+     * @param EventInterface $event
+     * @internal
+     */
+    public function handleFilterField(EventInterface $event)
+    {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $metadata = $event->getParam('metadata');
+        if (!$metadata || !$metadata->hasField($event->getParam('name'))) {
             return;
         }
+
+        $this->prepareEvent($event);
 
         $inputSpec = $event->getParam('inputSpec');
 
-        if (!isset($inputSpec['filters'])) {
-            $inputSpec['filters'] = array();
-        }
-
-        switch ($annotation->type) {
+        switch ($metadata->getTypeOfField($event->getParam('name'))) {
             case 'bool':
             case 'boolean':
                 $inputSpec['filters'][] = array('name' => 'Boolean');
@@ -211,88 +170,125 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     }
 
     /**
-     * Handle the Required annotation
-     *
-     * Sets the required flag on the input based on the annotation value.
-     *
-     * @param  \Zend\EventManager\EventInterface $event
-     *
-     * @return void
+     * @param EventInterface $event
+     * @internal
      */
-    public function handleRequiredAnnotation(EventInterface $event)
+    public function handleRequiredAssociation(EventInterface $event)
     {
-        $annotation = $event->getParam('annotation');
-        if (!$annotation instanceof Column) {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $metadata = $event->getParam('metadata');
+        $mapping  = $this->getAssociationMapping($event);
+        if (!$mapping) {
             return;
         }
 
-        $inputSpec = $event->getParam('inputSpec');
-        $inputSpec['required'] = (bool) !$annotation->nullable;
+        $this->prepareEvent($event);
+
+        $inputSpec   = $event->getParam('inputSpec');
+        $elementSpec = $event->getParam('elementSpec');
+
+        if ($metadata->isCollectionValuedAssociation($event->getParam('name'))) {
+            $inputSpec['required'] = false;
+        } elseif (isset($mapping['joinColumns'])) {
+            $required = true;
+            foreach ($mapping['joinColumns'] as $joinColumn) {
+                if (isset($joinColumn['nullable']) && $joinColumn['nullable']) {
+                    $required = false;
+
+                    if (!isset($elementSpec['spec']['options']['empty_option'])) {
+                        $elementSpec['spec']['options']['empty_option'] = 'NULL';
+                    }
+                    break;
+                }
+            }
+
+            $inputSpec['required'] = $required;
+        }
     }
 
     /**
-     * Handle the Type annotation
-     *
-     * Sets the element class type to use in the element specification.
-     *
-     * @param  \Zend\EventManager\EventInterface $event
-     *
-     * @return void
+     * @param EventInterface $event
+     * @internal
      */
-    public function handleTypeAnnotation(EventInterface $event)
+    public function handleRequiredField(EventInterface $event)
     {
-        $annotation = $event->getParam('annotation');
-
-        if (!$annotation instanceof Column) {
+        $mapping = $this->getFieldMapping($event);
+        if (!$mapping) {
             return;
         }
 
-        $type = $annotation->type;
-        switch ($type) {
+        $this->prepareEvent($event);
+
+        $inputSpec             = $event->getParam('inputSpec');
+        $inputSpec['required'] = isset($mapping['nullable']) ? !$mapping['nullable'] : true;
+    }
+
+    /**
+     * @param EventInterface $event
+     * @internal
+     */
+    public function handleTypeField(EventInterface $event)
+    {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $metadata = $event->getParam('metadata');
+        $mapping  = $this->getFieldMapping($event);
+        if (!$mapping) {
+            return;
+        }
+
+        $this->prepareEvent($event);
+
+        $elementSpec = $event->getParam('elementSpec');
+
+        switch ($metadata->getTypeOfField($event->getParam('name'))) {
+            case 'bigint':
+            case 'integer':
+            case 'smallint':
+                $type = 'Zend\Form\Element\Number';
+                break;
             case 'bool':
             case 'boolean':
                 $type = 'Zend\Form\Element\Checkbox';
                 break;
             case 'date':
-                $type = 'Zend\Form\Element\Date';
+                $type = 'Zend\Form\Element\DateSelect';
                 break;
+            case 'datetimetz':
             case 'datetime':
-                $type = 'Zend\Form\Element\DateTime';
+                $type = 'Zend\Form\Element\DateTimeSelect';
+                break;
+            case 'time':
+                $type = 'Zend\Form\Element\Time';
+                break;
+            case 'text':
+                $type = 'Zend\Form\Element\Text';
                 break;
             default:
                 $type = 'Zend\Form\Element';
                 break;
         }
 
-        $elementSpec = $event->getParam('elementSpec');
-
         $elementSpec['spec']['type'] = $type;
     }
 
     /**
-     * Handle the Validator annotation
-     *
-     * Adds a validator to the validator chain of the input specification.
-     *
-     * @param  \Zend\EventManager\EventInterface $event
-     *
-     * @return void
+     * @param EventInterface $event
+     * @internal
      */
-    public function handleValidatorAnnotation(EventInterface $event)
+    public function handleValidatorField(EventInterface $event)
     {
-        $annotation = $event->getParam('annotation');
-
-        if (!$annotation instanceof Column) {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $mapping  = $this->getFieldMapping($event);
+        $metadata = $event->getParam('metadata');
+        if (!$mapping) {
             return;
         }
 
+        $this->prepareEvent($event);
+
         $inputSpec = $event->getParam('inputSpec');
 
-        if (!isset($inputSpec['validators'])) {
-            $inputSpec['validators'] = array();
-        }
-
-        switch ($annotation->type) {
+        switch ($metadata->getTypeOfField($event->getParam('name'))) {
             case 'bool':
             case 'boolean':
                 $inputSpec['validators'][] = array(
@@ -309,13 +305,87 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
                 $inputSpec['validators'][] = array('name' => 'Int');
                 break;
             case 'string':
-                if ($annotation->length) {
+                if (isset($mapping['length'])) {
                     $inputSpec['validators'][] = array(
                         'name'    => 'StringLength',
-                        'options' => array('max' => $annotation->length)
+                        'options' => array('max' => $mapping['length'])
                     );
                 }
                 break;
+        }
+    }
+
+    /**
+     * @param EventInterface $event
+     * @return array|null
+     */
+    protected function getFieldMapping(EventInterface $event)
+    {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
+        $metadata = $event->getParam('metadata');
+        if ($metadata && $metadata->hasField($event->getParam('name'))) {
+            return $metadata->getFieldMapping($event->getParam('name'));
+        }
+        return null;
+    }
+
+    /**
+     * @param EventInterface $event
+     * @return array|null
+     */
+    protected function getAssociationMapping(EventInterface $event)
+    {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
+        $metadata = $event->getParam('metadata');
+        if ($metadata && $metadata->hasAssociation($event->getParam('name'))) {
+            return $metadata->getAssociationMapping($event->getParam('name'));
+        }
+        return null;
+    }
+
+    /**
+     * @param ArrayObject $elementSpec
+     * @param string $targetEntity
+     */
+    protected function mergeAssociationOptions(ArrayObject $elementSpec, $targetEntity)
+    {
+        $options = isset($elementSpec['spec']['options']) ? $elementSpec['spec']['options'] : array();
+        $options = array_merge(
+            array(
+                'object_manager' => $this->objectManager,
+                'target_class'   => $targetEntity
+            ),
+            $options
+        );
+
+        $elementSpec['spec']['options'] = $options;
+        $elementSpec['spec']['type']    = 'DoctrineORMModule\Form\Element\EntitySelect';
+    }
+
+    /**
+     * Normalizes event setting all expected parameters.
+     *
+     * @param EventInterface $event
+     */
+    protected function prepareEvent(EventInterface $event)
+    {
+        foreach (array('elementSpec', 'inputSpec') as $type) {
+            if (!$event->getParam($type)) {
+                $event->setParam($type, new ArrayObject());
+            }
+        }
+
+        $elementSpec = $event->getParam('elementSpec');
+        $inputSpec   = $event->getParam('inputSpec');
+
+        if (!isset($elementSpec['spec'])) {
+            $elementSpec['spec'] = array();
+        }
+        if (!isset($inputSpec['filters'])) {
+            $inputSpec['filters'] = array();
+        }
+        if (!isset($inputSpec['validators'])) {
+            $inputSpec['validators'] = array();
         }
     }
 }
