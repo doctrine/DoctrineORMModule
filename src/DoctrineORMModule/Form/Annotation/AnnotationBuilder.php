@@ -71,7 +71,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
                 'inputSpec'   => isset($inputSpec[$name]) ? $inputSpec[$name] : new \ArrayObject()
             );
 
-            if ($this->excludeElementFromMetadata($metadata, $name)) {
+            if ($this->checkForExcludeElementFromMetadata($metadata, $name)) {
                 unset($formSpec['elements'][$key]);
                 unset($inputSpec[$name]);
                 continue;
@@ -92,7 +92,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
      * @param $name
      * @return bool
      */
-    protected function excludeElementFromMetadata(ClassMetadata $metadata, $name)
+    protected function checkForExcludeElementFromMetadata(ClassMetadata $metadata, $name)
     {
         $params = array('metadata' => $metadata, 'name' => $name);
         $test   = function($r) { return (true === $r); };

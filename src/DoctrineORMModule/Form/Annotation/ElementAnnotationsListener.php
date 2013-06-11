@@ -6,17 +6,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use DoctrineModule\Form\Element;
+use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\ListenerAggregateInterface;
 
-class ElementAnnotationsListener implements ListenerAggregateInterface
+class ElementAnnotationsListener extends AbstractListenerAggregate
 {
-    /**
-     * @var \Zend\Stdlib\CallbackHandler[]
-     */
-    protected $listeners = array();
-
     /**
      * @var \Doctrine\Common\Persistence\ObjectManager
      */
@@ -28,18 +23,6 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     public function __construct(ObjectManager $objectManager)
     {
         $this->objectManager = $objectManager;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function detach(EventManagerInterface $events)
-    {
-        foreach ($this->listeners as $index => $listener) {
-            if (false !== $events->detach($listener)) {
-                unset($this->listeners[$index]);
-            }
-        }
     }
 
     /**
@@ -59,22 +42,33 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_EXCLUDE_ASSOCIATION, array($this, 'handleExcludeAssociation'));
     }
 
-
+    /**
+     * @param EventInterface $event
+     * @internal
+     */
     public function handleToOne(EventInterface $event)
     {
-        $metadata = $this->getAssociationMetadata($event);
-        if (!$metadata || !($metadata['type'] & ClassMetadataInfo::TO_ONE)) {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $metadata = $event->getParam('metadata');
+        $mapping  = $this->getAssociationMapping($event);
+        if (!$mapping || !$metadata->isSingleValuedAssociation($event->getParam('name'))) {
             return;
         }
 
         $this->prepareEvent($event);
-        $this->mergeAssociationOptions($event->getParam('elementSpec'), $metadata['targetEntity']);
+        $this->mergeAssociationOptions($event->getParam('elementSpec'), $mapping['targetEntity']);
     }
 
+    /**
+     * @param EventInterface $event
+     * @internal
+     */
     public function handleToMany(EventInterface $event)
     {
-        $metadata = $this->getAssociationMetadata($event);
-        if (!$metadata || !($metadata['type'] & ClassMetadataInfo::TO_MANY)) {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $metadata = $event->getParam('metadata');
+        $mapping  = $this->getAssociationMapping($event);
+        if (!$mapping || !$metadata->isCollectionValuedAssociation($event->getParam('name'))) {
             return;
         }
 
@@ -85,43 +79,47 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         $inputSpec   = $event->getParam('inputSpec');
         $inputSpec['required'] = false;
 
-        $this->mergeAssociationOptions($elementSpec, $metadata['targetEntity']);
+        $this->mergeAssociationOptions($elementSpec, $mapping['targetEntity']);
 
         $elementSpec['spec']['attributes']['multiple'] = true;
     }
 
+    /**
+     * @param EventInterface $event
+     * @internal
+     * @return bool
+     */
     public function handleExcludeAssociation(EventInterface $event)
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
         $metadata = $event->getParam('metadata');
-        if ($metadata && $metadata->isAssociationInverseSide($event->getParam('name'))) {
-            return true;
-        }
-        return false;
+        return $metadata && $metadata->isAssociationInverseSide($event->getParam('name'));
     }
 
+    /**
+     * @param EventInterface $event
+     * @internal
+     * @return bool
+     */
     public function handleExcludeField(EventInterface $event)
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
         $metadata    = $event->getParam('metadata');
         $identifiers = $metadata->getIdentifierFieldNames();
 
-        if (!in_array($event->getParam('name'), $identifiers)) {
-            return false;
-        }
-
-        if ($metadata->generatorType === ClassMetadata::GENERATOR_TYPE_IDENTITY) {
-            return true;
-        }
-
-        return false;
+        return in_array($event->getParam('name'), $identifiers) &&
+               $metadata->generatorType === ClassMetadata::GENERATOR_TYPE_IDENTITY;
     }
 
+    /**
+     * @param EventInterface $event
+     * @internal
+     */
     public function handleFilterField(EventInterface $event)
     {
-        $metadata = $this->getFieldMetdata($event);
-
-        if (!$metadata) {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $metadata = $event->getParam('metadata');
+        if (!$metadata || !$metadata->hasField($event->getParam('name'))) {
             return;
         }
 
@@ -129,7 +127,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
 
         $inputSpec = $event->getParam('inputSpec');
 
-        switch ($metadata['type']) {
+        switch ($metadata->getTypeOfField($event->getParam('name'))) {
             case 'bool':
             case 'boolean':
                 $inputSpec['filters'][] = array('name' => 'Boolean');
@@ -150,11 +148,16 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         }
     }
 
+    /**
+     * @param EventInterface $event
+     * @internal
+     */
     public function handleRequiredAssociation(EventInterface $event)
     {
-        $metadata = $this->getAssociationMetadata($event);
-
-        if (!$metadata) {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $metadata = $event->getParam('metadata');
+        $mapping  = $this->getAssociationMapping($event);
+        if (!$mapping) {
             return;
         }
 
@@ -163,11 +166,11 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         $inputSpec   = $event->getParam('inputSpec');
         $elementSpec = $event->getParam('elementSpec');
 
-        if ($metadata['type'] & ClassMetadataInfo::TO_MANY) {
+        if ($metadata->isCollectionValuedAssociation($event->getParam('name'))) {
             $inputSpec['required'] = false;
-        } elseif (isset($metadata['joinColumns'])) {
+        } elseif (isset($mapping['joinColumns'])) {
             $required = true;
-            foreach ($metadata['joinColumns'] as $joinColumn) {
+            foreach ($mapping['joinColumns'] as $joinColumn) {
                 if (isset($joinColumn['nullable']) && $joinColumn['nullable']) {
                     $required = false;
 
@@ -182,30 +185,33 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         }
     }
 
+    /**
+     * @param EventInterface $event
+     * @internal
+     */
     public function handleRequiredField(EventInterface $event)
     {
-        $metadata = $this->getFieldMetdata($event);
-
-        if (!$metadata) {
+        $mapping = $this->getFieldMapping($event);
+        if (!$mapping) {
             return;
         }
 
         $this->prepareEvent($event);
 
-        $inputSpec = $event->getParam('inputSpec');
-
-        if (isset($metadata['nullable'])) {
-            $inputSpec['required'] = (bool) !$metadata['nullable'];
-        } else {
-            $inputSpec['required'] = true;
-        }
+        $inputSpec             = $event->getParam('inputSpec');
+        $inputSpec['required'] = isset($mapping['nullable']) ? !$mapping['nullable'] : true;
     }
 
+    /**
+     * @param EventInterface $event
+     * @internal
+     */
     public function handleTypeField(EventInterface $event)
     {
-        $metadata = $this->getFieldMetdata($event);
-
-        if (!$metadata) {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $metadata = $event->getParam('metadata');
+        $mapping  = $this->getFieldMapping($event);
+        if (!$mapping) {
             return;
         }
 
@@ -213,7 +219,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
 
         $elementSpec = $event->getParam('elementSpec');
 
-        switch ($metadata['type']) {
+        switch ($metadata->getTypeOfField($event->getParam('name'))) {
             case 'bigint':
             case 'integer':
             case 'smallint':
@@ -244,11 +250,16 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         $elementSpec['spec']['type'] = $type;
     }
 
+    /**
+     * @param EventInterface $event
+     * @internal
+     */
     public function handleValidatorField(EventInterface $event)
     {
-        $metadata = $this->getFieldMetdata($event);
-
-        if (!$metadata) {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $mapping  = $this->getFieldMapping($event);
+        $metadata = $event->getParam('metadata');
+        if (!$mapping) {
             return;
         }
 
@@ -256,7 +267,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
 
         $inputSpec = $event->getParam('inputSpec');
 
-        switch ($metadata['type']) {
+        switch ($metadata->getTypeOfField($event->getParam('name'))) {
             case 'bool':
             case 'boolean':
                 $inputSpec['validators'][] = array(
@@ -273,10 +284,10 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
                 $inputSpec['validators'][] = array('name' => 'Int');
                 break;
             case 'string':
-                if (isset($metadata['length'])) {
+                if (isset($mapping['length'])) {
                     $inputSpec['validators'][] = array(
                         'name'    => 'StringLength',
-                        'options' => array('max' => $metadata['length'])
+                        'options' => array('max' => $mapping['length'])
                     );
                 }
                 break;
@@ -284,39 +295,31 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
     }
 
     /**
-     * @return \Doctrine\Common\Persistence\ObjectManager
+     * @param EventInterface $event
+     * @return array|null
      */
-    public function getObjectManager()
+    protected function getFieldMapping(EventInterface $event)
     {
-        return $this->objectManager;
+        /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
+        $metadata = $event->getParam('metadata');
+        if ($metadata && $metadata->hasField($event->getParam('name'))) {
+            return $metadata->getFieldMapping($event->getParam('name'));
+        }
+        return null;
     }
 
     /**
      * @param EventInterface $event
      * @return array|null
      */
-    protected function getFieldMetdata(EventInterface $event)
+    protected function getAssociationMapping(EventInterface $event)
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
         $metadata = $event->getParam('metadata');
-        if (!$metadata || !$metadata->hasField($event->getParam('name'))) {
-            return null;
+        if ($metadata && $metadata->hasAssociation($event->getParam('name'))) {
+            return $metadata->getAssociationMapping($event->getParam('name'));
         }
-        return $metadata->getFieldMapping($event->getParam('name'));
-    }
-
-    /**
-     * @param EventInterface $event
-     * @return array|null
-     */
-    protected function getAssociationMetadata(EventInterface $event)
-    {
-        /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
-        $metadata = $event->getParam('metadata');
-        if (!$metadata || !$metadata->hasAssociation($event->getParam('name'))) {
-            return null;
-        }
-        return $metadata->getAssociationMapping($event->getParam('name'));
+        return null;
     }
 
     /**
@@ -328,7 +331,7 @@ class ElementAnnotationsListener implements ListenerAggregateInterface
         $options = isset($elementSpec['spec']['options']) ? $elementSpec['spec']['options'] : array();
         $options = array_merge(
             array(
-                'object_manager' => $this->getObjectManager(),
+                'object_manager' => $this->objectManager,
                 'target_class'   => $targetEntity
             ),
             $options
