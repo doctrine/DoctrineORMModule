@@ -23,7 +23,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @Author Kyle Spraggs <theman@spiffyjr.me>
+ * 
+ * @author Kyle Spraggs <theman@spiffyjr.me>
  */
 class FormEntityTarget
 {

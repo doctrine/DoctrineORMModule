@@ -25,7 +25,8 @@ use Zend\Form\Annotation as Form;
 /**
  * @ORM\Entity
  * @ORM\Table(name="doctrine_orm_module_form_entity")
- * @Author Kyle Spraggs <theman@spiffyjr.me>
+ *
+ * @author Kyle Spraggs <theman@spiffyjr.me>
  */
 class FormEntity
 {
