@@ -10,6 +10,11 @@ use Zend\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
 
 class AnnotationBuilder extends ZendAnnotationBuilder
 {
+    const EVENT_CONFIGURE_FIELD       = 'configureField';
+    const EVENT_CONFIGURE_ASSOCIATION = 'configureAssociation';
+    const EVENT_EXCLUDE_FIELD         = 'excludeField';
+    const EVENT_EXCLUDE_ASSOCIATION   = 'excludeAssociation';
+
     /**
      * @var \Doctrine\Common\Persistence\ObjectManager
      */
@@ -26,21 +31,13 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     }
 
     /**
-     * @return \Doctrine\Common\Persistence\ObjectManager
-     */
-    public function getObjectManager()
-    {
-        return $this->objectManager;
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function setEventManager(EventManagerInterface $events)
     {
         parent::setEventManager($events);
 
-        $this->getEventManager()->attach(new ElementAnnotationsListener($this->getObjectManager()));
+        $this->getEventManager()->attach(new ElementAnnotationsListener($this->objectManager));
 
         return $this;
     }
@@ -57,7 +54,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     public function getFormSpecification($entity)
     {
         $formSpec = parent::getFormSpecification($entity);
-        $metadata = $this->getObjectManager()->getClassMetadata(get_class($entity));
+        $metadata = $this->objectManager->getClassMetadata(get_class($entity));
 
         $inputSpec = $formSpec['input_filter'];
         foreach ($formSpec['elements'] as $key => $elementSpec) {
@@ -81,15 +78,20 @@ class AnnotationBuilder extends ZendAnnotationBuilder
             }
 
             if ($metadata->hasField($name)) {
-                $this->getEventManager()->trigger('configureElementField', $this, $params);
+                $this->getEventManager()->trigger(static::EVENT_CONFIGURE_FIELD, $this, $params);
             } elseif ($metadata->hasAssociation($name)) {
-                $this->getEventManager()->trigger('configureElementAssociation', $this, $params);
+                $this->getEventManager()->trigger(static::EVENT_CONFIGURE_ASSOCIATION, $this, $params);
             }
         }
 
         return $formSpec;
     }
 
+    /**
+     * @param ClassMetadata $metadata
+     * @param $name
+     * @return bool
+     */
     protected function excludeElementFromMetadata(ClassMetadata $metadata, $name)
     {
         $params = array('metadata' => $metadata, 'name' => $name);
@@ -97,9 +99,9 @@ class AnnotationBuilder extends ZendAnnotationBuilder
         $result = false;
 
         if ($metadata->hasField($name)) {
-            $result = $this->getEventManager()->trigger('checkForExcludeField', $this, $params, $test);
+            $result = $this->getEventManager()->trigger(static::EVENT_EXCLUDE_FIELD, $this, $params, $test);
         } elseif ($metadata->hasAssociation($name)) {
-            $result = $this->getEventManager()->trigger('checkForExcludeAssociation', $this, $params, $test);
+            $result = $this->getEventManager()->trigger(static::EVENT_EXCLUDE_ASSOCIATION, $this, $params, $test);
         }
 
         if ($result) {
