@@ -92,8 +92,13 @@ class AnnotationBuilder extends ZendAnnotationBuilder
             );
 
             if ($this->checkForExcludeElementFromMetadata($metadata, $name)) {
-                unset($formSpec['elements'][$key]);
+                $elementSpec = $formSpec['elements'];
+                unset($elementSpec[$key]);
+                $formSpec['elements'] = $elementSpec;
+
                 unset($inputSpec[$name]);
+                $formSpec['input_filter'] = $inputSpec;
+
                 continue;
             }
 
