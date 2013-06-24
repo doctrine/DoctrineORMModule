@@ -27,8 +27,8 @@ that are listed in `composer.json`
 
 ## Entities settings
 
-To register your entities with the ORM, add following metadata driver configurations to your application
-config for each of your entities namespaces:
+To register your entities with the ORM, add following metadata driver configurations to your module (merged)
+configuration for each of your entities namespaces:
 
 ```php
 <?php
