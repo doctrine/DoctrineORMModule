@@ -239,6 +239,9 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $this->prepareEvent($event);
 
         $elementSpec = $event->getParam('elementSpec');
+        
+        if(isset($elementSpec['spec']['type']))
+            return;
 
         switch ($metadata->getTypeOfField($event->getParam('name'))) {
             case 'bigint':
