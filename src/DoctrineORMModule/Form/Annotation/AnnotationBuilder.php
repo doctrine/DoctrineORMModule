@@ -74,7 +74,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     public function getFormSpecification($entity)
     {
         $formSpec = parent::getFormSpecification($entity);
-        $metadata = $this->objectManager->getClassMetadata(get_class($entity));
+        $metadata = $this->objectManager->getClassMetadata(is_object($entity)?get_class($entity):$entity);
 
         $inputSpec = $formSpec['input_filter'];
         foreach ($formSpec['elements'] as $key => $elementSpec) {
