@@ -96,7 +96,9 @@ class AnnotationBuilder extends ZendAnnotationBuilder
                 unset($elementSpec[$key]);
                 $formSpec['elements'] = $elementSpec;
 
-                unset($inputSpec[$name]);
+                if (isset($inputSpec[$name])){
+                    unset($inputSpec[$name]);
+                }
                 $formSpec['input_filter'] = $inputSpec;
 
                 continue;
