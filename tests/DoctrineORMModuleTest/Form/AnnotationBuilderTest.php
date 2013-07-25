@@ -27,5 +27,8 @@ class AnnotationBuilderTest extends TestCase
         $entity = new Issue237();
         $spec   = $this->builder->getFormSpecification($entity);
         $this->assertCount(0, $spec['elements']);
+
+        $spec   = $this->builder->getFormSpecification(get_class($entity));
+        $this->assertCount(0, $spec['elements']);
     }
 }
