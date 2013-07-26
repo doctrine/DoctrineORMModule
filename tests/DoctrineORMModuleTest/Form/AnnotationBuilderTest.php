@@ -19,7 +19,7 @@ class AnnotationBuilderTest extends TestCase
     }
 
     /**
-     * @covers DoctrineORMModuleTest\Form\AnnotationBuilder::getFormSpecification
+     * @covers \DoctrineORMModule\Form\Annotation\AnnotationBuilder::getFormSpecification
      * @link   https://github.com/doctrine/DoctrineORMModule/issues/237
      */
     public function testIssue237()
@@ -31,7 +31,7 @@ class AnnotationBuilderTest extends TestCase
     }
 
     /**
-     * @covers DoctrineORMModuleTest\Form\AnnotationBuilder::getFormSpecification
+     * @covers \DoctrineORMModule\Form\Annotation\AnnotationBuilder::getFormSpecification
      */
     public function testAnnotationBuilderSupportsClassNames()
     {
