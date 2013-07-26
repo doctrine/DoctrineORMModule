@@ -76,7 +76,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
         $formSpec = parent::getFormSpecification($entity);
         $metadata = $this->objectManager->getClassMetadata(get_class($entity));
 
-        $inputSpec = $formSpec['input_filter'];
+        $inputFilter = $formSpec['input_filter'];
         foreach ($formSpec['elements'] as $key => $elementSpec) {
             $name = isset($elementSpec['spec']['name']) ? $elementSpec['spec']['name'] : null;
 
@@ -84,11 +84,15 @@ class AnnotationBuilder extends ZendAnnotationBuilder
                 continue;
             }
 
+            if (!isset($inputFilter[$name])) {
+                $inputFilter[$name] = new \ArrayObject();
+            }
+
             $params = array(
                 'metadata'    => $metadata,
                 'name'        => $name,
                 'elementSpec' => $elementSpec,
-                'inputSpec'   => isset($inputSpec[$name]) ? $inputSpec[$name] : new \ArrayObject()
+                'inputSpec'   => $inputFilter[$name]
             );
 
             if ($this->checkForExcludeElementFromMetadata($metadata, $name)) {
@@ -96,9 +100,8 @@ class AnnotationBuilder extends ZendAnnotationBuilder
                 unset($elementSpec[$key]);
                 $formSpec['elements'] = $elementSpec;
 
-                unset($inputSpec[$name]);
-                $formSpec['input_filter'] = $inputSpec;
-
+                unset($inputFilter[$name]);
+                $formSpec['input_filter'] = $inputFilter;
                 continue;
             }
 
