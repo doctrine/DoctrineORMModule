@@ -288,7 +288,7 @@ class ElementAnnotationsListenerTest extends TestCase
             array('date', 'Zend\Form\Element\Date'),
             array('time', 'Zend\Form\Element\Time'),
             array('string', 'Zend\Form\Element'),
-            array('text', 'Zend\Form\Element\Text'),
+            array('text', 'Zend\Form\Element\Textarea'),
         );
     }
 
