@@ -251,11 +251,11 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                 $type = 'Zend\Form\Element\Checkbox';
                 break;
             case 'date':
-                $type = 'Zend\Form\Element\DateSelect';
+                $type = 'Zend\Form\Element\Date';
                 break;
             case 'datetimetz':
             case 'datetime':
-                $type = 'Zend\Form\Element\DateTimeSelect';
+                $type = 'Zend\Form\Element\DateTime';
                 break;
             case 'time':
                 $type = 'Zend\Form\Element\Time';
