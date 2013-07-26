@@ -212,15 +212,13 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
      */
     public function handleRequiredField(EventInterface $event)
     {
-        $mapping = $this->getFieldMapping($event);
-        if (!$mapping) {
-            return;
-        }
-
         $this->prepareEvent($event);
 
-        $inputSpec             = $event->getParam('inputSpec');
-        $inputSpec['required'] = isset($mapping['nullable']) ? !$mapping['nullable'] : true;
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        $metadata  = $event->getParam('metadata');
+        $inputSpec = $event->getParam('inputSpec');
+
+        $inputSpec['required'] = !$metadata->isNullable($event->getParam('name'));
     }
 
     /**
@@ -251,11 +249,11 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                 $type = 'Zend\Form\Element\Checkbox';
                 break;
             case 'date':
-                $type = 'Zend\Form\Element\DateSelect';
+                $type = 'Zend\Form\Element\Date';
                 break;
             case 'datetimetz':
             case 'datetime':
-                $type = 'Zend\Form\Element\DateTimeSelect';
+                $type = 'Zend\Form\Element\DateTime';
                 break;
             case 'time':
                 $type = 'Zend\Form\Element\Time';
