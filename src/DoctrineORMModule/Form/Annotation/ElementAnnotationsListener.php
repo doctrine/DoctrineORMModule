@@ -259,7 +259,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                 $type = 'Zend\Form\Element\Time';
                 break;
             case 'text':
-                $type = 'Zend\Form\Element\Text';
+                $type = 'Zend\Form\Element\Textarea';
                 break;
             default:
                 $type = 'Zend\Form\Element';
