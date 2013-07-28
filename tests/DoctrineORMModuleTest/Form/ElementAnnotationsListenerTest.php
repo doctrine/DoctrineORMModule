@@ -283,12 +283,12 @@ class ElementAnnotationsListenerTest extends TestCase
             array('bigint', 'Zend\Form\Element\Number'),
             array('integer', 'Zend\Form\Element\Number'),
             array('smallint', 'Zend\Form\Element\Number'),
-            array('datetime', 'Zend\Form\Element\DateTimeSelect'),
-            array('datetimetz', 'Zend\Form\Element\DateTimeSelect'),
-            array('date', 'Zend\Form\Element\DateSelect'),
+            array('datetime', 'Zend\Form\Element\DateTime'),
+            array('datetimetz', 'Zend\Form\Element\DateTime'),
+            array('date', 'Zend\Form\Element\Date'),
             array('time', 'Zend\Form\Element\Time'),
             array('string', 'Zend\Form\Element'),
-            array('text', 'Zend\Form\Element\Text'),
+            array('text', 'Zend\Form\Element\Textarea'),
         );
     }
 
