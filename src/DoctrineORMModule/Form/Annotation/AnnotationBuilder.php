@@ -21,7 +21,6 @@ namespace DoctrineORMModule\Form\Annotation;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
-use Zend\Code\Annotation\AnnotationManager;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
 
@@ -76,7 +75,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
         $formSpec    = parent::getFormSpecification($entity);
         $metadata    = $this->objectManager->getClassMetadata(is_object($entity) ? get_class($entity) : $entity);
         $inputFilter = $formSpec['input_filter'];
-        
+
         foreach ($formSpec['elements'] as $key => $elementSpec) {
             $name = isset($elementSpec['spec']['name']) ? $elementSpec['spec']['name'] : null;
 
