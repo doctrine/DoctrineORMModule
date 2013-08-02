@@ -20,7 +20,6 @@
 namespace DoctrineORMModule;
 
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
-use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
@@ -44,7 +43,6 @@ use Zend\Stdlib\ArrayUtils;
  */
 class Module implements
     ControllerProviderInterface,
-    BootstrapListenerInterface,
     ConfigProviderInterface,
     InitProviderInterface,
     DependencyIndicatorInterface
@@ -63,17 +61,6 @@ class Module implements
             }
         );
         $events->getSharedManager()->attach('doctrine', 'loadCli.post', array($this, 'initializeConsole'));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function onBootstrap(EventInterface $event)
-    {
-        /* @var $application \Zend\Mvc\ApplicationInterface */
-        $application = $event->getTarget();
-
-        $application->getServiceManager()->get('doctrine.entity_resolver.orm_default');
     }
 
     /**
