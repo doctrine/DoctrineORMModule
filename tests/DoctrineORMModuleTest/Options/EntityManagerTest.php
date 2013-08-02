@@ -17,27 +17,28 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModuleTest\Options;
+namespace DoctrineORMModuleTest\Collector;
 
-use PHPUnit_Framework_TestCase as TestCase;
-use DoctrineORMModule\Options\Configuration;
+use PHPUnit_Framework_TestCase;
+use DoctrineORMModule\Options\EntityManager;
 
-class ConfigurationOptionsTest extends TestCase
+/**
+ * Tests for {@see \DoctrineORMModule\Options\EntityManager}
+ *
+ * @covers \DoctrineORMModule\Options\EntityManager
+ *
+ * @author Marco Pivetta <ocramius@gmail.com>
+ */
+class EntityManagerTest extends PHPUnit_Framework_TestCase
 {
-    public function testSetGetNamingStrategy()
+    public function testSetGetResolver()
     {
-        $options = new Configuration();
-        $options->setNamingStrategy(null);
-        $this->assertNull($options->getNamingStrategy());
+        $options = new EntityManager();
 
-        $options->setNamingStrategy('test');
-        $this->assertSame('test', $options->getNamingStrategy());
+        $this->assertSame('doctrine.entity_resolver.orm_default', $options->getEntityResolver());
 
-        $namingStrategy = $this->getMock('Doctrine\ORM\Mapping\NamingStrategy');
-        $options->setNamingStrategy($namingStrategy);
-        $this->assertSame($namingStrategy, $options->getNamingStrategy());
+        $options->setEntityResolver('foo');
 
-        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
-        $options->setNamingStrategy(new \stdClass());
+        $this->assertSame('doctrine.entity_resolver.foo', $options->getEntityResolver());
     }
 }
