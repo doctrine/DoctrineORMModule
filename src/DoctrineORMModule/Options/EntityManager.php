@@ -25,6 +25,16 @@ class EntityManager extends AbstractOptions
     protected $connection = 'orm_default';
 
     /**
+     * Set the connection key for the EntityResolver, which is
+     * a service of type {@see \Doctrine\ORM\Tools\ResolveTargetEntityListener}.
+     * The EntityResolver service name is assembled
+     * as "doctrine.entity_resolver.{key}"
+     *
+     * @var string
+     */
+    protected $entityResolver = 'orm_default';
+
+    /**
      * @param  string $configuration
      * @return self
      */
@@ -61,5 +71,25 @@ class EntityManager extends AbstractOptions
     public function getConnection()
     {
         return 'doctrine.connection.' . $this->connection;
+    }
+
+    /**
+     * @param  string $entityResolver
+     * @return self
+     */
+    public function setEntityResolver($entityResolver)
+    {
+        $this->entityResolver = (string) $entityResolver;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     * @return self
+     */
+    public function getEntityResolver()
+    {
+        return 'doctrine.entity_resolver.' . $this->entityResolver;
     }
 }
