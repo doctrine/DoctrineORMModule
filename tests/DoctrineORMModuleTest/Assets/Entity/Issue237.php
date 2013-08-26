@@ -36,4 +36,10 @@ class Issue237
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Form\Input("Zend\InputFilter\Input")
+     */
+    protected $name;
 }
