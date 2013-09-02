@@ -32,4 +32,4 @@ class EntityWithoutRepository
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-} 
+}

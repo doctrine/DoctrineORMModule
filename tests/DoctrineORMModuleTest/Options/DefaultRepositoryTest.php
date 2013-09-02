@@ -32,4 +32,4 @@ class DefaultRepositoryTest extends TestCase
         $repository = $this->getEntityManager()->getRepository($entityWithDefaultRepository);
         $this->isInstanceOf('DoctrineORMModuleTest\Assets\RepositoryClass', $repository);
     }
-} 
+}
