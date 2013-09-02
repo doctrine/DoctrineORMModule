@@ -4,7 +4,6 @@ namespace DoctrineORMModule\Options;
 
 use DoctrineORMModule\Options\DBALConfiguration;
 use Doctrine\ORM\Mapping\NamingStrategy;
-use Doctrine\ORM\EntityRepository;
 use Zend\Stdlib\Exception\InvalidArgumentException;
 
 /**
@@ -148,7 +147,7 @@ class Configuration extends DBALConfiguration
     /**
      * Default repository class
      *
-     * @var string|null|EntityRepository
+     * @var string|null
      */
     protected $defaultRepositoryClassName;
 
