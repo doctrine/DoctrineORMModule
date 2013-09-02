@@ -143,6 +143,14 @@ class Configuration extends DBALConfiguration
      */
     protected $namingStrategy;
 
+
+    /**
+     * Default repository class
+     *
+     * @var string|null
+     */
+    protected $defaultRepositoryClassName;
+
     /**
      * @param  array $datetimeFunctions
      * @return self
@@ -461,5 +469,28 @@ class Configuration extends DBALConfiguration
     public function getNamingStrategy()
     {
         return $this->namingStrategy;
+    }
+
+    /**
+     * Sets default repository class.
+     *
+     * @param string $className
+     *
+     * @return void
+     *
+     */
+    public function setDefaultRepositoryClassName($className)
+    {
+        $this->defaultRepositoryClassName = $className;
+    }
+
+    /**
+     * Get default repository class name.
+     *
+     * @return string|null
+     */
+    public function getDefaultRepositoryClassName()
+    {
+        return $this->defaultRepositoryClassName;
     }
 }
