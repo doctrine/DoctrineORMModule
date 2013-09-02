@@ -4,6 +4,7 @@ namespace DoctrineORMModule\Options;
 
 use DoctrineORMModule\Options\DBALConfiguration;
 use Doctrine\ORM\Mapping\NamingStrategy;
+use Doctrine\ORM\EntityRepository;
 use Zend\Stdlib\Exception\InvalidArgumentException;
 
 /**
@@ -142,6 +143,14 @@ class Configuration extends DBALConfiguration
      * @var string|null|NamingStrategy
      */
     protected $namingStrategy;
+
+
+    /**
+     * Default repository class
+     *
+     * @var string|null|EntityRepository
+     */
+    protected $defaultRepositoryClassName;
 
     /**
      * @param  array $datetimeFunctions
@@ -461,5 +470,28 @@ class Configuration extends DBALConfiguration
     public function getNamingStrategy()
     {
         return $this->namingStrategy;
+    }
+
+    /**
+     * Sets default repository class.
+     *
+     * @param string $className
+     *
+     * @return void
+     *
+     */
+    public function setDefaultRepositoryClassName($className)
+    {
+        $this->defaultRepositoryClassName = $className;
+    }
+
+    /**
+     * Get default repository class name.
+     *
+     * @return string|null
+     */
+    public function getDefaultRepositoryClassName()
+    {
+        return $this->defaultRepositoryClassName;
     }
 }

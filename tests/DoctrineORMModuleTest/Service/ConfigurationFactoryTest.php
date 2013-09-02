@@ -116,4 +116,21 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('Zend\ServiceManager\Exception\InvalidArgumentException');
         $this->factory->createService($this->serviceManager);
     }
+
+    public function testCanSetDefaultRepositoryClass(){
+
+        $repositoryClass = 'DoctrineORMModuleTest\Assets\RepositoryClass';
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+                        'default_repository_class_name' => $repositoryClass,
+                    ),
+                ),
+            ),
+        );
+        $this->serviceManager->setService('Config', $config);
+        $ormConfig = $this->factory->createService($this->serviceManager);
+        $this->assertSame($repositoryClass, $ormConfig->getDefaultRepositoryClassName());
+    }
 }

@@ -75,6 +75,10 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             }
         }
 
+        if ($className = $options->getDefaultRepositoryClassName()){
+            $config->setDefaultRepositoryClassName($className);
+        }
+
         $this->setupDBALConfiguration($serviceLocator, $config);
 
         return $config;
