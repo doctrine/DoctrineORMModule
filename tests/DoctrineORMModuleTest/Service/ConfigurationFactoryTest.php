@@ -30,7 +30,6 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
      * @var ServiceManager
      */
     protected $serviceManager;
-
     /**
      * @var ConfigurationFactory
      */
@@ -117,8 +116,8 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $this->factory->createService($this->serviceManager);
     }
 
-    public function testCanSetDefaultRepositoryClass(){
-
+    public function testCanSetDefaultRepositoryClass()
+    {
         $repositoryClass = 'DoctrineORMModuleTest\Assets\RepositoryClass';
         $config = array(
             'doctrine' => array(
