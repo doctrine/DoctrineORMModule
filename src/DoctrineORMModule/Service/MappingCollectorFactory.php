@@ -17,17 +17,40 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModule;
+namespace DoctrineORMModule\Service;
+
+use Doctrine\DBAL\DriverManager;
+use DoctrineModule\Service\AbstractFactory;
+use DoctrineORMModule\Collector\MappingCollector;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Version
+ * Service factory responsible for instantiating {@see \DoctrineORMModule\Collector\MappingCollector}
  *
  * @license MIT
  * @link    http://www.doctrine-project.org/
- * @since   0.1.0
- * @author  Kyle Spraggs <theman@spiffyjr.me>
+ * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class Version
+class MappingCollectorFactory extends AbstractFactory
 {
-    const VERSION = '0.8.0';
+    /**
+     * {@inheritDoc}
+     *
+     * @return \DoctrineORMModule\Collector\MappingCollector
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $name          = $this->getName();
+        /* @var $objectManager \Doctrine\Common\Persistence\ObjectManager */
+        $objectManager = $serviceLocator->get('doctrine.entitymanager.' . $name);
+
+        return new MappingCollector($objectManager->getMetadataFactory(), 'doctrine.mapping_collector.' . $name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOptionsClass()
+    {
+    }
 }

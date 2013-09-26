@@ -17,17 +17,28 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModule;
+namespace DoctrineORMModuleTest\Collector;
+
+use PHPUnit_Framework_TestCase;
+use DoctrineORMModule\Options\EntityManager;
 
 /**
- * Version
+ * Tests for {@see \DoctrineORMModule\Options\EntityManager}
  *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @since   0.1.0
- * @author  Kyle Spraggs <theman@spiffyjr.me>
+ * @covers \DoctrineORMModule\Options\EntityManager
+ *
+ * @author Marco Pivetta <ocramius@gmail.com>
  */
-class Version
+class EntityManagerTest extends PHPUnit_Framework_TestCase
 {
-    const VERSION = '0.8.0';
+    public function testSetGetResolver()
+    {
+        $options = new EntityManager();
+
+        $this->assertSame('doctrine.entity_resolver.orm_default', $options->getEntityResolver());
+
+        $options->setEntityResolver('foo');
+
+        $this->assertSame('doctrine.entity_resolver.foo', $options->getEntityResolver());
+    }
 }

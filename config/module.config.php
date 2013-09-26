@@ -75,7 +75,14 @@ return array(
                 'proxy_namespace'   => 'DoctrineORMModule\Proxy',
 
                 // SQL filters. See http://docs.doctrine-project.org/en/latest/reference/filters.html
-                'filters'           => array()
+                'filters'           => array(),
+
+                // Custom DQL functions.
+                // You can grab common MySQL ones at https://github.com/beberlei/DoctrineExtensions
+                // Further docs at http://docs.doctrine-project.org/en/latest/cookbook/dql-user-defined-functions.html
+                'datetime_functions' => array(),
+                'string_functions' => array(),
+                'numeric_functions' => array(),
             )
         ),
 
@@ -112,9 +119,21 @@ return array(
             'orm_default' => array()
         ),
 
-        // collector SQL logger, used when ZendDeveloperTools and its toolbar are active
+        // SQL logger collector, used when ZendDeveloperTools and its toolbar are active
         'sql_logger_collector' => array(
             // configuration for the `doctrine.sql_logger_collector.orm_default` service
+            'orm_default' => array(),
+        ),
+
+        // mappings collector, used when ZendDeveloperTools and its toolbar are active
+        'mapping_collector' => array(
+            // configuration for the `doctrine.sql_logger_collector.orm_default` service
+            'orm_default' => array(),
+        ),
+
+        // form annotation builder configuration
+        'formannotationbuilder' => array(
+            // Configuration for service `doctrine.formannotation.orm_default` service
             'orm_default' => array(),
         ),
 
@@ -135,6 +154,88 @@ return array(
                 //'credentialProperty' => 'password'
             ),
         ),
+
+        // migrations configuration
+        'migrations_configuration' => array(
+            'orm_default' => array(
+                'directory' => 'data/DoctrineORMModule/Migrations',
+                'namespace' => 'DoctrineORMModule\Migrations',
+                'table'     => 'migrations',
+            ),
+        ),
+
+        // migrations commands base config
+        'migrations_cmd' => array(
+            'generate' => array(),
+            'execute'  => array(),
+            'migrate'  => array(),
+            'status'   => array(),
+            'version'  => array(),
+            'diff'     => array(),
+        ),
+    ),
+
+    'service_manager' => array(
+        'factories' => array(
+            'Doctrine\ORM\EntityManager' => 'DoctrineORMModule\Service\EntityManagerAliasCompatFactory',
+        ),
+        'invokables' => array(
+            // DBAL commands
+            'doctrine.dbal_cmd.runsql' => '\Doctrine\DBAL\Tools\Console\Command\RunSqlCommand',
+            'doctrine.dbal_cmd.import' => '\Doctrine\DBAL\Tools\Console\Command\ImportCommand',
+            // ORM Commands
+            'doctrine.orm_cmd.clear_cache_metadata' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand',
+            'doctrine.orm_cmd.clear_cache_result' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand',
+            'doctrine.orm_cmd.clear_cache_query' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand',
+            'doctrine.orm_cmd.schema_tool_create' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand',
+            'doctrine.orm_cmd.schema_tool_update' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand',
+            'doctrine.orm_cmd.schema_tool_drop' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand',
+            'doctrine.orm_cmd.convert_d1_schema' => '\Doctrine\ORM\Tools\Console\Command\ConvertDoctrine1SchemaCommand',
+            'doctrine.orm_cmd.generate_entities' => '\Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand',
+            'doctrine.orm_cmd.generate_proxies' => '\Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand',
+            'doctrine.orm_cmd.convert_mapping' => '\Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand',
+            'doctrine.orm_cmd.run_dql' => '\Doctrine\ORM\Tools\Console\Command\RunDqlCommand',
+            'doctrine.orm_cmd.validate_schema' => '\Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand',
+            'doctrine.orm_cmd.info' => '\Doctrine\ORM\Tools\Console\Command\InfoCommand',
+            'doctrine.orm_cmd.ensure_production_settings'
+                => '\Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand',
+            'doctrine.orm_cmd.generate_repositories'
+                => '\Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand',
+        ),
+    ),
+
+    // Factory mappings - used to define which factory to use to instantiate a particular doctrine
+    // service type
+    'doctrine_factories' => array(
+        'connection'               => 'DoctrineORMModule\Service\DBALConnectionFactory',
+        'configuration'            => 'DoctrineORMModule\Service\ConfigurationFactory',
+        'entitymanager'            => 'DoctrineORMModule\Service\EntityManagerFactory',
+        'entity_resolver'          => 'DoctrineORMModule\Service\EntityResolverFactory',
+        'sql_logger_collector'     => 'DoctrineORMModule\Service\SQLLoggerCollectorFactory',
+        'mapping_collector'        => 'DoctrineORMModule\Service\MappingCollectorFactory',
+        'formannotationbuilder'    => 'DoctrineORMModule\Service\FormAnnotationBuilderFactory',
+        'migrations_configuration' => 'DoctrineORMModule\Service\MigrationsConfigurationFactory',
+        'migrations_cmd'           => 'DoctrineORMModule\Service\MigrationsCommandFactory',
+    ),
+
+    // Zend\Form\FormElementManager configuration
+    'form_elements' => array(
+        'aliases' => array(
+            'objectselect'        => 'DoctrineModule\Form\Element\ObjectSelect',
+            'objectradio'         => 'DoctrineModule\Form\Element\ObjectRadio',
+            'objectmulticheckbox' => 'DoctrineModule\Form\Element\ObjectMultiCheckbox',
+        ),
+        'factories' => array(
+            'DoctrineModule\Form\Element\ObjectSelect'        => 'DoctrineORMModule\Service\ObjectSelectFactory',
+            'DoctrineModule\Form\Element\ObjectRadio'         => 'DoctrineORMModule\Service\ObjectRadioFactory',
+            'DoctrineModule\Form\Element\ObjectMultiCheckbox' => 'DoctrineORMModule\Service\ObjectMultiCheckboxFactory',
+        ),
+    ),
+
+    'hydrators' => array(
+        'factories' => array(
+            'DoctrineModule\Stdlib\Hydrator\DoctrineObject' => 'DoctrineORMModule\Service\DoctrineObjectHydratorFactory'
+        )
     ),
 
     ////////////////////////////////////////////////////////////////////
@@ -160,22 +261,24 @@ return array(
 
     'view_manager' => array(
         'template_map' => array(
-            'zend-developer-tools/toolbar/doctrine-orm-queries'  => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-queries.phtml',
-            'zend-developer-tools/toolbar/doctrine-orm-mappings' => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-mappings.phtml',
+            'zend-developer-tools/toolbar/doctrine-orm-queries'
+                => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-queries.phtml',
+            'zend-developer-tools/toolbar/doctrine-orm-mappings'
+                => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-mappings.phtml',
         ),
     ),
 
     'zenddevelopertools' => array(
         'profiler' => array(
             'collectors' => array(
-                'orm_default'  => 'doctrine.sql_logger_collector.orm_default',
-                'orm_default_mappings' => 'doctrine.mapping_collector.orm_default',
+                'doctrine.sql_logger_collector.orm_default' => 'doctrine.sql_logger_collector.orm_default',
+                'doctrine.mapping_collector.orm_default'    => 'doctrine.mapping_collector.orm_default',
             ),
         ),
         'toolbar' => array(
             'entries' => array(
-                'orm_default'  => 'zend-developer-tools/toolbar/doctrine-orm-queries',
-                'orm_default_mappings' => 'zend-developer-tools/toolbar/doctrine-orm-mappings',
+                'doctrine.sql_logger_collector.orm_default' => 'zend-developer-tools/toolbar/doctrine-orm-queries',
+                'doctrine.mapping_collector.orm_default'    => 'zend-developer-tools/toolbar/doctrine-orm-mappings',
             ),
         ),
     ),

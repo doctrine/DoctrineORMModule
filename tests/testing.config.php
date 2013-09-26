@@ -35,7 +35,8 @@ return array(
         'entity_resolver' => array(
             'orm_default' => array(
                 'resolvers' => array(
-                    'DoctrineORMModuleTest\Assets\Entity\TargetInterface' => 'DoctrineORMModuleTest\Assets\Entity\TargetEntity',
+                    'DoctrineORMModuleTest\Assets\Entity\TargetInterface'
+                        => 'DoctrineORMModuleTest\Assets\Entity\TargetEntity',
                 ),
             ),
         ),

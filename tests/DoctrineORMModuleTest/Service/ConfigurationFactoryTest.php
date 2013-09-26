@@ -46,8 +46,8 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $this->serviceManager->setService('doctrine.cache.array', new ArrayCache());
         $this->serviceManager->setService(
             'doctrine.driver.orm_default',
-            $this->getMock('Doctrine\Common\Persistence\Mapping\Driver\MappingDriver'
-        ));
+            $this->getMock('Doctrine\Common\Persistence\Mapping\Driver\MappingDriver')
+        );
     }
 
     public function testWillInstantiateConfigWithoutNamingStrategySetting()

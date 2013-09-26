@@ -17,17 +17,32 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModule;
+namespace DoctrineORMModule\Service;
+
+use DoctrineModule\Form\Element\ObjectRadio;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\FactoryInterface;
 
 /**
- * Version
+ * Factory for {@see ObjectRadio}
  *
  * @license MIT
  * @link    http://www.doctrine-project.org/
- * @since   0.1.0
- * @author  Kyle Spraggs <theman@spiffyjr.me>
+ * @author  Daniel Gimenes <daniel@danielgimenes.com.br>
  */
-class Version
+class ObjectRadioFactory implements FactoryInterface
 {
-    const VERSION = '0.8.0';
+    /**
+     * {@inheritDoc}
+     */
+    public function createService(ServiceLocatorInterface $pluginManager)
+    {
+        $services      = $pluginManager->getServiceLocator();
+        $entityManager = $services->get('Doctrine\ORM\EntityManager');
+        $element       = new ObjectRadio;
+
+        $element->getProxy()->setObjectManager($entityManager);
+
+        return $element;
+    }
 }

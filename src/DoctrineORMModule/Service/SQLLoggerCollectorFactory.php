@@ -78,7 +78,7 @@ class SQLLoggerCollectorFactory implements FactoryInterface
             $configuration->setSQLLogger($debugStackLogger);
         }
 
-        return new SQLLoggerCollector($debugStackLogger, $options->getName());
+        return new SQLLoggerCollector($debugStackLogger, 'doctrine.sql_logger_collector.' . $options->getName());
     }
 
     /**
@@ -95,10 +95,12 @@ class SQLLoggerCollectorFactory implements FactoryInterface
             : null;
 
         if (null === $options) {
-            throw new RuntimeException(sprintf(
-                'Configuration with name "%s" could not be found in "doctrine.sql_logger_collector".',
-                $this->name
-            ));
+            throw new RuntimeException(
+                sprintf(
+                    'Configuration with name "%s" could not be found in "doctrine.sql_logger_collector".',
+                    $this->name
+                )
+            );
         }
 
         $optionsClass = $this->getOptionsClass();

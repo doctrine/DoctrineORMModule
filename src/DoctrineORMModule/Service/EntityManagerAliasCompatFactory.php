@@ -17,17 +17,30 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModule;
+namespace DoctrineORMModule\Service;
+
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Version
+ * Factory that provides the `Doctrine\ORM\EntityManager` alias for `doctrine.entitymanager.orm_default`
  *
  * @license MIT
  * @link    http://www.doctrine-project.org/
- * @since   0.1.0
- * @author  Kyle Spraggs <theman@spiffyjr.me>
+ * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class Version
+class EntityManagerAliasCompatFactory implements FactoryInterface
 {
-    const VERSION = '0.8.0';
+    /**
+     * {@inheritDoc}
+     *
+     * @return \Doctrine\ORM\EntityManager
+     *
+     * @deprecated this method was introduced to allow aliasing of service `Doctrine\ORM\EntityManager`
+     *             from `doctrine.entitymanager.orm_default`
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        return $serviceLocator->get('doctrine.entitymanager.orm_default');
+    }
 }

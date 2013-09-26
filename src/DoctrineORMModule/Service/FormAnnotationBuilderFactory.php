@@ -17,17 +17,39 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModule;
+namespace DoctrineORMModule\Service;
+
+use Doctrine\DBAL\DriverManager;
+use DoctrineModule\Service\AbstractFactory;
+use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Version
+ * Service factory responsible for instantiating {@see \DoctrineORMModule\Form\Annotation\AnnotationBuilder}
  *
  * @license MIT
  * @link    http://www.doctrine-project.org/
- * @since   0.1.0
- * @author  Kyle Spraggs <theman@spiffyjr.me>
+ * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class Version
+class FormAnnotationBuilderFactory extends AbstractFactory
 {
-    const VERSION = '0.8.0';
+    /**
+     * {@inheritDoc}
+     *
+     * @return \DoctrineORMModule\Form\Annotation\AnnotationBuilder
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        /* @var $entityManager \Doctrine\ORM\EntityManager */
+        $entityManager = $serviceLocator->get('doctrine.entitymanager.' . $this->getName());
+
+        return new AnnotationBuilder($entityManager);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOptionsClass()
+    {
+    }
 }

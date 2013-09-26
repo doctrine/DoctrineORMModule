@@ -17,17 +17,23 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModule;
+namespace DoctrineORMModuleTest\Assets\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Zend\Form\Annotation as Form;
 
 /**
- * Version
+ * @ORM\Entity
+ * @ORM\Table(name="doctrine_orm_module_form_entity")
  *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @since   0.1.0
- * @author  Kyle Spraggs <theman@spiffyjr.me>
+ * @author Kyle Spraggs <theman@spiffyjr.me>
  */
-class Version
+class Issue237
 {
-    const VERSION = '0.8.0';
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    protected $id;
 }

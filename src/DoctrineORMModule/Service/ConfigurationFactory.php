@@ -50,7 +50,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             $config->addNamedNativeQuery($name, $query['sql'], new $query['rsm']);
         }
 
-        foreach ($options->getCustomHydrationModes() AS $modeName => $hydrator) {
+        foreach ($options->getCustomHydrationModes() as $modeName => $hydrator) {
             $config->addCustomHydrationMode($modeName, $hydrator);
         }
 
@@ -66,10 +66,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         if ($namingStrategy = $options->getNamingStrategy()) {
             if (is_string($namingStrategy)) {
                 if (!$serviceLocator->has($namingStrategy)) {
-                    throw new InvalidArgumentException(sprintf(
-                        'Naming strategy "%s" not found',
-                        $namingStrategy
-                    ));
+                    throw new InvalidArgumentException(sprintf('Naming strategy "%s" not found', $namingStrategy));
                 }
 
                 $config->setNamingStrategy($serviceLocator->get($namingStrategy));

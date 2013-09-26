@@ -160,6 +160,6 @@ class SQLLoggerCollectorFactoryTest extends TestCase
         );
         /* @var $service \DoctrineORMModule\Collector\SQLLoggerCollector */
         $service = $this->factory->createService($this->services);
-        $this->assertSame('test_collector_name', $service->getName());
+        $this->assertSame('doctrine.sql_logger_collector.test_collector_name', $service->getName());
     }
 }

@@ -1,6 +1,6 @@
 # Doctrine 2 ORM Module for Zend Framework 2
 
-[![Master branch build status](https://secure.travis-ci.org/doctrine/DoctrineORMModule.png?branch=master)](http://travis-ci.org/doctrine/DoctrineORMModule)
+[![Master branch build status](https://secure.travis-ci.org/doctrine/DoctrineORMModule.png?branch=master)](http://travis-ci.org/doctrine/DoctrineORMModule) [![Latest Stable Version](https://poser.pugx.org/doctrine/doctrine-orm-module/v/stable.png)](https://packagist.org/packages/doctrine/doctrine-orm-module) [![Total Downloads](https://poser.pugx.org/doctrine/doctrine-orm-module/downloads.png)](https://packagist.org/packages/doctrine/doctrine-orm-module) 
 
 DoctrineORMModule integrates Doctrine 2 ORM with Zend Framework 2 quickly and easily.
 
@@ -27,8 +27,8 @@ that are listed in `composer.json`
 
 ## Entities settings
 
-To register your entities with the ORM, add following metadata driver configurations to your application
-config for each of your entities namespaces:
+To register your entities with the ORM, add following metadata driver configurations to your module (merged)
+configuration for each of your entities namespaces:
 
 ```php
 <?php

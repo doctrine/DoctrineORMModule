@@ -19,29 +19,40 @@
 
 namespace DoctrineORMModule\Service;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Migrations\Configuration\Configuration;
 use DoctrineModule\Service\AbstractFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class EntityManagerFactory extends AbstractFactory
+/**
+ * DBAL Connection ServiceManager factory
+ *
+ * @license MIT
+ * @link    http://www.doctrine-project.org/
+ * @author  Marco Pivetta <ocramius@gmail.com>
+ */
+class MigrationsConfigurationFactory extends AbstractFactory
 {
     /**
      * {@inheritDoc}
-     * @return EntityManager
+     *
+     * @return \Doctrine\DBAL\Migrations\Configuration\Configuration
      */
-    public function createService(ServiceLocatorInterface $sl)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /* @var $options \DoctrineORMModule\Options\EntityManager */
-        $options    = $this->getOptions($sl, 'entitymanager');
-        $connection = $sl->get($options->getConnection());
-        $config     = $sl->get($options->getConfiguration());
+        $name             = $this->getName();
+        /* @var $connection \Doctrine\DBAL\Connection */
+        $connection       = $serviceLocator->get('doctrine.connection.' . $name);
+        $appConfig        = $serviceLocator->get('Config');
+        $migrationsConfig = $appConfig['doctrine']['migrations_configuration'][$name];
+        $configuration    = new Configuration($connection);
 
-        // initializing the resolver
-        // @todo should actually attach it to a fetched event manager here, and not
-        //       rely on its factory code
-        $sl->get($options->getEntityResolver());
+        $configuration->setMigrationsDirectory($migrationsConfig['directory']);
+        $configuration->setMigrationsNamespace($migrationsConfig['namespace']);
+        $configuration->setMigrationsTableName($migrationsConfig['table']);
+        $configuration->registerMigrationsFromDirectory($migrationsConfig['directory']);
 
-        return EntityManager::create($connection, $config);
+        return $configuration;
     }
 
     /**
@@ -49,6 +60,5 @@ class EntityManagerFactory extends AbstractFactory
      */
     public function getOptionsClass()
     {
-        return 'DoctrineORMModule\Options\EntityManager';
     }
 }
