@@ -75,6 +75,18 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             }
         }
 
+        if ($quoteStrategy = $options->getQuoteStrategy()) {
+            if (is_string($quoteStrategy)) {
+                if (!$serviceLocator->has($quoteStrategy)) {
+                    throw new InvalidArgumentException(sprintf('Quote strategy "%s" not found', $quoteStrategy));
+                }
+
+                $config->setQuoteStrategy($serviceLocator->get($quoteStrategy));
+            } else {
+                $config->setQuoteStrategy($quoteStrategy);
+            }
+        }
+
         $this->setupDBALConfiguration($serviceLocator, $config);
 
         return $config;
