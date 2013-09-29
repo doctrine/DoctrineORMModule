@@ -40,6 +40,11 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     protected $objectManager;
 
     /**
+     * Specific Doctrine Module Form Elements
+     */
+    protected $formElements;
+
+    /**
      * Constructor. Ensures ObjectManager is present.
      *
      * @param \Doctrine\Common\Persistence\ObjectManager $objectManager
@@ -47,6 +52,11 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     public function __construct(ObjectManager $objectManager)
     {
         $this->objectManager = $objectManager;
+        $this->formElements = array(
+            'DoctrineModule\Form\Element\ObjectSelect',
+            'DoctrineModule\Form\Element\ObjectMultiCheckbox',
+            'DoctrineModule\Form\Element\ObjectRadio',
+        );
     }
 
     /**
@@ -78,6 +88,8 @@ class AnnotationBuilder extends ZendAnnotationBuilder
 
         foreach ($formSpec['elements'] as $key => $elementSpec) {
             $name = isset($elementSpec['spec']['name']) ? $elementSpec['spec']['name'] : null;
+            $isFormElement = (isset($elementSpec['spec']['type']) && in_array($elementSpec['spec']['type'], $this->formElements)) ? true : false;
+
 
             if (!$name) {
                 continue;
@@ -107,7 +119,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
                 continue;
             }
 
-            if ($metadata->hasField($name)) {
+            if ($metadata->hasField($name) || (!$metadata->hasAssociation($name) && $isFormElement)) {
                 $this->getEventManager()->trigger(static::EVENT_CONFIGURE_FIELD, $this, $params);
             } elseif ($metadata->hasAssociation($name)) {
                 $this->getEventManager()->trigger(static::EVENT_CONFIGURE_ASSOCIATION, $this, $params);
