@@ -107,8 +107,10 @@ class FormEntity
     protected $targetOne;
 
     /**
+     * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")
      * @ORM\OneToOne(targetEntity="TargetInterface")
      * @ORM\JoinColumn(nullable=true)
+     * @Form\Options({"empty_option":null})
      */
     protected $targetOneNullable;
 
