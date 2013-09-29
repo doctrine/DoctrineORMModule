@@ -59,6 +59,7 @@ class AnnotationBuilderTest extends TestCase
                 }
             }
         }
+
         $this->assertFalse($showEmptyValue);
     }
 }
