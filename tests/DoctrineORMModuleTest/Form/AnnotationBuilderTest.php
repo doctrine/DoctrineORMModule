@@ -3,8 +3,8 @@
 namespace DoctrineORMModuleTest\Form;
 
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
-use DoctrineORMModuleTest\Assets\Entity\Issue237;
 use DoctrineORMModuleTest\Assets\Entity\FormEntity;
+use DoctrineORMModuleTest\Assets\Entity\Issue237;
 use DoctrineORMModuleTest\Framework\TestCase;
 
 class AnnotationBuilderTest extends TestCase
@@ -47,14 +47,12 @@ class AnnotationBuilderTest extends TestCase
     public function testEmptyOptionNullDoesntGenerateValue()
     {
         $showEmptyValue = true;
-        $entity = new FormEntity();
-        $spec   = $this->builder->getFormSpecification($entity);
+        $entity         = new FormEntity();
+        $spec           = $this->builder->getFormSpecification($entity);
         foreach ($spec['elements'] as $k) {
-            if(isset($k['spec']['options']))
-            {
-                foreach($k['spec']['options'] as $option=>$optionvalue)
-                {
-                    if('empty_option' === $option && !isset($optionvalue)) {
+            if (isset($k['spec']['options'])) {
+                foreach ($k['spec']['options'] as $option => $optionvalue) {
+                    if ('empty_option' === $option && !isset($optionvalue)) {
                         $showEmptyValue = false;
                         break;
                     }
