@@ -267,8 +267,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
 
         $elementSpec = $event->getParam('elementSpec');
 
-        if(isset($elementSpec['spec']['options']['target_class']))
-        {
+        if(isset($elementSpec['spec']['options']['target_class'])) {
             $this->mergeAssociationOptions($elementSpec,$elementSpec['spec']['options']['target_class']);
             return;
         } elseif(isset($elementSpec['spec']['type']) || isset($elementSpec['spec']['attributes']['type'])) {
