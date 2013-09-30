@@ -42,7 +42,8 @@ class AnnotationBuilderTest extends TestCase
     }
 
     /**
-     * empty_option behavior - null value should not be overridden #247
+     * empty_option behavior - !isset can't evaluate null value
+     * @link https://github.com/doctrine/DoctrineORMModule/pull/247
      */
     public function testEmptyOptionNullDoesntGenerateValue()
     {
