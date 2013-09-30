@@ -49,14 +49,14 @@ class AnnotationBuilderTest extends TestCase
         $showEmptyValue = true;
         $entity         = new FormEntity();
         $spec           = $this->builder->getFormSpecification($entity);
-        foreach ($spec['elements'] as $k) {
-            if (isset($k['spec']['options'])) {
-                foreach ($k['spec']['options'] as $option => $optionvalue) {
-                    if ('empty_option' === $option && !isset($optionvalue)) {
-                        $showEmptyValue = false;
-                        break;
-                    }
-                }
+
+        foreach ($spec['elements'] as $elementSpec) {
+            if (isset($elementSpec['spec']['options']) &&
+                array_key_exists('empty_option', $elementSpec['spec']['options']) &&
+                null === $elementSpec['spec']['options']['empty_option']
+            ) {
+                $showEmptyValue = false;
+                break;
             }
         }
 
