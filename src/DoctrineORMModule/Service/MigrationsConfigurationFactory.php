@@ -47,6 +47,7 @@ class MigrationsConfigurationFactory extends AbstractFactory
         $migrationsConfig = $appConfig['doctrine']['migrations_configuration'][$name];
         $configuration    = new Configuration($connection);
 
+        $configuration->setName($migrationsConfig['name']);
         $configuration->setMigrationsDirectory($migrationsConfig['directory']);
         $configuration->setMigrationsNamespace($migrationsConfig['namespace']);
         $configuration->setMigrationsTableName($migrationsConfig['table']);
