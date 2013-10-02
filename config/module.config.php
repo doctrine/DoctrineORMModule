@@ -110,7 +110,11 @@ return array(
 
                 // configuration instance to use. The retrieved service name will
                 // be `doctrine.configuration.$thisSetting`
-                'configuration' => 'orm_default'
+                'configuration' => 'orm_default',
+
+                // array of default - enabled SQL Filters in this entity manager.
+                // accepts both a list of filter names and filter name => filter parameters map
+                'filters' => array()
             )
         ),
 
