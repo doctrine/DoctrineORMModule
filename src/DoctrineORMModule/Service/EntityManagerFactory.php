@@ -45,7 +45,7 @@ class EntityManagerFactory extends AbstractFactory
 
         foreach ($options->getFilters() as $filterName => $params) {
             $filter = $em->getFilters()->enable($filterName);
-            
+
             foreach ($params as $name => $value) {
                 $filter->setParameter($name, $value);
             }

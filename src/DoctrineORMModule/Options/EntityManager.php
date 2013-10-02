@@ -107,7 +107,7 @@ class EntityManager extends AbstractOptions
     public function setFilters($filters)
     {
         $this->filters = array();
-        
+
         foreach ($filters as $index => $filterOrParams) {
             if (is_array($filterOrParams)) {
                 $this->filters[$index] = $filterOrParams;
