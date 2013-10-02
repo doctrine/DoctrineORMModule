@@ -36,6 +36,8 @@ class EntityManager extends AbstractOptions
 
     /**
      * Array of default - enabled SQL Filters in this entity manager
+     *
+     * @var array
      */
     protected $filters = array();
 
