@@ -4,6 +4,7 @@ namespace DoctrineORMModule\Options;
 
 use DoctrineORMModule\Options\DBALConfiguration;
 use Doctrine\ORM\Mapping\NamingStrategy;
+use Doctrine\ORM\Repository\RepositoryFactory;
 use Zend\Stdlib\Exception\InvalidArgumentException;
 
 /**
@@ -142,6 +143,14 @@ class Configuration extends DBALConfiguration
      * @var string|null|NamingStrategy
      */
     protected $namingStrategy;
+
+    /**
+     * Repository factory or name of the repository factory service to be set in ORM
+     * configuration (if any)
+     *
+     * @var string|null|RepositoryFactory
+     */
+    protected $repositoryFactory;
 
     /**
      * @param  array $datetimeFunctions
@@ -461,5 +470,38 @@ class Configuration extends DBALConfiguration
     public function getNamingStrategy()
     {
         return $this->namingStrategy;
+    }
+
+    /**
+     * @param  string|null|RepositoryFactory $repositoryFactory
+     * @return self
+     * @throws InvalidArgumentException   when the provided repository factory does not fit the expected type
+     */
+    public function setRepositoryFactory($repositoryFactory)
+    {
+        if (null === $repositoryFactory
+            || is_string($repositoryFactory)
+            || $repositoryFactory instanceof RepositoryFactory
+        ) {
+            $this->repositoryFactory = $repositoryFactory;
+
+            return $this;
+        }
+
+        throw new InvalidArgumentException(
+            sprintf(
+                'repositoryFactory must be either a string, a Doctrine\ORM\Repository\RepositoryFactory '
+                . 'instance or null, %s given',
+                is_object($repositoryFactory) ? get_class($repositoryFactory) : gettype($repositoryFactory)
+            )
+        );
+    }
+
+    /**
+     * @return string|null|RepositoryFactory
+     */
+    public function getRepositoryFactory()
+    {
+        return $this->repositoryFactory;
     }
 }
