@@ -156,7 +156,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $identifiers = $metadata->getIdentifierFieldNames();
 
         return in_array($event->getParam('name'), $identifiers) &&
-               $metadata->generatorType === ClassMetadata::GENERATOR_TYPE_IDENTITY;
+        $metadata->generatorType === ClassMetadata::GENERATOR_TYPE_IDENTITY;
     }
 
     /**
@@ -267,10 +267,12 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
 
         $elementSpec = $event->getParam('elementSpec');
 
-        if(isset($elementSpec['spec']['options']['target_class'])) {
-            $this->mergeAssociationOptions($elementSpec,$elementSpec['spec']['options']['target_class']);
+        if (isset($elementSpec['spec']['options']['target_class'])) {
+            $this->mergeAssociationOptions($elementSpec, $elementSpec['spec']['options']['target_class']);
             return;
-        } elseif(isset($elementSpec['spec']['type']) || isset($elementSpec['spec']['attributes']['type'])) {
+        }
+
+        if (isset($elementSpec['spec']['type']) || isset($elementSpec['spec']['attributes']['type'])) {
             return;
         }
 

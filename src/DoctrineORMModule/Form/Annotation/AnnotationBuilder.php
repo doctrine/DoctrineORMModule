@@ -40,11 +40,6 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     protected $objectManager;
 
     /**
-     * Specific Doctrine Module Form Elements
-     */
-    protected $formElements;
-
-    /**
      * Constructor. Ensures ObjectManager is present.
      *
      * @param \Doctrine\Common\Persistence\ObjectManager $objectManager
@@ -52,11 +47,6 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     public function __construct(ObjectManager $objectManager)
     {
         $this->objectManager = $objectManager;
-        $this->formElements = array(
-            'DoctrineModule\Form\Element\ObjectSelect',
-            'DoctrineModule\Form\Element\ObjectMultiCheckbox',
-            'DoctrineModule\Form\Element\ObjectRadio',
-        );
     }
 
     /**
@@ -82,14 +72,19 @@ class AnnotationBuilder extends ZendAnnotationBuilder
      */
     public function getFormSpecification($entity)
     {
-        $formSpec    = parent::getFormSpecification($entity);
-        $metadata    = $this->objectManager->getClassMetadata(is_object($entity) ? get_class($entity) : $entity);
-        $inputFilter = $formSpec['input_filter'];
+        $formSpec     = parent::getFormSpecification($entity);
+        $metadata     = $this->objectManager->getClassMetadata(is_object($entity) ? get_class($entity) : $entity);
+        $inputFilter  = $formSpec['input_filter'];
+
+        $formElements = array(
+            'DoctrineModule\Form\Element\ObjectSelect',
+            'DoctrineModule\Form\Element\ObjectMultiCheckbox',
+            'DoctrineModule\Form\Element\ObjectRadio',
+        );
 
         foreach ($formSpec['elements'] as $key => $elementSpec) {
-            $name = isset($elementSpec['spec']['name']) ? $elementSpec['spec']['name'] : null;
-            $isFormElement = (isset($elementSpec['spec']['type']) && in_array($elementSpec['spec']['type'], $this->formElements)) ? true : false;
-
+            $name          = isset($elementSpec['spec']['name']) ? $elementSpec['spec']['name'] : null;
+            $isFormElement = (isset($elementSpec['spec']['type']) && in_array($elementSpec['spec']['type'], $formElements));
 
             if (!$name) {
                 continue;
@@ -138,9 +133,6 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     {
         $params = array('metadata' => $metadata, 'name' => $name);
         $result = false;
-        $test   = function ($r) {
-            return (true === $r);
-        };
 
         if ($metadata->hasField($name)) {
             $result = $this->getEventManager()->trigger(static::EVENT_EXCLUDE_FIELD, $this, $params);
