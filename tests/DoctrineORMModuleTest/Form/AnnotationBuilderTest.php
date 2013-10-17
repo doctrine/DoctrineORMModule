@@ -42,21 +42,22 @@ class AnnotationBuilderTest extends TestCase
     }
 
     /**
-     * empty_option behavior - null value should not be overridden #247
+     * empty_option behavior - !isset can't evaluate null value
+     * @link https://github.com/doctrine/DoctrineORMModule/pull/247
      */
     public function testEmptyOptionNullDoesntGenerateValue()
     {
         $showEmptyValue = true;
-        $entity         = new FormEntity();
-        $spec           = $this->builder->getFormSpecification($entity);
-        foreach ($spec['elements'] as $k) {
-            if (isset($k['spec']['options'])) {
-                foreach ($k['spec']['options'] as $option => $optionvalue) {
-                    if ('empty_option' === $option && !isset($optionvalue)) {
-                        $showEmptyValue = false;
-                        break;
-                    }
-                }
+        $entity = new FormEntity();
+        $spec = $this->builder->getFormSpecification($entity);
+
+        foreach ($spec['elements'] as $elementSpec) {
+            if (isset($elementSpec['spec']['options']) &&
+                array_key_exists('empty_option', $elementSpec['spec']['options']) &&
+                null === $elementSpec['spec']['options']['empty_option']
+            ) {
+                $showEmptyValue = false;
+                break;
             }
         }
 
