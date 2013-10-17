@@ -195,7 +195,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                 if (isset($joinColumn['nullable']) && $joinColumn['nullable']) {
                     $required = false;
 
-                    if (!array_key_exists('empty_option', $elementSpec['spec']['options'])) {
+                    if (!isset($elementSpec['spec']['options']['empty_option'])) {
                         $elementSpec['spec']['options']['empty_option'] = 'NULL';
                     }
                     break;
