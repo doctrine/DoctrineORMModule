@@ -125,7 +125,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     protected function checkForExcludeElementFromMetadata(ClassMetadata $metadata, $name)
     {
         $params = array('metadata' => $metadata, 'name' => $name);
-        $test   = function($r) { return (true === $r); };
+        $test   = function ($r) { return (true === $r); };
         $result = false;
 
         if ($metadata->hasField($name)) {
