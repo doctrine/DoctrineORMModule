@@ -237,36 +237,37 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $this->prepareEvent($event);
 
         $elementSpec = $event->getParam('elementSpec');
+        if (!isset($elementSpec['spec']['type'])) {
+            switch ($metadata->getTypeOfField($event->getParam('name'))) {
+                case 'bigint':
+                case 'integer':
+                case 'smallint':
+                    $type = 'Zend\Form\Element\Number';
+                    break;
+                case 'bool':
+                case 'boolean':
+                    $type = 'Zend\Form\Element\Checkbox';
+                    break;
+                case 'date':
+                    $type = 'Zend\Form\Element\Date';
+                    break;
+                case 'datetimetz':
+                case 'datetime':
+                    $type = 'Zend\Form\Element\DateTime';
+                    break;
+                case 'time':
+                    $type = 'Zend\Form\Element\Time';
+                    break;
+                case 'text':
+                    $type = 'Zend\Form\Element\Textarea';
+                    break;
+                default:
+                    $type = 'Zend\Form\Element';
+                    break;
+            }
 
-        switch ($metadata->getTypeOfField($event->getParam('name'))) {
-            case 'bigint':
-            case 'integer':
-            case 'smallint':
-                $type = 'Zend\Form\Element\Number';
-                break;
-            case 'bool':
-            case 'boolean':
-                $type = 'Zend\Form\Element\Checkbox';
-                break;
-            case 'date':
-                $type = 'Zend\Form\Element\Date';
-                break;
-            case 'datetimetz':
-            case 'datetime':
-                $type = 'Zend\Form\Element\DateTime';
-                break;
-            case 'time':
-                $type = 'Zend\Form\Element\Time';
-                break;
-            case 'text':
-                $type = 'Zend\Form\Element\Textarea';
-                break;
-            default:
-                $type = 'Zend\Form\Element';
-                break;
+            $elementSpec['spec']['type'] = $type;
         }
-
-        $elementSpec['spec']['type'] = $type;
     }
 
     /**
@@ -357,7 +358,9 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         );
 
         $elementSpec['spec']['options'] = $options;
-        $elementSpec['spec']['type']    = 'DoctrineORMModule\Form\Element\EntitySelect';
+        if (!isset($elementSpec['spec']['type'])) {
+            $elementSpec['spec']['type']    = 'DoctrineORMModule\Form\Element\EntitySelect';
+        }
     }
 
     /**
