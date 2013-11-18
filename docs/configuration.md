@@ -157,17 +157,17 @@ public function getServiceConfig()
 {
     return array(
         'factories' => array(
-            'doctrine.connection.orm_crawler'           => new DBALConnectionFactory('orm_crawler'),
-            'doctrine.configuration.orm_crawler'        => new ORMConfigurationFactory('orm_crawler'),
-            'doctrine.entitymanager.orm_crawler'        => new EntityManagerFactory('orm_crawler'),
+            'doctrine.connection.orm_crawler'           => new \DoctrineORMModule\Service\DBALConnectionFactory('orm_crawler'),
+            'doctrine.configuration.orm_crawler'        => new \DoctrineORMModule\Service\ConfigurationFactory('orm_crawler'),
+            'doctrine.entitymanager.orm_crawler'        => new \DoctrineORMModule\Service\EntityManagerFactory('orm_crawler'),
 
-            'doctrine.driver.orm_crawler'               => new DriverFactory('orm_crawler'),
-            'doctrine.eventmanager.orm_crawler'         => new EventManagerFactory('orm_crawler'),
-            'doctrine.entity_resolver.orm_crawler'      => new EntityResolverFactory('orm_crawler'),
-            'doctrine.sql_logger_collector.orm_crawler' => new SQLLoggerCollectorFactory('orm_crawler'),
+            'doctrine.driver.orm_crawler'               => new \DoctrineModule\Service\DriverFactory('orm_crawler'),
+            'doctrine.eventmanager.orm_crawler'         => new \DoctrineModule\Service\EventManagerFactory('orm_crawler'),
+            'doctrine.entity_resolver.orm_crawler'      => new \DoctrineORMModule\Service\EntityResolverFactory('orm_crawler'),
+            'doctrine.sql_logger_collector.orm_crawler' => new \DoctrineORMModule\Service\EntityResolverFactory('orm_crawler'),
 
-            'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function(ServiceLocatorInterface $sl) {
-                return new AnnotationBuilder($sl->get('doctrine.entitymanager.orm_crawler'));
+            'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function(\Zend\ServiceManager\ServiceLocatorInterface $sl) {
+                return new \DoctrineORMModule\Form\Annotation\AnnotationBuilder($sl->get('doctrine.entitymanager.orm_crawler'));
             },
         ),
     );
