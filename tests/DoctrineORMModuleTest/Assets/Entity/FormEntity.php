@@ -112,6 +112,14 @@ class FormEntity
      */
     protected $targetOneNullable;
 
+   /**
+    * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")
+    * @ORM\OneToOne(targetEntity="TargetInterface")
+    * @ORM\JoinColumn(nullable=true)
+    * @Form\Options({"empty_option":null})
+    */
+    protected $noDisplayEmptyOption;
+
     /**
      * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntity")
      */
