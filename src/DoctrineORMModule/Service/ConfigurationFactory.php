@@ -61,6 +61,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         $config->setMetadataCacheImpl($serviceLocator->get($options->getMetadataCache()));
         $config->setQueryCacheImpl($serviceLocator->get($options->getQueryCache()));
         $config->setResultCacheImpl($serviceLocator->get($options->getResultCache()));
+        $config->setHydrationCacheImpl($serviceLocator->get($options->getHydrationCache()));
         $config->setMetadataDriverImpl($serviceLocator->get($options->getDriver()));
 
         if ($namingStrategy = $options->getNamingStrategy()) {

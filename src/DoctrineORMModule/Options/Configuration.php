@@ -45,6 +45,15 @@ class Configuration extends DBALConfiguration
     protected $resultCache = 'array';
 
     /**
+     * Set the cache key for the hydration cache. Cache key
+     * is assembled as "doctrine.cache.{key}" and pulled from
+     * service locator.
+     *
+     * @var string
+     */
+    protected $hydrationCache = 'array';
+
+    /**
      * Set the driver key for the metadata driver. Driver key
      * is assembled as "doctrine.driver.{key}" and pulled from
      * service locator.
@@ -264,6 +273,25 @@ class Configuration extends DBALConfiguration
     public function getResultCache()
     {
         return "doctrine.cache.{$this->resultCache}";
+    }
+
+    /**
+     * @param  string $hydrationCache
+     * @return self
+     */
+    public function setHydrationCache($hydrationCache)
+    {
+        $this->hydrationCache = $hydrationCache;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHydrationCache()
+    {
+        return "doctrine.cache.{$this->hydrationCache}";
     }
 
     /**

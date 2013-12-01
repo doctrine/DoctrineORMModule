@@ -116,4 +116,21 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('Zend\ServiceManager\Exception\InvalidArgumentException');
         $this->factory->createService($this->serviceManager);
     }
+
+    public function testWillInstantiateConfigWithHydrationCacheSetting()
+    {
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+                        'hydration_cache' => 'array',
+                    ),
+                ),
+            ),
+        );
+        $this->serviceManager->setService('Config', $config);
+        $factory = new ConfigurationFactory('test_default');
+        $ormConfig = $factory->createService($this->serviceManager);
+        $this->assertInstanceOf('Doctrine\Common\Cache\ArrayCache', $ormConfig->getHydrationCacheImpl());
+    }
 }
