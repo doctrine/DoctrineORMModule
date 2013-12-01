@@ -1,7 +1,7 @@
 #### How to Register Custom DQL Functions
 
 ```php
-return array(    
+return array(
     'doctrine' => array(
         'configuration' => array(
             'orm_default' => array(
@@ -23,6 +23,7 @@ return array(
             'metadata_cache'    => 'my_memcache',
             'query_cache'       => 'my_memcache',
             'result_cache'      => 'my_memcache',
+            'hydration_cache'   => 'my_memcache',
         )
     ),
 );
@@ -73,7 +74,7 @@ return array(
 ```php
 'connection' => array(
     'orm_default' => array(
-        'doctrine_type_mappings' => array(            
+        'doctrine_type_mappings' => array(
             'mytype' => 'mytype'
         ),
     )
@@ -105,6 +106,7 @@ return array(
                 'metadata_cache'    => 'array',
                 'query_cache'       => 'array',
                 'result_cache'      => 'array',
+                'hydration_cache'   => 'array',
                 'driver'            => 'orm_crawler',
                 'generate_proxies'  => true,
                 'proxy_dir'         => 'data/DoctrineORMModule/Proxy',
@@ -129,7 +131,7 @@ return array(
             ),
         ),
 
-        'entitymanager' => array(            
+        'entitymanager' => array(
             'orm_crawler' => array(
                 'connection'    => 'orm_crawler',
                 'configuration' => 'orm_crawler'
