@@ -59,6 +59,10 @@ return array(
                 // `doctrine.cache.$thisSetting`
                 'result_cache'      => 'array',
 
+                // Hydration cache to use.  The retrieved service name will be
+                // `doctrine.cache.$thisSetting`
+                'hydration_cache'   => 'array',
+
                 // Mapping driver instance to use. Change this only if you don't want
                 // to use the default chained driver. The retrieved service name will
                 // be `doctrine.driver.$thisSetting`
@@ -159,6 +163,7 @@ return array(
         'migrations_configuration' => array(
             'orm_default' => array(
                 'directory' => 'data/DoctrineORMModule/Migrations',
+                'name'      => 'Doctrine Database Migrations',
                 'namespace' => 'DoctrineORMModule\Migrations',
                 'table'     => 'migrations',
             ),

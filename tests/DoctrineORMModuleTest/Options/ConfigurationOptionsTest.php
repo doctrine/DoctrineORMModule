@@ -40,4 +40,21 @@ class ConfigurationOptionsTest extends TestCase
         $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
         $options->setNamingStrategy(new \stdClass());
     }
+
+    public function testSetRepositoryFactory()
+    {
+        $options = new Configuration();
+        $options->setRepositoryFactory(null);
+        $this->assertNull($options->getRepositoryFactory());
+
+        $options->setRepositoryFactory('test');
+        $this->assertSame('test', $options->getRepositoryFactory());
+
+        $repositoryFactory = $this->getMock('Doctrine\ORM\Repository\DefaultRepositoryFactory');
+        $options->setRepositoryFactory($repositoryFactory);
+        $this->assertSame($repositoryFactory, $options->getRepositoryFactory());
+
+        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $options->setRepositoryFactory(new \stdClass());
+    }
 }

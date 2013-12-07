@@ -61,6 +61,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         $config->setMetadataCacheImpl($serviceLocator->get($options->getMetadataCache()));
         $config->setQueryCacheImpl($serviceLocator->get($options->getQueryCache()));
         $config->setResultCacheImpl($serviceLocator->get($options->getResultCache()));
+        $config->setHydrationCacheImpl($serviceLocator->get($options->getHydrationCache()));
         $config->setMetadataDriverImpl($serviceLocator->get($options->getDriver()));
 
         if ($namingStrategy = $options->getNamingStrategy()) {
@@ -72,6 +73,18 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
                 $config->setNamingStrategy($serviceLocator->get($namingStrategy));
             } else {
                 $config->setNamingStrategy($namingStrategy);
+            }
+        }
+
+        if ($repositoryFactory = $options->getRepositoryFactory()){
+            if (is_string($repositoryFactory)) {
+                if (!$serviceLocator->has($repositoryFactory)) {
+                    throw new InvalidArgumentException(sprintf('Repository factory "%s" not found', $repositoryFactory));
+                }
+
+                $config->setRepositoryFactory($serviceLocator->get($repositoryFactory));
+            } else {
+                $config->setRepositoryFactory($repositoryFactory);
             }
         }
 
