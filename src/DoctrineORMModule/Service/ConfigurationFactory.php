@@ -42,6 +42,8 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         $config->setCustomStringFunctions($options->getStringFunctions());
         $config->setCustomNumericFunctions($options->getNumericFunctions());
 
+        $config->setClassMetadataFactoryName($options->getClassMetadataFactoryName());
+
         foreach ($options->getNamedQueries() as $name => $query) {
             $config->addNamedQuery($name, $query);
         }
