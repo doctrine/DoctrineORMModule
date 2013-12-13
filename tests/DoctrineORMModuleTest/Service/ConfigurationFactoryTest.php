@@ -133,4 +133,37 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $ormConfig = $factory->createService($this->serviceManager);
         $this->assertInstanceOf('Doctrine\Common\Cache\ArrayCache', $ormConfig->getHydrationCacheImpl());
     }
+
+    public function testAcceptsMetadataFactory()
+    {
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+                        'classMetadataFactoryName' => 'Factory'
+                    ),
+                ),
+            ),
+        );
+        $this->serviceManager->setService('Config', $config);
+        $factory = new ConfigurationFactory('test_default');
+        $ormConfig = $factory->createService($this->serviceManager);
+        $this->assertEquals('Factory', $ormConfig->getClassMetadataFactoryName());
+    }
+
+    public function testDefaultMetadatFactory()
+    {
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+                    ),
+                ),
+            ),
+        );
+        $this->serviceManager->setService('Config', $config);
+        $factory = new ConfigurationFactory('test_default');
+        $ormConfig = $factory->createService($this->serviceManager);
+        $this->assertEquals('Doctrine\ORM\Mapping\ClassMetadataFactory', $ormConfig->getClassMetadataFactoryName());
+    }
 }

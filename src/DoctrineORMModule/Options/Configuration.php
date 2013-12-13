@@ -162,6 +162,14 @@ class Configuration extends DBALConfiguration
     protected $repositoryFactory;
 
     /**
+     * Class name of MetaData factory to be set in ORM.
+     * The entityManager will create a new instance on construction.
+     *
+     * @var string
+     */
+    protected $classMetadataFactoryName;
+
+    /**
      * @param  array $datetimeFunctions
      * @return self
      */
@@ -531,5 +539,22 @@ class Configuration extends DBALConfiguration
     public function getRepositoryFactory()
     {
         return $this->repositoryFactory;
+    }
+
+    /**
+     *
+     * @param string $factoryName
+     */
+    public function setClassMetadataFactoryName($factoryName)
+    {
+        $this->classMetadataFactoryName = $factoryName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClassMetadataFactoryName()
+    {
+        return $this->classMetadataFactoryName;
     }
 }
