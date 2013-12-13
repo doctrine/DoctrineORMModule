@@ -162,7 +162,8 @@ class Configuration extends DBALConfiguration
     protected $repositoryFactory;
 
     /**
-     * Name of MetaData factory to be set in ORM
+     * Class name of MetaData factory to be set in ORM.
+     * The entityManager will create a new instance on construction.
      *
      * @var string
      */
