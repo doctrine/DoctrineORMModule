@@ -542,12 +542,15 @@ class Configuration extends DBALConfiguration
     }
 
     /**
+     * Set the metadata factory class name to use
+     *
+     * @see \Doctrine\ORM\Configuration::setClassMetadataFactoryName()
      *
      * @param string $factoryName
      */
     public function setClassMetadataFactoryName($factoryName)
     {
-        $this->classMetadataFactoryName = $factoryName;
+        $this->classMetadataFactoryName = (string) $factoryName;
     }
 
     /**
