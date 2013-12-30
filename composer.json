@@ -38,6 +38,7 @@
         "doctrine/dbal":                     ">=2.4,<2.5-dev",
         "zendframework/zend-stdlib":         ">=2.2",
         "zendframework/zend-mvc":            ">=2.2",
+        "zendframework/zend-form":           ">=2.2",
         "zendframework/zend-servicemanager": ">=2.2"
     },
     "require-dev": {
@@ -49,7 +50,6 @@
         "squizlabs/php_codesniffer":          "1.4.*"
     },
     "suggest": {
-        "zendframework/zend-form":            "if you use form elements powered by Doctrine", 
         "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development",
         "doctrine/migrations":                "doctrine migrations if you want to keep your schema definitions versioned"
     },
