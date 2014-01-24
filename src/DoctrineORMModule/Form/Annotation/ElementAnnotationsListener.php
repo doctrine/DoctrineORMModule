@@ -51,16 +51,42 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_FIELD, array($this, 'handleFilterField'));
-        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_FIELD, array($this, 'handleTypeField'));
-        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_FIELD, array($this, 'handleValidatorField'));
-        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_FIELD, array($this, 'handleRequiredField'));
-        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_EXCLUDE_FIELD, array($this, 'handleExcludeField'));
-
-        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_ASSOCIATION, array($this, 'handleToOne'));
-        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_ASSOCIATION, array($this, 'handleToMany'));
-        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_CONFIGURE_ASSOCIATION, array($this, 'handleRequiredAssociation'));
-        $this->listeners[] = $events->attach(AnnotationBuilder::EVENT_EXCLUDE_ASSOCIATION, array($this, 'handleExcludeAssociation'));
+        $this->listeners[] = $events->attach(
+            AnnotationBuilder::EVENT_CONFIGURE_FIELD,
+            array($this, 'handleFilterField')
+        );
+        $this->listeners[] = $events->attach(
+            AnnotationBuilder::EVENT_CONFIGURE_FIELD,
+            array($this, 'handleTypeField')
+        );
+        $this->listeners[] = $events->attach(
+            AnnotationBuilder::EVENT_CONFIGURE_FIELD,
+            array($this, 'handleValidatorField')
+        );
+        $this->listeners[] = $events->attach(
+            AnnotationBuilder::EVENT_CONFIGURE_FIELD,
+            array($this, 'handleRequiredField')
+        );
+        $this->listeners[] = $events->attach(
+            AnnotationBuilder::EVENT_EXCLUDE_FIELD,
+            array($this, 'handleExcludeField')
+        );
+        $this->listeners[] = $events->attach(
+            AnnotationBuilder::EVENT_CONFIGURE_ASSOCIATION,
+            array($this, 'handleToOne')
+        );
+        $this->listeners[] = $events->attach(
+            AnnotationBuilder::EVENT_CONFIGURE_ASSOCIATION,
+            array($this, 'handleToMany')
+        );
+        $this->listeners[] = $events->attach(
+            AnnotationBuilder::EVENT_CONFIGURE_ASSOCIATION,
+            array($this, 'handleRequiredAssociation')
+        );
+        $this->listeners[] = $events->attach(
+            AnnotationBuilder::EVENT_EXCLUDE_ASSOCIATION,
+            array($this, 'handleExcludeAssociation')
+        );
     }
 
     /**
