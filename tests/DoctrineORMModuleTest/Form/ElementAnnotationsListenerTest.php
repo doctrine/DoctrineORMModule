@@ -38,7 +38,10 @@ class ElementAnnotationsListenerTest extends TestCase
 
         $elementSpec = $event->getParam('elementSpec');
         $this->assertEquals($this->getEntityManager(), $elementSpec['spec']['options']['object_manager']);
-        $this->assertEquals('DoctrineORMModuleTest\Assets\Entity\TargetEntity', $elementSpec['spec']['options']['target_class']);
+        $this->assertEquals(
+            'DoctrineORMModuleTest\Assets\Entity\TargetEntity',
+            $elementSpec['spec']['options']['target_class']
+        );
         $this->assertEquals('DoctrineORMModule\Form\Element\EntitySelect', $elementSpec['spec']['type']);
     }
 
@@ -94,7 +97,10 @@ class ElementAnnotationsListenerTest extends TestCase
 
         $this->assertTrue($elementSpec['spec']['attributes']['multiple']);
         $this->assertEquals($this->getEntityManager(), $elementSpec['spec']['options']['object_manager']);
-        $this->assertEquals('DoctrineORMModuleTest\Assets\Entity\FormEntityTarget', $elementSpec['spec']['options']['target_class']);
+        $this->assertEquals(
+            'DoctrineORMModuleTest\Assets\Entity\FormEntityTarget',
+            $elementSpec['spec']['options']['target_class']
+        );
         $this->assertEquals('DoctrineORMModule\Form\Element\EntitySelect', $elementSpec['spec']['type']);
         $this->assertFalse($inputSpec['required']);
     }

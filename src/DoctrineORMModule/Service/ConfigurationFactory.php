@@ -78,10 +78,12 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             }
         }
 
-        if ($repositoryFactory = $options->getRepositoryFactory()){
+        if ($repositoryFactory = $options->getRepositoryFactory()) {
             if (is_string($repositoryFactory)) {
                 if (!$serviceLocator->has($repositoryFactory)) {
-                    throw new InvalidArgumentException(sprintf('Repository factory "%s" not found', $repositoryFactory));
+                    throw new InvalidArgumentException(
+                        sprintf('Repository factory "%s" not found', $repositoryFactory)
+                    );
                 }
 
                 $config->setRepositoryFactory($serviceLocator->get($repositoryFactory));
