@@ -1,13 +1,15 @@
 language: php
 
 php:
+  - 5.3.3
   - 5.3
   - 5.4
   - 5.5
+  - hhvm
 
 matrix:
   allow_failures:
-    - php: 5.5
+    - php: hhvm
 
 before_script:
   - composer install --dev --prefer-source
