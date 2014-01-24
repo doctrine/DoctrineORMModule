@@ -17,7 +17,7 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace OcraServiceManagerTest\ServiceManager;
+namespace DoctrineORMModuleTest\Yuml;
 
 use DoctrineORMModule\Yuml\YumlController;
 

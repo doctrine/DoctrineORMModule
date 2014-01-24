@@ -11,7 +11,7 @@
     backupGlobals="false"
     syntaxCheck="true"
 >
-    <testsuite name="OcraServiceManager tests">
+    <testsuite name="DoctrineORMModule tests">
         <directory>./tests</directory>
     </testsuite>
     <filter>
