@@ -130,7 +130,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $identifiers = $metadata->getIdentifierFieldNames();
 
         return in_array($event->getParam('name'), $identifiers) &&
-        $metadata->generatorType === ClassMetadata::GENERATOR_TYPE_IDENTITY;
+               $metadata->generatorType === ClassMetadata::GENERATOR_TYPE_IDENTITY;
     }
 
     /**
@@ -197,7 +197,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                     $required = false;
                     if ((isset($elementSpec['spec']['options']) &&
                          !array_key_exists('empty_option', $elementSpec['spec']['options'])) ||
-                        !isset($elementSpec['spec']['options'])
+                         !isset($elementSpec['spec']['options'])
                     ) {
                         $elementSpec['spec']['options']['empty_option'] = 'NULL';
                     }
