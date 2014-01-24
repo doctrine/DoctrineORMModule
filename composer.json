@@ -33,7 +33,7 @@
     ],
     "require": {
         "php":                               ">=5.3.3",
-        "doctrine/doctrine-module":          "0.8.*",
+        "doctrine/doctrine-module":          "~0.8",
         "doctrine/orm":                      ">=2.4,<2.6-dev",
         "doctrine/dbal":                     ">=2.4,<2.6-dev",
         "zendframework/zend-stdlib":         ">=2.2",
@@ -41,7 +41,7 @@
         "zendframework/zend-servicemanager": ">=2.2"
     },
     "require-dev": {
-        "zendframework/zendframework":        "2.*",
+        "zendframework/zendframework":        "~2.2",
         "doctrine/data-fixtures":             "1.0.*",
         "zendframework/zend-developer-tools": "*",
         "doctrine/migrations":                "1.*",
