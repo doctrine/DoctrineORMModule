@@ -17,7 +17,7 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModuleTest\Collector;
+namespace DoctrineORMModuleTest\Options;
 
 use PHPUnit_Framework_TestCase;
 use DoctrineORMModule\Options\EntityManager;
