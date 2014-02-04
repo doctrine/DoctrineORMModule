@@ -57,4 +57,23 @@ class ConfigurationOptionsTest extends TestCase
         $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
         $options->setRepositoryFactory(new \stdClass());
     }
+
+    public function testSetGetEntityListenerResolver()
+    {
+        $options = new Configuration();
+
+        $options->setEntityListenerResolver(null);
+        $this->assertNull($options->getEntityListenerResolver());
+
+        $options->setEntityListenerResolver('test');
+        $this->assertSame('test', $options->getEntityListenerResolver());
+
+        $entityListenerResolver = $this->getMock('Doctrine\ORM\Mapping\EntityListenerResolver');
+
+        $options->setEntityListenerResolver($entityListenerResolver);
+        $this->assertSame($entityListenerResolver, $options->getEntityListenerResolver());
+
+        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $options->setEntityListenerResolver(new \stdClass());
+    }
 }

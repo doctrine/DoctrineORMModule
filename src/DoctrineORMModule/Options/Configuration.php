@@ -3,6 +3,7 @@
 namespace DoctrineORMModule\Options;
 
 use DoctrineORMModule\Options\DBALConfiguration;
+use Doctrine\ORM\Mapping\EntityListenerResolver;
 use Doctrine\ORM\Mapping\NamingStrategy;
 use Doctrine\ORM\Repository\RepositoryFactory;
 use Zend\Stdlib\Exception\InvalidArgumentException;
@@ -168,6 +169,15 @@ class Configuration extends DBALConfiguration
      * @var string
      */
     protected $classMetadataFactoryName;
+
+    /**
+     * Entity listener resolver or service name of the entity listener resolver
+     * to be set in ORM configuration (if any)
+     *
+     * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#entity-listeners-resolver
+     * @var  string|null|EntityListenerResolver
+     */
+    protected $entityListenerResolver;
 
     /**
      * @param  array $datetimeFunctions
@@ -559,5 +569,37 @@ class Configuration extends DBALConfiguration
     public function getClassMetadataFactoryName()
     {
         return $this->classMetadataFactoryName;
+    }
+
+    /**
+     * @param  string|null|EntityListenerResolver $entityListenerResolver
+     * @return self
+     * @throws InvalidArgumentException           When the provided entity listener resolver
+     *                                            does not fit the expected type
+     */
+    public function setEntityListenerResolver($entityListenerResolver)
+    {
+        if (null === $entityListenerResolver
+            || is_string($entityListenerResolver)
+            || $entityListenerResolver instanceof EntityListenerResolver
+        ) {
+            $this->entityListenerResolver = $entityListenerResolver;
+
+            return $this;
+        }
+
+        throw new InvalidArgumentException(sprintf(
+            'entityListenerResolver must be either a string, a Doctrine\ORM\Mapping\EntityListenerResolver '
+                . 'instance or null, %s given',
+            is_object($entityListenerResolver) ? get_class($entityListenerResolver) : gettype($entityListenerResolver)
+        ));
+    }
+
+    /**
+     * @return string|null|EntityListenerResolver
+     */
+    public function getEntityListenerResolver()
+    {
+        return $this->entityListenerResolver;
     }
 }

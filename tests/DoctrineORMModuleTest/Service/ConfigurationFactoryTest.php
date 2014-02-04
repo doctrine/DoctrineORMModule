@@ -166,4 +166,64 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $ormConfig = $factory->createService($this->serviceManager);
         $this->assertEquals('Doctrine\ORM\Mapping\ClassMetadataFactory', $ormConfig->getClassMetadataFactoryName());
     }
+
+    public function testWillInstantiateConfigWithoutEntityListenerResolverSetting()
+    {
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(),
+                ),
+            ),
+        );
+
+        $this->serviceManager->setService('Config', $config);
+
+        $ormConfig = $this->factory->createService($this->serviceManager);
+
+        $this->assertInstanceOf('Doctrine\ORM\Mapping\EntityListenerResolver', $ormConfig->getEntityListenerResolver());
+    }
+
+    public function testWillInstantiateConfigWithEntityListenerResolverObject()
+    {
+        $entityListenerResolver = $this->getMock('Doctrine\ORM\Mapping\EntityListenerResolver');
+
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+                        'entity_listener_resolver' => $entityListenerResolver,
+                    ),
+                ),
+            ),
+        );
+
+        $this->serviceManager->setService('Config', $config);
+
+        $ormConfig = $this->factory->createService($this->serviceManager);
+
+        $this->assertSame($entityListenerResolver, $ormConfig->getEntityListenerResolver());
+    }
+
+    public function testWillInstantiateConfigWithEntityListenerResolverReference()
+    {
+        $entityListenerResolver = $this->getMock('Doctrine\ORM\Mapping\EntityListenerResolver');
+
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+                        'entity_listener_resolver' => 'test_entity_listener_resolver',
+                    ),
+                ),
+            ),
+        );
+
+        $this->serviceManager->setService('Config', $config);
+        $this->serviceManager->setService('test_entity_listener_resolver', $entityListenerResolver);
+
+        $ormConfig = $this->factory->createService($this->serviceManager);
+
+        $this->assertSame($entityListenerResolver, $ormConfig->getEntityListenerResolver());
+    }
 }

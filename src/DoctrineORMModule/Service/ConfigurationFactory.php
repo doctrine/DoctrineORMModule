@@ -92,6 +92,14 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             }
         }
 
+        if ($entityListenerResolver = $options->getEntityListenerResolver()) {
+            if (is_string($entityListenerResolver)) {
+                $config->setEntityListenerResolver($serviceLocator->get($entityListenerResolver));
+            } else {
+                $config->setEntityListenerResolver($entityListenerResolver);
+            }
+        }
+
         $this->setupDBALConfiguration($serviceLocator, $config);
 
         return $config;
