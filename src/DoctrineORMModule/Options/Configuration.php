@@ -580,8 +580,8 @@ class Configuration extends DBALConfiguration
     public function setEntityListenerResolver($entityListenerResolver)
     {
         if (null === $entityListenerResolver
-            || is_string($entityListenerResolver)
             || $entityListenerResolver instanceof EntityListenerResolver
+            || is_string($entityListenerResolver)
         ) {
             $this->entityListenerResolver = $entityListenerResolver;
 
