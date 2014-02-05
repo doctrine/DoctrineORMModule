@@ -19,6 +19,7 @@
 
 namespace DoctrineORMModule\Service;
 
+use Doctrine\ORM\Mapping\EntityListenerResolver;
 use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\Exception\InvalidArgumentException;
@@ -93,10 +94,10 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         }
 
         if ($entityListenerResolver = $options->getEntityListenerResolver()) {
-            if (is_string($entityListenerResolver)) {
-                $config->setEntityListenerResolver($serviceLocator->get($entityListenerResolver));
-            } else {
+            if ($entityListenerResolver instanceof EntityListenerResolver) {
                 $config->setEntityListenerResolver($entityListenerResolver);
+            } else {
+                $config->setEntityListenerResolver($serviceLocator->get($entityListenerResolver));
             }
         }
 
