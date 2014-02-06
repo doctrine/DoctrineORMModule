@@ -181,9 +181,6 @@ class ElementAnnotationsListenerTest extends TestCase
 
         $this->assertEquals('foo', $elementSpec['spec']['options']['empty_option']);
 
-        $elementSpec['spec']['options']['empty_option'] = null;
-        $listener->handleRequiredAssociation($event);
-        $this->assertEquals('NULL', $elementSpec['spec']['options']['empty_option']);
     }
 
     public function testHandleRequiredField()

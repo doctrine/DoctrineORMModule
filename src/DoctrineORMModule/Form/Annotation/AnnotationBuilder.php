@@ -131,13 +131,13 @@ class AnnotationBuilder extends ZendAnnotationBuilder
         };
 
         if ($metadata->hasField($name)) {
-            $result = $this->getEventManager()->trigger(static::EVENT_EXCLUDE_FIELD, $this, $params, $test);
+            $result = $this->getEventManager()->trigger(static::EVENT_EXCLUDE_FIELD, $this, $params);
         } elseif ($metadata->hasAssociation($name)) {
-            $result = $this->getEventManager()->trigger(static::EVENT_EXCLUDE_ASSOCIATION, $this, $params, $test);
+            $result = $this->getEventManager()->trigger(static::EVENT_EXCLUDE_ASSOCIATION, $this, $params);
         }
 
         if ($result) {
-            $result = (bool) $result->last();
+            $result = (bool)$result->last();
         }
 
         return $result;

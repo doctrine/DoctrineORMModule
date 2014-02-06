@@ -122,8 +122,8 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $this->prepareEvent($event);
 
         /** @var \ArrayObject $elementSpec */
-        $elementSpec = $event->getParam('elementSpec');
-        $inputSpec   = $event->getParam('inputSpec');
+        $elementSpec           = $event->getParam('elementSpec');
+        $inputSpec             = $event->getParam('inputSpec');
         $inputSpec['required'] = false;
 
         $this->mergeAssociationOptions($elementSpec, $mapping['targetEntity']);
@@ -140,6 +140,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
         $metadata = $event->getParam('metadata');
+
         return $metadata && $metadata->isAssociationInverseSide($event->getParam('name'));
     }
 
@@ -220,8 +221,10 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
             foreach ($mapping['joinColumns'] as $joinColumn) {
                 if (isset($joinColumn['nullable']) && $joinColumn['nullable']) {
                     $required = false;
-
-                    if (!isset($elementSpec['spec']['options']['empty_option'])) {
+                    if ((isset($elementSpec['spec']['options']) &&
+                         !array_key_exists('empty_option', $elementSpec['spec']['options'])) ||
+                         !isset($elementSpec['spec']['options'])
+                    ) {
                         $elementSpec['spec']['options']['empty_option'] = 'NULL';
                     }
                     break;
@@ -350,6 +353,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         if ($metadata && $metadata->hasField($event->getParam('name'))) {
             return $metadata->getFieldMapping($event->getParam('name'));
         }
+
         return null;
     }
 
@@ -364,6 +368,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         if ($metadata && $metadata->hasAssociation($event->getParam('name'))) {
             return $metadata->getAssociationMapping($event->getParam('name'));
         }
+
         return null;
     }
 
