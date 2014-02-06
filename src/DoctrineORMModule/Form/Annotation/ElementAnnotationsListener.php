@@ -156,7 +156,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $identifiers = $metadata->getIdentifierFieldNames();
 
         return in_array($event->getParam('name'), $identifiers) &&
-        $metadata->generatorType === ClassMetadata::GENERATOR_TYPE_IDENTITY;
+               $metadata->generatorType === ClassMetadata::GENERATOR_TYPE_IDENTITY;
     }
 
     /**
