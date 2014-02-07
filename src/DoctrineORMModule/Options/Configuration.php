@@ -174,7 +174,7 @@ class Configuration extends DBALConfiguration
      * Entity listener resolver or service name of the entity listener resolver
      * to be set in ORM configuration (if any)
      *
-     * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#entity-listeners-resolver
+     * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
      * @var  string|null|EntityListenerResolver
      */
     protected $entityListenerResolver;
@@ -590,7 +590,7 @@ class Configuration extends DBALConfiguration
 
         throw new InvalidArgumentException(sprintf(
             'entityListenerResolver must be either a string, a Doctrine\ORM\Mapping\EntityListenerResolver '
-                . 'instance or null, %s given',
+            . 'instance or null, %s given',
             is_object($entityListenerResolver) ? get_class($entityListenerResolver) : gettype($entityListenerResolver)
         ));
     }
