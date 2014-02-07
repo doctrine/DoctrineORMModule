@@ -32,13 +32,14 @@
         }
     ],
     "require": {
-        "php":                               ">=5.3.3",
+        "php":                               ">=5.3.23",
         "doctrine/doctrine-module":          "0.8.*",
         "doctrine/orm":                      ">=2.4,<2.6-dev",
         "doctrine/dbal":                     ">=2.4,<2.6-dev",
         "zendframework/zend-stdlib":         ">=2.2",
         "zendframework/zend-mvc":            ">=2.2",
-        "zendframework/zend-servicemanager": ">=2.2"
+        "zendframework/zend-servicemanager": ">=2.2",
+        "squizlabs/php_codesniffer": "1.4.*"
     },
     "require-dev": {
         "zendframework/zendframework":        "2.*",
