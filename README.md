@@ -1,6 +1,6 @@
 # Doctrine 2 ORM Module for Zend Framework 2
 
-[![Master branch build status](https://secure.travis-ci.org/doctrine/DoctrineORMModule.png?branch=master)](http://travis-ci.org/doctrine/DoctrineORMModule) [![Latest Stable Version](https://poser.pugx.org/doctrine/doctrine-orm-module/v/stable.png)](https://packagist.org/packages/doctrine/doctrine-orm-module) [![Total Downloads](https://poser.pugx.org/doctrine/doctrine-orm-module/downloads.png)](https://packagist.org/packages/doctrine/doctrine-orm-module) 
+[![Master branch build status](https://secure.travis-ci.org/doctrine/DoctrineORMModule.png?branch=master)](http://travis-ci.org/doctrine/DoctrineORMModule) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/doctrine/DoctrineORMModule/badges/quality-score.png?s=1e2a047fb1bb0f66937bcbc3a61f960c8089c835)](https://scrutinizer-ci.com/g/doctrine/DoctrineORMModule/) [![Code Coverage](https://scrutinizer-ci.com/g/doctrine/DoctrineORMModule/badges/coverage.png?s=377656ded5ffaaf4635acfb26729caa212fb5d76)](https://scrutinizer-ci.com/g/doctrine/DoctrineORMModule/) [![Latest Stable Version](https://poser.pugx.org/doctrine/doctrine-orm-module/v/stable.png)](https://packagist.org/packages/doctrine/doctrine-orm-module) [![Total Downloads](https://poser.pugx.org/doctrine/doctrine-orm-module/downloads.png)](https://packagist.org/packages/doctrine/doctrine-orm-module)
 
 DoctrineORMModule integrates Doctrine 2 ORM with Zend Framework 2 quickly and easily.
 

@@ -4,6 +4,7 @@
    were updated to properly handle 'empty_option'.
    According to ZF2 docs, setting empty_option to NULL instructs a \Zend\Form\Element\Select that it should not add an "empty option" to a select list.
    [#281](https://github.com/doctrine/DoctrineORMModule/pull/281)
+ * The required PHP version is bumped to `5.3.23` [#306](https://github.com/doctrine/DoctrineORMModule/pull/306)
 
 # 0.8.0
 

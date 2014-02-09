@@ -32,21 +32,21 @@
         }
     ],
     "require": {
-        "php":                               ">=5.3.3",
-        "doctrine/doctrine-module":          "0.8.*",
+        "php":                               ">=5.3.23",
+        "doctrine/doctrine-module":          "0.9.*",
         "doctrine/orm":                      ">=2.4,<2.6-dev",
         "doctrine/dbal":                     ">=2.4,<2.6-dev",
-        "zendframework/zend-stdlib":         ">=2.2",
-        "zendframework/zend-mvc":            ">=2.2",
-        "zendframework/zend-servicemanager": ">=2.2"
+        "zendframework/zend-stdlib":         "~2.3",
+        "zendframework/zend-mvc":            "~2.3",
+        "zendframework/zend-servicemanager": "~2.3"
     },
     "require-dev": {
-        "zendframework/zendframework":        "2.*",
+        "zendframework/zendframework":        "~2.3",
         "doctrine/data-fixtures":             "1.0.*",
         "zendframework/zend-developer-tools": "*",
         "doctrine/migrations":                "1.*",
-        "phpunit/phpunit":                    ">=3.7",
-        "squizlabs/php_codesniffer":          "1.4.*"
+        "phpunit/phpunit":                    "~3.7",
+        "squizlabs/php_codesniffer":          "1.5.*"
     },
     "suggest": {
         "zendframework/zend-form":            "if you want to use form elements backed by Doctrine",
@@ -61,7 +61,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.8.x-dev"
+            "dev-master": "0.9.x-dev"
         }
     }
 }

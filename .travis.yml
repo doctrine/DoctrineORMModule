@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 5.3.3
   - 5.3
   - 5.4
   - 5.5
@@ -12,10 +11,9 @@ matrix:
     - php: hhvm
 
 before_script:
-  - composer install --dev --prefer-source
-  - wget http://cs.sensiolabs.org/get/php-cs-fixer.phar
+  - composer update --prefer-source
 
 script:
   - ./vendor/bin/phpunit --coverage-clover ./build/clover.xml
-  - php build/coverage-checker.php build/clover.xml 60
-  - ./.travis/check-cs.sh
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then php build/coverage-checker.php build/clover.xml 70; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.3' ]; then ./vendor/bin/phpcs --standard=PSR2 ./src/ ./tests/; fi"
