@@ -6,6 +6,7 @@ use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use DoctrineORMModuleTest\Assets\Entity\FormEntity;
 use DoctrineORMModuleTest\Assets\Entity\Issue237;
 use DoctrineORMModuleTest\Framework\TestCase;
+use Zend\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
 
 class AnnotationBuilderTest extends TestCase
 {
@@ -62,5 +63,40 @@ class AnnotationBuilderTest extends TestCase
             }
         }
         $this->assertFalse($showEmptyValue);
+    }
+
+    /**
+     * Ensure user defined \Type or type attribute overrides the listener one
+     */
+    public function testEnsureCustomTypeOrAttributeTypeIsUsedInAnnotations()
+    {
+        $userDefinedTypeOverridesListenerType = true;
+        $entity                               = new FormEntity();
+
+        $zendAnnotationBuilder = new ZendAnnotationBuilder();
+        $zendForm              = $zendAnnotationBuilder->createForm($entity);
+
+        $spec           = $this->builder->getFormSpecification($entity);
+        $annotationForm = $this->builder->createForm($entity);
+
+        $attributesToTest = array('specificType', 'specificAttributeType');
+
+        foreach ($spec['elements'] as $element) {
+            $elementName = $element['spec']['name'];
+            if (in_array($elementName, $attributesToTest)) {
+                $annotationFormElement = $annotationForm->get($elementName);
+                $zendFormElement       = $zendForm->get($elementName);
+
+                $annotationElementAttribute = $annotationFormElement->getAttribute('type');
+                $zendElementAttribute       = $annotationFormElement->getAttribute('type');
+
+                if ((get_class($zendFormElement) !== get_class($annotationFormElement)) ||
+                    ($annotationElementAttribute !== $zendElementAttribute)
+                ) {
+                    $userDefinedTypeOverridesListenerType = false;
+                }
+            }
+        }
+        $this->assertTrue($userDefinedTypeOverridesListenerType);
     }
 }

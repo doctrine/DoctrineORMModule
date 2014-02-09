@@ -124,4 +124,18 @@ class FormEntity
      * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntity")
      */
     protected $targetMany;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
+     * @Form\Type("Radio")
+     */
+    protected $specificType;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
+     * @Form\Attributes({"type":"textarea"})
+     */
+    protected $specificAttributeType;
 }
