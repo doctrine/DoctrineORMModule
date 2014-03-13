@@ -103,7 +103,7 @@ class AnnotationBuilderTest extends TestCase
     /**
      * Ensure prefer_form_input_filter is set to true for the generated form
      */
-    public function testPreferFomInputfilterIsTrue()
+    public function testPreferFomInputFilterIsTrue()
     {
         $entity = new FormEntity();
         $form   = $this->builder->createForm($entity);
