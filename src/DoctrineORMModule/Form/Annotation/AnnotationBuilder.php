@@ -122,6 +122,8 @@ class AnnotationBuilder extends ZendAnnotationBuilder
             }
         }
 
+        $formSpec['options'] = array('prefer_form_input_filter' => true);
+
         return $formSpec;
     }
 
