@@ -99,4 +99,14 @@ class AnnotationBuilderTest extends TestCase
         }
         $this->assertTrue($userDefinedTypeOverridesListenerType);
     }
+
+    /**
+     * Ensure prefer_form_input_filter is set to true for the generated form
+     */
+    public function testPreferFomInputfilterIsTrue()
+    {
+        $entity = new FormEntity();
+        $form   = $this->builder->createForm($entity);
+        $this->assertTrue($form->getPreferFormInputFilter());
+    }
 }
