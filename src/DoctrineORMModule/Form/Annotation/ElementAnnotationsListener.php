@@ -22,7 +22,6 @@ namespace DoctrineORMModule\Form\Annotation;
 use ArrayObject;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use DoctrineModule\Form\Element;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventInterface;
