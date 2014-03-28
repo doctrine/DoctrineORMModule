@@ -396,7 +396,9 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         );
 
         $elementSpec['spec']['options'] = $options;
-        $elementSpec['spec']['type']    = 'DoctrineORMModule\Form\Element\EntitySelect';
+        if (!isset($elementSpec['spec']['type'])) {
+            $elementSpec['spec']['type'] = 'DoctrineORMModule\Form\Element\EntitySelect';
+        }
     }
 
     /**
