@@ -226,4 +226,56 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($entityListenerResolver, $ormConfig->getEntityListenerResolver());
     }
+
+    public function testDontCreateSecondLevelCacheByDefault()
+    {
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(),
+                ),
+            ),
+        );
+
+        $this->serviceManager->setService('Config', $config);
+
+        $ormConfig = $this->factory->createService($this->serviceManager);
+
+        $this->assertNull($ormConfig->getSecondLevelCacheConfiguration());
+    }
+
+    public function testCanInstantiateWithSecondLevelCacheConfig()
+    {
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+                        'second_level_cache' => array(
+                            'enabled'               => true,
+                            'default_lifetime'      => 800,
+                            'default_lock_lifetime' => 400,
+                            'regions'               => array(
+                                'MyRegion' => array(
+                                    'lifetime'      => 100,
+                                    'lock_lifetime' => 50
+                                )
+                            )
+                        )
+                    ),
+                ),
+            ),
+        );
+
+        $this->serviceManager->setService('Config', $config);
+
+        $ormConfig        = $this->factory->createService($this->serviceManager);
+        $secondLevelCache = $ormConfig->getSecondLevelCacheConfiguration();
+        $regionsConfig    = $secondLevelCache->getRegionsConfiguration();
+
+        $this->assertInstanceOf('Doctrine\ORM\Cache\CacheConfiguration', $secondLevelCache);
+        $this->assertEquals(800, $regionsConfig->getDefaultLifetime());
+        $this->assertEquals(400, $regionsConfig->getDefaultLockLifetime());
+        $this->assertEquals(100, $regionsConfig->getLifetime('MyRegion'));
+        $this->assertEquals(50, $regionsConfig->getLockLifetime('MyRegion'));
+    }
 }
