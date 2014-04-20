@@ -87,6 +87,9 @@ return array(
                 'datetime_functions' => array(),
                 'string_functions' => array(),
                 'numeric_functions' => array(),
+
+                // Second level cache configuration (see doc to learn about configuration)
+                'second_level_cache' => array()
             )
         ),
 

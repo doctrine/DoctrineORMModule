@@ -175,3 +175,28 @@ public function getServiceConfig()
     );
 }
 ```
+
+## How to use second level cache
+
+> Don't forget to also make your entities cacheable for this to work ([learn more](http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/second-level-cache.html))
+
+```php
+'doctrine' => array(
+    'configuration' => array(
+        'orm_default' => array(
+            'second_level_cache' => array(
+                'enabled'               => true,
+                'default_lifetime'      => 3600,
+                'default_lock_lifetime' => 60,
+
+                'regions'               => array(
+                    'My\Region\Name' => array(
+                        'lifetime'      => 20,
+                        'lock_lifetime' => 200
+                    )
+                )
+            )
+        )
+    ),
+),
+```

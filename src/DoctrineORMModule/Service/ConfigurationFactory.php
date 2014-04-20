@@ -19,6 +19,9 @@
 
 namespace DoctrineORMModule\Service;
 
+use Doctrine\ORM\Cache\CacheConfiguration;
+use Doctrine\ORM\Cache\DefaultCacheFactory;
+use Doctrine\ORM\Cache\RegionsConfiguration;
 use Doctrine\ORM\Mapping\EntityListenerResolver;
 use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -99,6 +102,33 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             } else {
                 $config->setEntityListenerResolver($serviceLocator->get($entityListenerResolver));
             }
+        }
+
+        $secondLevelCache = $options->getSecondLevelCache();
+
+        if ($secondLevelCache->isEnabled()) {
+            $regionsConfig = new RegionsConfiguration(
+                $secondLevelCache->getDefaultLifetime(),
+                $secondLevelCache->getDefaultLockLifetime()
+            );
+
+            foreach ($secondLevelCache->getRegions() as $regionName => $regionConfig) {
+                if (isset($regionConfig['lifetime'])) {
+                    $regionsConfig->setLifetime($regionName, $regionConfig['lifetime']);
+                }
+
+                if (isset($regionConfig['lock_lifetime'])) {
+                    $regionsConfig->setLockLifetime($regionName, $regionConfig['lock_lifetime']);
+                }
+            }
+
+            // As Second Level Cache caches queries results, we reuse the result cache impl
+            $cacheFactory = new DefaultCacheFactory($regionsConfig, $config->getResultCacheImpl());
+
+            $config->setSecondLevelCacheEnabled();
+
+            $config->getSecondLevelCacheConfiguration()
+                   ->setCacheFactory($cacheFactory);
         }
 
         $this->setupDBALConfiguration($serviceLocator, $config);
