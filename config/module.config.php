@@ -225,10 +225,15 @@ return array(
 
     // Zend\Form\FormElementManager configuration
     'form_elements' => array(
-        'aliases' => array(
+        'invokables' => array(
             'objectselect'        => 'DoctrineModule\Form\Element\ObjectSelect',
             'objectradio'         => 'DoctrineModule\Form\Element\ObjectRadio',
             'objectmulticheckbox' => 'DoctrineModule\Form\Element\ObjectMultiCheckbox',
+        ),
+        'shared' => array(
+            'objectselect'        => false,
+            'objectradio'         => false,
+            'objectmulticheckbox' => false
         ),
         'factories' => array(
             'DoctrineModule\Form\Element\ObjectSelect'        => 'DoctrineORMModule\Service\ObjectSelectFactory',
