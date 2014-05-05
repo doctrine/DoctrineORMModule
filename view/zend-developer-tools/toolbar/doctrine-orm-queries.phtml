@@ -24,7 +24,7 @@
             <span class="zdt-detail-label">SQL</span>
             <span class="zdt-detail-value ddt-detail-query ddt-detail-value">
                 <?php /* highlight UPPERCASE words in the query, which should mostly match SQL keywords */ ?>
-                <?php echo preg_replace('/([A-Z]+)/', '<span class="highlight">$1</span>', $this->escapeHtml($query['sql'])) ?>
+                <?php echo preg_replace('/\b([A-Z]+)\b/', '<span class="highlight">$1</span>', $this->escapeHtml($query['sql'])) ?>
             </span>
             <span class="clear"></span>
             <span class="zdt-detail-label">Params</span>
