@@ -19,7 +19,6 @@
 
 namespace DoctrineORMModule\Service;
 
-use Doctrine\DBAL\DriverManager;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use Zend\ServiceManager\ServiceLocatorInterface;

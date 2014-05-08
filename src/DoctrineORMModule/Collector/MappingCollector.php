@@ -26,7 +26,6 @@ use ZendDeveloperTools\Collector\AutoHideInterface;
 
 use Zend\Mvc\MvcEvent;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
 
 /**

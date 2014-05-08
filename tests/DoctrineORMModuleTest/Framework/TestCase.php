@@ -22,7 +22,6 @@ namespace DoctrineORMModuleTest\Framework;
 use PHPUnit_Framework_TestCase;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
-use Zend\ServiceManager\ServiceManager;
 use DoctrineORMModuleTest\Util\ServiceManagerFactory;
 
 /**
