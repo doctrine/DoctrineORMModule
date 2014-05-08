@@ -20,7 +20,6 @@ namespace DoctrineORMModuleTest\Service;
 
 use DoctrineORMModule\Service\MigrationsCommandFactory;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\ServiceManager\ServiceManager;
 use DoctrineORMModuleTest\Util\ServiceManagerFactory;
 
 /**

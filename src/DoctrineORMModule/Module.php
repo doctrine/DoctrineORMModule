@@ -24,10 +24,7 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Loader\StandardAutoloader;
 use Zend\EventManager\EventInterface;
-
 use Symfony\Component\Console\Helper\DialogHelper;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
