@@ -88,7 +88,7 @@ class AnnotationBuilderTest extends TestCase
                 $zendFormElement       = $zendForm->get($elementName);
 
                 $annotationElementAttribute = $annotationFormElement->getAttribute('type');
-                $zendElementAttribute       = $annotationFormElement->getAttribute('type');
+                $zendElementAttribute       = $zendFormElement->getAttribute('type');
 
                 if ((get_class($zendFormElement) !== get_class($annotationFormElement)) ||
                     ($annotationElementAttribute !== $zendElementAttribute)
