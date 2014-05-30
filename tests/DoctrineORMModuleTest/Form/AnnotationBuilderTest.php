@@ -79,7 +79,7 @@ class AnnotationBuilderTest extends TestCase
         $spec           = $this->builder->getFormSpecification($entity);
         $annotationForm = $this->builder->createForm($entity);
 
-        $attributesToTest = array('specificType', 'specificAttributeType');
+        $attributesToTest = array('specificType', 'specificMultiType', 'specificAttributeType');
 
         foreach ($spec['elements'] as $element) {
             $elementName = $element['spec']['name'];
