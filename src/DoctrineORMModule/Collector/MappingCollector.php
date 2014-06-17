@@ -99,6 +99,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
         foreach ($metadata as $class) {
             $this->classes[$class->getName()] = $class;
         }
+        ksort($this->classes);
     }
 
     /**
