@@ -303,7 +303,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                 break;
         }
 
-        $elementSpec['spec']['type'] = (!empty($elementSpec['spec']['type'])) $elementSpec['spec']['type'] ? : $type;
+        $elementSpec['spec']['type'] = (!empty($elementSpec['spec']['type'])) ? $elementSpec['spec']['type'] : $type;
     }
 
     /**
