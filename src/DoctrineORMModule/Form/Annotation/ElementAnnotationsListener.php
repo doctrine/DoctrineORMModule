@@ -246,6 +246,10 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $metadata  = $event->getParam('metadata');
         $inputSpec = $event->getParam('inputSpec');
 
+        if (!$metadata || !$metadata->hasField($event->getParam('name'))) {
+            return;
+        }
+
         $inputSpec['required'] = !$metadata->isNullable($event->getParam('name'));
     }
 
