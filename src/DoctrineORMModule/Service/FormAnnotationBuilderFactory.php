@@ -44,6 +44,7 @@ class FormAnnotationBuilderFactory extends AbstractFactory
         $entityManager = $serviceLocator->get('doctrine.entitymanager.' . $this->getName());
 
         $annotationBuilder = new AnnotationBuilder($entityManager);
+        
         $annotationBuilder->setFormFactory($this->getFormFactory($serviceLocator));
 
         return $annotationBuilder;
@@ -65,6 +66,7 @@ class FormAnnotationBuilderFactory extends AbstractFactory
     protected function getFormFactory(ServiceLocatorInterface $services)
     {
         $elements = null;
+        
         if ($services->has('FormElementManager')) {
             $elements = $services->get('FormElementManager');
         }
