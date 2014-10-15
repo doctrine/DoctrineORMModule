@@ -63,7 +63,7 @@ class FormAnnotationBuilderFactory extends AbstractFactory
      * @param  ServiceLocatorInterface $services
      * @return Factory
      */
-    protected function getFormFactory(ServiceLocatorInterface $services)
+    private function getFormFactory(ServiceLocatorInterface $services)
     {
         $elements = null;
         
