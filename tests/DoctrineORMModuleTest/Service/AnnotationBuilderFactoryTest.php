@@ -19,7 +19,6 @@
 
 namespace DoctrineORMModuleTest\Service;
 
-use DoctrineModule\ServiceFactory\AbstractDoctrineServiceFactory;
 use DoctrineORMModule\Service\FormAnnotationBuilderFactory;
 use PHPUnit_Framework_TestCase;
 use Zend\ServiceManager\ServiceManager;
