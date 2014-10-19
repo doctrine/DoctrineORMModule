@@ -25,6 +25,9 @@ use Zend\ServiceManager\ServiceManager;
 
 class FormAnnotationBuilderFactoryTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @group #352
+     */
     public function testFormElementManagerGetsInjected()
     {
         $entityManager      = $this->getMock('Doctrine\ORM\EntityManager', array(), array(), '', false);
