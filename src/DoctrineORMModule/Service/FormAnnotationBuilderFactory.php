@@ -21,6 +21,7 @@ namespace DoctrineORMModule\Service;
 
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
+use Zend\Form\Factory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -42,7 +43,11 @@ class FormAnnotationBuilderFactory extends AbstractFactory
         /* @var $entityManager \Doctrine\ORM\EntityManager */
         $entityManager = $serviceLocator->get('doctrine.entitymanager.' . $this->getName());
 
-        return new AnnotationBuilder($entityManager);
+        $annotationBuilder = new AnnotationBuilder($entityManager);
+        
+        $annotationBuilder->setFormFactory($this->getFormFactory($serviceLocator));
+
+        return $annotationBuilder;
     }
 
     /**
@@ -50,5 +55,22 @@ class FormAnnotationBuilderFactory extends AbstractFactory
      */
     public function getOptionsClass()
     {
+    }
+
+    /**
+     * Retrieve the form factory
+     *
+     * @param  ServiceLocatorInterface $services
+     * @return Factory
+     */
+    private function getFormFactory(ServiceLocatorInterface $services)
+    {
+        $elements = null;
+        
+        if ($services->has('FormElementManager')) {
+            $elements = $services->get('FormElementManager');
+        }
+
+        return new Factory($elements);
     }
 }
