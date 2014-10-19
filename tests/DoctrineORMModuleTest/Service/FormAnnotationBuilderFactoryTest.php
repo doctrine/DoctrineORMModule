@@ -23,6 +23,11 @@ use DoctrineORMModule\Service\FormAnnotationBuilderFactory;
 use PHPUnit_Framework_TestCase;
 use Zend\ServiceManager\ServiceManager;
 
+/**
+ * Tests for {@see \DoctrineORMModule\Service\FormAnnotationBuilderFactory}
+ *
+ * @covers \DoctrineORMModule\Service\FormAnnotationBuilderFactory
+ */
 class FormAnnotationBuilderFactoryTest extends PHPUnit_Framework_TestCase
 {
     /**
