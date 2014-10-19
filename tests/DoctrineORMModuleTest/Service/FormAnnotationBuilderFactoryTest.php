@@ -23,7 +23,7 @@ use DoctrineORMModule\Service\FormAnnotationBuilderFactory;
 use PHPUnit_Framework_TestCase;
 use Zend\ServiceManager\ServiceManager;
 
-class AnnotationBuilderFactoryTest extends PHPUnit_Framework_TestCase
+class FormAnnotationBuilderFactoryTest extends PHPUnit_Framework_TestCase
 {
     public function testFormElementManagerGetsInjected()
     {
