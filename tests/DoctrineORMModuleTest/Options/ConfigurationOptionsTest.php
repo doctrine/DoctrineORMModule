@@ -21,6 +21,7 @@ namespace DoctrineORMModuleTest\Options;
 
 use PHPUnit_Framework_TestCase as TestCase;
 use DoctrineORMModule\Options\Configuration;
+use Doctrine\ORM\Repository\DefaultRepositoryFactory;
 
 class ConfigurationOptionsTest extends TestCase
 {
@@ -50,7 +51,7 @@ class ConfigurationOptionsTest extends TestCase
         $options->setRepositoryFactory('test');
         $this->assertSame('test', $options->getRepositoryFactory());
 
-        $repositoryFactory = $this->getMock('Doctrine\ORM\Repository\DefaultRepositoryFactory');
+        $repositoryFactory = new DefaultRepositoryFactory();
         $options->setRepositoryFactory($repositoryFactory);
         $this->assertSame($repositoryFactory, $options->getRepositoryFactory());
 
