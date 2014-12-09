@@ -81,6 +81,20 @@ return array(
 ),
 ```
 
+### How to Define Relationships with Abstract Classes and Interfaces (ResolveTargetEntityListener)
+
+```php
+'doctrine' => array(
+    'entity_resolver' => array(
+        'orm_default' => array(
+            'resolvers' => array(
+                'Acme\\InvoiceModule\\Model\\InvoiceSubjectInterface', 'Acme\\CustomerModule\\Entity\\Customer'
+            )
+        )
+    )
+)
+```
+
 ### How to Use Two Connections
 
 ```php
