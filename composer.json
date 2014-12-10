@@ -38,7 +38,8 @@
         "doctrine/dbal":                     ">=2.4,<2.6-dev",
         "zendframework/zend-stdlib":         "~2.3",
         "zendframework/zend-mvc":            "~2.3",
-        "zendframework/zend-servicemanager": "~2.3"
+        "zendframework/zend-servicemanager": "~2.3",
+        "symfony/console": "~2.5"
     },
     "require-dev": {
         "zendframework/zendframework":        "~2.3",
