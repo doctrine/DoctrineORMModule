@@ -144,4 +144,12 @@ class FormEntity
      * @Form\Attributes({"type":"textarea"})
      */
     protected $specificAttributeType;
+
+    /**
+     * @ORM\Column(type="string", length=256)
+     * @Form\Type("File")
+     * @ORM\JoinColumn(nullable=true)
+     * @Form\Options({"label":"Image"})
+     */
+    protected $image;
 }
