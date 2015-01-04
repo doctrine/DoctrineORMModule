@@ -340,7 +340,10 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                 $inputSpec['validators'][] = array('name' => 'Int');
                 break;
             case 'string':
-                if (isset($mapping['length'])) {
+                $elementSpec = $event->getParam('elementSpec');
+                if (!in_array($elementSpec['spec']['type'], array('File', 'Zend\Form\Element\File')) &&
+                    isset($mapping['length'])
+                ) {
                     $inputSpec['validators'][] = array(
                         'name'    => 'StringLength',
                         'options' => array('max' => $mapping['length'])

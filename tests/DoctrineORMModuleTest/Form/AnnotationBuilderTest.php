@@ -101,6 +101,22 @@ class AnnotationBuilderTest extends TestCase
     }
 
     /**
+     * @link https://github.com/zendframework/zf2/issues/7096
+     */
+    public function testFileTypeDoesntGrabStringLengthValidator()
+    {
+        $validators = $this
+            ->builder
+            ->createForm(new FormEntity())
+            ->getInputFilter()
+            ->get('image')
+            ->getValidatorChain()
+            ->getValidators();
+
+        $this->assertEquals(0, count($validators));
+    }
+
+    /**
      * Ensure prefer_form_input_filter is set to true for the generated form
      */
     public function testPreferFormInputFilterIsTrue()
