@@ -30,7 +30,6 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
      * @var ServiceManager
      */
     protected $serviceManager;
-
     /**
      * @var ConfigurationFactory
      */
@@ -117,18 +116,29 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $this->factory->createService($this->serviceManager);
     }
 
+<<<<<<< HEAD
     public function testWillInstantiateConfigWithHydrationCacheSetting()
     {
+=======
+    public function testCanSetDefaultRepositoryClass()
+    {
+        $repositoryClass = 'DoctrineORMModuleTest\Assets\RepositoryClass';
+>>>>>>> 1033fde4315a1bd203ce73293b5e8d4dd13ef6b9
         $config = array(
             'doctrine' => array(
                 'configuration' => array(
                     'test_default' => array(
+<<<<<<< HEAD
                         'hydration_cache' => 'array',
+=======
+                        'default_repository_class_name' => $repositoryClass,
+>>>>>>> 1033fde4315a1bd203ce73293b5e8d4dd13ef6b9
                     ),
                 ),
             ),
         );
         $this->serviceManager->setService('Config', $config);
+<<<<<<< HEAD
         $factory = new ConfigurationFactory('test_default');
         $ormConfig = $factory->createService($this->serviceManager);
         $this->assertInstanceOf('Doctrine\Common\Cache\ArrayCache', $ormConfig->getHydrationCacheImpl());
@@ -225,5 +235,9 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $ormConfig = $this->factory->createService($this->serviceManager);
 
         $this->assertSame($entityListenerResolver, $ormConfig->getEntityListenerResolver());
+=======
+        $ormConfig = $this->factory->createService($this->serviceManager);
+        $this->assertSame($repositoryClass, $ormConfig->getDefaultRepositoryClassName());
+>>>>>>> 1033fde4315a1bd203ce73293b5e8d4dd13ef6b9
     }
 }

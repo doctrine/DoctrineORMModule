@@ -95,6 +95,18 @@ return array(
 )
 ```
 
+### Set a custom default repository
+
+```php
+'doctrine' => array(
+    'configuration' => array(
+        'orm_default' => array(
+            'default_repository_class_name' => 'MyCustomRepository'
+        )
+    )
+)
+```
+
 ### How to Use Two Connections
 
 ```php

@@ -153,6 +153,14 @@ class Configuration extends DBALConfiguration
      */
     protected $namingStrategy;
 
+
+    /**
+     * Default repository class
+     *
+     * @var string|null
+     */
+    protected $defaultRepositoryClassName;
+
     /**
      * Repository factory or name of the repository factory service to be set in ORM
      * configuration (if any)
@@ -600,5 +608,26 @@ class Configuration extends DBALConfiguration
     public function getEntityListenerResolver()
     {
         return $this->entityListenerResolver;
+    }
+
+    /**
+     * Sets default repository class.
+     *
+     * @param  string $className
+     * @return void
+     */
+    public function setDefaultRepositoryClassName($className)
+    {
+        $this->defaultRepositoryClassName = (string) $className;
+    }
+
+    /**
+     * Get default repository class name.
+     *
+     * @return string|null
+     */
+    public function getDefaultRepositoryClassName()
+    {
+        return $this->defaultRepositoryClassName;
     }
 }

@@ -79,6 +79,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             }
         }
 
+<<<<<<< HEAD
         if ($repositoryFactory = $options->getRepositoryFactory()) {
             if (is_string($repositoryFactory)) {
                 if (!$serviceLocator->has($repositoryFactory)) {
@@ -99,6 +100,10 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             } else {
                 $config->setEntityListenerResolver($serviceLocator->get($entityListenerResolver));
             }
+=======
+        if ($className = $options->getDefaultRepositoryClassName()){
+            $config->setDefaultRepositoryClassName($className);
+>>>>>>> 1033fde4315a1bd203ce73293b5e8d4dd13ef6b9
         }
 
         $this->setupDBALConfiguration($serviceLocator, $config);
