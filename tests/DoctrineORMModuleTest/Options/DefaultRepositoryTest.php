@@ -21,10 +21,8 @@ namespace DoctrineORMModuleTest\Collector;
 
 use DoctrineORMModuleTest\Framework\TestCase;
 
-
 class DefaultRepositoryTest extends TestCase
 {
-
     public function testEntityHasDefaultRepositoryInstance()
     {
         $entityWithDefaultRepository = 'DoctrineORMModuleTest\Assets\Entity\EntityWithoutRepository';
