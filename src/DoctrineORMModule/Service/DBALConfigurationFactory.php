@@ -40,7 +40,7 @@ class DBALConfigurationFactory implements FactoryInterface
     protected $name;
 
     /**
-     * @param $name
+     * @param string $name
      */
     public function __construct($name)
     {
