@@ -128,6 +128,7 @@ class Module implements
                     'doctrine.migrations_cmd.status',
                     'doctrine.migrations_cmd.version',
                     'doctrine.migrations_cmd.diff',
+                    'doctrine.migrations_cmd.latest',
                 )
             );
         }
