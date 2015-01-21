@@ -21,11 +21,8 @@ namespace DoctrineORMModule\Service;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-
 use RuntimeException;
-
 use DoctrineORMModule\Collector\SQLLoggerCollector;
-
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\DBAL\Logging\LoggerChain;
 
@@ -44,7 +41,7 @@ class SQLLoggerCollectorFactory implements FactoryInterface
     protected $name;
 
     /**
-     * @param $name
+     * @param string $name
      */
     public function __construct($name)
     {
