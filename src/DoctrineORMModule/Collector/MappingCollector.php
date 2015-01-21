@@ -26,7 +26,6 @@ use ZendDeveloperTools\Collector\AutoHideInterface;
 
 use Zend\Mvc\MvcEvent;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
 
 /**
@@ -100,6 +99,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
         foreach ($metadata as $class) {
             $this->classes[$class->getName()] = $class;
         }
+        ksort($this->classes);
     }
 
     /**

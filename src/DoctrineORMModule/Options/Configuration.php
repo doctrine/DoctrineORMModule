@@ -2,7 +2,6 @@
 
 namespace DoctrineORMModule\Options;
 
-use DoctrineORMModule\Options\DBALConfiguration;
 use Doctrine\ORM\Mapping\EntityListenerResolver;
 use Doctrine\ORM\Mapping\NamingStrategy;
 use Doctrine\ORM\Repository\RepositoryFactory;

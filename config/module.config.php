@@ -140,7 +140,7 @@ return array(
 
         // form annotation builder configuration
         'formannotationbuilder' => array(
-            // Configuration for service `doctrine.formannotation.orm_default` service
+            // Configuration for service `doctrine.formannotationbuilder.orm_default` service
             'orm_default' => array(),
         ),
 

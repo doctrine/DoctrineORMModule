@@ -79,7 +79,7 @@ class AnnotationBuilderTest extends TestCase
         $spec           = $this->builder->getFormSpecification($entity);
         $annotationForm = $this->builder->createForm($entity);
 
-        $attributesToTest = array('specificType', 'specificAttributeType');
+        $attributesToTest = array('specificType', 'specificMultiType', 'specificAttributeType');
 
         foreach ($spec['elements'] as $element) {
             $elementName = $element['spec']['name'];
@@ -88,7 +88,7 @@ class AnnotationBuilderTest extends TestCase
                 $zendFormElement       = $zendForm->get($elementName);
 
                 $annotationElementAttribute = $annotationFormElement->getAttribute('type');
-                $zendElementAttribute       = $annotationFormElement->getAttribute('type');
+                $zendElementAttribute       = $zendFormElement->getAttribute('type');
 
                 if ((get_class($zendFormElement) !== get_class($annotationFormElement)) ||
                     ($annotationElementAttribute !== $zendElementAttribute)
@@ -98,6 +98,22 @@ class AnnotationBuilderTest extends TestCase
             }
         }
         $this->assertTrue($userDefinedTypeOverridesListenerType);
+    }
+
+    /**
+     * @link https://github.com/zendframework/zf2/issues/7096
+     */
+    public function testFileTypeDoesntGrabStringLengthValidator()
+    {
+        $validators = $this
+            ->builder
+            ->createForm(new FormEntity())
+            ->getInputFilter()
+            ->get('image')
+            ->getValidatorChain()
+            ->getValidators();
+
+        $this->assertEquals(0, count($validators));
     }
 
     /**

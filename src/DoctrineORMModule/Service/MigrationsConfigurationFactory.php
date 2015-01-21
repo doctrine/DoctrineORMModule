@@ -19,7 +19,6 @@
 
 namespace DoctrineORMModule\Service;
 
-use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Migrations\Configuration\Configuration;
 use DoctrineModule\Service\AbstractFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;

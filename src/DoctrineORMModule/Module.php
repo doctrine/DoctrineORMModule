@@ -24,11 +24,8 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Loader\StandardAutoloader;
 use Zend\EventManager\EventInterface;
-
-use Symfony\Component\Console\Helper\DialogHelper;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Zend\Stdlib\ArrayUtils;
@@ -141,7 +138,7 @@ class Module implements
         $entityManager = $serviceLocator->get('doctrine.entitymanager.orm_default');
         $helperSet     = $cli->getHelperSet();
 
-        $helperSet->set(new DialogHelper(), 'dialog');
+        $helperSet->set(new QuestionHelper(), 'question');
         $helperSet->set(new ConnectionHelper($entityManager->getConnection()), 'db');
         $helperSet->set(new EntityManagerHelper($entityManager), 'em');
     }

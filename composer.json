@@ -1,46 +1,47 @@
 {
-    "name": "doctrine/doctrine-orm-module",
-    "description": "Zend Framework 2 Module that provides Doctrine ORM functionality",
-    "type": "library",
-    "license": "MIT",
-    "keywords": [
+    "name":              "doctrine/doctrine-orm-module",
+    "description":       "Zend Framework 2 Module that provides Doctrine ORM functionality",
+    "type":              "library",
+    "license":           "MIT",
+    "keywords":          [
         "doctrine",
         "orm",
         "module",
         "zf2"
     ],
-    "homepage": "http://www.doctrine-project.org/",
-    "authors": [
+    "homepage":          "http://www.doctrine-project.org/",
+    "authors":           [
         {
-            "name": "Kyle Spraggs",
-            "email": "theman@spiffyjr.me",
+            "name":     "Kyle Spraggs",
+            "email":    "theman@spiffyjr.me",
             "homepage": "http://www.spiffyjr.me/"
         },
         {
-            "name": "Marco Pivetta",
-            "email": "ocramius@gmail.com",
+            "name":     "Marco Pivetta",
+            "email":    "ocramius@gmail.com",
             "homepage": "http://marco-pivetta.com/"
         },
         {
-            "name": "Evan Coury",
-            "email": "me@evancoury.com",
+            "name":     "Evan Coury",
+            "email":    "me@evancoury.com",
             "homepage": "http://blog.evan.pro/"
         },
         {
-            "name": "Guilherme Blanco",
+            "name":  "Guilherme Blanco",
             "email": "guilhermeblanco@hotmail.com"
         }
     ],
-    "require": {
+    "require":           {
         "php":                               ">=5.3.23",
         "doctrine/doctrine-module":          "0.9.*",
         "doctrine/orm":                      ">=2.5,<2.7-dev",
         "doctrine/dbal":                     ">=2.5,<2.7-dev",
         "zendframework/zend-stdlib":         "~2.3",
         "zendframework/zend-mvc":            "~2.3",
-        "zendframework/zend-servicemanager": "~2.3"
+        "zendframework/zend-servicemanager": "~2.3",
+        "symfony/console":                   "~2.5"
     },
-    "require-dev": {
+    "require-dev":       {
         "zendframework/zendframework":        "~2.3",
         "doctrine/data-fixtures":             "1.0.*",
         "zendframework/zend-developer-tools": "*",
@@ -48,18 +49,18 @@
         "phpunit/phpunit":                    "~3.7",
         "squizlabs/php_codesniffer":          "1.5.*"
     },
-    "suggest": {
+    "suggest":           {
         "zendframework/zend-form":            "if you want to use form elements backed by Doctrine",
         "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development",
         "doctrine/migrations":                "doctrine migrations if you want to keep your schema definitions versioned"
     },
     "minimum-stability": "dev",
-    "autoload": {
+    "autoload":          {
         "psr-0": {
             "DoctrineORMModule\\": "src/"
         }
     },
-    "extra": {
+    "extra":             {
         "branch-alias": {
             "dev-master": "0.9.x-dev"
         }

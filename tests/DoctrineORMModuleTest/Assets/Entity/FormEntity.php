@@ -133,9 +133,23 @@ class FormEntity
     protected $specificType;
 
     /**
+     * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntityMulti")
+     * @Form\Type("DoctrineORMModule\Form\Element\EntityMultiCheckbox")
+     */
+    protected $specificMultiType;
+
+    /**
      * @ORM\Column(type="integer")
      * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
      * @Form\Attributes({"type":"textarea"})
      */
     protected $specificAttributeType;
+
+    /**
+     * @ORM\Column(type="string", length=256)
+     * @Form\Type("File")
+     * @ORM\JoinColumn(nullable=true)
+     * @Form\Options({"label":"Image"})
+     */
+    protected $image;
 }

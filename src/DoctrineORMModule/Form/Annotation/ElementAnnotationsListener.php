@@ -340,6 +340,13 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                 $inputSpec['validators'][] = array('name' => 'Int');
                 break;
             case 'string':
+                $elementSpec = $event->getParam('elementSpec');
+                if (isset($elementSpec['spec']['type']) &&
+                    in_array($elementSpec['spec']['type'], array('File', 'Zend\Form\Element\File'))
+                ) {
+                    return;
+                }
+
                 if (isset($mapping['length'])) {
                     $inputSpec['validators'][] = array(
                         'name'    => 'StringLength',
@@ -396,7 +403,9 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         );
 
         $elementSpec['spec']['options'] = $options;
-        $elementSpec['spec']['type']    = 'DoctrineORMModule\Form\Element\EntitySelect';
+        if (!isset($elementSpec['spec']['type'])) {
+            $elementSpec['spec']['type'] = 'DoctrineORMModule\Form\Element\EntitySelect';
+        }
     }
 
     /**

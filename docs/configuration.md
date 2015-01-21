@@ -81,6 +81,20 @@ return array(
 ),
 ```
 
+### How to Define Relationships with Abstract Classes and Interfaces (ResolveTargetEntityListener)
+
+```php
+'doctrine' => array(
+    'entity_resolver' => array(
+        'orm_default' => array(
+            'resolvers' => array(
+                'Acme\\InvoiceModule\\Model\\InvoiceSubjectInterface', 'Acme\\CustomerModule\\Entity\\Customer'
+            )
+        )
+    )
+)
+```
+
 ### How to Use Two Connections
 
 ```php
@@ -166,7 +180,7 @@ public function getServiceConfig()
             'doctrine.driver.orm_crawler'               => new \DoctrineModule\Service\DriverFactory('orm_crawler'),
             'doctrine.eventmanager.orm_crawler'         => new \DoctrineModule\Service\EventManagerFactory('orm_crawler'),
             'doctrine.entity_resolver.orm_crawler'      => new \DoctrineORMModule\Service\EntityResolverFactory('orm_crawler'),
-            'doctrine.sql_logger_collector.orm_crawler' => new \DoctrineORMModule\Service\EntityResolverFactory('orm_crawler'),
+            'doctrine.sql_logger_collector.orm_crawler' => new \DoctrineORMModule\Service\SQLLoggerCollectorFactory('orm_crawler'),
 
             'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function(\Zend\ServiceManager\ServiceLocatorInterface $sl) {
                 return new \DoctrineORMModule\Form\Annotation\AnnotationBuilder($sl->get('doctrine.entitymanager.orm_crawler'));
