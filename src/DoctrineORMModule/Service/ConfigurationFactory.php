@@ -19,6 +19,7 @@
 
 namespace DoctrineORMModule\Service;
 
+use Doctrine\ORM\Cache\CacheConfiguration;
 use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Cache\RegionsConfiguration;
 use Doctrine\ORM\Mapping\EntityListenerResolver;
@@ -124,10 +125,12 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             // As Second Level Cache caches queries results, we reuse the result cache impl
             $cacheFactory = new DefaultCacheFactory($regionsConfig, $config->getResultCacheImpl());
 
-            $config->setSecondLevelCacheEnabled();
+            $cacheConfiguration = new CacheConfiguration();
+            $cacheConfiguration->setCacheFactory($cacheFactory);
+            $cacheConfiguration->setRegionsConfiguration($regionsConfig);
 
-            $config->getSecondLevelCacheConfiguration()
-                   ->setCacheFactory($cacheFactory);
+            $config->setSecondLevelCacheEnabled();
+            $config->setSecondLevelCacheConfiguration($cacheConfiguration);
         }
 
         $this->setupDBALConfiguration($serviceLocator, $config);

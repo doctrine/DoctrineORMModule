@@ -227,7 +227,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $this->assertSame($entityListenerResolver, $ormConfig->getEntityListenerResolver());
     }
 
-    public function testDontCreateSecondLevelCacheByDefault()
+    public function testDoNotCreateSecondLevelCacheByDefault()
     {
         $config = array(
             'doctrine' => array(
@@ -250,8 +250,24 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
             'doctrine' => array(
                 'configuration' => array(
                     'test_default' => array(
+                        'result_cache' => 'array',
+
                         'second_level_cache' => array(
-                            'enabled' => true
+                            'enabled'               => true,
+                            'default_lifetime'      => 200,
+                            'default_lock_lifetime' => 500,
+
+                            'regions' => array(
+                                'my_first_region' => array(
+                                    'lifetime'      => 800,
+                                    'lock_lifetime' => 1000
+                                ),
+
+                                'my_second_region' => array(
+                                    'lifetime'      => 10,
+                                    'lock_lifetime' => 20
+                                )
+                            )
                         )
                     ),
                 ),
@@ -264,5 +280,24 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $secondLevelCache = $ormConfig->getSecondLevelCacheConfiguration();
         
         $this->assertInstanceOf('Doctrine\ORM\Cache\CacheConfiguration', $secondLevelCache);
+
+        $cacheFactory = $secondLevelCache->getCacheFactory();
+        $this->assertInstanceOf('Doctrine\ORM\Cache\DefaultCacheFactory', $cacheFactory);
+
+        $regionsConfiguration = $secondLevelCache->getRegionsConfiguration();
+        $this->assertEquals(200, $regionsConfiguration->getDefaultLifetime());
+        $this->assertEquals(500, $regionsConfiguration->getDefaultLockLifetime());
+
+        $this->assertEquals(800, $regionsConfiguration->getLifetime('my_first_region'));
+        $this->assertEquals(10, $regionsConfiguration->getLifetime('my_second_region'));
+
+        $this->assertEquals(1000, $regionsConfiguration->getLockLifetime('my_first_region'));
+        $this->assertEquals(20, $regionsConfiguration->getLockLifetime('my_second_region'));
+
+        // Doctrine does not allow to retrieve the cache adapter from cache factory, so we are forced to use
+        // reflection here
+        $reflProperty = new \ReflectionProperty($cacheFactory, 'cache');
+        $reflProperty->setAccessible(true);
+        $this->assertInstanceOf('Doctrine\Common\Cache\ArrayCache', $reflProperty->getValue($cacheFactory));
     }
 }

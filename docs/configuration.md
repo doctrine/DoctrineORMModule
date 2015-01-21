@@ -95,6 +95,38 @@ return array(
 )
 ```
 
+### How to enable and configure second-level cache
+
+```php
+'doctrine' => array(
+   'configuration' => array(
+       'orm_default' => array(
+           'result_cache' => 'apc', // Second level cache reuse the cache defined in result cache
+
+           'second_level_cache' => array(
+               'enabled'               => true,
+               'default_lifetime'      => 200,
+               'default_lock_lifetime' => 500,
+
+               'regions' => array(
+                   'my_first_region' => array(
+                       'lifetime'      => 800,
+                       'lock_lifetime' => 1000
+                   ),
+
+                   'my_second_region' => array(
+                       'lifetime'      => 10,
+                       'lock_lifetime' => 20
+                   )
+               )
+           )
+       ),
+   ),
+)
+```
+
+You also need to add the `Cache` annotation to your model ([read more](http://doctrine-orm.readthedocs.org/en/latest/reference/second-level-cache.html#entity-cache-definition)).
+
 ### How to Use Two Connections
 
 ```php
