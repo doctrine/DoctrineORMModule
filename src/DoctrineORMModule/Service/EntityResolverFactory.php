@@ -42,7 +42,7 @@ class EntityResolverFactory extends AbstractFactory
             $targetEntityListener->addResolveTargetEntity($oldEntity, $newEntity, array());
         }
 
-        $eventManager->addEventListener(Events::loadClassMetadata, $targetEntityListener);
+        $eventManager->addEventSubscriber($targetEntityListener);
 
         return $eventManager;
     }

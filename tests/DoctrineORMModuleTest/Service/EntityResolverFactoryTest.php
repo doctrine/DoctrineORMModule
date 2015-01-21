@@ -19,6 +19,7 @@
 
 namespace DoctrineORMModuleTest\Service;
 
+use Doctrine\ORM\Events;
 use DoctrineORMModuleTest\Framework\TestCase as TestCase;
 
 class EntityResolverFactoryTest extends TestCase
@@ -30,5 +31,13 @@ class EntityResolverFactoryTest extends TestCase
         $meta          = $classMetadata->associationMappings;
 
         $this->assertSame('DoctrineORMModuleTest\Assets\Entity\TargetEntity', $meta['target']['targetEntity']);
+    }
+
+    public function testAssertSubscriberIsAdded()
+    {
+        $evm = $this->getEntityManager()->getEventManager();
+
+        $this->assertTrue($evm->hasListeners(Events::loadClassMetadata));
+        $this->assertTrue($evm->hasListeners(Events::onClassMetadataNotFound));
     }
 }
