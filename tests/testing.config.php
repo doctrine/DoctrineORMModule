@@ -18,6 +18,11 @@
  */
 return array(
     'doctrine' => array(
+        'configuration' => array(
+            'orm_default' => array(
+                'default_repository_class_name' => 'DoctrineORMModuleTest\Assets\RepositoryClass',
+            ),
+        ),
         'driver' => array(
             'DoctrineORMModuleTest\Assets\Entity' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
