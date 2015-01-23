@@ -21,6 +21,7 @@ namespace DoctrineORMModule\Service;
 
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Tools\ResolveTargetEntityListener;
+use Doctrine\ORM\Version;
 use DoctrineModule\Service\AbstractFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -42,7 +43,11 @@ class EntityResolverFactory extends AbstractFactory
             $targetEntityListener->addResolveTargetEntity($oldEntity, $newEntity, array());
         }
 
-        $eventManager->addEventSubscriber($targetEntityListener);
+        if (Version::compare('2.5.0') >= 0) {
+            $eventManager->addEventSubscriber($targetEntityListener);
+        } else {
+            $eventManager->addEventListener(Events::loadClassMetadata, $targetEntityListener);
+        }
 
         return $eventManager;
     }
