@@ -32,10 +32,10 @@
         }
     ],
     "require":           {
-        "php":                               ">=5.3.23",
+        "php":                               ">=5.4",
         "doctrine/doctrine-module":          "0.9.*",
-        "doctrine/orm":                      ">=2.5,<2.7-dev",
-        "doctrine/dbal":                     ">=2.5,<2.7-dev",
+        "doctrine/orm":                      ">=2.4,<2.7-dev",
+        "doctrine/dbal":                     ">=2.4,<2.7-dev",
         "zendframework/zend-stdlib":         "~2.3",
         "zendframework/zend-mvc":            "~2.3",
         "zendframework/zend-servicemanager": "~2.3",
