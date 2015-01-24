@@ -8,7 +8,6 @@
    It also reintroduces the DoctrineModule\Form\Element\ObjectSelect behavior of v0.7.0, that permitted to set an ObjectSelect on an entity's attribute when no association was defined (OneToMany etc.)
    [#272](https://github.com/doctrine/DoctrineORMModule/pull/272)
  * The required PHP version is bumped to `5.3.23` [#306](https://github.com/doctrine/DoctrineORMModule/pull/306)
- * Doctrine ORM minimal version is bumped to `2.5`
  * Add support for second level cache (see docs about how to configure it)
 
 # 0.8.0

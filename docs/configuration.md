@@ -66,7 +66,6 @@ return array(
 )
 ```
 
-<<<<<<< HEAD
 ### How to enable and configure second-level cache
 
 ```php
@@ -99,7 +98,6 @@ return array(
 
 You also need to add the `Cache` annotation to your model ([read more](http://doctrine-orm.readthedocs.org/en/latest/reference/second-level-cache.html#entity-cache-definition)).
 
-=======
 ### Set a custom default repository
 
 ```php
@@ -112,7 +110,6 @@ You also need to add the `Cache` annotation to your model ([read more](http://do
 )
 ```
 
->>>>>>> cf1bf47c9d06044ed676aced685fa74dda50dc00
 ### How to Use Two Connections
 
 ```php
