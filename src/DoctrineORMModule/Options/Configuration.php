@@ -187,6 +187,14 @@ class Configuration extends DBALConfiguration
     protected $entityListenerResolver;
 
     /**
+     * Configuration for second level cache
+     *
+     * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/second-level-cache.html
+     * @var SecondLevelCacheConfiguration|null
+     */
+    protected $secondLevelCache;
+
+    /**
      * @param  array $datetimeFunctions
      * @return self
      */
@@ -608,6 +616,23 @@ class Configuration extends DBALConfiguration
     public function getEntityListenerResolver()
     {
         return $this->entityListenerResolver;
+    }
+
+    /**
+     * @param  array $secondLevelCache
+     * @return void
+     */
+    public function setSecondLevelCache(array $secondLevelCache)
+    {
+        $this->secondLevelCache = new SecondLevelCacheConfiguration($secondLevelCache);
+    }
+
+    /**
+     * @return SecondLevelCacheConfiguration
+     */
+    public function getSecondLevelCache()
+    {
+        return $this->secondLevelCache ?: new SecondLevelCacheConfiguration();
     }
 
     /**

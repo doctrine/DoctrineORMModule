@@ -66,6 +66,38 @@ return array(
 )
 ```
 
+### How to enable and configure second-level cache
+
+```php
+'doctrine' => array(
+   'configuration' => array(
+       'orm_default' => array(
+           'result_cache' => 'apc', // Second level cache reuse the cache defined in result cache
+
+           'second_level_cache' => array(
+               'enabled'               => true,
+               'default_lifetime'      => 200,
+               'default_lock_lifetime' => 500,
+
+               'regions' => array(
+                   'my_first_region' => array(
+                       'lifetime'      => 800,
+                       'lock_lifetime' => 1000
+                   ),
+
+                   'my_second_region' => array(
+                       'lifetime'      => 10,
+                       'lock_lifetime' => 20
+                   )
+               )
+           )
+       ),
+   ),
+)
+```
+
+You also need to add the `Cache` annotation to your model ([read more](http://doctrine-orm.readthedocs.org/en/latest/reference/second-level-cache.html#entity-cache-definition)).
+
 ### Set a custom default repository
 
 ```php
@@ -171,4 +203,29 @@ public function getServiceConfig()
         ),
     );
 }
+```
+
+## How to use second level cache
+
+> Don't forget to also make your entities cacheable for this to work ([learn more](http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/second-level-cache.html))
+
+```php
+'doctrine' => array(
+    'configuration' => array(
+        'orm_default' => array(
+            'second_level_cache' => array(
+                'enabled'               => true,
+                'default_lifetime'      => 3600,
+                'default_lock_lifetime' => 60,
+
+                'regions'               => array(
+                    'My\Region\Name' => array(
+                        'lifetime'      => 20,
+                        'lock_lifetime' => 200
+                    )
+                )
+            )
+        )
+    ),
+),
 ```

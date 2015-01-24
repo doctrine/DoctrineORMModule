@@ -19,7 +19,11 @@
 
 namespace DoctrineORMModule\Service;
 
+use Doctrine\ORM\Cache\CacheConfiguration;
+use Doctrine\ORM\Cache\DefaultCacheFactory;
+use Doctrine\ORM\Cache\RegionsConfiguration;
 use Doctrine\ORM\Mapping\EntityListenerResolver;
+use Doctrine\ORM\Version;
 use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\Exception\InvalidArgumentException;
@@ -98,6 +102,37 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
                 $config->setEntityListenerResolver($entityListenerResolver);
             } else {
                 $config->setEntityListenerResolver($serviceLocator->get($entityListenerResolver));
+            }
+        }
+
+        if (Version::compare('2.5.0') >= 0) {
+            $secondLevelCache = $options->getSecondLevelCache();
+
+            if ($secondLevelCache->isEnabled()) {
+                $regionsConfig = new RegionsConfiguration(
+                    $secondLevelCache->getDefaultLifetime(),
+                    $secondLevelCache->getDefaultLockLifetime()
+                );
+
+                foreach ($secondLevelCache->getRegions() as $regionName => $regionConfig) {
+                    if (isset($regionConfig['lifetime'])) {
+                        $regionsConfig->setLifetime($regionName, $regionConfig['lifetime']);
+                    }
+
+                    if (isset($regionConfig['lock_lifetime'])) {
+                        $regionsConfig->setLockLifetime($regionName, $regionConfig['lock_lifetime']);
+                    }
+                }
+
+                // As Second Level Cache caches queries results, we reuse the result cache impl
+                $cacheFactory = new DefaultCacheFactory($regionsConfig, $config->getResultCacheImpl());
+
+                $cacheConfiguration = new CacheConfiguration();
+                $cacheConfiguration->setCacheFactory($cacheFactory);
+                $cacheConfiguration->setRegionsConfiguration($regionsConfig);
+
+                $config->setSecondLevelCacheEnabled();
+                $config->setSecondLevelCacheConfiguration($cacheConfiguration);
             }
         }
 
