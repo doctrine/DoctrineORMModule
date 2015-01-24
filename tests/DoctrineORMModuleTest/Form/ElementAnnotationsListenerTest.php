@@ -202,6 +202,15 @@ class ElementAnnotationsListenerTest extends TestCase
         $this->assertFalse($inputSpec['required']);
     }
 
+    public function testHandleRequiredFieldNonFieldProperty()
+    {
+        $listener = $this->listener;
+        $event    = $this->getMetadataEvent();
+        $event->setParam('name', 'targetMany');
+        $listener->handleRequiredField($event);
+        $this->assertFalse(isset($inputSpec['required']));
+    }
+
     /**
      * @dataProvider eventTypeProvider
      */

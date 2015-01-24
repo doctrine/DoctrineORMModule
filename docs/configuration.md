@@ -14,35 +14,6 @@ return array(
 )
 ```
 
-#### How to use Memcache
-
-```php
-'doctrine' => array(
-    'configuration' => array(
-        'orm_default' => array(
-            'metadata_cache'    => 'my_memcache',
-            'query_cache'       => 'my_memcache',
-            'result_cache'      => 'my_memcache',
-            'hydration_cache'   => 'my_memcache',
-        )
-    ),
-);
-```
-
-```php
-'service_manager' => array(
-    'factories' => array(
-        'doctrine.cache.my_memcache' => function ($sm) {
-            $cache = new \Doctrine\Common\Cache\MemcacheCache();
-            $memcache = new \Memcache();
-            $memcache->connect('localhost', 11211);
-            $cache->setMemcache($memcache);
-            return $cache;
-        },
-    ),
-),
-```
-
 ### How to register type mapping
 
 ```php
@@ -95,6 +66,7 @@ return array(
 )
 ```
 
+<<<<<<< HEAD
 ### How to enable and configure second-level cache
 
 ```php
@@ -127,6 +99,20 @@ return array(
 
 You also need to add the `Cache` annotation to your model ([read more](http://doctrine-orm.readthedocs.org/en/latest/reference/second-level-cache.html#entity-cache-definition)).
 
+=======
+### Set a custom default repository
+
+```php
+'doctrine' => array(
+    'configuration' => array(
+        'orm_default' => array(
+            'default_repository_class_name' => 'MyCustomRepository'
+        )
+    )
+)
+```
+
+>>>>>>> cf1bf47c9d06044ed676aced685fa74dda50dc00
 ### How to Use Two Connections
 
 ```php

@@ -180,6 +180,7 @@ return array(
             'status'   => array(),
             'version'  => array(),
             'diff'     => array(),
+            'latest'   => array()
         ),
     ),
 

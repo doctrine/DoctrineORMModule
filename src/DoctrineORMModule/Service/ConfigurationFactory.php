@@ -105,7 +105,6 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             }
         }
 
-        // @TODO: remove the check when Doctrine 2.5 is out
         if (Version::compare('2.5.0') >= 0) {
             $secondLevelCache = $options->getSecondLevelCache();
 
@@ -135,6 +134,10 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
                 $config->setSecondLevelCacheEnabled();
                 $config->setSecondLevelCacheConfiguration($cacheConfiguration);
             }
+        }
+
+        if ($className = $options->getDefaultRepositoryClassName()) {
+            $config->setDefaultRepositoryClassName($className);
         }
 
         $this->setupDBALConfiguration($serviceLocator, $config);
