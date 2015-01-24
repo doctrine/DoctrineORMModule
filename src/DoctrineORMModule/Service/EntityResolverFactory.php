@@ -19,6 +19,7 @@
 
 namespace DoctrineORMModule\Service;
 
+use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Tools\ResolveTargetEntityListener;
 use DoctrineModule\Service\AbstractFactory;
@@ -42,7 +43,12 @@ class EntityResolverFactory extends AbstractFactory
             $targetEntityListener->addResolveTargetEntity($oldEntity, $newEntity, array());
         }
 
-        $eventManager->addEventListener(Events::loadClassMetadata, $targetEntityListener);
+        // Starting from Doctrine ORM 2.5, the listener implements EventSubscriber
+        if ($targetEntityListener instanceof EventSubscriber) {
+            $eventManager->addEventSubscriber($targetEntityListener);
+        } else {
+            $eventManager->addEventListener(Events::loadClassMetadata, $targetEntityListener);
+        }
 
         return $eventManager;
     }
