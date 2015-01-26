@@ -214,11 +214,11 @@ public function getServiceConfig()
     'configuration' => array(
         'orm_default' => array(
             'second_level_cache' => array(
-                'enabled'               => true,
-                'default_lifetime'      => 3600,
-                'default_lock_lifetime' => 60,
-
-                'regions'               => array(
+                'enabled'                        => true,
+                'default_lifetime'               => 3600,
+                'default_lock_lifetime'          => 60,
+                'set_file_lock_region_directory' => __DIR__ . '/../my_dir',
+                'regions'                        => array(
                     'My\Region\Name' => array(
                         'lifetime'      => 20,
                         'lock_lifetime' => 200

@@ -40,6 +40,13 @@ class SecondLevelCacheConfiguration extends AbstractOptions
     protected $defaultLockLifetime = 60;
 
     /**
+     * The file lock region directory (needed for some cache usage)
+     *
+     * @var string
+     */
+    protected $fileLockRegionDirectory = '';
+
+    /**
      * Configure the lifetime and lock lifetime per region. You must pass an associative array like this:
      *
      * array(
@@ -96,6 +103,22 @@ class SecondLevelCacheConfiguration extends AbstractOptions
     public function getDefaultLockLifetime()
     {
         return $this->defaultLockLifetime;
+    }
+
+    /**
+     * @param string $fileLockRegionDirectory
+     */
+    public function setFileLockRegionDirectory($fileLockRegionDirectory)
+    {
+        $this->fileLockRegionDirectory = (string) $fileLockRegionDirectory;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileLockRegionDirectory()
+    {
+        return $this->fileLockRegionDirectory;
     }
 
     /**
