@@ -274,9 +274,10 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
                         'result_cache' => 'array',
 
                         'second_level_cache' => array(
-                            'enabled'               => true,
-                            'default_lifetime'      => 200,
-                            'default_lock_lifetime' => 500,
+                            'enabled'                    => true,
+                            'default_lifetime'           => 200,
+                            'default_lock_lifetime'      => 500,
+                            'file_lock_region_directory' => 'my_dir',
 
                             'regions' => array(
                                 'my_first_region' => array(
@@ -304,6 +305,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
         $cacheFactory = $secondLevelCache->getCacheFactory();
         $this->assertInstanceOf('Doctrine\ORM\Cache\DefaultCacheFactory', $cacheFactory);
+        $this->assertEquals('my_dir', $cacheFactory->getFileLockRegionDirectory());
 
         $regionsConfiguration = $secondLevelCache->getRegionsConfiguration();
         $this->assertEquals(200, $regionsConfiguration->getDefaultLifetime());

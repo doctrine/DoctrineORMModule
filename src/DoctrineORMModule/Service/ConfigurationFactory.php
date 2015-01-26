@@ -126,6 +126,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
 
                 // As Second Level Cache caches queries results, we reuse the result cache impl
                 $cacheFactory = new DefaultCacheFactory($regionsConfig, $config->getResultCacheImpl());
+                $cacheFactory->setFileLockRegionDirectory($secondLevelCache->getFileLockRegionDirectory());
 
                 $cacheConfiguration = new CacheConfiguration();
                 $cacheConfiguration->setCacheFactory($cacheFactory);
