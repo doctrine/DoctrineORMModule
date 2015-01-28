@@ -40,7 +40,8 @@
         "zendframework/zend-stdlib":         "~2.3",
         "zendframework/zend-mvc":            "~2.3",
         "zendframework/zend-servicemanager": "~2.3",
-        "symfony/console":                   "~2.5"
+        "symfony/console":                   "~2.5",
+        "symfony/yaml":                      "~2.5"
     },
     "require-dev":       {
         "zendframework/zendframework":        "~2.3",
