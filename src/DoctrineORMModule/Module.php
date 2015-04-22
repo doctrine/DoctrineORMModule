@@ -29,6 +29,7 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Zend\Stdlib\ArrayUtils;
+use Symfony\Component\Console\Helper\DialogHelper;
 
 /**
  * Base module for Doctrine ORM.
@@ -142,5 +143,8 @@ class Module implements
         $helperSet->set(new QuestionHelper(), 'question');
         $helperSet->set(new ConnectionHelper($entityManager->getConnection()), 'db');
         $helperSet->set(new EntityManagerHelper($entityManager), 'em');
+        if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
+            $helperSet->set(new DialogHelper(), 'dialog');
+        }
     }
 }
