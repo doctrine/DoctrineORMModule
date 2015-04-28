@@ -161,27 +161,6 @@ return array(
                 //'credentialProperty' => 'password'
             ),
         ),
-
-        // migrations configuration
-        'migrations_configuration' => array(
-            'orm_default' => array(
-                'directory' => 'data/DoctrineORMModule/Migrations',
-                'name'      => 'Doctrine Database Migrations',
-                'namespace' => 'DoctrineORMModule\Migrations',
-                'table'     => 'migrations',
-            ),
-        ),
-
-        // migrations commands base config
-        'migrations_cmd' => array(
-            'generate' => array(),
-            'execute'  => array(),
-            'migrate'  => array(),
-            'status'   => array(),
-            'version'  => array(),
-            'diff'     => array(),
-            'latest'   => array()
-        ),
     ),
 
     'service_manager' => array(
@@ -223,8 +202,6 @@ return array(
         'sql_logger_collector'     => 'DoctrineORMModule\Service\SQLLoggerCollectorFactory',
         'mapping_collector'        => 'DoctrineORMModule\Service\MappingCollectorFactory',
         'formannotationbuilder'    => 'DoctrineORMModule\Service\FormAnnotationBuilderFactory',
-        'migrations_configuration' => 'DoctrineORMModule\Service\MigrationsConfigurationFactory',
-        'migrations_cmd'           => 'DoctrineORMModule\Service\MigrationsCommandFactory',
     ),
 
     // Zend\Form\FormElementManager configuration

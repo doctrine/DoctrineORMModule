@@ -118,21 +118,6 @@ class Module implements
             'doctrine.orm_cmd.info',
         );
 
-        if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
-            $commands = ArrayUtils::merge(
-                $commands,
-                array(
-                    'doctrine.migrations_cmd.execute',
-                    'doctrine.migrations_cmd.generate',
-                    'doctrine.migrations_cmd.migrate',
-                    'doctrine.migrations_cmd.status',
-                    'doctrine.migrations_cmd.version',
-                    'doctrine.migrations_cmd.diff',
-                    'doctrine.migrations_cmd.latest',
-                )
-            );
-        }
-
         $cli->addCommands(array_map(array($serviceLocator, 'get'), $commands));
 
         /* @var $entityManager \Doctrine\ORM\EntityManager */
