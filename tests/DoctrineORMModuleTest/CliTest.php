@@ -130,17 +130,5 @@ class CliTest extends PHPUnit_Framework_TestCase
             'Doctrine\ORM\Tools\Console\Command\RunDqlCommand',
             $this->cli->get('orm:run-dql')
         );
-        $this->assertInstanceOf(
-            'Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand',
-            $this->cli->get('migrations:generate')
-        );
-        $this->assertInstanceOf(
-            'Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand',
-            $this->cli->get('migrations:diff')
-        );
-        $this->assertInstanceOf(
-            'Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand',
-            $this->cli->get('migrations:execute')
-        );
     }
 }
