@@ -19,6 +19,8 @@
 
 namespace DoctrineORMModule;
 
+use Symfony\Component\Console\Helper\DialogHelper;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
@@ -139,11 +141,11 @@ class Module implements
         $helperSet     = $cli->getHelperSet();
 
         if (class_exists('Symfony\Component\Console\Helper\QuestionHelper')) {
-            $helperSet->set(new \Symfony\Component\Console\Helper\QuestionHelper(), 'question');
+            $helperSet->set(new QuestionHelper(), 'question');
         }
 
         if (class_exists('Symfony\Component\Console\Helper\DialogHelper')) {
-            $helperSet->set(new \Symfony\Component\Console\Helper\DialogHelper(), 'dialog');
+            $helperSet->set(new DialogHelper(), 'dialog');
         }
 
         $helperSet->set(new ConnectionHelper($entityManager->getConnection()), 'db');
