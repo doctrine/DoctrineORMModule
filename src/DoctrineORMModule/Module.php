@@ -25,7 +25,6 @@ use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\EventManager\EventInterface;
-use Symfony\Component\Console\Helper\QuestionHelper;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Zend\Stdlib\ArrayUtils;
@@ -139,7 +138,14 @@ class Module implements
         $entityManager = $serviceLocator->get('doctrine.entitymanager.orm_default');
         $helperSet     = $cli->getHelperSet();
 
-        $helperSet->set(new QuestionHelper(), 'question');
+        if (class_exists('Symfony\Component\Console\Helper\QuestionHelper')) {
+            $helperSet->set(new \Symfony\Component\Console\Helper\QuestionHelper(), 'question');
+        }
+
+        if (class_exists('Symfony\Component\Console\Helper\DialogHelper')) {
+            $helperSet->set(new \Symfony\Component\Console\Helper\DialogHelper(), 'dialog');
+        }
+
         $helperSet->set(new ConnectionHelper($entityManager->getConnection()), 'db');
         $helperSet->set(new EntityManagerHelper($entityManager), 'em');
     }
