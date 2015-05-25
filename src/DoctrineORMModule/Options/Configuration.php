@@ -193,6 +193,14 @@ class Configuration extends DBALConfiguration
      * @var SecondLevelCacheConfiguration|null
      */
     protected $secondLevelCache;
+    
+    /**
+     * Keys must be the name of the custom query hint and the value must be
+     * the class name for the hint
+     *
+     * @var array
+     */
+    protected $defaultQueryHints = array();
 
     /**
      * @param  array $datetimeFunctions
@@ -655,4 +663,25 @@ class Configuration extends DBALConfiguration
     {
         return $this->defaultRepositoryClassName;
     }
+    
+    /**
+     * Set default query hints
+     * 
+     * @return array
+     */
+    public function getDefaultQueryHints()
+    {
+        return $this->defaultQueryHints;
+    }
+
+    /**
+     * Get default query hints
+     * 
+     * @param array $defaultQueryHints
+     */
+    public function setDefaultQueryHints($defaultQueryHints)
+    {
+        $this->defaultQueryHints = $defaultQueryHints;
+    }
+    
 }
