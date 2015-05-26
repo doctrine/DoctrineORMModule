@@ -144,6 +144,13 @@ class Configuration extends DBALConfiguration
      * @var array
      */
     protected $customHydrationModes = array();
+
+    /**
+     * Keys must be the name of the custom query hint and the value must be
+     * the class name for the custom walker
+     *
+     * @var array
+     */
     protected $defaultQueryHints = array();
 
     /**
@@ -658,6 +665,8 @@ class Configuration extends DBALConfiguration
     }
 
     /**
+     * Get default query hints
+     *
      * @return array
      */
     public function getDefaultQueryHints()
@@ -666,6 +675,8 @@ class Configuration extends DBALConfiguration
     }
 
     /**
+     * Set default query hints
+     *
      * @param array $defaultQueryHints
      */
     public function setDefaultQueryHints($defaultQueryHints)
