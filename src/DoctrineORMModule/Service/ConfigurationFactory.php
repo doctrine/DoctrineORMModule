@@ -53,6 +53,9 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             $config->addNamedQuery($name, $query);
         }
 
+        $config->setDefaultQueryHints($options->getDefaultQueryHints());
+
+
         foreach ($options->getNamedNativeQueries() as $name => $query) {
             $config->addNamedNativeQuery($name, $query['sql'], new $query['rsm']);
         }

@@ -144,6 +144,7 @@ class Configuration extends DBALConfiguration
      * @var array
      */
     protected $customHydrationModes = array();
+    protected $defaultQueryHints = array();
 
     /**
      * Naming strategy or name of the naming strategy service to be set in ORM
@@ -655,4 +656,21 @@ class Configuration extends DBALConfiguration
     {
         return $this->defaultRepositoryClassName;
     }
+
+    /**
+     * @return array
+     */
+    public function getDefaultQueryHints()
+    {
+        return $this->defaultQueryHints;
+    }
+
+    /**
+     * @param array $defaultQueryHints
+     */
+    public function setDefaultQueryHints($defaultQueryHints)
+    {
+        $this->defaultQueryHints = $defaultQueryHints;
+    }
+
 }
