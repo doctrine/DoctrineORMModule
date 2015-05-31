@@ -141,10 +141,8 @@ class Module implements
         $helperSet     = $cli->getHelperSet();
 
         if (class_exists('Symfony\Component\Console\Helper\QuestionHelper')) {
-            $helperSet->set(new QuestionHelper(), 'question');
-        }
-
-        if (class_exists('Symfony\Component\Console\Helper\DialogHelper')) {
+            $helperSet->set(new QuestionHelper(), 'dialog');
+        } else {
             $helperSet->set(new DialogHelper(), 'dialog');
         }
 
