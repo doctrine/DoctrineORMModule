@@ -46,7 +46,7 @@
         "doctrine/data-fixtures":             "1.0.*",
         "zendframework/zend-developer-tools": "*",
         "doctrine/migrations":                "1.0.*@dev",
-        "phpunit/phpunit":                    "~3.7",
+        "phpunit/phpunit":                    "~4.0",
         "squizlabs/php_codesniffer":          "1.5.*"
     },
     "suggest":           {
