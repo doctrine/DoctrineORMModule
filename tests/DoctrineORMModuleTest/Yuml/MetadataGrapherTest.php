@@ -428,10 +428,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class3
             ->expects($this->any())
             ->method('getAssociationTargetClass')
-            ->with($this->logicalOr(
-            $this->equalTo('b'),
-            $this->equalTo('c'))
-            )
+            ->with($this->logicalOr($this->equalTo('b'), $this->equalTo('c')))
             ->will($this->returnCallback(array($this,'getAssociationTargetClassMock')));
         $class3->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $class3->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
