@@ -425,7 +425,14 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class3 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
         $class3->expects($this->any())->method('getName')->will($this->returnValue('C'));
         $class3->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('b')));
-        $class3->expects($this->any())->method('getAssociationTargetClass')->with($this->logicalOr($this->equalTo('b'),$this->equalTo('c')))->will($this->returnCallback(array($this,'getAssociationTargetClassMock')));
+        $class3
+            ->expects($this->any())
+            ->method('getAssociationTargetClass')
+            ->with($this->logicalOr(
+            $this->equalTo('b'),
+            $this->equalTo('c'))
+            )
+            ->will($this->returnCallback(array($this,'getAssociationTargetClassMock')));
         $class3->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $class3->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
         $class3->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
