@@ -177,7 +177,7 @@ public function getServiceConfig()
 
 [Official documentation](http://doctrine-orm.readthedocs.org/en/latest/reference/namingstrategy.html)
 
-## Zend Configuration
+Zend Configuration
 
 ```php
 return array(
