@@ -403,8 +403,23 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers \DoctrineORMModule\Yuml\MetadataGrapher
+     * @dataProvider injectMultipleRelationsWithBothBiAndMonoDirectional
      */
-    public function testBugTestCaseFix()
+    public function testDrawMultipleClassRelatedBothBiAndMonoDirectional($class1, $class2, $class3, $expected)
+    {
+        $this->assertSame(
+            $expected,
+            $this->grapher->generateFromMetadata(array($class1, $class2,$class3))
+        );
+    }
+
+    /**
+     * dataProvider to inject classes in every order possible into the test
+     *     testDrawMultipleClassRelatedBothBiAndMonoDirectional
+     *
+     * @return array
+     */
+    public function injectMultipleRelationsWithBothBiAndMonoDirectional()
     {
         $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
         $class1->expects($this->any())->method('getName')->will($this->returnValue('A'));
@@ -434,29 +449,13 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         $class3->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
         $class3->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
 
-        $this->assertSame(
-            '[A]-c 1>[C],[B]<>b *-c 1>[C]',
-            $this->grapher->generateFromMetadata(array($class1, $class2,$class3))
-        );
-        $this->assertSame(
-            '[A]-c 1>[C],[C]<c 1-b *<>[B]',
-            $this->grapher->generateFromMetadata(array($class1, $class3,$class2))
-        );
-        $this->assertSame(
-            '[B]<>b *-c 1>[C],[A]-c 1>[C]',
-            $this->grapher->generateFromMetadata(array($class2, $class1,$class3))
-        );
-        $this->assertSame(
-            '[B]<>b *-c 1>[C],[A]-c 1>[C]',
-            $this->grapher->generateFromMetadata(array($class2, $class3,$class1))
-        );
-        $this->assertSame(
-            '[C]<c 1-b *<>[B],[A]-c 1>[C]',
-            $this->grapher->generateFromMetadata(array($class3, $class1,$class2))
-        );
-        $this->assertSame(
-            '[C]<c 1-b *<>[B],[A]-c 1>[C]',
-            $this->grapher->generateFromMetadata(array($class3, $class2,$class1))
+        return array(
+            array($class1, $class2, $class3, '[A]-c 1>[C],[B]<>b *-c 1>[C]'),
+            array($class1, $class3, $class2, '[A]-c 1>[C],[C]<c 1-b *<>[B]'),
+            array($class2, $class1, $class3, '[B]<>b *-c 1>[C],[A]-c 1>[C]'),
+            array($class2, $class3, $class1, '[B]<>b *-c 1>[C],[A]-c 1>[C]'),
+            array($class3, $class1, $class2, '[C]<c 1-b *<>[B],[A]-c 1>[C]'),
+            array($class3, $class2, $class1, '[C]<c 1-b *<>[B],[A]-c 1>[C]')
         );
     }
 
