@@ -105,7 +105,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             }
         }
 
-        if (Version::compare('2.5.0') >= 0) {
+        if (Version::compare('2.5.0') >= 0 || Version::compare('2.5.0') == -1) {
             $secondLevelCache = $options->getSecondLevelCache();
 
             if ($secondLevelCache->isEnabled()) {
