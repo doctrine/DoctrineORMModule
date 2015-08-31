@@ -106,7 +106,7 @@ class MetadataGrapher
         $bidirectional  = false;
 
         if ($isInverse) {
-            foreach($class2->getAssociationNames()as $class2Side){
+            foreach ($class2->getAssociationNames() as $class2Side){
                 $targetClass = $this->getClassByName($class2->getAssociationTargetClass($class2Side));
                 if ($class1->getName() == $targetClass->getName()){
                     $class2SideName = $class2Side;
