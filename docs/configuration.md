@@ -175,6 +175,10 @@ public function getServiceConfig()
 
 ### How to Use Naming Strategy
 
+[Official documentation](http://doctrine-orm.readthedocs.org/en/latest/reference/namingstrategy.html)
+
+## Zend Configuration
+
 ```php
 return array(
     'service_manager' => array(
