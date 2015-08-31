@@ -106,7 +106,13 @@ class MetadataGrapher
         $bidirectional  = false;
 
         if ($isInverse) {
-            $class2SideName = (string) $class1->getAssociationMappedByTargetField($association);
+            foreach($class2->getAssociationNames()as $class2Side){
+                $targetClass = $this->getClassByName($class2->getAssociationTargetClass($class2Side));
+                if ($class1->getName() == $targetClass->getName()){
+                    $class2SideName = $class2Side;
+                    break;
+                }
+            }
 
             if ($class2SideName) {
                 $class2Count    = $class2->isCollectionValuedAssociation($class2SideName) ? 2 : 1;
@@ -223,7 +229,7 @@ class MetadataGrapher
      */
     private function visitAssociation($className, $association = null)
     {
-        if (null === $association) {
+        if (!$association) {
             if (isset($this->visitedAssociations[$className])) {
                 return false;
             }
