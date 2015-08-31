@@ -101,7 +101,7 @@ class MetadataGrapher
         }
 
         $class1SideName = $association;
-        $class2SideName = '';
+        $class2SideName = null;
         $class2Count    = 0;
         $bidirectional  = false;
 
@@ -229,7 +229,7 @@ class MetadataGrapher
      */
     private function visitAssociation($className, $association = null)
     {
-        if (!$association) {
+        if (null === $association) {
             if (isset($this->visitedAssociations[$className])) {
                 return false;
             }
