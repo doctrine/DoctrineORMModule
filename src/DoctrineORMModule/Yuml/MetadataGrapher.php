@@ -145,7 +145,7 @@ class MetadataGrapher
      * @param ClassMetadata $class2
      * @return string|null
      */
-    private function getClassReverseAssociationName(ClassMetadata $class1,  ClassMetadata $class2)
+    private function getClassReverseAssociationName(ClassMetadata $class1, ClassMetadata $class2)
     {
         foreach ($class2->getAssociationNames() as $class2Side) {
             $targetClass = $this->getClassByName($class2->getAssociationTargetClass($class2Side));
