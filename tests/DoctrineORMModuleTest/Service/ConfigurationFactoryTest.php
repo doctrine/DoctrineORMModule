@@ -20,6 +20,7 @@
 namespace DoctrineORMModuleTest\Service;
 
 use PHPUnit_Framework_TestCase;
+use Doctrine\ORM\Version;
 use DoctrineORMModule\Service\ConfigurationFactory;
 use Doctrine\Common\Cache\ArrayCache;
 use Zend\ServiceManager\ServiceManager;
@@ -261,12 +262,18 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $this->serviceManager->setService('Config', $config);
 
         $ormConfig = $this->factory->createService($this->serviceManager);
-
-        $this->assertNull($ormConfig->getSecondLevelCacheConfiguration());
+        if (Version::compare('2.5.0') <= 0) {
+            $this->assertNull($ormConfig->getSecondLevelCacheConfiguration());
+        } else {
+            $this->assertFalse(method_exists($ormConfig, "getSecondLevelCacheConfiguration"));
+        }
     }
 
     public function testCanInstantiateWithSecondLevelCacheConfig()
     {
+        if (Version::compare('2.5.0') > 0) {
+            $this->markTestSkipped('doctrine/orm does not support this feature');
+        }
         $config = array(
             'doctrine' => array(
                 'configuration' => array(
@@ -300,7 +307,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
         $ormConfig        = $this->factory->createService($this->serviceManager);
         $secondLevelCache = $ormConfig->getSecondLevelCacheConfiguration();
-        
+
         $this->assertInstanceOf('Doctrine\ORM\Cache\CacheConfiguration', $secondLevelCache);
 
         $cacheFactory = $secondLevelCache->getCacheFactory();
