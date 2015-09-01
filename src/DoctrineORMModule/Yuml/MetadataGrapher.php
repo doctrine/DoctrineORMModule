@@ -208,6 +208,7 @@ class MetadataGrapher
             foreach ($this->metadata as $class) {
                 if ($class->getName() === $className) {
                     $this->classByNames[$className] = $class;
+                    break;
                 }
             }
         }
