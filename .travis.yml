@@ -7,6 +7,10 @@ php:
   - 7
   - hhvm
 
+env:
+  - DOCTRINE_ORM="~2.4.0"
+  - DOCTRINE_ORM="~2.5.0"
+
 matrix:
   allow_failures:
     - php: 7
@@ -14,6 +18,8 @@ matrix:
 
 before_script:
   - composer update --prefer-source
+  - composer install --prefer-source
+  - composer require doctrine/orm:${DOCTRINE_ORM} --prefer-source --no-interaction --update-with-dependencies
 
 script:
   - ./vendor/bin/phpunit --coverage-clover ./build/clover.xml
