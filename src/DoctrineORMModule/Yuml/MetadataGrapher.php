@@ -117,8 +117,8 @@ class MetadataGrapher
         $class2Count    = 0;
         $bidirectional  = false;
 
-        if (null !== $class2SideName){
-            if ($isInverse){
+        if (null !== $class2SideName) {
+            if ($isInverse) {
                 $class2Count    = $class2->isCollectionValuedAssociation($class2SideName) ? 2 : 1;
                 $bidirectional  = true;
             } elseif ($class2->isAssociationInverseSide($class2SideName)) {
