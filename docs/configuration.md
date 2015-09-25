@@ -52,6 +52,20 @@ return array(
 ),
 ```
 
+### Option to set the doctrine type comment (DC2Type:myType) for custom types
+
+```php
+'doctrine' => array(
+    'connection' => array(
+        'orm_default' => array(
+            'doctrineCommentedTypes' => array(
+                'mytype'
+            ),
+        ),
+    ),
+),
+```
+
 ### How to Define Relationships with Abstract Classes and Interfaces (ResolveTargetEntityListener)
 
 ```php

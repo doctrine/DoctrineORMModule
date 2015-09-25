@@ -85,6 +85,11 @@ class DBALConnection extends AbstractOptions
     protected $doctrineTypeMappings = array();
 
     /**
+     * @var array
+     */
+    protected $doctrineCommentedTypes = array();
+
+    /**
      * @param string $configuration
      */
     public function setConfiguration($configuration)
@@ -150,6 +155,24 @@ class DBALConnection extends AbstractOptions
     public function getDoctrineTypeMappings()
     {
         return $this->doctrineTypeMappings;
+    }
+
+    /**
+     * @param  array                                     $doctrineCommentedTypes
+     * @return \DoctrineORMModule\Options\DBALConnection
+     */
+    public function setDoctrineCommentedTypes($doctrineCommentedTypes)
+    {
+        $this->doctrineCommentedTypes = (array) $doctrineCommentedTypes;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDoctrineCommentedTypes()
+    {
+        return $this->doctrineCommentedTypes;
     }
 
     /**
