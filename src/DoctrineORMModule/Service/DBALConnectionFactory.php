@@ -62,7 +62,6 @@ class DBALConnectionFactory extends AbstractFactory
             $platform->registerDoctrineTypeMapping($dbType, $doctrineType);
         }
         foreach ($options->getDoctrineCommentedTypes() as $type) {
-            var_dump(Type::getType($type));die;
             $platform->markDoctrineTypeCommented(Type::getType($type));
         }
 
