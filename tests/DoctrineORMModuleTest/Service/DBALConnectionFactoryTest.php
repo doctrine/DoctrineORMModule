@@ -122,6 +122,10 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
             $configurationFactory->createService($this->serviceManager)
         );
         $dbal = $this->factory->createService($this->serviceManager);
-        $this->assertInstanceOf(MoneyType::class, Type::getType($dbal->getDatabasePlatform()->getDoctrineTypeMapping("money")));
+        $platform = $dbal->getDatabasePlatform();
+        $type = Type::getType($platform->getDoctrineTypeMapping("money"));
+
+        $this->assertInstanceOf(MoneyType::class, $type);
+        $this->assertTrue($platform->isCommentedDoctrineType($type));
     }
 }
