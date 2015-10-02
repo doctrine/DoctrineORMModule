@@ -28,7 +28,7 @@ class DBALConnectionTest extends PHPUnit_Framework_TestCase
     public function testSetNullCommentedTypes()
     {
         $options = new DBALConnection();
-        $options->setDoctrineCommentedTypes(null);
+        $options->setDoctrineCommentedTypes([]);
         $this->assertSame(array(), $options->getDoctrineCommentedTypes());
     }
 

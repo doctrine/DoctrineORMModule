@@ -160,9 +160,9 @@ class DBALConnection extends AbstractOptions
     /**
      * @param  array                                     $doctrineCommentedTypes
      */
-    public function setDoctrineCommentedTypes($doctrineCommentedTypes)
+    public function setDoctrineCommentedTypes(array $doctrineCommentedTypes)
     {
-        $this->doctrineCommentedTypes = (array) $doctrineCommentedTypes;
+        $this->doctrineCommentedTypes = $doctrineCommentedTypes;
     }
 
     /**
