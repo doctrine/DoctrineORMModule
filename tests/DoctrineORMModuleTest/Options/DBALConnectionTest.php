@@ -23,6 +23,9 @@ use PHPUnit_Framework_TestCase;
 use DoctrineORMModule\Options\DBALConnection;
 use Doctrine\ORM\Repository\DefaultRepositoryFactory;
 
+/**
+ * @covers \DoctrineORMModule\Options\DBALConnection
+ */
 class DBALConnectionTest extends PHPUnit_Framework_TestCase
 {
     public function testSetNullCommentedTypes()
