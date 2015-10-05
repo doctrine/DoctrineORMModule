@@ -29,5 +29,5 @@ namespace DoctrineORMModule;
  */
 class Version
 {
-    const VERSION = '0.9.1';
+    const VERSION = '0.9.2';
 }
