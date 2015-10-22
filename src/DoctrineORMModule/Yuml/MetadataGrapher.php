@@ -43,6 +43,13 @@ class MetadataGrapher
     private $metadata;
 
     /**
+     * Temporary array where reverse association name are stored
+     *
+     * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata[]
+     */
+    private $classByNames = array();
+
+    /**
      * Generate a YUML compatible `dsl_text` to describe a given array
      * of entities
      *
@@ -85,6 +92,11 @@ class MetadataGrapher
         return implode(',', $str);
     }
 
+    /**
+     * @param ClassMetadata $class1
+     * @param string $association
+     * @return string
+     */
     private function getAssociationString(ClassMetadata $class1, $association)
     {
         $targetClassName = $class1->getAssociationTargetClass($association);
@@ -101,27 +113,17 @@ class MetadataGrapher
         }
 
         $class1SideName = $association;
-        $class2SideName = '';
+        $class2SideName = $this->getClassReverseAssociationName($class1, $class2);
         $class2Count    = 0;
         $bidirectional  = false;
 
-        if ($isInverse) {
-            $class2SideName = (string) $class1->getAssociationMappedByTargetField($association);
-
-            if ($class2SideName) {
+        if (null !== $class2SideName) {
+            if ($isInverse) {
                 $class2Count    = $class2->isCollectionValuedAssociation($class2SideName) ? 2 : 1;
                 $bidirectional  = true;
-            }
-        } else {
-            foreach ($class2->getAssociationNames() as $class2Side) {
-                if ($class2->isAssociationInverseSide($class2Side)
-                    && ($association === $class2->getAssociationMappedByTargetField($class2Side))
-                ) {
-                    $class2SideName = $class2Side;
-                    $class2Count    = $class2->isCollectionValuedAssociation($class2SideName) ? 2 : 1;
-                    $bidirectional  = true;
-                    break;
-                }
+            } elseif ($class2->isAssociationInverseSide($class2SideName)) {
+                $class2Count    = $class2->isCollectionValuedAssociation($class2SideName) ? 2 : 1;
+                $bidirectional  = true;
             }
         }
 
@@ -136,6 +138,23 @@ class MetadataGrapher
             . ($class1Count > 1 ? '*' : ($class1Count ? '1' : '')) // class1 side single/multi valued
             . (($bidirectional && $isInverse) ? '<>' : '>') // class1 side arrow
             . $this->getClassString($class2);
+    }
+
+    /**
+     * @param ClassMetadata $class1
+     * @param ClassMetadata $class2
+     * @return string|null
+     */
+    private function getClassReverseAssociationName(ClassMetadata $class1, ClassMetadata $class2)
+    {
+        foreach ($class2->getAssociationNames() as $class2Side) {
+            $targetClass = $this->getClassByName($class2->getAssociationTargetClass($class2Side));
+            if ($class1->getName() === $targetClass->getName()) {
+                return $class2Side;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -185,13 +204,16 @@ class MetadataGrapher
      */
     private function getClassByName($className)
     {
-        foreach ($this->metadata as $class) {
-            if ($class->getName() === $className) {
-                return $class;
+        if (!isset($this->classByNames[$className])) {
+            foreach ($this->metadata as $class) {
+                if ($class->getName() === $className) {
+                    $this->classByNames[$className] = $class;
+                    break;
+                }
             }
         }
 
-        return null;
+        return isset($this->classByNames[$className])? $this->classByNames[$className]: null;
     }
 
     /**

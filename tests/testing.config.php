@@ -55,5 +55,10 @@ return array(
                 ),
             ),
         ),
+        'migrations_configuration' => array(
+            'orm_default' => array(
+                'directory' => 'build/',
+            ),
+        ),
     ),
 );

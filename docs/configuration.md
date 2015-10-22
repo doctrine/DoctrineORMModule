@@ -1,4 +1,4 @@
-#### How to Register Custom DQL Functions
+### How to Register Custom DQL Functions
 
 ```php
 return array(
@@ -52,6 +52,20 @@ return array(
 ),
 ```
 
+### Option to set the doctrine type comment (DC2Type:myType) for custom types
+
+```php
+'doctrine' => array(
+    'connection' => array(
+        'orm_default' => array(
+            'doctrineCommentedTypes' => array(
+                'mytype'
+            ),
+        ),
+    ),
+),
+```
+
 ### How to Define Relationships with Abstract Classes and Interfaces (ResolveTargetEntityListener)
 
 ```php
@@ -65,38 +79,6 @@ return array(
     )
 )
 ```
-
-### How to enable and configure second-level cache
-
-```php
-'doctrine' => array(
-   'configuration' => array(
-       'orm_default' => array(
-           'result_cache' => 'apc', // Second level cache reuse the cache defined in result cache
-
-           'second_level_cache' => array(
-               'enabled'               => true,
-               'default_lifetime'      => 200,
-               'default_lock_lifetime' => 500,
-
-               'regions' => array(
-                   'my_first_region' => array(
-                       'lifetime'      => 800,
-                       'lock_lifetime' => 1000
-                   ),
-
-                   'my_second_region' => array(
-                       'lifetime'      => 10,
-                       'lock_lifetime' => 20
-                   )
-               )
-           )
-       ),
-   ),
-)
-```
-
-You also need to add the `Cache` annotation to your model ([read more](http://doctrine-orm.readthedocs.org/en/latest/reference/second-level-cache.html#entity-cache-definition)).
 
 ### Set a custom default repository
 
@@ -205,27 +187,25 @@ public function getServiceConfig()
 }
 ```
 
-## How to use second level cache
+### How to Use Naming Strategy
 
-> Don't forget to also make your entities cacheable for this to work ([learn more](http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/second-level-cache.html))
+[Official documentation](http://doctrine-orm.readthedocs.org/en/latest/reference/namingstrategy.html)
+
+Zend Configuration
 
 ```php
-'doctrine' => array(
-    'configuration' => array(
-        'orm_default' => array(
-            'second_level_cache' => array(
-                'enabled'                        => true,
-                'default_lifetime'               => 3600,
-                'default_lock_lifetime'          => 60,
-                'file_lock_region_directory' => __DIR__ . '/../my_dir',
-                'regions'                        => array(
-                    'My\Region\Name' => array(
-                        'lifetime'      => 20,
-                        'lock_lifetime' => 200
-                    )
-                )
-            )
-        )
+return array(
+    'service_manager' => array(
+        'invokables' => array(
+            'Doctrine\ORM\Mapping\UnderscoreNamingStrategy' => 'Doctrine\ORM\Mapping\UnderscoreNamingStrategy',
+        ),
     ),
-),
+    'doctrine' => array(
+        'configuration' => array(
+            'orm_default' => array(
+                'naming_strategy' => 'Doctrine\ORM\Mapping\UnderscoreNamingStrategy'
+            ),
+        ),
+    ),
+);
 ```

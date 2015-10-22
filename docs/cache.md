@@ -1,89 +1,109 @@
-#### Caching queries, results and metadata
+### Caching queries, results and metadata
 
 If you want to set a cache for query, result and metadata, you can specify this inside your `module.config.php`
 
 ```php
-'doctrine' => array(
-    'configuration' => array(
-        'orm_default' => array(
-            'query_cache'       => 'apc',
-            'result_cache'      => 'apc',
-            'metadata_cache'    => 'apc'
-        )
-    )
-),
+'doctrine' => [
+    'configuration' => [
+        'orm_default' => [
+            'query_cache'       => 'filesystem',
+            'result_cache'      => 'array',
+            'metadata_cache'    => 'apc',
+            'hydration_cache'   => 'memcached',
+        ],
+    ],
+],
 ```
 
-The previous configuration take in consideration an Apc adapter. You can specify any other adapter that implements
-the `Doctrine\Common\Cache\Cache` interface.
+The previous configuration take in consideration different cache adapters. You can specify any other adapter that implements
+the `Doctrine\Common\Cache\Cache` interface. Find more [here](http://doctrine-orm.readthedocs.org/en/latest/reference/caching.html).
 
-##### Example with Memcached
+#### Example with Redis
 
 ```php
-'doctrine' => array(
-    'configuration' => array(
-        'orm_default' => array(
-            'query_cache'       => 'memcached',
-            'result_cache'      => 'memcached',
-            'metadata_cache'    => 'memcached'
-        )
-    )
-),
+'doctrine' => [
+    'configuration' => [
+        'orm_default' => [
+            'query_cache'       => 'redis',
+            'result_cache'      => 'redis',
+            'metadata_cache'    => 'redis',
+            'hydration_cache'   => 'redis',
+        ],
+    ],
+],
 ```
 
 In this case you have to specify a custom factory in your `service_manager` configuration to create a
-`Memcached` object:
+`Redis` object:
 
 ```php
 // module.config.php
-'service_manager' => array(
-    'factories' => array(
-        'my_memcached_alias' => function() {
-            $memcached = new \Memcached();
-            $memcached->addServer('localhost', 11211);
-            return $memcached;
-        }
-    )
-),
-```
-
-Please be aware that you can't use *Closures* inside yout module configuration if you want to cache it. To avoid this problem, you have to use a Factory:
-```php
-// module.config.php
-'service_manager' => array(
-    'factories' => array(
-        'my_memcached_alias' => __NAMESPACE__ . '\Cache\MemcachedFactory'
-    )
-),
+'service_manager' => [
+    'factories' => [
+        __NAMESPACE__ . '\Cache\Redis' => __NAMESPACE__ . '\Cache\RedisFactory',
+    ],
+],
+'doctrine' => [
+    'cache' => [
+        'redis' => [
+            'namespace' => __NAMESPACE__ . '_Doctrine',
+            'instance'  => __NAMESPACE__ . '\Cache\Redis',
+        ],
+    ],
+],
 ```
 
 ```php
-// MemcachedFactory.php
+// RedisFactory.php
 namespace YourModule\Cache;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class MemcachedFactory implements FactoryInterface {
+class RedisFactory implements FactoryInterface
+{
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $redis = new Redis();
+        $redis->connect('127.0.0.1', 6379);
 
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return \Memcached
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator) {
-
-        $memcached = new \Memcached();
-        $memcached->addServer('localhost', 11211);
-        return $memcached;
+        return $redis;
     }
-
 }
 ```
 
+Read more about [Caching](http://doctrine-orm.readthedocs.org/en/latest/reference/caching.html).
 
-Other supported that need a custom factory are:
 
-* `memcache`: require you to return a `Memcache` instance (use the `my_memcache_alias` as the key in the
-service manager).
-* `redis`: require you to return a `Redis` instance (use the `my_redis_alias` as the key in the service manager).
+
+
+### How to enable and configure Second Level Cache
+
+```php
+'doctrine' => [
+   'configuration' => [
+       'orm_default' => [
+           'result_cache' => 'redis', // Second level cache reuse the cache defined in result cache
+           'second_level_cache' => [
+               'enabled'               => true,
+               'default_lifetime'      => 200,
+               'default_lock_lifetime' => 500,
+               'file_lock_region_directory' => __DIR__ . '/../my_dir',
+               'regions' => [
+                   'My\FirstRegion\Name' => [
+                       'lifetime'      => 800,
+                       'lock_lifetime' => 1000
+                   ],
+                   'My\SecondRegion\Name' => [
+                       'lifetime'      => 10,
+                       'lock_lifetime' => 20
+                   ],
+               ],
+           ],
+       ],
+   ],
+],
+```
+
+You also need to add the `Cache` annotation to your model ([read more](http://doctrine-orm.readthedocs.org/en/latest/reference/second-level-cache.html#entity-cache-definition)).
+Read more about [Second Level Cache](http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/second-level-cache.html).
