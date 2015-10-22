@@ -20,6 +20,7 @@
 namespace DoctrineORMModule\Service;
 
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Types\Type;
 use DoctrineModule\Service\AbstractFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -60,6 +61,10 @@ class DBALConnectionFactory extends AbstractFactory
         $platform = $connection->getDatabasePlatform();
         foreach ($options->getDoctrineTypeMappings() as $dbType => $doctrineType) {
             $platform->registerDoctrineTypeMapping($dbType, $doctrineType);
+        }
+
+        foreach ($options->getDoctrineCommentedTypes() as $type) {
+            $platform->markDoctrineTypeCommented(Type::getType($type));
         }
 
         return $connection;

@@ -4,12 +4,12 @@ php:
   - 5.4
   - 5.5
   - 5.6
-  - 7.0
+  - 7
   - hhvm
 
 matrix:
   allow_failures:
-    - php: 7.0
+    - php: 7
     - php: hhvm
 
 before_script:
@@ -17,9 +17,9 @@ before_script:
 
 script:
   - ./vendor/bin/phpunit --coverage-clover ./build/clover.xml
-  - if [ $TRAVIS_PHP_VERSION != 'hhvm' ]; then php build/coverage-checker.php build/clover.xml 70; fi
+  - if [ $TRAVIS_PHP_VERSION != 'hhvm' ] && [ $TRAVIS_PHP_VERSION != '7' ]; then php build/coverage-checker.php build/clover.xml 70; fi
   - ./vendor/bin/phpcs --standard=PSR2 ./src/ ./tests/
 
 after_script:
-  - if [ $TRAVIS_PHP_VERSION != 'hhvm' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [ $TRAVIS_PHP_VERSION != 'hhvm' ]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover.xml; fi
+  - if [ $TRAVIS_PHP_VERSION != 'hhvm' ] && [ $TRAVIS_PHP_VERSION != '7' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [ $TRAVIS_PHP_VERSION != 'hhvm' ] && [ $TRAVIS_PHP_VERSION != '7' ]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover.xml; fi

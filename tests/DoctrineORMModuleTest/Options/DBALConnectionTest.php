@@ -17,17 +17,28 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModule;
+namespace DoctrineORMModuleTest\Options;
+
+use PHPUnit_Framework_TestCase;
+use DoctrineORMModule\Options\DBALConnection;
+use Doctrine\ORM\Repository\DefaultRepositoryFactory;
 
 /**
- * Version
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @since   0.1.0
- * @author  Kyle Spraggs <theman@spiffyjr.me>
+ * @covers \DoctrineORMModule\Options\DBALConnection
  */
-class Version
+class DBALConnectionTest extends PHPUnit_Framework_TestCase
 {
-    const VERSION = '0.9.2';
+    public function testSetNullCommentedTypes()
+    {
+        $options = new DBALConnection();
+        $options->setDoctrineCommentedTypes([]);
+        $this->assertSame(array(), $options->getDoctrineCommentedTypes());
+    }
+
+    public function testSetGetCommentedTypes()
+    {
+        $options = new DBALConnection();
+        $options->setDoctrineCommentedTypes(array('mytype'));
+        $this->assertSame(array('mytype'), $options->getDoctrineCommentedTypes());
+    }
 }

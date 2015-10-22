@@ -16,18 +16,35 @@
  * and is licensed under the MIT license. For more information, see
  * <http://www.doctrine-project.org>.
  */
+namespace DoctrineORMModuleTest\Assets\Types;
 
-namespace DoctrineORMModule;
+use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 /**
- * Version
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @since   0.1.0
- * @author  Kyle Spraggs <theman@spiffyjr.me>
+ * My custom datatype.
  */
-class Version
+class MoneyType extends Type
 {
-    const VERSION = '0.9.2';
+    const MONEY = 'money';
+
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    {
+        return 'MyMoney';
+    }
+
+    public function convertToPHPValue($value, AbstractPlatform $platform)
+    {
+        return new Money($value);
+    }
+
+    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    {
+        return $value->toDecimal();
+    }
+
+    public function getName()
+    {
+        return self::MONEY;
+    }
 }
