@@ -9,6 +9,7 @@ return array(
                 'name' => 'Migrations Name',
                 'namespace' => 'Migrations  Namespace',
                 'table' => 'migrations_table',
+                'column' => 'version',
             ),
         ),
     ),

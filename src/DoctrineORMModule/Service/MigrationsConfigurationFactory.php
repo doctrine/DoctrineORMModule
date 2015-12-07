@@ -50,6 +50,7 @@ class MigrationsConfigurationFactory extends AbstractFactory
         $configuration->setMigrationsDirectory($migrationsConfig['directory']);
         $configuration->setMigrationsNamespace($migrationsConfig['namespace']);
         $configuration->setMigrationsTableName($migrationsConfig['table']);
+        $configuration->setMigrationsColumnName($migrationsConfig['column']);
         $configuration->registerMigrationsFromDirectory($migrationsConfig['directory']);
 
         return $configuration;
