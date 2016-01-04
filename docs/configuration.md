@@ -118,7 +118,6 @@ return array(
                 'query_cache'       => 'array',
                 'result_cache'      => 'array',
                 'hydration_cache'   => 'array',
-                'driver'            => 'orm_crawler',
                 'generate_proxies'  => true,
                 'proxy_dir'         => 'data/DoctrineORMModule/Proxy',
                 'proxy_namespace'   => 'DoctrineORMModule\Proxy',
