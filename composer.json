@@ -55,7 +55,7 @@
         "doctrine/migrations":                "doctrine migrations if you want to keep your schema definitions versioned"
     },
     "autoload":          {
-        "psr-0": {
+        "psr-4": {
             "DoctrineORMModule\\": "src/"
         }
     }
