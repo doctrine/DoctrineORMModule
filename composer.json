@@ -33,7 +33,7 @@
     ],
     "require":           {
         "php":                               ">=5.4",
-        "doctrine/doctrine-module":          "~0.8",
+        "doctrine/doctrine-module":          "~1.0",
         "doctrine/orm":                      ">=2.5,<2.7",
         "doctrine/dbal":                     ">=2.4,<2.7",
         "zendframework/zend-stdlib":         "~2.3",
