@@ -116,6 +116,59 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $this->factory->createService($this->serviceManager);
     }
 
+    public function testWillInstantiateConfigWithQuoteStrategyObject()
+    {
+        $quoteStrategy = $this->getMock('Doctrine\ORM\Mapping\QuoteStrategy');
+
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+                        'quote_strategy' => $quoteStrategy,
+                    ),
+                ),
+            ),
+        );
+        $this->serviceManager->setService('Config', $config);
+        $factory = new ConfigurationFactory('test_default');
+        $ormConfig = $factory->createService($this->serviceManager);
+        $this->assertSame($quoteStrategy, $ormConfig->getQuoteStrategy());
+    }
+
+    public function testWillInstantiateConfigWithQuoteStrategyReference()
+    {
+        $quoteStrategy = $this->getMock('Doctrine\ORM\Mapping\QuoteStrategy');
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+                        'quote_strategy' => 'test_quote_strategy',
+                    ),
+                ),
+            ),
+        );
+        $this->serviceManager->setService('Config', $config);
+        $this->serviceManager->setService('test_quote_strategy', $quoteStrategy);
+        $ormConfig = $this->factory->createService($this->serviceManager);
+        $this->assertSame($quoteStrategy, $ormConfig->getQuoteStrategy());
+    }
+
+    public function testWillNotInstantiateConfigWithInvalidQuoteStrategyReference()
+    {
+        $config = array(
+            'doctrine' => array(
+                'configuration' => array(
+                    'test_default' => array(
+                        'quote_strategy' => 'test_quote_strategy',
+                    ),
+                ),
+            ),
+        );
+        $this->serviceManager->setService('Config', $config);
+        $this->setExpectedException('Zend\ServiceManager\Exception\InvalidArgumentException');
+        $this->factory->createService($this->serviceManager);
+    }
+
     public function testWillInstantiateConfigWithHydrationCacheSetting()
     {
         $config = array(
