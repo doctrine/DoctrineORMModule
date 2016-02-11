@@ -169,6 +169,7 @@ return array(
                 'name'      => 'Doctrine Database Migrations',
                 'namespace' => 'DoctrineORMModule\Migrations',
                 'table'     => 'migrations',
+                'column'    => 'version',
             ),
         ),
 
