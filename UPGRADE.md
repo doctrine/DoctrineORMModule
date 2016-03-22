@@ -1,3 +1,10 @@
+# 0.10.0
+
+ * [#450](https://github.com/doctrine/DoctrineORMModule/pull/450) Use stable release for DoctrineModule
+ * [#443](https://github.com/doctrine/DoctrineORMModule/pull/443) Added ability to configure the version column in MigrationsConfigurationFactory
+ * [#457](https://github.com/doctrine/DoctrineORMModule/pull/457) Fixed compatibility with Zend\Mvc 2.7
+ * [#458](https://github.com/doctrine/DoctrineORMModule/pull/458) Drop PHP 5.4 and allow PHP 7 on Travis
+
 # 0.9.2
  * [#423](https://github.com/doctrine/DoctrineORMModule/pull/423) Docs about cache updated
  * [#428](https://github.com/doctrine/DoctrineORMModule/pull/428) metadatagrapher - fix diagram inconcistency
