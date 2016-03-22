@@ -31,20 +31,38 @@
             "email": "guilhermeblanco@hotmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/svycka/DoctrineModule"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/svycka/ZendDeveloperTools"
+        }
+    ],
     "require":           {
         "php":                               "^5.5 || ^7.0",
-        "doctrine/doctrine-module":          "~1.0",
+        "doctrine/doctrine-module":          "dev-feature/sm3-support",
         "doctrine/orm":                      ">=2.5,<2.7",
         "doctrine/dbal":                     ">=2.4,<2.7",
-        "zendframework/zend-stdlib":         "~2.3",
-        "zendframework/zend-mvc":            "~2.3",
-        "zendframework/zend-servicemanager": "~2.3",
+        "zendframework/zend-stdlib":         "^2.7.6",
+        "zendframework/zend-hydrator":       "^1.1",
+        "zendframework/zend-mvc":            "^2.5.2",
+        "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
         "symfony/console":                   "~2.5|~3.0"
     },
     "require-dev":       {
-        "zendframework/zendframework":        "~2.3",
+        "zendframework/zend-modulemanager":   "^2.6.1",
+        "zendframework/zend-config":          "^2.6",
+        "zendframework/zend-view":            "^2.5.2",
+        "zendframework/zend-serializer":      "^2.6",
+        "zendframework/zend-log":             "^2.5.2",
+        "zendframework/zend-i18n":            "^2.6",
+        "zendframework/zend-console":         "^2.6",
+        "zendframework/zend-code":            "^2.5.2",
         "doctrine/data-fixtures":             "1.0.*",
-        "zendframework/zend-developer-tools": "*",
+        "zendframework/zend-developer-tools": "dev-feature/sm-v3-support",
         "doctrine/migrations":                "1.0.*@dev",
         "phpunit/phpunit":                    "~4.0",
         "squizlabs/php_codesniffer":          "~2"
