@@ -20,6 +20,7 @@
 namespace DoctrineORMModule\Service;
 
 use DoctrineModule\Form\Element\ObjectSelect;
+use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\FactoryInterface;
 
@@ -34,15 +35,23 @@ class ObjectSelectFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}
+     *
+     * @return ObjectSelect
      */
-    public function createService(ServiceLocatorInterface $pluginManager)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $services      = $pluginManager->getServiceLocator();
-        $entityManager = $services->get('Doctrine\ORM\EntityManager');
+        $entityManager = $container->get('Doctrine\ORM\EntityManager');
         $element       = new ObjectSelect;
 
         $element->getProxy()->setObjectManager($entityManager);
 
         return $element;
+    }
+    /**
+     * {@inheritDoc}
+     */
+    public function createService(ServiceLocatorInterface $container)
+    {
+        return $this($container->getServiceLocator(), ObjectSelect::class);
     }
 }
