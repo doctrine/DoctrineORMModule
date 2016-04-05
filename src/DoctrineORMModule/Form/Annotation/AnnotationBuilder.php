@@ -56,8 +56,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     {
         parent::setEventManager($events);
 
-        $annotationsListener = new ElementAnnotationsListener($this->objectManager);
-        $annotationsListener->attach($this->getEventManager());
+        (new ElementAnnotationsListener($this->objectManager))->attach($this->getEventManager());
 
         return $this;
     }
