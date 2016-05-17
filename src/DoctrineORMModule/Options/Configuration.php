@@ -567,7 +567,7 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @return string|null|NamingStrategy
+     * @return string|null|QuoteStrategy
      */
     public function getQuoteStrategy()
     {
