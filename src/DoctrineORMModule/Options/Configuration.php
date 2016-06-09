@@ -683,5 +683,4 @@ class Configuration extends DBALConfiguration
     {
         $this->defaultQueryHints = $defaultQueryHints;
     }
-
 }
