@@ -36,6 +36,7 @@
         "doctrine/doctrine-module":          "~1.0",
         "doctrine/orm":                      ">=2.5,<2.7",
         "doctrine/dbal":                     ">=2.4,<2.7",
+        "zendframework/zenddiagnostics":     "^1.0",
         "zendframework/zend-stdlib":         "~2.3",
         "zendframework/zend-mvc":            "~2.3",
         "zendframework/zend-servicemanager": "~2.3",
