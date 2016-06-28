@@ -52,7 +52,7 @@
         "zendframework/zend-console":         "^2.6",
         "zendframework/zend-code":            "^2.5.2",
         "doctrine/data-fixtures":             "1.0.*",
-        "zendframework/zend-developer-tools": "^1.1",
+        "zendframework/zend-developer-tools": "^1.0",
         "doctrine/migrations":                "1.0.*@dev",
         "phpunit/phpunit":                    "~4.0",
         "squizlabs/php_codesniffer":          "~2"
