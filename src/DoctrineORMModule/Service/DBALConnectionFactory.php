@@ -22,6 +22,7 @@ namespace DoctrineORMModule\Service;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Types\Type;
 use DoctrineModule\Service\AbstractFactory;
+use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -35,16 +36,17 @@ class DBALConnectionFactory extends AbstractFactory
 {
     /**
      * {@inheritDoc}
+     *
      * @return \Doctrine\DBAL\Connection
      */
-    public function createService(ServiceLocatorInterface $sl)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         /** @var $options \DoctrineORMModule\Options\DBALConnection */
-        $options = $this->getOptions($sl, 'connection');
+        $options = $this->getOptions($container, 'connection');
         $pdo     = $options->getPdo();
 
         if (is_string($pdo)) {
-            $pdo = $sl->get($pdo);
+            $pdo = $container->get($pdo);
         }
 
         $params = array(
@@ -54,8 +56,8 @@ class DBALConnectionFactory extends AbstractFactory
         );
         $params = array_merge($params, $options->getParams());
 
-        $configuration = $sl->get($options->getConfiguration());
-        $eventManager  = $sl->get($options->getEventManager());
+        $configuration = $container->get($options->getConfiguration());
+        $eventManager  = $container->get($options->getEventManager());
 
         $connection = DriverManager::getConnection($params, $configuration, $eventManager);
         $platform = $connection->getDatabasePlatform();
@@ -68,6 +70,15 @@ class DBALConnectionFactory extends AbstractFactory
         }
 
         return $connection;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return \Doctrine\DBAL\Connection
+     */
+    public function createService(ServiceLocatorInterface $container)
+    {
+        return $this($container, \Doctrine\DBAL\Connection::class);
     }
 
     /**

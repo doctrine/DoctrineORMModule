@@ -35,8 +35,8 @@ class FormAnnotationBuilderFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testFormElementManagerGetsInjected()
     {
-        $entityManager      = $this->getMock('Doctrine\ORM\EntityManager', array(), array(), '', false);
-        $formElementManager = $this->getMock('Zend\Form\FormElementManager');
+        $entityManager      = $this->getMock('Doctrine\ORM\EntityManager', [], [], '', false);
+        $formElementManager = $this->getMock('Zend\Form\FormElementManager', [], [], '', false);
 
         $serviceManager = new ServiceManager();
 
