@@ -22,7 +22,7 @@ namespace DoctrineORMModule\Service;
 use DoctrineModule\Form\Element\ObjectRadio;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Factory for {@see ObjectRadio}
