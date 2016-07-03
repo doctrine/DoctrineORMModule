@@ -90,11 +90,11 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
 
         if ($quoteStrategy = $options->getQuoteStrategy()) {
             if (is_string($quoteStrategy)) {
-                if (!$serviceLocator->has($quoteStrategy)) {
+                if (!$container->has($quoteStrategy)) {
                     throw new InvalidArgumentException(sprintf('Quote strategy "%s" not found', $quoteStrategy));
                 }
 
-                $config->setQuoteStrategy($serviceLocator->get($quoteStrategy));
+                $config->setQuoteStrategy($container->get($quoteStrategy));
             } else {
                 $config->setQuoteStrategy($quoteStrategy);
             }
