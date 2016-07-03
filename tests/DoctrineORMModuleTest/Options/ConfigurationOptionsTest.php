@@ -42,6 +42,23 @@ class ConfigurationOptionsTest extends TestCase
         $options->setNamingStrategy(new \stdClass());
     }
 
+    public function testSetGetQuoteStrategy()
+    {
+        $options = new Configuration();
+        $options->setQuoteStrategy(null);
+        $this->assertNull($options->getQuoteStrategy());
+
+        $options->setQuoteStrategy('test');
+        $this->assertSame('test', $options->getQuoteStrategy());
+
+        $quoteStrategy = $this->getMock('Doctrine\ORM\Mapping\QuoteStrategy');
+        $options->setQuoteStrategy($quoteStrategy);
+        $this->assertSame($quoteStrategy, $options->getQuoteStrategy());
+
+        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $options->setQuoteStrategy(new \stdClass());
+    }
+
     public function testSetRepositoryFactory()
     {
         $options = new Configuration();
