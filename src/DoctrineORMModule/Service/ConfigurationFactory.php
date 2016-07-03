@@ -88,6 +88,18 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             }
         }
 
+        if ($quoteStrategy = $options->getQuoteStrategy()) {
+            if (is_string($quoteStrategy)) {
+                if (!$serviceLocator->has($quoteStrategy)) {
+                    throw new InvalidArgumentException(sprintf('Quote strategy "%s" not found', $quoteStrategy));
+                }
+
+                $config->setQuoteStrategy($serviceLocator->get($quoteStrategy));
+            } else {
+                $config->setQuoteStrategy($quoteStrategy);
+            }
+        }
+
         if ($repositoryFactory = $options->getRepositoryFactory()) {
             if (is_string($repositoryFactory)) {
                 if (!$container->has($repositoryFactory)) {

@@ -4,6 +4,7 @@ namespace DoctrineORMModule\Options;
 
 use Doctrine\ORM\Mapping\EntityListenerResolver;
 use Doctrine\ORM\Mapping\NamingStrategy;
+use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Repository\RepositoryFactory;
 use Zend\Stdlib\Exception\InvalidArgumentException;
 
@@ -153,6 +154,13 @@ class Configuration extends DBALConfiguration
      */
     protected $namingStrategy;
 
+    /**
+     * Quote strategy or name of the quote strategy service to be set in ORM
+     * configuration (if any)
+     *
+     * @var string|null|QuoteStrategy
+     */
+    protected $quoteStrategy;
 
     /**
      * Default repository class
@@ -531,6 +539,39 @@ class Configuration extends DBALConfiguration
     public function getNamingStrategy()
     {
         return $this->namingStrategy;
+    }
+
+    /**
+     * @param  string|null|QuoteStrategy $quoteStrategy
+     * @return self
+     * @throws InvalidArgumentException   when the provided quote strategy does not fit the expected type
+     */
+    public function setQuoteStrategy($quoteStrategy)
+    {
+        if (null === $quoteStrategy
+            || is_string($quoteStrategy)
+            || $quoteStrategy instanceof QuoteStrategy
+        ) {
+            $this->quoteStrategy = $quoteStrategy;
+
+            return $this;
+        }
+
+        throw new InvalidArgumentException(
+            sprintf(
+                'quoteStrategy must be either a string, a Doctrine\ORM\Mapping\QuoteStrategy '
+                . 'instance or null, %s given',
+                is_object($quoteStrategy) ? get_class($quoteStrategy) : gettype($quoteStrategy)
+            )
+        );
+    }
+
+    /**
+     * @return string|null|QuoteStrategy
+     */
+    public function getQuoteStrategy()
+    {
+        return $this->quoteStrategy;
     }
 
     /**

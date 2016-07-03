@@ -209,3 +209,26 @@ return array(
     ),
 );
 ```
+
+### How to Use Quote Strategy
+
+[Official documentation](http://doctrine-orm.readthedocs.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words)
+
+Zend Configuration
+
+```php
+return array(
+    'service_manager' => array(
+        'invokables' => array(
+            'Doctrine\ORM\Mapping\AnsiQuoteStrategy' => 'Doctrine\ORM\Mapping\AnsiQuoteStrategy',
+        ),
+    ),
+    'doctrine' => array(
+        'configuration' => array(
+            'orm_default' => array(
+                'quote_strategy' => 'Doctrine\ORM\Mapping\AnsiQuoteStrategy'
+            ),
+        ),
+    ),
+);
+```
