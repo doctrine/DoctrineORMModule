@@ -1,3 +1,7 @@
+# 0.11.0
+ * [#459](https://github.com/doctrine/DoctrineORMModule/pull/459) Added ServiceManager v3 support
+ * [#460](https://github.com/doctrine/DoctrineORMModule/pull/460) Add .gitattributes to remove unneeded files
+ * [#453](https://github.com/doctrine/DoctrineORMModule/pull/453) Added an option to configure the ORM quote strategy
 # 0.10.0
 
  * [#450](https://github.com/doctrine/DoctrineORMModule/pull/450) Use stable release for DoctrineModule
