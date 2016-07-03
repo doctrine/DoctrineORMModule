@@ -1,19 +1,14 @@
 <?xml version="1.0"?>
 <phpunit
-    bootstrap="./tests/Bootstrap.php"
-    colors="true"
-    convertErrorsToExceptions="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
-    verbose="true"
-    stopOnFailure="false"
-    processIsolation="false"
-    backupGlobals="false"
-    syntaxCheck="true"
+        bootstrap="./vendor/autoload.php"
+        colors="true"
+        backupGlobals="false"
 >
-    <testsuite name="DoctrineORMModule tests">
-        <directory>./tests</directory>
-    </testsuite>
+    <testsuites>
+        <testsuite name="DoctrineORMModule Test Suite">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>

@@ -19,8 +19,8 @@
 
 namespace DoctrineORMModuleTest\Util;
 
-use Zend\ServiceManager\ServiceManager;
 use Zend\Mvc\Service\ServiceManagerConfig;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * Utility used to retrieve a freshly bootstrapped application's service manager
@@ -32,36 +32,33 @@ use Zend\Mvc\Service\ServiceManagerConfig;
 class ServiceManagerFactory
 {
     /**
-     * @var array
+     * @return array
      */
-    protected static $config;
-
-    /**
-     * @param array $config
-     */
-    public static function setConfig(array $config)
+    protected static function getConfiguration()
     {
-        static::$config = $config;
+        return include __DIR__ . '/../TestConfiguration.php';
     }
 
     /**
      * Builds a new service manager
      *
-     * @return \Zend\ServiceManager\ServiceManager
+     * @param array $configuration
+     * @return ServiceManager
      */
-    public static function getServiceManager()
+    public static function getServiceManager(array $configuration = [])
     {
-        $serviceManager = new ServiceManager();
+        $configuration        = $configuration ?: static::getConfiguration();
+        $serviceManager       = new ServiceManager();
         $serviceManagerConfig = new ServiceManagerConfig(
-            isset(static::$config['service_manager']) ? static::$config['service_manager'] : array()
+            isset($configuration['service_manager']) ? $configuration['service_manager'] : array()
         );
         $serviceManagerConfig->configureServiceManager($serviceManager);
-        $serviceManager->setService('ApplicationConfig', static::$config);
+        $serviceManager->setService('ApplicationConfig', $configuration);
 
-        /** @var $moduleManager \Zend\ModuleManager\ModuleManager */
+        /** @var $moduleManager \Zend\ModuleManager\ModuleManagerInterface */
         $moduleManager = $serviceManager->get('ModuleManager');
         $moduleManager->loadModules();
-        //$serviceManager->setAllowOverride(true);
+
         return $serviceManager;
     }
 }
