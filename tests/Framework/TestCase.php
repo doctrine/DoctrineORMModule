@@ -19,10 +19,10 @@
 
 namespace DoctrineORMModuleTest\Framework;
 
-use PHPUnit_Framework_TestCase;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use DoctrineORMModuleTest\Util\ServiceManagerFactory;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Base test case for tests using the entity manager

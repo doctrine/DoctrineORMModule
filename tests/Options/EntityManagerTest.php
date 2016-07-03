@@ -19,8 +19,8 @@
 
 namespace DoctrineORMModuleTest\Options;
 
-use PHPUnit_Framework_TestCase;
 use DoctrineORMModule\Options\EntityManager;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Tests for {@see \DoctrineORMModule\Options\EntityManager}

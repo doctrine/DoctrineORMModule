@@ -19,12 +19,10 @@
 
 namespace DoctrineORMModule\Collector;
 
-use ZendDeveloperTools\Collector\CollectorInterface;
-use ZendDeveloperTools\Collector\AutoHideInterface;
-
-use Zend\Mvc\MvcEvent;
-
 use Doctrine\DBAL\Logging\DebugStack;
+use Zend\Mvc\MvcEvent;
+use ZendDeveloperTools\Collector\AutoHideInterface;
+use ZendDeveloperTools\Collector\CollectorInterface;
 
 /**
  * Collector to be used in ZendDeveloperTools to record and display SQL queries

@@ -19,9 +19,9 @@
 
 namespace DoctrineORMModuleTest\Service;
 
-use PHPUnit_Framework_TestCase;
-use DoctrineORMModule\Service\ConfigurationFactory;
 use Doctrine\Common\Cache\ArrayCache;
+use DoctrineORMModule\Service\ConfigurationFactory;
+use PHPUnit_Framework_TestCase;
 use Zend\ServiceManager\ServiceManager;
 
 class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase

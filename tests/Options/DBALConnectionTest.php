@@ -19,9 +19,8 @@
 
 namespace DoctrineORMModuleTest\Options;
 
-use PHPUnit_Framework_TestCase;
 use DoctrineORMModule\Options\DBALConnection;
-use Doctrine\ORM\Repository\DefaultRepositoryFactory;
+use PHPUnit_Framework_TestCase;
 
 /**
  * @covers \DoctrineORMModule\Options\DBALConnection

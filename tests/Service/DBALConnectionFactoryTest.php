@@ -19,14 +19,13 @@
 
 namespace DoctrineORMModuleTest\Service;
 
-use PHPUnit_Framework_TestCase;
-use DoctrineORMModuleTest\Assets\Types\MoneyType;
-use DoctrineORMModule\Service\DBALConnectionFactory;
-use Doctrine\DBAL\Types\Type;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\EventManager;
-use Zend\ServiceManager\ServiceManager;
+use Doctrine\DBAL\Types\Type;
 use DoctrineORMModule\Service\ConfigurationFactory;
+use DoctrineORMModule\Service\DBALConnectionFactory;
+use PHPUnit_Framework_TestCase;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * @covers \DoctrineORMModule\Service\DBALConnectionFactory

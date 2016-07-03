@@ -19,13 +19,13 @@
 
 namespace DoctrineORMModule\Service;
 
-use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use RuntimeException;
-use DoctrineORMModule\Collector\SQLLoggerCollector;
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\DBAL\Logging\LoggerChain;
+use DoctrineORMModule\Collector\SQLLoggerCollector;
+use Interop\Container\ContainerInterface;
+use RuntimeException;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * DBAL Configuration ServiceManager factory

@@ -19,10 +19,10 @@
 
 namespace DoctrineORMModuleTest\Service;
 
-use PHPUnit_Framework_TestCase as TestCase;
-use DoctrineORMModule\Service\SQLLoggerCollectorFactory;
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\ORM\Configuration as ORMConfiguration;
+use DoctrineORMModule\Service\SQLLoggerCollectorFactory;
+use PHPUnit_Framework_TestCase as TestCase;
 use Zend\ServiceManager\ServiceManager;
 
 class SQLLoggerCollectorFactoryTest extends TestCase

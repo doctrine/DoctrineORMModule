@@ -19,9 +19,9 @@
 
 namespace DoctrineORMModule\Yuml;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Http\Client;
 use Zend\Http\Request;
+use Zend\Mvc\Controller\AbstractActionController;
 
 /**
  * Utility to generate Yuml compatible strings from metadata graphs

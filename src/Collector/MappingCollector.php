@@ -19,14 +19,11 @@
 
 namespace DoctrineORMModule\Collector;
 
-use Serializable;
-
-use ZendDeveloperTools\Collector\CollectorInterface;
-use ZendDeveloperTools\Collector\AutoHideInterface;
-
-use Zend\Mvc\MvcEvent;
-
 use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
+use Serializable;
+use Zend\Mvc\MvcEvent;
+use ZendDeveloperTools\Collector\AutoHideInterface;
+use ZendDeveloperTools\Collector\CollectorInterface;
 
 /**
  * Collector to be used in ZendDeveloperTools to record and display mapping information

@@ -19,8 +19,8 @@
 
 namespace DoctrineORMModuleTest\Collector;
 
-use PHPUnit_Framework_TestCase;
 use DoctrineORMModule\Collector\MappingCollector;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Tests for the MappingCollector

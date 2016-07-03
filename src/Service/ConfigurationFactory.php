@@ -22,12 +22,12 @@ namespace DoctrineORMModule\Service;
 use Doctrine\ORM\Cache\CacheConfiguration;
 use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Cache\RegionsConfiguration;
+use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Mapping\EntityListenerResolver;
 use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationFactory;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\Exception\InvalidArgumentException;
-use Doctrine\ORM\Configuration;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ConfigurationFactory extends DoctrineConfigurationFactory
 {

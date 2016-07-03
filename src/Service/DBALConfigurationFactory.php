@@ -19,10 +19,10 @@
 
 namespace DoctrineORMModule\Service;
 
-use Interop\Container\ContainerInterface;
-use RuntimeException;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Types\Type;
+use Interop\Container\ContainerInterface;
+use RuntimeException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

@@ -19,9 +19,9 @@
 
 namespace DoctrineORMModuleTest\Collector;
 
-use PHPUnit_Framework_TestCase as TestCase;
-use DoctrineORMModule\Collector\SQLLoggerCollector;
 use Doctrine\DBAL\Logging\DebugStack;
+use DoctrineORMModule\Collector\SQLLoggerCollector;
+use PHPUnit_Framework_TestCase as TestCase;
 use Zend\Mvc\MvcEvent;
 
 class SQLLoggerCollectorTest extends TestCase

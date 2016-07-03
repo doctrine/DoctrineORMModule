@@ -19,9 +19,9 @@
 
 namespace DoctrineORMModuleTest\Options;
 
-use PHPUnit_Framework_TestCase as TestCase;
-use DoctrineORMModule\Options\Configuration;
 use Doctrine\ORM\Repository\DefaultRepositoryFactory;
+use DoctrineORMModule\Options\Configuration;
+use PHPUnit_Framework_TestCase as TestCase;
 
 class ConfigurationOptionsTest extends TestCase
 {

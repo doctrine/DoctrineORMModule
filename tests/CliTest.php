@@ -19,8 +19,8 @@
 
 namespace DoctrineORMModuleTest;
 
-use PHPUnit_Framework_TestCase;
 use DoctrineORMModuleTest\Util\ServiceManagerFactory;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Tests used to verify that command line functionality is active

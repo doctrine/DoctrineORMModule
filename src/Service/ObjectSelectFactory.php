@@ -21,8 +21,8 @@ namespace DoctrineORMModule\Service;
 
 use DoctrineModule\Form\Element\ObjectSelect;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Factory for {@see ObjectSelect}

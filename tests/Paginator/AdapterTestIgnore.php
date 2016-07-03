@@ -19,16 +19,14 @@
 
 namespace DoctrineORMModuleTest\Paginator;
 
-use DoctrineORMModuleTest\Framework\TestCase;
-use DoctrineORMModuleTest\Assets\Fixture\TestFixture;
-
-use Doctrine\Common\DataFixtures\Loader as FixtureLoader;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Loader as FixtureLoader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as PaginatorAdapter;
+use DoctrineORMModuleTest\Assets\Fixture\TestFixture;
+use DoctrineORMModuleTest\Framework\TestCase;
 
 class AdapterTestIgnore extends TestCase
 {

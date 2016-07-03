@@ -19,8 +19,8 @@
 namespace DoctrineORMModuleTest\Service;
 
 use DoctrineORMModule\Service\MigrationsCommandFactory;
-use PHPUnit_Framework_TestCase as TestCase;
 use DoctrineORMModuleTest\Util\ServiceManagerFactory;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * Tests for {@see \DoctrineORMModule\Service\MigrationsCommandFactory}
