@@ -18,6 +18,8 @@
  */
 return [
     'modules' => [
+        'Zend\Cache',
+        'Zend\Router',
         'DoctrineModule',
         'DoctrineORMModule',
     ],

@@ -140,12 +140,7 @@ class Module implements
         $entityManager = $serviceLocator->get('doctrine.entitymanager.orm_default');
         $helperSet     = $cli->getHelperSet();
 
-        if (class_exists('Symfony\Component\Console\Helper\QuestionHelper')) {
-            $helperSet->set(new QuestionHelper(), 'dialog');
-        } else {
-            $helperSet->set(new DialogHelper(), 'dialog');
-        }
-
+        $helperSet->set(new QuestionHelper(), 'dialog');
         $helperSet->set(new ConnectionHelper($entityManager->getConnection()), 'db');
         $helperSet->set(new EntityManagerHelper($entityManager), 'em');
     }

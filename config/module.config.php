@@ -257,7 +257,7 @@ return [
     'router' => [
         'routes' => [
             'doctrine_orm_module_yuml' => [
-                'type' => 'Zend\\Mvc\\Router\\Http\\Literal',
+                'type' => \Zend\Router\Http\Literal::class,
                 'options' => [
                     'route' => '/ocra_service_manager_yuml',
                     'defaults' => [
