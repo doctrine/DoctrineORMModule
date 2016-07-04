@@ -93,7 +93,7 @@ class User
 }
 ```
 
-To have Schema-Tool convert the underlying database type of your new "tinyint" directly into an instance 
+To have Schema-Tool convert the underlying database type of your new "tinyint" directly into an instance
 of TinyIntType you have to additionally register this mapping with your database platform.
 
 ```php
@@ -112,5 +112,5 @@ return [
 ```
 
 Now using Schema-Tool, whenever it detects a column having the "tinyint" it will convert it into a "tinyint"
-Doctrine Type instance for Schema representation. Keep in mind that you can easily produce clashes this 
+Doctrine Type instance for Schema representation. Keep in mind that you can easily produce clashes this
 way, each database type can only map to exactly one Doctrine mapping type.

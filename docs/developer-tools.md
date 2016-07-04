@@ -94,7 +94,7 @@ class Module
         $config = $e->getTarget()->getServiceManager()->get('Config');
 
         if (
-            isset($config['zenddevelopertools']['profiler']['enabled']) 
+            isset($config['zenddevelopertools']['profiler']['enabled'])
             && $config['zenddevelopertools']['profiler']['enabled']
         ) {
             // when ZendDeveloperTools is enabled, initialize the sql collector

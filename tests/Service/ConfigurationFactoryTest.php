@@ -349,7 +349,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
         $ormConfig        = $this->factory->createService($this->serviceManager);
         $secondLevelCache = $ormConfig->getSecondLevelCacheConfiguration();
-        
+
         $this->assertInstanceOf('Doctrine\ORM\Cache\CacheConfiguration', $secondLevelCache);
 
         $cacheFactory = $secondLevelCache->getCacheFactory();

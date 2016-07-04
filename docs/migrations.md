@@ -1,7 +1,7 @@
 #### How to configure Doctrine Migrations
 
 ```php
-return [    
+return [
     'doctrine' => [
         'migrations_configuration' => [
             'orm_default' => [
