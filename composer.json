@@ -70,5 +70,16 @@
         "psr-4": {
             "DoctrineORMModuleTest\\": "tests/"
         }
+    },
+    "scripts": {
+        "check": [
+            "@cs",
+            "@test"
+        ],
+        "coveralls": "coveralls",
+        "cs": "phpcs",
+        "cs-fix": "phpcbf",
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-clover build/clover.xml"
     }
 }
