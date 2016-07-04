@@ -20,7 +20,6 @@
 namespace DoctrineORMModuleTest\Options;
 
 use DoctrineORMModule\Options\EntityManager;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Tests for {@see \DoctrineORMModule\Options\EntityManager}
@@ -29,7 +28,7 @@ use PHPUnit_Framework_TestCase;
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  */
-class EntityManagerTest extends PHPUnit_Framework_TestCase
+class EntityManagerTest extends \PHPUnit_Framework_TestCase
 {
     public function testSetGetResolver()
     {

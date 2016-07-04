@@ -21,6 +21,8 @@ class ElementAnnotationsListenerTest extends TestCase
 
     /**
      * @dataProvider eventNameProvider
+     *
+     * @param string $method
      */
     public function testEventsWithNoMetadata($method)
     {
@@ -134,6 +136,9 @@ class ElementAnnotationsListenerTest extends TestCase
 
     /**
      * @dataProvider eventFilterProvider
+     *
+     * @param string $name
+     * @param string $type
      */
     public function testHandleFilterField($name, $type)
     {
@@ -212,6 +217,9 @@ class ElementAnnotationsListenerTest extends TestCase
 
     /**
      * @dataProvider eventTypeProvider
+     *
+     * @param string $name
+     * @param string $type
      */
     public function testHandleTypeField($name, $type)
     {
@@ -230,6 +238,9 @@ class ElementAnnotationsListenerTest extends TestCase
 
     /**
      * @dataProvider eventValidatorProvider
+     *
+     * @param string $name
+     * @param string $type
      */
     public function testHandlevalidatorField($name, $type)
     {

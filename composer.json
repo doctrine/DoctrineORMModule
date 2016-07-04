@@ -50,7 +50,7 @@
     "require-dev":       {
         "doctrine/data-fixtures":             "^1.2",
         "doctrine/migrations":                "^1.4",
-        "phpunit/phpunit":                    "^4.8",
+        "phpunit/phpunit":                    "^5.4",
         "squizlabs/php_codesniffer":          "^2.6.1",
         "zendframework/zend-developer-tools": "^1.1",
         "zendframework/zend-i18n":            "^2.7.3",

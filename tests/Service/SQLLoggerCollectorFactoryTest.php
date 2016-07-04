@@ -22,10 +22,9 @@ namespace DoctrineORMModuleTest\Service;
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\ORM\Configuration as ORMConfiguration;
 use DoctrineORMModule\Service\SQLLoggerCollectorFactory;
-use PHPUnit_Framework_TestCase as TestCase;
 use Zend\ServiceManager\ServiceManager;
 
-class SQLLoggerCollectorFactoryTest extends TestCase
+class SQLLoggerCollectorFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var ServiceManager
@@ -88,12 +87,12 @@ class SQLLoggerCollectorFactoryTest extends TestCase
 
     public function testCreateSQLLoggerWithPreviousExistingLoggerChainsLoggers()
     {
-        $originalLogger = $this->getMock('Doctrine\DBAL\Logging\SQLLogger');
+        $originalLogger = $this->createMock('Doctrine\DBAL\Logging\SQLLogger');
         $originalLogger
             ->expects($this->once())
             ->method('startQuery')
             ->with($this->equalTo('test query'));
-        $injectedLogger = $this->getMock('Doctrine\DBAL\Logging\DebugStack');
+        $injectedLogger = $this->createMock('Doctrine\DBAL\Logging\DebugStack');
         $injectedLogger
             ->expects($this->once())
             ->method('startQuery')

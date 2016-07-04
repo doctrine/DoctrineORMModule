@@ -20,12 +20,11 @@
 namespace DoctrineORMModuleTest\Options;
 
 use DoctrineORMModule\Options\DBALConnection;
-use PHPUnit_Framework_TestCase;
 
 /**
  * @covers \DoctrineORMModule\Options\DBALConnection
  */
-class DBALConnectionTest extends PHPUnit_Framework_TestCase
+class DBALConnectionTest extends \PHPUnit_Framework_TestCase
 {
     public function testSetNullCommentedTypes()
     {

@@ -20,7 +20,6 @@ namespace DoctrineORMModuleTest\Service;
 
 use DoctrineORMModule\Service\MigrationsCommandFactory;
 use DoctrineORMModuleTest\Util\ServiceManagerFactory;
-use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * Tests for {@see \DoctrineORMModule\Service\MigrationsCommandFactory}
@@ -30,7 +29,7 @@ use PHPUnit_Framework_TestCase as TestCase;
  *
  * @covers \DoctrineORMModule\Service\MigrationsCommandFactory
  */
-class MigrationsCommandFactoryTest extends TestCase
+class MigrationsCommandFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Zend\ServiceManager\ServiceManager
@@ -69,7 +68,7 @@ class MigrationsCommandFactoryTest extends TestCase
     {
         $factory = new MigrationsCommandFactory('unknowncommand');
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $factory->createService($this->serviceLocator);
     }
 }

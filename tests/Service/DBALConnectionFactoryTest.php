@@ -24,13 +24,12 @@ use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Types\Type;
 use DoctrineORMModule\Service\ConfigurationFactory;
 use DoctrineORMModule\Service\DBALConnectionFactory;
-use PHPUnit_Framework_TestCase;
 use Zend\ServiceManager\ServiceManager;
 
 /**
  * @covers \DoctrineORMModule\Service\DBALConnectionFactory
  */
-class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
+class DBALConnectionFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var ServiceManager
@@ -70,8 +69,8 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
             ],
         ];
         $configurationMock = $this->getMockBuilder('Doctrine\ORM\Configuration')
-            ->disableOriginalConstructor()
-            ->getMock();
+                                  ->disableOriginalConstructor()
+                                  ->getMock();
 
         $this->serviceManager->setService('doctrine.configuration.orm_default', $configurationMock);
         $this->serviceManager->setService('Config', $config);
@@ -113,7 +112,7 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
         $this->serviceManager->setService('Configuration', $config);
         $this->serviceManager->setService(
             'doctrine.driver.orm_default',
-            $this->getMock('Doctrine\Common\Persistence\Mapping\Driver\MappingDriver')
+            $this->createMock('Doctrine\Common\Persistence\Mapping\Driver\MappingDriver')
         );
         $configurationFactory = new ConfigurationFactory('orm_default');
         $this->serviceManager->setService(

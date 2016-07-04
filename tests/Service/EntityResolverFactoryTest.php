@@ -20,7 +20,7 @@
 namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\ORM\Events;
-use DoctrineORMModuleTest\Framework\TestCase as TestCase;
+use DoctrineORMModuleTest\Framework\TestCase;
 
 class EntityResolverFactoryTest extends TestCase
 {

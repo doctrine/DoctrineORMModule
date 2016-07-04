@@ -20,7 +20,6 @@
 namespace DoctrineORMModuleTest;
 
 use DoctrineORMModuleTest\Util\ServiceManagerFactory;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Tests used to verify that command line functionality is active
@@ -29,7 +28,7 @@ use PHPUnit_Framework_TestCase;
  * @link    http://www.doctrine-project.org/
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class CliTest extends PHPUnit_Framework_TestCase
+class CliTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Symfony\Component\Console\Application

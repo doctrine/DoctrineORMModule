@@ -21,10 +21,9 @@ namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\Common\Cache\ArrayCache;
 use DoctrineORMModule\Service\ConfigurationFactory;
-use PHPUnit_Framework_TestCase;
 use Zend\ServiceManager\ServiceManager;
 
-class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
+class ConfigurationFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var ServiceManager
@@ -45,7 +44,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $this->serviceManager->setService('doctrine.cache.array', new ArrayCache());
         $this->serviceManager->setService(
             'doctrine.driver.orm_default',
-            $this->getMock('Doctrine\Common\Persistence\Mapping\Driver\MappingDriver')
+            $this->createMock('Doctrine\Common\Persistence\Mapping\Driver\MappingDriver')
         );
     }
 
@@ -65,7 +64,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testWillInstantiateConfigWithNamingStrategyObject()
     {
-        $namingStrategy = $this->getMock('Doctrine\ORM\Mapping\NamingStrategy');
+        $namingStrategy = $this->createMock('Doctrine\ORM\Mapping\NamingStrategy');
 
         $config = [
             'doctrine' => [
@@ -84,7 +83,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testWillInstantiateConfigWithNamingStrategyReference()
     {
-        $namingStrategy = $this->getMock('Doctrine\ORM\Mapping\NamingStrategy');
+        $namingStrategy = $this->createMock('Doctrine\ORM\Mapping\NamingStrategy');
         $config = [
             'doctrine' => [
                 'configuration' => [
@@ -112,13 +111,13 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
             ],
         ];
         $this->serviceManager->setService('Config', $config);
-        $this->setExpectedException('Zend\ServiceManager\Exception\InvalidArgumentException');
+        $this->expectException('Zend\ServiceManager\Exception\InvalidArgumentException');
         $this->factory->createService($this->serviceManager);
     }
 
     public function testWillInstantiateConfigWithQuoteStrategyObject()
     {
-        $quoteStrategy = $this->getMock('Doctrine\ORM\Mapping\QuoteStrategy');
+        $quoteStrategy = $this->createMock('Doctrine\ORM\Mapping\QuoteStrategy');
 
         $config = [
             'doctrine' => [
@@ -137,7 +136,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testWillInstantiateConfigWithQuoteStrategyReference()
     {
-        $quoteStrategy = $this->getMock('Doctrine\ORM\Mapping\QuoteStrategy');
+        $quoteStrategy = $this->createMock('Doctrine\ORM\Mapping\QuoteStrategy');
         $config = [
             'doctrine' => [
                 'configuration' => [
@@ -165,7 +164,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
             ],
         ];
         $this->serviceManager->setService('Config', $config);
-        $this->setExpectedException('Zend\ServiceManager\Exception\InvalidArgumentException');
+        $this->expectException('Zend\ServiceManager\Exception\InvalidArgumentException');
         $this->factory->createService($this->serviceManager);
     }
 
@@ -259,7 +258,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testWillInstantiateConfigWithEntityListenerResolverObject()
     {
-        $entityListenerResolver = $this->getMock('Doctrine\ORM\Mapping\EntityListenerResolver');
+        $entityListenerResolver = $this->createMock('Doctrine\ORM\Mapping\EntityListenerResolver');
 
         $config = [
             'doctrine' => [
@@ -280,7 +279,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testWillInstantiateConfigWithEntityListenerResolverReference()
     {
-        $entityListenerResolver = $this->getMock('Doctrine\ORM\Mapping\EntityListenerResolver');
+        $entityListenerResolver = $this->createMock('Doctrine\ORM\Mapping\EntityListenerResolver');
 
         $config = [
             'doctrine' => [

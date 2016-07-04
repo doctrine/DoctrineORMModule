@@ -20,7 +20,6 @@
 namespace DoctrineORMModuleTest\Collector;
 
 use DoctrineORMModule\Collector\MappingCollector;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Tests for the MappingCollector
@@ -28,7 +27,7 @@ use PHPUnit_Framework_TestCase;
  * @author  Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class MappingCollectorTest extends PHPUnit_Framework_TestCase
+class MappingCollectorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Doctrine\Common\Persistence\Mapping\ClassMetadataFactory|\PHPUnit_Framework_MockObject_MockObject
@@ -47,7 +46,7 @@ class MappingCollectorTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->metadataFactory = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadataFactory');
+        $this->metadataFactory = $this->createMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadataFactory');
         $this->collector       = new MappingCollector($this->metadataFactory, 'test-collector');
     }
 
@@ -73,9 +72,9 @@ class MappingCollectorTest extends PHPUnit_Framework_TestCase
      */
     public function testCollect()
     {
-        $m1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $m1 = $this->createMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
         $m1->expects($this->any())->method('getName')->will($this->returnValue('M1'));
-        $m2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $m2 = $this->createMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
         $m2->expects($this->any())->method('getName')->will($this->returnValue('M2'));
         $this
             ->metadataFactory
@@ -83,7 +82,7 @@ class MappingCollectorTest extends PHPUnit_Framework_TestCase
             ->method('getAllMetadata')
             ->will($this->returnValue([$m1, $m2]));
 
-        $this->collector->collect($this->getMock('Zend\\Mvc\\MvcEvent'));
+        $this->collector->collect($this->createMock('Zend\\Mvc\\MvcEvent'));
 
         $classes = $this->collector->getClasses();
 
@@ -99,11 +98,11 @@ class MappingCollectorTest extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->collector->canHide());
 
-        $m1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $m1 = $this->createMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
         $m1->expects($this->any())->method('getName')->will($this->returnValue('M1'));
         $this->metadataFactory->expects($this->any())->method('getAllMetadata')->will($this->returnValue([$m1]));
 
-        $this->collector->collect($this->getMock('Zend\\Mvc\\MvcEvent'));
+        $this->collector->collect($this->createMock('Zend\\Mvc\\MvcEvent'));
 
         $this->assertFalse($this->collector->canHide());
     }
@@ -115,11 +114,11 @@ class MappingCollectorTest extends PHPUnit_Framework_TestCase
      */
     public function testSerializeUnserializeAndCollectWithNoMetadataFactory()
     {
-        $m1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $m1 = $this->createMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
         $m1->expects($this->any())->method('getName')->will($this->returnValue('M1'));
         $this->metadataFactory->expects($this->any())->method('getAllMetadata')->will($this->returnValue([$m1]));
 
-        $this->collector->collect($this->getMock('Zend\\Mvc\\MvcEvent'));
+        $this->collector->collect($this->createMock('Zend\\Mvc\\MvcEvent'));
 
         /** @var $collector MappingCollector */
         $collector = unserialize(serialize($this->collector));
@@ -129,7 +128,7 @@ class MappingCollectorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($m1, $classes['M1']);
         $this->assertSame('test-collector', $collector->getName());
 
-        $collector->collect($this->getMock('Zend\\Mvc\\MvcEvent'));
+        $collector->collect($this->createMock('Zend\\Mvc\\MvcEvent'));
 
         $classes = $collector->getClasses();
         $this->assertCount(1, $classes);

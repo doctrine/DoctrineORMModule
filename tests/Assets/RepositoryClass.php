@@ -19,7 +19,8 @@
 
 namespace DoctrineORMModuleTest\Assets;
 
-class RepositoryClass extends \Doctrine\ORM\EntityRepository
-{
+use Doctrine\ORM\EntityRepository;
 
+class RepositoryClass extends EntityRepository
+{
 }
