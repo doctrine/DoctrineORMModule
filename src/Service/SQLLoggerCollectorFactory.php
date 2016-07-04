@@ -26,7 +26,6 @@ use DoctrineORMModule\Collector\SQLLoggerCollector;
 use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * DBAL Configuration ServiceManager factory
@@ -77,14 +76,6 @@ class SQLLoggerCollectorFactory implements FactoryInterface
         }
 
         return new SQLLoggerCollector($debugStackLogger, 'doctrine.sql_logger_collector.' . $options->getName());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function createService(ServiceLocatorInterface $container)
-    {
-        return $this($container, SQLLoggerCollector::class);
     }
 
     /**

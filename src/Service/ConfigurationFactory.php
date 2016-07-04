@@ -28,7 +28,6 @@ use DoctrineORMModule\Options\Configuration as OptionsConfiguration;
 use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationFactory;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Exception\InvalidArgumentException;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ConfigurationFactory extends DoctrineConfigurationFactory
 {
@@ -160,15 +159,6 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         $this->setupDBALConfiguration($container, $config);
 
         return $config;
-    }
-
-    /**
-     * @param  ServiceLocatorInterface $container
-     * @return Configuration
-     */
-    public function createService(ServiceLocatorInterface $container)
-    {
-        return $this($container, Configuration::class);
     }
 
     protected function getOptionsClass()

@@ -25,7 +25,6 @@ use Doctrine\DBAL\Types\Type;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\DBALConnection as OptionsDBALConnection;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * DBAL Connection ServiceManager factory
@@ -72,16 +71,6 @@ class DBALConnectionFactory extends AbstractFactory
         }
 
         return $connection;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return Connection
-     */
-    public function createService(ServiceLocatorInterface $container)
-    {
-        return $this($container, Connection::class);
     }
 
     /**

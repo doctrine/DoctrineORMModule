@@ -25,6 +25,7 @@ use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\DBAL\Driver\PDOSqlite\Driver;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Configuration;
+use DoctrineORMModule\Options\DBALConnection;
 use DoctrineORMModule\Service\ConfigurationFactory;
 use DoctrineORMModule\Service\DBALConnectionFactory;
 use DoctrineORMModuleTest\Assets\Types\MoneyType;
@@ -80,7 +81,7 @@ class DBALConnectionFactoryTest extends \PHPUnit_Framework_TestCase
         $this->serviceManager->setService('Config', $config);
         $this->serviceManager->setService('Configuration', $config);
 
-        $dbal = $this->factory->createService($this->serviceManager);
+        $dbal = $this->factory->__invoke($this->serviceManager, DBALConnection::class);
         $platform = $dbal->getDatabasePlatform();
         $this->assertSame('string', $platform->getDoctrineTypeMapping("money"));
     }
@@ -118,9 +119,9 @@ class DBALConnectionFactoryTest extends \PHPUnit_Framework_TestCase
         $configurationFactory = new ConfigurationFactory('orm_default');
         $this->serviceManager->setService(
             'doctrine.configuration.orm_default',
-            $configurationFactory->createService($this->serviceManager)
+            $configurationFactory($this->serviceManager, Configuration::class)
         );
-        $dbal = $this->factory->createService($this->serviceManager);
+        $dbal = $this->factory->__invoke($this->serviceManager, DBALConnection::class);
         $platform = $dbal->getDatabasePlatform();
         $type = Type::getType($platform->getDoctrineTypeMapping("money"));
 

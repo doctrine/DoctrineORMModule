@@ -24,7 +24,6 @@ use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use Interop\Container\ContainerInterface;
 use Zend\Form\Factory;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Service factory responsible for instantiating {@see \DoctrineORMModule\Form\Annotation\AnnotationBuilder}
@@ -49,16 +48,6 @@ class FormAnnotationBuilderFactory extends AbstractFactory
         $annotationBuilder->setFormFactory($this->getFormFactory($container));
 
         return $annotationBuilder;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return \DoctrineORMModule\Form\Annotation\AnnotationBuilder
-     */
-    public function createService(ServiceLocatorInterface $container)
-    {
-        return $this($container, \DoctrineORMModule\Form\Annotation\AnnotationBuilder::class);
     }
 
     /**

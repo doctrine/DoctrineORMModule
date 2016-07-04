@@ -25,7 +25,6 @@ use Doctrine\ORM\Tools\ResolveTargetEntityListener;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\EntityResolver as OptionsEntityResolver;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 class EntityResolverFactory extends AbstractFactory
 {
@@ -53,14 +52,6 @@ class EntityResolverFactory extends AbstractFactory
         }
 
         return $eventManager;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function createService(ServiceLocatorInterface $container)
-    {
-        return $this($container, \Zend\EventManager\EventManager::class);
     }
 
     /**

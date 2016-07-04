@@ -23,7 +23,6 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Migrations\Configuration\Configuration;
 use DoctrineModule\Service\AbstractFactory;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * DBAL Connection ServiceManager factory
@@ -59,16 +58,6 @@ class MigrationsConfigurationFactory extends AbstractFactory
         }
 
         return $configuration;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return \Doctrine\DBAL\Migrations\Configuration\Configuration
-     */
-    public function createService(ServiceLocatorInterface $container)
-    {
-        return $this($container, \Doctrine\DBAL\Migrations\Configuration\Configuration::class);
     }
 
     /**

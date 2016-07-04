@@ -21,7 +21,6 @@ namespace DoctrineORMModule\Service;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 class DoctrineObjectHydratorFactory implements FactoryInterface
 {
@@ -31,13 +30,5 @@ class DoctrineObjectHydratorFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new DoctrineObject($container->get('doctrine.entitymanager.orm_default'));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function createService(ServiceLocatorInterface $container)
-    {
-        return $this($container->getServiceLocator(), DoctrineObject::class);
     }
 }

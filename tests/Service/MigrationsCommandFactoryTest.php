@@ -51,14 +51,14 @@ class MigrationsCommandFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $factory = new MigrationsCommandFactory('execute');
 
-        $this->assertInstanceOf(ExecuteCommand::class, $factory->createService($this->serviceLocator));
+        $this->assertInstanceOf(ExecuteCommand::class, $factory($this->serviceLocator, ExecuteCommand::class));
     }
 
     public function testDiffFactory()
     {
         $factory = new MigrationsCommandFactory('diff');
 
-        $this->assertInstanceOf(DiffCommand::class, $factory->createService($this->serviceLocator));
+        $this->assertInstanceOf(DiffCommand::class, $factory($this->serviceLocator, DiffCommand::class));
     }
 
     public function testThrowException()
@@ -66,6 +66,6 @@ class MigrationsCommandFactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new MigrationsCommandFactory('unknowncommand');
 
         $this->expectException(\InvalidArgumentException::class);
-        $factory->createService($this->serviceLocator);
+        $factory($this->serviceLocator, 'unknowncommand');
     }
 }

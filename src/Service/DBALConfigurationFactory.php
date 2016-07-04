@@ -24,7 +24,6 @@ use Doctrine\DBAL\Types\Type;
 use DoctrineOrmModule\Options\Configuration as OptionsConfiguration;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * DBAL Configuration ServiceManager factory
@@ -59,16 +58,6 @@ class DBALConfigurationFactory implements FactoryInterface
         $this->setupDBALConfiguration($container, $config);
 
         return $config;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return Configuration
-     */
-    public function createService(ServiceLocatorInterface $container)
-    {
-        return $this($container, Configuration::class);
     }
 
     /**

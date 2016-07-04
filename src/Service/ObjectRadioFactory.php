@@ -22,7 +22,6 @@ namespace DoctrineORMModule\Service;
 use DoctrineModule\Form\Element\ObjectRadio;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Factory for {@see ObjectRadio}
@@ -46,13 +45,5 @@ class ObjectRadioFactory implements FactoryInterface
         $element->getProxy()->setObjectManager($entityManager);
 
         return $element;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function createService(ServiceLocatorInterface $container)
-    {
-        return $this($container->getServiceLocator(), ObjectRadio::class);
     }
 }

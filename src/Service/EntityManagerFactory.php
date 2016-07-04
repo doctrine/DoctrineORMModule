@@ -23,7 +23,6 @@ use Doctrine\ORM\EntityManager;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\EntityManager as OptionsEntityManager;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 class EntityManagerFactory extends AbstractFactory
 {
@@ -45,16 +44,6 @@ class EntityManagerFactory extends AbstractFactory
         $container->get($options->getEntityResolver());
 
         return EntityManager::create($connection, $config);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return EntityManager
-     */
-    public function createService(ServiceLocatorInterface $container)
-    {
-        return $this($container, EntityManager::class);
     }
 
     /**

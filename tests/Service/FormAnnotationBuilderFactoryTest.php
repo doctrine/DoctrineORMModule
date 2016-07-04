@@ -20,6 +20,7 @@
 namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\ORM\EntityManager;
+use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use DoctrineORMModule\Service\FormAnnotationBuilderFactory;
 use Zend\Form\FormElementManager\FormElementManagerV3Polyfill as FormElementManager;
 use Zend\ServiceManager\ServiceManager;
@@ -49,7 +50,7 @@ class FormAnnotationBuilderFactoryTest extends \PHPUnit_Framework_TestCase
         $serviceManager->setService('FormElementManager', $formElementManager);
 
         $annotationBuilderFactory = new FormAnnotationBuilderFactory('test');
-        $annotationBuilder = $annotationBuilderFactory->createService($serviceManager);
+        $annotationBuilder = $annotationBuilderFactory($serviceManager, AnnotationBuilder::class);
 
         $this->assertSame($formElementManager, $annotationBuilder->getFormFactory()->getFormElementManager());
     }

@@ -22,7 +22,6 @@ use Doctrine\DBAL\Migrations\Configuration\Configuration;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Service factory for migrations command
@@ -68,15 +67,5 @@ class MigrationsCommandFactory implements FactoryInterface
         $command->setMigrationConfiguration($configuration);
 
         return $command;
-    }
-
-    /**
-     * @param  ServiceLocatorInterface $container
-     * @return AbstractCommand
-     * @throws \InvalidArgumentException
-     */
-    public function createService(ServiceLocatorInterface $container)
-    {
-        return $this($container, 'Doctrine\DBAL\Migrations\Tools\Console\Command\\' . $this->name . 'Command');
     }
 }

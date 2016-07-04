@@ -62,7 +62,7 @@ class SQLLoggerCollectorFactoryTest extends \PHPUnit_Framework_TestCase
                 ],
             ]
         );
-        $service = $this->factory->createService($this->services);
+        $service = $this->factory->__invoke($this->services, SQLLoggerCollector::class);
         $this->assertInstanceOf(SQLLoggerCollector::class, $service);
         $this->assertInstanceOf(SQLLogger::class, $configuration->getSQLLogger());
     }
@@ -83,7 +83,7 @@ class SQLLoggerCollectorFactoryTest extends \PHPUnit_Framework_TestCase
                 ],
             ]
         );
-        $this->factory->createService($this->services);
+        $this->factory->__invoke($this->services, SQLLoggerCollector::class);
         $this->assertInstanceOf(SQLLogger::class, $configuration->getSQLLogger());
     }
 
@@ -116,7 +116,7 @@ class SQLLoggerCollectorFactoryTest extends \PHPUnit_Framework_TestCase
                 ],
             ]
         );
-        $this->factory->createService($this->services);
+        $this->factory->__invoke($this->services, SQLLoggerCollector::class);
         /** @var $logger SQLLogger */
         $logger = $configuration->getSQLLogger();
         $logger->startQuery('test query');
@@ -140,7 +140,7 @@ class SQLLoggerCollectorFactoryTest extends \PHPUnit_Framework_TestCase
                 ],
             ]
         );
-        $this->factory->createService($this->services);
+        $this->factory->__invoke($this->services, SQLLoggerCollector::class);
         $this->assertSame($logger, $configuration->getSQLLogger());
     }
 
@@ -160,7 +160,7 @@ class SQLLoggerCollectorFactoryTest extends \PHPUnit_Framework_TestCase
             ]
         );
         /** @var $service SQLLoggerCollector */
-        $service = $this->factory->createService($this->services);
+        $service = $this->factory->__invoke($this->services, SQLLoggerCollector::class);
         $this->assertSame('doctrine.sql_logger_collector.test_collector_name', $service->getName());
     }
 }
