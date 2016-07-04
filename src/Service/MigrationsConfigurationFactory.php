@@ -19,6 +19,7 @@
 
 namespace DoctrineORMModule\Service;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Migrations\Configuration\Configuration;
 use DoctrineModule\Service\AbstractFactory;
 use Interop\Container\ContainerInterface;
@@ -36,12 +37,12 @@ class MigrationsConfigurationFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      *
-     * @return \Doctrine\DBAL\Migrations\Configuration\Configuration
+     * @return Configuration
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $name             = $this->getName();
-        /** @var $connection \Doctrine\DBAL\Connection */
+        /** @var $connection Connection */
         $connection       = $container->get('doctrine.connection.' . $name);
         $appConfig        = $container->get('Config');
         $migrationsConfig = $appConfig['doctrine']['migrations_configuration'][$name];
@@ -75,5 +76,6 @@ class MigrationsConfigurationFactory extends AbstractFactory
      */
     public function getOptionsClass()
     {
+        throw new \BadMethodCallException('Not implemented');
     }
 }

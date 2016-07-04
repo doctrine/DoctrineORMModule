@@ -19,6 +19,7 @@
 
 namespace DoctrineORMModule\Service;
 
+use Doctrine\ORM\EntityManager;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use Interop\Container\ContainerInterface;
@@ -37,15 +38,14 @@ class FormAnnotationBuilderFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      *
-     * @return \DoctrineORMModule\Form\Annotation\AnnotationBuilder
+     * @return AnnotationBuilder
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /** @var $entityManager \Doctrine\ORM\EntityManager */
+        /** @var $entityManager EntityManager */
         $entityManager = $container->get('doctrine.entitymanager.' . $this->getName());
 
         $annotationBuilder = new AnnotationBuilder($entityManager);
-
         $annotationBuilder->setFormFactory($this->getFormFactory($container));
 
         return $annotationBuilder;
@@ -66,6 +66,7 @@ class FormAnnotationBuilderFactory extends AbstractFactory
      */
     public function getOptionsClass()
     {
+        throw new \BadMethodCallException('Not implemented');
     }
 
     /**

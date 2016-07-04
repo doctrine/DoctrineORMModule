@@ -19,6 +19,7 @@
 
 namespace DoctrineORMModuleTest\Util;
 
+use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 
@@ -55,7 +56,7 @@ class ServiceManagerFactory
         $serviceManagerConfig->configureServiceManager($serviceManager);
         $serviceManager->setService('ApplicationConfig', $configuration);
 
-        /** @var $moduleManager \Zend\ModuleManager\ModuleManagerInterface */
+        /** @var $moduleManager ModuleManagerInterface */
         $moduleManager = $serviceManager->get('ModuleManager');
         $moduleManager->loadModules();
 

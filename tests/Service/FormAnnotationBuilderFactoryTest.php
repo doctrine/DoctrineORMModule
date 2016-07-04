@@ -19,7 +19,9 @@
 
 namespace DoctrineORMModuleTest\Service;
 
+use Doctrine\ORM\EntityManager;
 use DoctrineORMModule\Service\FormAnnotationBuilderFactory;
+use Zend\Form\FormElementManager\FormElementManagerV3Polyfill as FormElementManager;
 use Zend\ServiceManager\ServiceManager;
 
 /**
@@ -34,10 +36,10 @@ class FormAnnotationBuilderFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormElementManagerGetsInjected()
     {
-        $entityManager      = $this->getMockBuilder('Doctrine\ORM\EntityManager')
+        $entityManager      = $this->getMockBuilder(EntityManager::class)
                                    ->disableOriginalConstructor()
                                    ->getMock();
-        $formElementManager = $this->getMockBuilder('Zend\Form\FormElementManager')
+        $formElementManager = $this->getMockBuilder(FormElementManager::class)
                                    ->disableOriginalConstructor()
                                    ->getMock();
 

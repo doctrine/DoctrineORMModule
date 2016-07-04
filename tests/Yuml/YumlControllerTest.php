@@ -20,6 +20,10 @@
 namespace DoctrineORMModuleTest\Yuml;
 
 use DoctrineORMModule\Yuml\YumlController;
+use Zend\Http\Client;
+use Zend\Http\Response;
+use Zend\Mvc\Controller\Plugin\Redirect;
+use Zend\Mvc\Controller\PluginManager;
 
 /**
  * Tests for Yuml redirector controller
@@ -36,12 +40,12 @@ class YumlControllerTest extends \PHPUnit_Framework_TestCase
     protected $controller;
 
     /**
-     * @var \Zend\Http\Client|\PHPUnit_Framework_MockObject_MockObject
+     * @var Client|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $httpClient;
 
     /**
-     * @var \Zend\Mvc\Controller\PluginManager|\PHPUnit_Framework_MockObject_MockObject
+     * @var PluginManager|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $pluginManager;
 
@@ -52,9 +56,9 @@ class YumlControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->httpClient     = $this->createMock('Zend\\Http\\Client');
+        $this->httpClient     = $this->createMock(Client::class);
         $this->controller     = new YumlController($this->httpClient);
-        $this->pluginManager  = $this->getMockBuilder('Zend\\Mvc\\Controller\\PluginManager')
+        $this->pluginManager  = $this->getMockBuilder(PluginManager::class)
                                      ->disableOriginalConstructor()
                                      ->getMock();
         $this->controller->setPluginManager($this->pluginManager);
@@ -65,9 +69,9 @@ class YumlControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testIndexActionWillRedirectToYuml()
     {
-        $response           = $this->createMock('Zend\\Http\\Response');
-        $controllerResponse = $this->createMock('Zend\\Http\\Response');
-        $redirect           = $this->createMock('Zend\\Mvc\\Controller\\Plugin\\Redirect');
+        $response           = $this->createMock(Response::class);
+        $controllerResponse = $this->createMock(Response::class);
+        $redirect           = $this->createMock(Redirect::class);
         $this->httpClient->expects($this->any())->method('send')->will($this->returnValue($response));
         $response->expects($this->any())->method('isSuccess')->will($this->returnValue(true));
         $response->expects($this->any())->method('getBody')->will($this->returnValue('short-url'));
@@ -90,11 +94,11 @@ class YumlControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testIndexActionWillFailOnMalformedResponse()
     {
-        $response = $this->createMock('Zend\\Http\\Response');
+        $response = $this->createMock(Response::class);
         $this->httpClient->expects($this->any())->method('send')->will($this->returnValue($response));
         $response->expects($this->any())->method('isSuccess')->will($this->returnValue(false));
 
-        $this->expectException('UnexpectedValueException');
+        $this->expectException(\UnexpectedValueException::class);
         $this->controller->indexAction();
     }
 }

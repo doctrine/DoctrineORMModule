@@ -18,6 +18,8 @@
 
 namespace DoctrineORMModule\Service;
 
+use Doctrine\DBAL\Migrations\Configuration\Configuration;
+use Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -46,7 +48,7 @@ class MigrationsCommandFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
-     * @return \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand
+     * @return AbstractCommand
      * @throws \InvalidArgumentException
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
@@ -58,9 +60,9 @@ class MigrationsCommandFactory implements FactoryInterface
         }
 
         // @TODO currently hardcoded: `orm_default` should be injected
-        /** @var $configuration \Doctrine\DBAL\Migrations\Configuration\Configuration */
+        /** @var $configuration Configuration */
         $configuration = $container->get('doctrine.migrations_configuration.orm_default');
-        /** @var $command \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand */
+        /** @var $command AbstractCommand */
         $command       = new $className();
 
         $command->setMigrationConfiguration($configuration);
@@ -69,8 +71,8 @@ class MigrationsCommandFactory implements FactoryInterface
     }
 
     /**
-     * @param  \Zend\ServiceManager\ServiceLocatorInterface $container
-     * @return \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand
+     * @param  ServiceLocatorInterface $container
+     * @return AbstractCommand
      * @throws \InvalidArgumentException
      */
     public function createService(ServiceLocatorInterface $container)

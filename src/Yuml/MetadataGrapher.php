@@ -38,14 +38,14 @@ class MetadataGrapher
     protected $visitedAssociations = [];
 
     /**
-     * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata[]
+     * @var ClassMetadata[]
      */
     private $metadata;
 
     /**
      * Temporary array where reverse association name are stored
      *
-     * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata[]
+     * @var ClassMetadata[]
      */
     private $classByNames = [];
 
@@ -53,8 +53,7 @@ class MetadataGrapher
      * Generate a YUML compatible `dsl_text` to describe a given array
      * of entities
      *
-     * @param  $metadata \Doctrine\Common\Persistence\Mapping\ClassMetadata[]
-     *
+     * @param  $metadata ClassMetadata[]
      * @return string
      */
     public function generateFromMetadata(array $metadata)
@@ -160,8 +159,7 @@ class MetadataGrapher
     /**
      * Build the string representing the single graph item
      *
-     * @param ClassMetadata   $class
-     *
+     * @param  ClassMetadata $class
      * @return string
      */
     private function getClassString(ClassMetadata $class)
@@ -198,8 +196,7 @@ class MetadataGrapher
     /**
      * Retrieve a class metadata instance by name from the given array
      *
-     * @param string          $className
-     *
+     * @param  string $className
      * @return ClassMetadata|null
      */
     private function getClassByName($className)
@@ -219,11 +216,10 @@ class MetadataGrapher
     /**
      * Retrieve a class metadata's parent class metadata
      *
-     * @param ClassMetadata   $class
-     *
+     * @param  ClassMetadata $class
      * @return ClassMetadata|null
      */
-    private function getParent($class)
+    private function getParent(ClassMetadata $class)
     {
         $className = $class->getName();
 
@@ -237,9 +233,8 @@ class MetadataGrapher
     /**
      * Visit a given association and mark it as visited
      *
-     * @param string      $className
-     * @param string|null $association
-     *
+     * @param  string      $className
+     * @param  string|null $association
      * @return bool true if the association was visited before
      */
     private function visitAssociation($className, $association = null)

@@ -20,8 +20,9 @@
 namespace DoctrineORMModule;
 
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
-use Symfony\Component\Console\Helper\DialogHelper;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
@@ -29,6 +30,7 @@ use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
 
 /**
@@ -93,9 +95,9 @@ class Module implements
      */
     public function initializeConsole(EventInterface $event)
     {
-        /** @var $cli \Symfony\Component\Console\Application */
+        /** @var $cli Application */
         $cli            = $event->getTarget();
-        /** @var $serviceLocator \Zend\ServiceManager\ServiceLocatorInterface */
+        /** @var $serviceLocator ServiceLocatorInterface */
         $serviceLocator = $event->getParam('ServiceManager');
 
         $commands = [
@@ -118,7 +120,7 @@ class Module implements
             'doctrine.orm_cmd.info',
         ];
 
-        if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
+        if (class_exists(\Doctrine\DBAL\Migrations\Version::class)) {
             $commands = ArrayUtils::merge(
                 $commands,
                 [
@@ -135,7 +137,7 @@ class Module implements
 
         $cli->addCommands(array_map([$serviceLocator, 'get'], $commands));
 
-        /** @var $entityManager \Doctrine\ORM\EntityManager */
+        /** @var $entityManager EntityManager */
         $entityManager = $serviceLocator->get('doctrine.entitymanager.orm_default');
         $helperSet     = $cli->getHelperSet();
 

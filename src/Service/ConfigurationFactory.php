@@ -24,6 +24,7 @@ use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Cache\RegionsConfiguration;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Mapping\EntityListenerResolver;
+use DoctrineORMModule\Options\Configuration as OptionsConfiguration;
 use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationFactory;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Exception\InvalidArgumentException;
@@ -38,7 +39,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /** @var $options \DoctrineORMModule\Options\Configuration */
+        /** @var $options OptionsConfiguration */
         $options = $this->getOptions($container);
         $config  = new Configuration();
 
@@ -161,6 +162,10 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         return $config;
     }
 
+    /**
+     * @param  ServiceLocatorInterface $container
+     * @return Configuration
+     */
     public function createService(ServiceLocatorInterface $container)
     {
         return $this($container, Configuration::class);
@@ -168,6 +173,6 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
 
     protected function getOptionsClass()
     {
-        return 'DoctrineORMModule\Options\Configuration';
+        return OptionsConfiguration::class;
     }
 }

@@ -37,7 +37,7 @@ class AnnotationBuilderTest extends TestCase
      */
     public function testAnnotationBuilderSupportsClassNames()
     {
-        $spec = $this->builder->getFormSpecification('DoctrineORMModuleTest\\Assets\\Entity\\Issue237');
+        $spec = $this->builder->getFormSpecification(Issue237::class);
 
         $this->assertCount(0, $spec['elements'], 'Annotation builder allows also class names');
     }

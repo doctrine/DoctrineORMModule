@@ -19,8 +19,8 @@
 
 namespace DoctrineORMModule\Collector;
 
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
-use Serializable;
 use Zend\Mvc\MvcEvent;
 use ZendDeveloperTools\Collector\AutoHideInterface;
 use ZendDeveloperTools\Collector\CollectorInterface;
@@ -32,7 +32,7 @@ use ZendDeveloperTools\Collector\CollectorInterface;
  * @link    www.doctrine-project.org
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class MappingCollector implements CollectorInterface, AutoHideInterface, Serializable
+class MappingCollector implements CollectorInterface, AutoHideInterface, \Serializable
 {
     /**
      * Collector priority
@@ -50,7 +50,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
     protected $classMetadataFactory = [];
 
     /**
-     * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata[] indexed by class name
+     * @var ClassMetadata[] indexed by class name
      */
     protected $classes = [];
 
@@ -89,7 +89,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
             return;
         }
 
-        /** @var $metadata \Doctrine\Common\Persistence\Mapping\ClassMetadata[] */
+        /** @var $metadata ClassMetadata[] */
         $metadata      = $this->classMetadataFactory->getAllMetadata();
         $this->classes = [];
 
@@ -129,7 +129,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
     }
 
     /**
-     * @return \Doctrine\Common\Persistence\Mapping\ClassMetadata[]
+     * @return ClassMetadata[]
      */
     public function getClasses()
     {

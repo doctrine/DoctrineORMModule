@@ -2,8 +2,11 @@
 
 namespace DoctrineORMModuleTest\Form;
 
-use ArrayObject;
 use DoctrineORMModule\Form\Annotation\ElementAnnotationsListener;
+use DoctrineORMModule\Form\Element\EntitySelect;
+use DoctrineORMModuleTest\Assets\Entity\FormEntity;
+use DoctrineORMModuleTest\Assets\Entity\FormEntityTarget;
+use DoctrineORMModuleTest\Assets\Entity\TargetEntity;
 use DoctrineORMModuleTest\Framework\TestCase;
 use Zend\EventManager\Event;
 
@@ -40,18 +43,15 @@ class ElementAnnotationsListenerTest extends TestCase
 
         $elementSpec = $event->getParam('elementSpec');
         $this->assertEquals($this->getEntityManager(), $elementSpec['spec']['options']['object_manager']);
-        $this->assertEquals(
-            'DoctrineORMModuleTest\Assets\Entity\TargetEntity',
-            $elementSpec['spec']['options']['target_class']
-        );
-        $this->assertEquals('DoctrineORMModule\Form\Element\EntitySelect', $elementSpec['spec']['type']);
+        $this->assertEquals(TargetEntity::class, $elementSpec['spec']['options']['target_class']);
+        $this->assertEquals(EntitySelect::class, $elementSpec['spec']['type']);
     }
 
     public function testToOneMergesOptions()
     {
         $listener    = $this->listener;
         $event       = $this->getMetadataEvent();
-        $elementSpec = new ArrayObject();
+        $elementSpec = new \ArrayObject();
         $elementSpec['spec']['options']['foo'] = 'bar';
 
         $event->setParam('name', 'targetOne');
@@ -99,11 +99,8 @@ class ElementAnnotationsListenerTest extends TestCase
 
         $this->assertTrue($elementSpec['spec']['attributes']['multiple']);
         $this->assertEquals($this->getEntityManager(), $elementSpec['spec']['options']['object_manager']);
-        $this->assertEquals(
-            'DoctrineORMModuleTest\Assets\Entity\FormEntityTarget',
-            $elementSpec['spec']['options']['target_class']
-        );
-        $this->assertEquals('DoctrineORMModule\Form\Element\EntitySelect', $elementSpec['spec']['type']);
+        $this->assertEquals(FormEntityTarget::class, $elementSpec['spec']['options']['target_class']);
+        $this->assertEquals(EntitySelect::class, $elementSpec['spec']['type']);
         $this->assertFalse($inputSpec['required']);
     }
 
@@ -111,7 +108,7 @@ class ElementAnnotationsListenerTest extends TestCase
     {
         $listener    = $this->listener;
         $event       = $this->getMetadataEvent();
-        $elementSpec = new ArrayObject();
+        $elementSpec = new \ArrayObject();
         $elementSpec['spec']['options']['foo'] = 'bar';
 
         $event->setParam('name', 'targetMany');
@@ -242,7 +239,7 @@ class ElementAnnotationsListenerTest extends TestCase
      * @param string $name
      * @param string $type
      */
-    public function testHandlevalidatorField($name, $type)
+    public function testHandleValidatorField($name, $type)
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -300,17 +297,17 @@ class ElementAnnotationsListenerTest extends TestCase
     public function eventTypeProvider()
     {
         return [
-            ['bool', 'Zend\Form\Element\Checkbox'],
-            ['boolean', 'Zend\Form\Element\Checkbox'],
-            ['bigint', 'Zend\Form\Element\Number'],
-            ['integer', 'Zend\Form\Element\Number'],
-            ['smallint', 'Zend\Form\Element\Number'],
-            ['datetime', 'Zend\Form\Element\DateTime'],
-            ['datetimetz', 'Zend\Form\Element\DateTime'],
-            ['date', 'Zend\Form\Element\Date'],
-            ['time', 'Zend\Form\Element\Time'],
-            ['string', 'Zend\Form\Element'],
-            ['text', 'Zend\Form\Element\Textarea'],
+            ['bool', \Zend\Form\Element\Checkbox::class],
+            ['boolean', \Zend\Form\Element\Checkbox::class],
+            ['bigint', \Zend\Form\Element\Number::class],
+            ['integer', \Zend\Form\Element\Number::class],
+            ['smallint', \Zend\Form\Element\Number::class],
+            ['datetime', \Zend\Form\Element\DateTime::class],
+            ['datetimetz', \Zend\Form\Element\DateTime::class],
+            ['date', \Zend\Form\Element\Date::class],
+            ['time', \Zend\Form\Element\Time::class],
+            ['string', \Zend\Form\Element::class],
+            ['text', \Zend\Form\Element\Textarea::class],
         ];
     }
 
@@ -334,7 +331,7 @@ class ElementAnnotationsListenerTest extends TestCase
     protected function getMetadataEvent()
     {
         $event    = new Event();
-        $metadata = $this->getEntityManager()->getClassMetadata('DoctrineORMModuleTest\Assets\Entity\FormEntity');
+        $metadata = $this->getEntityManager()->getClassMetadata(FormEntity::class);
         $event->setParam('metadata', $metadata);
 
         return $event;

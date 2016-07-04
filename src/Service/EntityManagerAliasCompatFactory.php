@@ -19,6 +19,7 @@
 
 namespace DoctrineORMModule\Service;
 
+use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -35,7 +36,7 @@ class EntityManagerAliasCompatFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
-     * @return \Doctrine\ORM\EntityManager
+     * @return EntityManager
      *
      * @deprecated this method was introduced to allow aliasing of service `Doctrine\ORM\EntityManager`
      *             from `doctrine.entitymanager.orm_default`

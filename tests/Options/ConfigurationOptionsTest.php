@@ -19,8 +19,12 @@
 
 namespace DoctrineORMModuleTest\Options;
 
+use Doctrine\ORM\Mapping\EntityListenerResolver;
+use Doctrine\ORM\Mapping\NamingStrategy;
+use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Repository\DefaultRepositoryFactory;
 use DoctrineORMModule\Options\Configuration;
+use Zend\Stdlib\Exception\InvalidArgumentException;
 
 class ConfigurationOptionsTest extends \PHPUnit_Framework_TestCase
 {
@@ -33,11 +37,11 @@ class ConfigurationOptionsTest extends \PHPUnit_Framework_TestCase
         $options->setNamingStrategy('test');
         $this->assertSame('test', $options->getNamingStrategy());
 
-        $namingStrategy = $this->createMock('Doctrine\ORM\Mapping\NamingStrategy');
+        $namingStrategy = $this->createMock(NamingStrategy::class);
         $options->setNamingStrategy($namingStrategy);
         $this->assertSame($namingStrategy, $options->getNamingStrategy());
 
-        $this->expectException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $options->setNamingStrategy(new \stdClass());
     }
 
@@ -50,11 +54,11 @@ class ConfigurationOptionsTest extends \PHPUnit_Framework_TestCase
         $options->setQuoteStrategy('test');
         $this->assertSame('test', $options->getQuoteStrategy());
 
-        $quoteStrategy = $this->createMock('Doctrine\ORM\Mapping\QuoteStrategy');
+        $quoteStrategy = $this->createMock(QuoteStrategy::class);
         $options->setQuoteStrategy($quoteStrategy);
         $this->assertSame($quoteStrategy, $options->getQuoteStrategy());
 
-        $this->expectException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $options->setQuoteStrategy(new \stdClass());
     }
 
@@ -71,7 +75,7 @@ class ConfigurationOptionsTest extends \PHPUnit_Framework_TestCase
         $options->setRepositoryFactory($repositoryFactory);
         $this->assertSame($repositoryFactory, $options->getRepositoryFactory());
 
-        $this->expectException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $options->setRepositoryFactory(new \stdClass());
     }
 
@@ -85,12 +89,12 @@ class ConfigurationOptionsTest extends \PHPUnit_Framework_TestCase
         $options->setEntityListenerResolver('test');
         $this->assertSame('test', $options->getEntityListenerResolver());
 
-        $entityListenerResolver = $this->createMock('Doctrine\ORM\Mapping\EntityListenerResolver');
+        $entityListenerResolver = $this->createMock(EntityListenerResolver::class);
 
         $options->setEntityListenerResolver($entityListenerResolver);
         $this->assertSame($entityListenerResolver, $options->getEntityListenerResolver());
 
-        $this->expectException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $options->setEntityListenerResolver(new \stdClass());
     }
 }

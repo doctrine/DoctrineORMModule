@@ -21,7 +21,9 @@ namespace DoctrineORMModule\Yuml;
 
 use Zend\Http\Client;
 use Zend\Http\Request;
+use Zend\Http\Response;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Mvc\Controller\Plugin\Redirect;
 
 /**
  * Utility to generate Yuml compatible strings from metadata graphs
@@ -48,12 +50,12 @@ class YumlController extends AbstractActionController
     /**
      * Redirects the user to a YUML graph drawn with the provided `dsl_text`
      *
-     * @return \Zend\Http\Response
+     * @return Response
      * @throws \UnexpectedValueException if the YUML service answered incorrectly
      */
     public function indexAction()
     {
-        /** @var $request \Zend\Http\Request */
+        /** @var $request Request */
         $request = $this->getRequest();
         $this->httpClient->setMethod(Request::METHOD_POST);
         $this->httpClient->setParameterPost(['dsl_text' => $request->getPost('dsl_text')]);
@@ -63,7 +65,7 @@ class YumlController extends AbstractActionController
             throw new \UnexpectedValueException('HTTP Request failed');
         }
 
-        /** @var $redirect \Zend\Mvc\Controller\Plugin\Redirect */
+        /** @var $redirect Redirect */
         $redirect = $this->plugin('redirect');
 
         return $redirect->toUrl('http://yuml.me/' . $response->getBody());

@@ -21,9 +21,10 @@ namespace DoctrineORMModule\Service;
 
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\DBAL\Logging\LoggerChain;
+use Doctrine\ORM\Configuration;
 use DoctrineORMModule\Collector\SQLLoggerCollector;
+use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
 use Interop\Container\ContainerInterface;
-use RuntimeException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -54,7 +55,6 @@ class SQLLoggerCollectorFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /** @var $options \DoctrineORMModule\Options\SQLLoggerCollectorOptions */
         $options = $this->getOptions($container);
 
         // @todo always ask the serviceLocator instead? (add a factory?)
@@ -64,7 +64,7 @@ class SQLLoggerCollectorFactory implements FactoryInterface
             $debugStackLogger = new DebugStack();
         }
 
-        /** @var $configuration \Doctrine\ORM\Configuration */
+        /** @var $configuration Configuration */
         $configuration = $container->get($options->getConfiguration());
 
         if (null !== $configuration->getSQLLogger()) {
@@ -89,8 +89,8 @@ class SQLLoggerCollectorFactory implements FactoryInterface
 
     /**
      * @param  ContainerInterface $serviceLocator
-     * @return mixed
-     * @throws RuntimeException
+     * @return SQLLoggerCollectorOptions
+     * @throws \RuntimeException
      */
     protected function getOptions(ContainerInterface $serviceLocator)
     {
@@ -101,7 +101,7 @@ class SQLLoggerCollectorFactory implements FactoryInterface
             : null;
 
         if (null === $options) {
-            throw new RuntimeException(
+            throw new \RuntimeException(
                 sprintf(
                     'Configuration with name "%s" could not be found in "doctrine.sql_logger_collector".',
                     $this->name
@@ -119,6 +119,6 @@ class SQLLoggerCollectorFactory implements FactoryInterface
      */
     protected function getOptionsClass()
     {
-        return 'DoctrineORMModule\Options\SQLLoggerCollectorOptions';
+        return SQLLoggerCollectorOptions::class;
     }
 }

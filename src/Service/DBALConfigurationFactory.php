@@ -21,8 +21,8 @@ namespace DoctrineORMModule\Service;
 
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Types\Type;
+use DoctrineOrmModule\Options\Configuration as OptionsConfiguration;
 use Interop\Container\ContainerInterface;
-use RuntimeException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -51,7 +51,7 @@ class DBALConfigurationFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
-     * @return \Doctrine\DBAL\Configuration
+     * @return Configuration
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
@@ -64,11 +64,11 @@ class DBALConfigurationFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
-     * @return \Doctrine\DBAL\Configuration
+     * @return Configuration
      */
     public function createService(ServiceLocatorInterface $container)
     {
-        return $this($container, \Doctrine\DBAL\Configuration::class);
+        return $this($container, Configuration::class);
     }
 
     /**
@@ -97,8 +97,8 @@ class DBALConfigurationFactory implements FactoryInterface
 
     /**
      * @param  ContainerInterface $serviceLocator
-     * @return mixed
-     * @throws RuntimeException
+     * @return OptionsConfiguration
+     * @throws \RuntimeException
      */
     public function getOptions(ContainerInterface $serviceLocator)
     {
@@ -107,7 +107,7 @@ class DBALConfigurationFactory implements FactoryInterface
         $options = isset($options['configuration'][$this->name]) ? $options['configuration'][$this->name] : null;
 
         if (null === $options) {
-            throw new RuntimeException(
+            throw new \RuntimeException(
                 sprintf(
                     'Configuration with name "%s" could not be found in "doctrine.configuration".',
                     $this->name
@@ -125,6 +125,6 @@ class DBALConfigurationFactory implements FactoryInterface
      */
     protected function getOptionsClass()
     {
-        return 'DoctrineModule\Options\Configuration';
+        return OptionsConfiguration::class;
     }
 }

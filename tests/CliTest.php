@@ -19,7 +19,13 @@
 
 namespace DoctrineORMModuleTest;
 
+use Doctrine\DBAL\Migrations\Tools\Console\Command as MigrationsCommand;
+use Doctrine\DBAL\Tools\Console\Command as DBALCommand;
+use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
+use Doctrine\ORM\Tools\Console\Command as ORMCommand;
+use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use DoctrineORMModuleTest\Util\ServiceManagerFactory;
+use Zend\EventManager\SharedEventManagerInterface;
 
 /**
  * Tests used to verify that command line functionality is active
@@ -46,7 +52,7 @@ class CliTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $serviceManager     = ServiceManagerFactory::getServiceManager();
-        /** @var $sharedEventManager \Zend\EventManager\SharedEventManagerInterface */
+        /** @var $sharedEventManager SharedEventManagerInterface */
         $sharedEventManager = $serviceManager->get('SharedEventManager');
         /** @var $application \Zend\Mvc\Application */
         $application        = $serviceManager->get('Application');
@@ -70,75 +76,75 @@ class CliTest extends \PHPUnit_Framework_TestCase
     {
         $helperSet = $this->cli->getHelperSet();
 
-        /** @var $emHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
+        /** @var $emHelper EntityManagerHelper */
         $emHelper = $helperSet->get('em');
-        $this->assertInstanceOf('Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper', $emHelper);
+        $this->assertInstanceOf(EntityManagerHelper::class, $emHelper);
         $this->assertSame($this->entityManager, $emHelper->getEntityManager());
 
-        /** @var $dbHelper \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper */
+        /** @var $dbHelper ConnectionHelper */
         $dbHelper = $helperSet->get('db');
-        $this->assertInstanceOf('Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper', $dbHelper);
+        $this->assertInstanceOf(ConnectionHelper::class, $dbHelper);
         $this->assertSame($this->entityManager->getConnection(), $dbHelper->getConnection());
     }
 
     public function testValidCommands()
     {
-        $this->assertInstanceOf('Doctrine\DBAL\Tools\Console\Command\ImportCommand', $this->cli->get('dbal:import'));
-        $this->assertInstanceOf('Doctrine\DBAL\Tools\Console\Command\RunSqlCommand', $this->cli->get('dbal:run-sql'));
+        $this->assertInstanceOf(DBALCommand\ImportCommand::class, $this->cli->get('dbal:import'));
+        $this->assertInstanceOf(DBALCommand\RunSqlCommand::class, $this->cli->get('dbal:run-sql'));
         $this->assertInstanceOf(
-            'Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand',
+            ORMCommand\ClearCache\MetadataCommand::class,
             $this->cli->get('orm:clear-cache:metadata')
         );
         $this->assertInstanceOf(
-            'Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand',
+            ORMCommand\ClearCache\QueryCommand::class,
             $this->cli->get('orm:clear-cache:query')
         );
         $this->assertInstanceOf(
-            'Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand',
+            ORMCommand\ClearCache\ResultCommand::class,
             $this->cli->get('orm:clear-cache:result')
         );
         $this->assertInstanceOf(
-            'Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand',
+            ORMCommand\GenerateProxiesCommand::class,
             $this->cli->get('orm:generate-proxies')
         );
         $this->assertInstanceOf(
-            'Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand',
+            ORMCommand\EnsureProductionSettingsCommand::class,
             $this->cli->get('orm:ensure-production-settings')
         );
         $this->assertInstanceOf(
-            'Doctrine\ORM\Tools\Console\Command\InfoCommand',
+            ORMCommand\InfoCommand::class,
             $this->cli->get('orm:info')
         );
         $this->assertInstanceOf(
-            'Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand',
+            ORMCommand\SchemaTool\CreateCommand::class,
             $this->cli->get('orm:schema-tool:create')
         );
         $this->assertInstanceOf(
-            'Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand',
+            ORMCommand\SchemaTool\UpdateCommand::class,
             $this->cli->get('orm:schema-tool:update')
         );
         $this->assertInstanceOf(
-            'Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand',
+            ORMCommand\SchemaTool\DropCommand::class,
             $this->cli->get('orm:schema-tool:drop')
         );
         $this->assertInstanceOf(
-            'Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand',
+            ORMCommand\ValidateSchemaCommand::class,
             $this->cli->get('orm:validate-schema')
         );
         $this->assertInstanceOf(
-            'Doctrine\ORM\Tools\Console\Command\RunDqlCommand',
+            ORMCommand\RunDqlCommand::class,
             $this->cli->get('orm:run-dql')
         );
         $this->assertInstanceOf(
-            'Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand',
+            MigrationsCommand\GenerateCommand::class,
             $this->cli->get('migrations:generate')
         );
         $this->assertInstanceOf(
-            'Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand',
+            MigrationsCommand\DiffCommand::class,
             $this->cli->get('migrations:diff')
         );
         $this->assertInstanceOf(
-            'Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand',
+            MigrationsCommand\ExecuteCommand::class,
             $this->cli->get('migrations:execute')
         );
     }

@@ -19,15 +19,17 @@
 
 namespace DoctrineORMModuleTest\Collector;
 
+use DoctrineORMModuleTest\Assets\Entity\EntityWithoutRepository;
+use DoctrineORMModuleTest\Assets\RepositoryClass;
 use DoctrineORMModuleTest\Framework\TestCase;
 
 class DefaultRepositoryTest extends TestCase
 {
     public function testEntityHasDefaultRepositoryInstance()
     {
-        $entityWithDefaultRepository = 'DoctrineORMModuleTest\Assets\Entity\EntityWithoutRepository';
+        $entityWithDefaultRepository = EntityWithoutRepository::class;
 
         $repository = $this->getEntityManager()->getRepository($entityWithDefaultRepository);
-        $this->assertInstanceOf('DoctrineORMModuleTest\Assets\RepositoryClass', $repository);
+        $this->assertInstanceOf(RepositoryClass::class, $repository);
     }
 }

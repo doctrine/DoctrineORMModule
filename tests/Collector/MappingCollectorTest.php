@@ -19,7 +19,10 @@
 
 namespace DoctrineORMModuleTest\Collector;
 
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
 use DoctrineORMModule\Collector\MappingCollector;
+use Zend\Mvc\MvcEvent;
 
 /**
  * Tests for the MappingCollector
@@ -30,7 +33,7 @@ use DoctrineORMModule\Collector\MappingCollector;
 class MappingCollectorTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Doctrine\Common\Persistence\Mapping\ClassMetadataFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var ClassMetadataFactory|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $metadataFactory;
 
@@ -46,7 +49,7 @@ class MappingCollectorTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->metadataFactory = $this->createMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadataFactory');
+        $this->metadataFactory = $this->createMock(ClassMetadataFactory::class);
         $this->collector       = new MappingCollector($this->metadataFactory, 'test-collector');
     }
 
@@ -72,9 +75,9 @@ class MappingCollectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCollect()
     {
-        $m1 = $this->createMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $m1 = $this->createMock(ClassMetadata::class);
         $m1->expects($this->any())->method('getName')->will($this->returnValue('M1'));
-        $m2 = $this->createMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $m2 = $this->createMock(ClassMetadata::class);
         $m2->expects($this->any())->method('getName')->will($this->returnValue('M2'));
         $this
             ->metadataFactory
@@ -82,7 +85,7 @@ class MappingCollectorTest extends \PHPUnit_Framework_TestCase
             ->method('getAllMetadata')
             ->will($this->returnValue([$m1, $m2]));
 
-        $this->collector->collect($this->createMock('Zend\\Mvc\\MvcEvent'));
+        $this->collector->collect($this->createMock(MvcEvent::class));
 
         $classes = $this->collector->getClasses();
 
@@ -98,11 +101,11 @@ class MappingCollectorTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->collector->canHide());
 
-        $m1 = $this->createMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $m1 = $this->createMock(ClassMetadata::class);
         $m1->expects($this->any())->method('getName')->will($this->returnValue('M1'));
         $this->metadataFactory->expects($this->any())->method('getAllMetadata')->will($this->returnValue([$m1]));
 
-        $this->collector->collect($this->createMock('Zend\\Mvc\\MvcEvent'));
+        $this->collector->collect($this->createMock(MvcEvent::class));
 
         $this->assertFalse($this->collector->canHide());
     }
@@ -114,11 +117,11 @@ class MappingCollectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testSerializeUnserializeAndCollectWithNoMetadataFactory()
     {
-        $m1 = $this->createMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $m1 = $this->createMock(ClassMetadata::class);
         $m1->expects($this->any())->method('getName')->will($this->returnValue('M1'));
         $this->metadataFactory->expects($this->any())->method('getAllMetadata')->will($this->returnValue([$m1]));
 
-        $this->collector->collect($this->createMock('Zend\\Mvc\\MvcEvent'));
+        $this->collector->collect($this->createMock(MvcEvent::class));
 
         /** @var $collector MappingCollector */
         $collector = unserialize(serialize($this->collector));
@@ -128,7 +131,7 @@ class MappingCollectorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($m1, $classes['M1']);
         $this->assertSame('test-collector', $collector->getName());
 
-        $collector->collect($this->createMock('Zend\\Mvc\\MvcEvent'));
+        $collector->collect($this->createMock(MvcEvent::class));
 
         $classes = $collector->getClasses();
         $this->assertCount(1, $classes);
