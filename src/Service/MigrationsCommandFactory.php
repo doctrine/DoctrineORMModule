@@ -58,9 +58,9 @@ class MigrationsCommandFactory implements FactoryInterface
         }
 
         // @TODO currently hardcoded: `orm_default` should be injected
-        /* @var $configuration \Doctrine\DBAL\Migrations\Configuration\Configuration */
+        /** @var $configuration \Doctrine\DBAL\Migrations\Configuration\Configuration */
         $configuration = $container->get('doctrine.migrations_configuration.orm_default');
-        /* @var $command \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand */
+        /** @var $command \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand */
         $command       = new $className;
 
         $command->setMigrationConfiguration($configuration);
@@ -69,7 +69,7 @@ class MigrationsCommandFactory implements FactoryInterface
     }
 
     /**
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $container
+     * @param  \Zend\ServiceManager\ServiceLocatorInterface $container
      * @return \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand
      * @throws \InvalidArgumentException
      */

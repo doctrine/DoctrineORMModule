@@ -39,7 +39,7 @@ if (!$percentage) {
 }
 
 $xml = new SimpleXMLElement(file_get_contents($inputFile));
-/* @var $metrics SimpleXMLElement[] */
+/** @var $metrics SimpleXMLElement[] */
 $metrics = $xml->xpath('//metrics');
 
 $totalElements = 0;

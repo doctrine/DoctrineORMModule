@@ -63,6 +63,7 @@ class DBALConfigurationFactory implements FactoryInterface
 
     /**
      * {@inheritDoc}
+     *
      * @return \Doctrine\DBAL\Configuration
      */
     public function createService(ServiceLocatorInterface $container)

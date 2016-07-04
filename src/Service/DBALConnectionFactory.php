@@ -74,6 +74,7 @@ class DBALConnectionFactory extends AbstractFactory
 
     /**
      * {@inheritDoc}
+     *
      * @return \Doctrine\DBAL\Connection
      */
     public function createService(ServiceLocatorInterface $container)

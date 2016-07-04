@@ -47,9 +47,9 @@ class CliTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $serviceManager     = ServiceManagerFactory::getServiceManager();
-        /* @var $sharedEventManager \Zend\EventManager\SharedEventManagerInterface */
+        /** @var $sharedEventManager \Zend\EventManager\SharedEventManagerInterface */
         $sharedEventManager = $serviceManager->get('SharedEventManager');
-        /* @var $application \Zend\Mvc\Application */
+        /** @var $application \Zend\Mvc\Application */
         $application        = $serviceManager->get('Application');
         $invocations        = 0;
 
@@ -71,12 +71,12 @@ class CliTest extends PHPUnit_Framework_TestCase
     {
         $helperSet = $this->cli->getHelperSet();
 
-        /* @var $emHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
+        /** @var $emHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
         $emHelper = $helperSet->get('em');
         $this->assertInstanceOf('Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper', $emHelper);
         $this->assertSame($this->entityManager, $emHelper->getEntityManager());
 
-        /* @var $dbHelper \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper */
+        /** @var $dbHelper \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper */
         $dbHelper = $helperSet->get('db');
         $this->assertInstanceOf('Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper', $dbHelper);
         $this->assertSame($this->entityManager->getConnection(), $dbHelper->getConnection());

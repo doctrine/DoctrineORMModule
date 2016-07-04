@@ -41,7 +41,7 @@ class MappingCollectorFactory extends AbstractFactory
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $name          = $this->getName();
-        /* @var $objectManager \Doctrine\Common\Persistence\ObjectManager */
+        /** @var $objectManager \Doctrine\Common\Persistence\ObjectManager */
         $objectManager = $container->get('doctrine.entitymanager.' . $name);
 
         return new MappingCollector($objectManager->getMetadataFactory(), 'doctrine.mapping_collector.' . $name);

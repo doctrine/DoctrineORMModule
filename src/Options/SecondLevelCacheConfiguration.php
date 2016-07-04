@@ -51,7 +51,7 @@ class SecondLevelCacheConfiguration extends AbstractOptions
     protected $regions = [];
 
     /**
-     * @param boolean $enabled
+     * @param bool $enabled
      */
     public function setEnabled($enabled)
     {
@@ -59,7 +59,7 @@ class SecondLevelCacheConfiguration extends AbstractOptions
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isEnabled()
     {

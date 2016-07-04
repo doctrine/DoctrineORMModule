@@ -41,7 +41,7 @@ class FormAnnotationBuilderFactory extends AbstractFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /* @var $entityManager \Doctrine\ORM\EntityManager */
+        /** @var $entityManager \Doctrine\ORM\EntityManager */
         $entityManager = $container->get('doctrine.entitymanager.' . $this->getName());
 
         $annotationBuilder = new AnnotationBuilder($entityManager);

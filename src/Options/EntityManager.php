@@ -36,7 +36,7 @@ class EntityManager extends AbstractOptions
 
     /**
      * @param  string $configuration
-     * @return self
+     * @return $this
      */
     public function setConfiguration($configuration)
     {
@@ -55,7 +55,7 @@ class EntityManager extends AbstractOptions
 
     /**
      * @param  string $connection
-     * @return self
+     * @return $this
      */
     public function setConnection($connection)
     {
@@ -66,7 +66,6 @@ class EntityManager extends AbstractOptions
 
     /**
      * @return string
-     * @return self
      */
     public function getConnection()
     {
@@ -75,7 +74,7 @@ class EntityManager extends AbstractOptions
 
     /**
      * @param  string $entityResolver
-     * @return self
+     * @return $this
      */
     public function setEntityResolver($entityResolver)
     {
@@ -86,7 +85,6 @@ class EntityManager extends AbstractOptions
 
     /**
      * @return string
-     * @return self
      */
     public function getEntityResolver()
     {

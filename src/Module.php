@@ -88,15 +88,14 @@ class Module implements
     /**
      * Initializes the console with additional commands from the ORM, DBAL and (optionally) DBAL\Migrations
      *
-     * @param \Zend\EventManager\EventInterface $event
-     *
+     * @param  \Zend\EventManager\EventInterface $event
      * @return void
      */
     public function initializeConsole(EventInterface $event)
     {
-        /* @var $cli \Symfony\Component\Console\Application */
+        /** @var $cli \Symfony\Component\Console\Application */
         $cli            = $event->getTarget();
-        /* @var $serviceLocator \Zend\ServiceManager\ServiceLocatorInterface */
+        /** @var $serviceLocator \Zend\ServiceManager\ServiceLocatorInterface */
         $serviceLocator = $event->getParam('ServiceManager');
 
         $commands = [
@@ -136,7 +135,7 @@ class Module implements
 
         $cli->addCommands(array_map([$serviceLocator, 'get'], $commands));
 
-        /* @var $entityManager \Doctrine\ORM\EntityManager */
+        /** @var $entityManager \Doctrine\ORM\EntityManager */
         $entityManager = $serviceLocator->get('doctrine.entitymanager.orm_default');
         $helperSet     = $cli->getHelperSet();
 

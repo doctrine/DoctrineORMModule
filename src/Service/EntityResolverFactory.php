@@ -33,7 +33,7 @@ class EntityResolverFactory extends AbstractFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /* @var $options \DoctrineORMModule\Options\EntityResolver */
+        /** @var $options \DoctrineORMModule\Options\EntityResolver */
         $options      = $this->getOptions($container, 'entity_resolver');
         $eventManager = $container->get($options->getEventManager());
         $resolvers    = $options->getResolvers();

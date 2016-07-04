@@ -45,7 +45,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
     protected $name;
 
     /**
-     * @var ClassMetadataFactory|null
+     * @var ClassMetadataFactory
      */
     protected $classMetadataFactory = [];
 
@@ -89,7 +89,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
             return;
         }
 
-        /* @var $metadata \Doctrine\Common\Persistence\Mapping\ClassMetadata[] */
+        /** @var $metadata \Doctrine\Common\Persistence\Mapping\ClassMetadata[] */
         $metadata      = $this->classMetadataFactory->getAllMetadata();
         $this->classes = [];
 

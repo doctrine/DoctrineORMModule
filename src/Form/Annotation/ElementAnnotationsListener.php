@@ -362,7 +362,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     }
 
     /**
-     * @param EventInterface $event
+     * @param  EventInterface $event
      * @return array|null
      */
     protected function getFieldMapping(EventInterface $event)
@@ -377,7 +377,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     }
 
     /**
-     * @param EventInterface $event
+     * @param  EventInterface $event
      * @return array|null
      */
     protected function getAssociationMapping(EventInterface $event)

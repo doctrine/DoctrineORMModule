@@ -41,7 +41,7 @@ class MigrationsConfigurationFactory extends AbstractFactory
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $name             = $this->getName();
-        /* @var $connection \Doctrine\DBAL\Connection */
+        /** @var $connection \Doctrine\DBAL\Connection */
         $connection       = $container->get('doctrine.connection.' . $name);
         $appConfig        = $container->get('Config');
         $migrationsConfig = $appConfig['doctrine']['migrations_configuration'][$name];

@@ -128,8 +128,8 @@ class AnnotationBuilder extends ZendAnnotationBuilder
     }
 
     /**
-     * @param ClassMetadata $metadata
-     * @param $name
+     * @param  ClassMetadata $metadata
+     * @param  $name
      * @return bool
      */
     protected function checkForExcludeElementFromMetadata(ClassMetadata $metadata, $name)

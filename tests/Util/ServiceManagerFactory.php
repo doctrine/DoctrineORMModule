@@ -42,7 +42,7 @@ class ServiceManagerFactory
     /**
      * Builds a new service manager
      *
-     * @param array $configuration
+     * @param  array $configuration
      * @return ServiceManager
      */
     public static function getServiceManager(array $configuration = [])

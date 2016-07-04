@@ -33,7 +33,7 @@ class EntityManagerFactory extends AbstractFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /* @var $options \DoctrineORMModule\Options\EntityManager */
+        /** @var $options \DoctrineORMModule\Options\EntityManager */
         $options    = $this->getOptions($container, 'entitymanager');
         $connection = $container->get($options->getConnection());
         $config     = $container->get($options->getConfiguration());
@@ -48,6 +48,7 @@ class EntityManagerFactory extends AbstractFactory
 
     /**
      * {@inheritDoc}
+     *
      * @return EntityManager
      */
     public function createService(ServiceLocatorInterface $container)

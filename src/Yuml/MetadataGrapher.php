@@ -93,8 +93,8 @@ class MetadataGrapher
     }
 
     /**
-     * @param ClassMetadata $class1
-     * @param string $association
+     * @param  ClassMetadata $class1
+     * @param  string $association
      * @return string
      */
     private function getAssociationString(ClassMetadata $class1, $association)
@@ -141,8 +141,8 @@ class MetadataGrapher
     }
 
     /**
-     * @param ClassMetadata $class1
-     * @param ClassMetadata $class2
+     * @param  ClassMetadata $class1
+     * @param  ClassMetadata $class2
      * @return string|null
      */
     private function getClassReverseAssociationName(ClassMetadata $class1, ClassMetadata $class2)

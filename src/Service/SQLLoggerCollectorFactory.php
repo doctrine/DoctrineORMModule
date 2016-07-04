@@ -64,7 +64,7 @@ class SQLLoggerCollectorFactory implements FactoryInterface
             $debugStackLogger = new DebugStack();
         }
 
-        /* @var $configuration \Doctrine\ORM\Configuration */
+        /** @var $configuration \Doctrine\ORM\Configuration */
         $configuration = $container->get($options->getConfiguration());
 
         if (null !== $configuration->getSQLLogger()) {

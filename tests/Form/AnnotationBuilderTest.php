@@ -54,8 +54,8 @@ class AnnotationBuilderTest extends TestCase
 
         foreach ($spec['elements'] as $elementSpec) {
             if (isset($elementSpec['spec']['options'])) {
-                if (array_key_exists('empty_option', $elementSpec['spec']['options']) &&
-                    $elementSpec['spec']['options']['empty_option'] === null
+                if (array_key_exists('empty_option', $elementSpec['spec']['options'])
+                    && $elementSpec['spec']['options']['empty_option'] === null
                 ) {
                     $showEmptyValue = false;
                     break;
@@ -90,8 +90,8 @@ class AnnotationBuilderTest extends TestCase
                 $annotationElementAttribute = $annotationFormElement->getAttribute('type');
                 $zendElementAttribute       = $zendFormElement->getAttribute('type');
 
-                if ((get_class($zendFormElement) !== get_class($annotationFormElement)) ||
-                    ($annotationElementAttribute !== $zendElementAttribute)
+                if (get_class($zendFormElement) !== get_class($annotationFormElement)
+                    || $annotationElementAttribute !== $zendElementAttribute
                 ) {
                     $userDefinedTypeOverridesListenerType = false;
                 }

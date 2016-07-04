@@ -204,7 +204,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  array $datetimeFunctions
-     * @return self
+     * @return $this
      */
     public function setDatetimeFunctions($datetimeFunctions)
     {
@@ -223,7 +223,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  string $driver
-     * @return self
+     * @return $this
      */
     public function setDriver($driver)
     {
@@ -242,7 +242,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  array $entityNamespaces
-     * @return self
+     * @return $this
      */
     public function setEntityNamespaces($entityNamespaces)
     {
@@ -260,8 +260,8 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param  boolean $generateProxies
-     * @return self
+     * @param  bool $generateProxies
+     * @return $this
      */
     public function setGenerateProxies($generateProxies)
     {
@@ -271,7 +271,7 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getGenerateProxies()
     {
@@ -280,7 +280,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  string $metadataCache
-     * @return self
+     * @return $this
      */
     public function setMetadataCache($metadataCache)
     {
@@ -299,7 +299,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  string $resultCache
-     * @return self
+     * @return $this
      */
     public function setResultCache($resultCache)
     {
@@ -318,7 +318,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  string $hydrationCache
-     * @return self
+     * @return $this
      */
     public function setHydrationCache($hydrationCache)
     {
@@ -337,7 +337,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  array $namedNativeQueries
-     * @return self
+     * @return $this
      */
     public function setNamedNativeQueries($namedNativeQueries)
     {
@@ -356,7 +356,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  array $namedQueries
-     * @return self
+     * @return $this
      */
     public function setNamedQueries($namedQueries)
     {
@@ -375,7 +375,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  array $numericFunctions
-     * @return self
+     * @return $this
      */
     public function setNumericFunctions($numericFunctions)
     {
@@ -393,9 +393,8 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     *
      * @param  array $filters
-     * @return self
+     * @return $this
      */
     public function setFilters($filters)
     {
@@ -415,7 +414,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  string $proxyDir
-     * @return self
+     * @return $this
      */
     public function setProxyDir($proxyDir)
     {
@@ -434,7 +433,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  string $proxyNamespace
-     * @return self
+     * @return $this
      */
     public function setProxyNamespace($proxyNamespace)
     {
@@ -453,7 +452,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  string $queryCache
-     * @return self
+     * @return $this
      */
     public function setQueryCache($queryCache)
     {
@@ -472,7 +471,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  array $stringFunctions
-     * @return self
+     * @return $this
      */
     public function setStringFunctions($stringFunctions)
     {
@@ -491,7 +490,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  array $modes
-     * @return self
+     * @return $this
      */
     public function setCustomHydrationModes($modes)
     {
@@ -510,7 +509,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  string|null|NamingStrategy $namingStrategy
-     * @return self
+     * @return $this
      * @throws InvalidArgumentException   when the provided naming strategy does not fit the expected type
      */
     public function setNamingStrategy($namingStrategy)
@@ -543,8 +542,8 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  string|null|QuoteStrategy $quoteStrategy
-     * @return self
-     * @throws InvalidArgumentException   when the provided quote strategy does not fit the expected type
+     * @return $this
+     * @throws InvalidArgumentException  when the provided quote strategy does not fit the expected type
      */
     public function setQuoteStrategy($quoteStrategy)
     {
@@ -576,8 +575,8 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  string|null|RepositoryFactory $repositoryFactory
-     * @return self
-     * @throws InvalidArgumentException   when the provided repository factory does not fit the expected type
+     * @return $this
+     * @throws InvalidArgumentException      when the provided repository factory does not fit the expected type
      */
     public function setRepositoryFactory($repositoryFactory)
     {
@@ -629,7 +628,7 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  string|null|EntityListenerResolver $entityListenerResolver
-     * @return self
+     * @return $this
      * @throws InvalidArgumentException           When the provided entity listener resolver
      *                                            does not fit the expected type
      */

@@ -121,7 +121,7 @@ class MappingCollectorTest extends PHPUnit_Framework_TestCase
 
         $this->collector->collect($this->getMock('Zend\\Mvc\\MvcEvent'));
 
-        /* @var $collector MappingCollector */
+        /** @var $collector MappingCollector */
         $collector = unserialize(serialize($this->collector));
 
         $classes = $collector->getClasses();
