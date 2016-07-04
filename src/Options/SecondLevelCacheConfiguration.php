@@ -51,11 +51,14 @@ class SecondLevelCacheConfiguration extends AbstractOptions
     protected $regions = [];
 
     /**
-     * @param bool $enabled
+     * @param  bool $enabled
+     * @return $this
      */
     public function setEnabled($enabled)
     {
         $this->enabled = (bool) $enabled;
+
+        return $this;
     }
 
     /**
@@ -67,11 +70,14 @@ class SecondLevelCacheConfiguration extends AbstractOptions
     }
 
     /**
-     * @param int $defaultLifetime
+     * @param  int $defaultLifetime
+     * @return $this
      */
     public function setDefaultLifetime($defaultLifetime)
     {
         $this->defaultLifetime = (int) $defaultLifetime;
+
+        return $this;
     }
 
     /**
@@ -83,11 +89,14 @@ class SecondLevelCacheConfiguration extends AbstractOptions
     }
 
     /**
-     * @param int $defaultLockLifetime
+     * @param  int $defaultLockLifetime
+     * @return $this
      */
     public function setDefaultLockLifetime($defaultLockLifetime)
     {
         $this->defaultLockLifetime = (int) $defaultLockLifetime;
+
+        return $this;
     }
 
     /**
@@ -99,11 +108,14 @@ class SecondLevelCacheConfiguration extends AbstractOptions
     }
 
     /**
-     * @param string $fileLockRegionDirectory
+     * @param  string $fileLockRegionDirectory
+     * @return $this
      */
     public function setFileLockRegionDirectory($fileLockRegionDirectory)
     {
         $this->fileLockRegionDirectory = (string) $fileLockRegionDirectory;
+
+        return $this;
     }
 
     /**
@@ -115,11 +127,14 @@ class SecondLevelCacheConfiguration extends AbstractOptions
     }
 
     /**
-     * @param array $regions
+     * @param  array $regions
+     * @return $this
      */
     public function setRegions(array $regions)
     {
         $this->regions = $regions;
+
+        return $this;
     }
 
     /**

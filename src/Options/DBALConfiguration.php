@@ -55,11 +55,14 @@ class DBALConfiguration extends AbstractOptions
     protected $types = [];
 
     /**
-     * @param string $resultCache
+     * @param  string $resultCache
+     * @return $this
      */
     public function setResultCache($resultCache)
     {
         $this->resultCache = $resultCache;
+
+        return $this;
     }
 
     /**
@@ -71,11 +74,14 @@ class DBALConfiguration extends AbstractOptions
     }
 
     /**
-     * @param string $sqlLogger
+     * @param  string $sqlLogger
+     * @return $this
      */
     public function setSqlLogger($sqlLogger)
     {
         $this->sqlLogger = $sqlLogger;
+
+        return $this;
     }
 
     /**
@@ -87,11 +93,14 @@ class DBALConfiguration extends AbstractOptions
     }
 
     /**
-     * @param array $types
+     * @param  array $types
+     * @return $this
      */
     public function setTypes(array $types)
     {
         $this->types = $types;
+
+        return $this;
     }
 
     /**

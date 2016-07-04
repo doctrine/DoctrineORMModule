@@ -46,11 +46,14 @@ class SQLLoggerCollectorOptions extends AbstractOptions
     protected $sqlLogger;
 
     /**
-     * @param string $name
+     * @param  string $name
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = (string) $name;
+
+        return $this;
     }
 
     /**
@@ -64,11 +67,14 @@ class SQLLoggerCollectorOptions extends AbstractOptions
     }
 
     /**
-     * @param string|null $configuration
+     * @param  string|null $configuration
+     * @return $this
      */
     public function setConfiguration($configuration)
     {
         $this->configuration = $configuration ? (string) $configuration : null;
+
+        return $this;
     }
 
     /**
@@ -82,11 +88,14 @@ class SQLLoggerCollectorOptions extends AbstractOptions
     }
 
     /**
-     * @param string|null $sqlLogger
+     * @param  string|null $sqlLogger
+     * @return $this
      */
     public function setSqlLogger($sqlLogger)
     {
         $this->sqlLogger = $sqlLogger ? (string) $sqlLogger : null;
+
+        return $this;
     }
 
     /**

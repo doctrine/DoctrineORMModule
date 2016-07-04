@@ -611,11 +611,14 @@ class Configuration extends DBALConfiguration
      *
      * @see \Doctrine\ORM\Configuration::setClassMetadataFactoryName()
      *
-     * @param string $factoryName
+     * @param  string $factoryName
+     * @return $this
      */
     public function setClassMetadataFactoryName($factoryName)
     {
         $this->classMetadataFactoryName = (string) $factoryName;
+
+        return $this;
     }
 
     /**
@@ -660,11 +663,13 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  array $secondLevelCache
-     * @return void
+     * @return $this
      */
     public function setSecondLevelCache(array $secondLevelCache)
     {
         $this->secondLevelCache = new SecondLevelCacheConfiguration($secondLevelCache);
+
+        return $this;
     }
 
     /**
@@ -679,11 +684,13 @@ class Configuration extends DBALConfiguration
      * Sets default repository class.
      *
      * @param  string $className
-     * @return void
+     * @return $this
      */
     public function setDefaultRepositoryClassName($className)
     {
         $this->defaultRepositoryClassName = (string) $className;
+
+        return $this;
     }
 
     /**

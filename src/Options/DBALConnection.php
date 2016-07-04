@@ -46,7 +46,7 @@ class DBALConnection extends AbstractOptions
      *
      * @var string
      */
-    protected $eventmanager = 'orm_default';
+    protected $eventManager = 'orm_default';
 
     /**
      * Set the PDO instance, if any, to use. If a string is set
@@ -90,11 +90,14 @@ class DBALConnection extends AbstractOptions
     protected $doctrineCommentedTypes = [];
 
     /**
-     * @param string $configuration
+     * @param  string $configuration
+     * @return $this
      */
     public function setConfiguration($configuration)
     {
         $this->configuration = $configuration;
+
+        return $this;
     }
 
     /**
@@ -106,11 +109,14 @@ class DBALConnection extends AbstractOptions
     }
 
     /**
-     * @param string $eventmanager
+     * @param  string $eventManager
+     * @return $this
      */
-    public function setEventManager($eventmanager)
+    public function setEventManager($eventManager)
     {
-        $this->eventmanager = $eventmanager;
+        $this->eventManager = $eventManager;
+
+        return $this;
     }
 
     /**
@@ -118,15 +124,18 @@ class DBALConnection extends AbstractOptions
      */
     public function getEventManager()
     {
-        return 'doctrine.eventmanager.' . $this->eventmanager;
+        return 'doctrine.eventmanager.' . $this->eventManager;
     }
 
     /**
-     * @param array $params
+     * @param  array $params
+     * @return $this
      */
     public function setParams($params)
     {
         $this->params = $params;
+
+        return $this;
     }
 
     /**
@@ -139,7 +148,7 @@ class DBALConnection extends AbstractOptions
 
     /**
      * @param  array $doctrineTypeMappings
-     * @return \DoctrineORMModule\Options\DBALConnection
+     * @return $this
      */
     public function setDoctrineTypeMappings($doctrineTypeMappings)
     {
@@ -158,11 +167,14 @@ class DBALConnection extends AbstractOptions
     }
 
     /**
-     * @param array $doctrineCommentedTypes
+     * @param  array $doctrineCommentedTypes
+     * @return $this
      */
     public function setDoctrineCommentedTypes(array $doctrineCommentedTypes)
     {
         $this->doctrineCommentedTypes = $doctrineCommentedTypes;
+
+        return $this;
     }
 
     /**
@@ -174,11 +186,14 @@ class DBALConnection extends AbstractOptions
     }
 
     /**
-     * @param null|string $driverClass
+     * @param  null|string $driverClass
+     * @return $this
      */
     public function setDriverClass($driverClass)
     {
         $this->driverClass = $driverClass;
+
+        return $this;
     }
 
     /**
@@ -190,11 +205,14 @@ class DBALConnection extends AbstractOptions
     }
 
     /**
-     * @param null|\PDO|string $pdo
+     * @param  null|\PDO|string $pdo
+     * @return $this
      */
     public function setPdo($pdo)
     {
         $this->pdo = $pdo;
+
+        return $this;
     }
 
     /**
@@ -206,11 +224,14 @@ class DBALConnection extends AbstractOptions
     }
 
     /**
-     * @param string $wrapperClass
+     * @param  string $wrapperClass
+     * @return $this
      */
     public function setWrapperClass($wrapperClass)
     {
         $this->wrapperClass = $wrapperClass;
+
+        return $this;
     }
 
     /**
