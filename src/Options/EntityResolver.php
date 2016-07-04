@@ -40,7 +40,7 @@ class EntityResolver extends AbstractOptions
      */
     public function getEventManager()
     {
-        return "doctrine.eventmanager.{$this->eventManager}";
+        return 'doctrine.eventmanager.' . $this->eventManager;
     }
 
     /**
@@ -50,7 +50,7 @@ class EntityResolver extends AbstractOptions
     public function setResolvers(array $resolvers)
     {
         foreach ($resolvers as $old => $new) {
-            if (!class_exists($new)) {
+            if (! class_exists($new)) {
                 throw new InvalidArgumentException(
                     sprintf(
                         '%s is resolved to the entity %s, which does not exist',

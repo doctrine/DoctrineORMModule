@@ -72,7 +72,7 @@ class MetadataGrapher
 
             $associations = $class->getAssociationNames();
 
-            if (empty($associations) && !isset($this->visitedAssociations[$class->getName()])) {
+            if (empty($associations) && ! isset($this->visitedAssociations[$class->getName()])) {
                 $str[] = $this->getClassString($class);
 
                 continue;
@@ -186,7 +186,7 @@ class MetadataGrapher
             }
         }
 
-        if (!empty($fields)) {
+        if (! empty($fields)) {
             $classText .= '|' . implode(';', $fields);
         }
 
@@ -204,7 +204,7 @@ class MetadataGrapher
      */
     private function getClassByName($className)
     {
-        if (!isset($this->classByNames[$className])) {
+        if (! isset($this->classByNames[$className])) {
             foreach ($this->metadata as $class) {
                 if ($class->getName() === $className) {
                     $this->classByNames[$className] = $class;
@@ -227,7 +227,7 @@ class MetadataGrapher
     {
         $className = $class->getName();
 
-        if (!class_exists($className) || (!$parent = get_parent_class($className))) {
+        if (! class_exists($className) || ! ($parent = get_parent_class($className))) {
             return null;
         }
 
@@ -258,7 +258,7 @@ class MetadataGrapher
             return false;
         }
 
-        if (!isset($this->visitedAssociations[$className])) {
+        if (! isset($this->visitedAssociations[$className])) {
             $this->visitedAssociations[$className] = [];
         }
 

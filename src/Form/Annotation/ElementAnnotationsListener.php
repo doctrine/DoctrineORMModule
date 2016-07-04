@@ -97,7 +97,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $metadata = $event->getParam('metadata');
         $mapping  = $this->getAssociationMapping($event);
-        if (!$mapping || !$metadata->isSingleValuedAssociation($event->getParam('name'))) {
+        if (! $mapping || ! $metadata->isSingleValuedAssociation($event->getParam('name'))) {
             return;
         }
 
@@ -114,7 +114,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $metadata = $event->getParam('metadata');
         $mapping  = $this->getAssociationMapping($event);
-        if (!$mapping || !$metadata->isCollectionValuedAssociation($event->getParam('name'))) {
+        if (! $mapping || ! $metadata->isCollectionValuedAssociation($event->getParam('name'))) {
             return;
         }
 
@@ -154,8 +154,8 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $metadata    = $event->getParam('metadata');
         $identifiers = $metadata->getIdentifierFieldNames();
 
-        return in_array($event->getParam('name'), $identifiers) &&
-               $metadata->generatorType === ClassMetadata::GENERATOR_TYPE_IDENTITY;
+        return in_array($event->getParam('name'), $identifiers)
+            && $metadata->generatorType === ClassMetadata::GENERATOR_TYPE_IDENTITY;
     }
 
     /**
@@ -166,7 +166,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $metadata = $event->getParam('metadata');
-        if (!$metadata || !$metadata->hasField($event->getParam('name'))) {
+        if (! $metadata || ! $metadata->hasField($event->getParam('name'))) {
             return;
         }
 
@@ -204,7 +204,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $metadata = $event->getParam('metadata');
         $mapping  = $this->getAssociationMapping($event);
-        if (!$mapping) {
+        if (! $mapping) {
             return;
         }
 
@@ -220,9 +220,9 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
             foreach ($mapping['joinColumns'] as $joinColumn) {
                 if (isset($joinColumn['nullable']) && $joinColumn['nullable']) {
                     $required = false;
-                    if ((isset($elementSpec['spec']['options']) &&
-                         !array_key_exists('empty_option', $elementSpec['spec']['options'])) ||
-                         !isset($elementSpec['spec']['options'])
+                    if ((isset($elementSpec['spec']['options'])
+                            && ! array_key_exists('empty_option', $elementSpec['spec']['options']))
+                        || ! isset($elementSpec['spec']['options'])
                     ) {
                         $elementSpec['spec']['options']['empty_option'] = 'NULL';
                     }
@@ -246,11 +246,11 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $metadata  = $event->getParam('metadata');
         $inputSpec = $event->getParam('inputSpec');
 
-        if (!$metadata || !$metadata->hasField($event->getParam('name'))) {
+        if (! $metadata || ! $metadata->hasField($event->getParam('name'))) {
             return;
         }
 
-        $inputSpec['required'] = !$metadata->isNullable($event->getParam('name'));
+        $inputSpec['required'] = ! $metadata->isNullable($event->getParam('name'));
     }
 
     /**
@@ -262,7 +262,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $metadata = $event->getParam('metadata');
         $mapping  = $this->getFieldMapping($event);
-        if (!$mapping) {
+        if (! $mapping) {
             return;
         }
 
@@ -319,7 +319,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $mapping  = $this->getFieldMapping($event);
         $metadata = $event->getParam('metadata');
-        if (!$mapping) {
+        if (! $mapping) {
             return;
         }
 
@@ -345,8 +345,8 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                 break;
             case 'string':
                 $elementSpec = $event->getParam('elementSpec');
-                if (isset($elementSpec['spec']['type']) &&
-                    in_array($elementSpec['spec']['type'], ['File', 'Zend\Form\Element\File'])
+                if (isset($elementSpec['spec']['type'])
+                    && in_array($elementSpec['spec']['type'], ['File', 'Zend\Form\Element\File'])
                 ) {
                     return;
                 }
@@ -407,7 +407,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         );
 
         $elementSpec['spec']['options'] = $options;
-        if (!isset($elementSpec['spec']['type'])) {
+        if (! isset($elementSpec['spec']['type'])) {
             $elementSpec['spec']['type'] = 'DoctrineORMModule\Form\Element\EntitySelect';
         }
     }
@@ -420,7 +420,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     protected function prepareEvent(EventInterface $event)
     {
         foreach (['elementSpec', 'inputSpec'] as $type) {
-            if (!$event->getParam($type)) {
+            if (! $event->getParam($type)) {
                 $event->setParam($type, new ArrayObject());
             }
         }
@@ -428,13 +428,13 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $elementSpec = $event->getParam('elementSpec');
         $inputSpec   = $event->getParam('inputSpec');
 
-        if (!isset($elementSpec['spec'])) {
+        if (! isset($elementSpec['spec'])) {
             $elementSpec['spec'] = [];
         }
-        if (!isset($inputSpec['filters'])) {
+        if (! isset($inputSpec['filters'])) {
             $inputSpec['filters'] = [];
         }
-        if (!isset($inputSpec['validators'])) {
+        if (! isset($inputSpec['validators'])) {
             $inputSpec['validators'] = [];
         }
     }

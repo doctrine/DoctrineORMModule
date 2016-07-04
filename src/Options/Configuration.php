@@ -237,7 +237,7 @@ class Configuration extends DBALConfiguration
      */
     public function getDriver()
     {
-        return "doctrine.driver.{$this->driver}";
+        return 'doctrine.driver.' . $this->driver;
     }
 
     /**
@@ -294,7 +294,7 @@ class Configuration extends DBALConfiguration
      */
     public function getMetadataCache()
     {
-        return "doctrine.cache.{$this->metadataCache}";
+        return 'doctrine.cache.' . $this->metadataCache;
     }
 
     /**
@@ -313,7 +313,7 @@ class Configuration extends DBALConfiguration
      */
     public function getResultCache()
     {
-        return "doctrine.cache.{$this->resultCache}";
+        return 'doctrine.cache.' . $this->resultCache;
     }
 
     /**
@@ -332,7 +332,7 @@ class Configuration extends DBALConfiguration
      */
     public function getHydrationCache()
     {
-        return "doctrine.cache.{$this->hydrationCache}";
+        return 'doctrine.cache.' . $this->hydrationCache;
     }
 
     /**
@@ -466,7 +466,7 @@ class Configuration extends DBALConfiguration
      */
     public function getQueryCache()
     {
-        return "doctrine.cache.{$this->queryCache}";
+        return 'doctrine.cache.' . $this->queryCache;
     }
 
     /**

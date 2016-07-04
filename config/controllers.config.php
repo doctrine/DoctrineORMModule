@@ -30,7 +30,7 @@ return [
             $config = $pluginManager->getServiceLocator()->get('Config');
 
             if (! isset($config['zenddevelopertools']['toolbar']['enabled'])
-                || !$config['zenddevelopertools']['toolbar']['enabled']
+                || ! $config['zenddevelopertools']['toolbar']['enabled']
             ) {
                 throw new ServiceNotFoundException(
                     'Service DoctrineORMModule\\Yuml\\YumlController could not be found'

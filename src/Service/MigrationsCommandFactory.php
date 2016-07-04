@@ -61,7 +61,7 @@ class MigrationsCommandFactory implements FactoryInterface
         /** @var $configuration \Doctrine\DBAL\Migrations\Configuration\Configuration */
         $configuration = $container->get('doctrine.migrations_configuration.orm_default');
         /** @var $command \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand */
-        $command       = new $className;
+        $command       = new $className();
 
         $command->setMigrationConfiguration($configuration);
 

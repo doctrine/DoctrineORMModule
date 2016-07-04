@@ -50,7 +50,7 @@ class EntityManager extends AbstractOptions
      */
     public function getConfiguration()
     {
-        return "doctrine.configuration.{$this->configuration}";
+        return 'doctrine.configuration.' . $this->configuration;
     }
 
     /**

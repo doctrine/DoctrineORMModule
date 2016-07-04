@@ -41,7 +41,7 @@ class ObjectSelectFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $entityManager = $container->get('Doctrine\ORM\EntityManager');
-        $element       = new ObjectSelect;
+        $element       = new ObjectSelect();
 
         $element->getProxy()->setObjectManager($entityManager);
 

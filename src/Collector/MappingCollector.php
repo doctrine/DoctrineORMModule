@@ -85,7 +85,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
      */
     public function collect(MvcEvent $mvcEvent)
     {
-        if (!$this->classMetadataFactory) {
+        if (! $this->classMetadataFactory) {
             return;
         }
 
@@ -112,12 +112,10 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
      */
     public function serialize()
     {
-        return serialize(
-            [
-                'name'    => $this->name,
-                'classes' => $this->classes,
-            ]
-        );
+        return serialize([
+            'name'    => $this->name,
+            'classes' => $this->classes,
+        ]);
     }
 
     /**

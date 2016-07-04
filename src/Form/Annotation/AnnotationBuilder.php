@@ -84,14 +84,14 @@ class AnnotationBuilder extends ZendAnnotationBuilder
 
         foreach ($formSpec['elements'] as $key => $elementSpec) {
             $name          = isset($elementSpec['spec']['name']) ? $elementSpec['spec']['name'] : null;
-            $isFormElement = (isset($elementSpec['spec']['type']) &&
-                              in_array($elementSpec['spec']['type'], $formElements));
+            $isFormElement = isset($elementSpec['spec']['type'])
+                                && in_array($elementSpec['spec']['type'], $formElements);
 
-            if (!$name) {
+            if (! $name) {
                 continue;
             }
 
-            if (!isset($inputFilter[$name])) {
+            if (! isset($inputFilter[$name])) {
                 $inputFilter[$name] = new \ArrayObject();
             }
 
@@ -115,7 +115,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
                 continue;
             }
 
-            if ($metadata->hasField($name) || (!$metadata->hasAssociation($name) && $isFormElement)) {
+            if ($metadata->hasField($name) || (! $metadata->hasAssociation($name) && $isFormElement)) {
                 $this->getEventManager()->trigger(static::EVENT_CONFIGURE_FIELD, $this, $params);
             } elseif ($metadata->hasAssociation($name)) {
                 $this->getEventManager()->trigger(static::EVENT_CONFIGURE_ASSOCIATION, $this, $params);
@@ -144,7 +144,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
         }
 
         if ($result) {
-            $result = (bool)$result->last();
+            $result = (bool) $result->last();
         }
 
         return $result;

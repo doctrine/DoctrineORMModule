@@ -102,13 +102,13 @@ class DBALConnection extends AbstractOptions
      */
     public function getConfiguration()
     {
-        return "doctrine.configuration.{$this->configuration}";
+        return 'doctrine.configuration.' . $this->configuration;
     }
 
     /**
      * @param string $eventmanager
      */
-    public function setEventmanager($eventmanager)
+    public function setEventManager($eventmanager)
     {
         $this->eventmanager = $eventmanager;
     }
@@ -116,9 +116,9 @@ class DBALConnection extends AbstractOptions
     /**
      * @return string
      */
-    public function getEventmanager()
+    public function getEventManager()
     {
-        return "doctrine.eventmanager.{$this->eventmanager}";
+        return 'doctrine.eventmanager.' . $this->eventmanager;
     }
 
     /**
