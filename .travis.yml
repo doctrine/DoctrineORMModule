@@ -35,6 +35,15 @@ matrix:
     - php: 7
       env:
         - DEPS=latest
+    - php: nightly
+      env:
+        - DEPS=lowest
+    - php: nightly
+      env:
+        - DEPS=locked
+    - php: nightly
+      env:
+        - DEPS=latest
     - php: hhvm
       env:
         - DEPS=lowest
@@ -45,6 +54,7 @@ matrix:
       env:
         - DEPS=latest
   allow_failures:
+    - php: nightly
     - php: hhvm
 
 before_install:
