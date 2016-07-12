@@ -482,7 +482,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getAssociationTargetClass')
             ->with($this->logicalOr($this->equalTo('c'), $this->equalTo('d')))
-            ->will($this->returnCallback(array($this,'getAssociationClassMock')));
+            ->will($this->returnCallback(array($this, 'getAssociationClassMock')));
 
         $classAB->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $classAB->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
@@ -495,7 +495,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getAssociationTargetClass')
             ->with($this->logicalOr($this->equalTo('a'), $this->equalTo('b')))
-            ->will($this->returnCallback(array($this,'getAssociationClassMock')));
+            ->will($this->returnCallback(array($this, 'getAssociationClassMock')));
 
         $classCD->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $classCD->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
@@ -510,7 +510,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider injectTwoClassesWithTwoDifferentRelationsOneToManyBidirectionnal
      */
-    public function testMultipleRelationsManyToOneBeetweenTwoSameClasses($class1,$class2,$expected)
+    public function testMultipleRelationsManyToOneBeetweenTwoSameClasses($class1, $class2, $expected)
     {
         $this->assertSame(
             $expected,
@@ -518,7 +518,8 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function getAssociationClassMock($a){
+    public function getAssociationClassMock($a)
+    {
         switch ($a) {
             case 'a':
             case 'b':
@@ -528,7 +529,6 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
             case 'd':
                 return 'CD';
                 break;
-
         }
     }
 }
