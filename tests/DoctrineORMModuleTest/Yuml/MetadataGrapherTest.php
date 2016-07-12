@@ -469,4 +469,66 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     {
         return strtoupper($a);
     }
+
+    /**
+     * @return array
+     */
+    public function injectTwoClassesWithTwoDifferentRelationsOneToManyBidirectionnal()
+    {
+        $classAB = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $classAB->expects($this->any())->method('getName')->will($this->returnValue('AB'));
+        $classAB->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('c','d')));
+        $classAB
+            ->expects($this->any())
+            ->method('getAssociationTargetClass')
+            ->with($this->logicalOr($this->equalTo('c'), $this->equalTo('d')))
+            ->will($this->returnCallback(array($this,'getAssociationClassMock')));
+
+        $classAB->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
+        $classAB->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
+        $classAB->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+
+        $classCD = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $classCD->expects($this->any())->method('getName')->will($this->returnValue('CD'));
+        $classCD->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('a','b')));
+        $classCD
+            ->expects($this->any())
+            ->method('getAssociationTargetClass')
+            ->with($this->logicalOr($this->equalTo('a'), $this->equalTo('b')))
+            ->will($this->returnCallback(array($this,'getAssociationClassMock')));
+
+        $classCD->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
+        $classCD->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
+        $classCD->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+
+        return array(
+            array($classAB, $classCD, "[AB]<a 1-c *<>[CD],[AB]<b 1-d *<>[CD]"),
+            array($classCD, $classAB, "[CD]<>c *-a 1>[AB],[CD]<>d *-b 1>[AB]"),
+        );
+    }
+
+    /**
+     * @dataProvider injectTwoClassesWithTwoDifferentRelationsOneToManyBidirectionnal
+     */
+    public function testMultipleRelationsManyToOneBeetweenTwoSameClasses($class1,$class2,$expected)
+    {
+        $this->assertSame(
+            $expected,
+            $this->grapher->generateFromMetadata(array($class1, $class2))
+        );
+    }
+
+    public function getAssociationClassMock($a){
+        switch ($a) {
+            case 'a':
+            case 'b':
+                return 'AB';
+                break;
+            case 'c':
+            case 'd':
+                return 'CD';
+                break;
+
+        }
+    }
 }
