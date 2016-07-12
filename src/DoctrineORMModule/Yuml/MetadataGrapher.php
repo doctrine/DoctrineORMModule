@@ -113,7 +113,7 @@ class MetadataGrapher
         }
 
         $class1SideName = $association;
-        $class2SideName = $this->getClassReverseAssociationName($class1, $class2);
+        $class2SideName = $this->getClassReverseAssociationName($class1, $association);
         $class2Count    = 0;
         $bidirectional  = false;
 
@@ -142,19 +142,16 @@ class MetadataGrapher
 
     /**
      * @param ClassMetadata $class1
-     * @param ClassMetadata $class2
+     * @param string $association
      * @return string|null
      */
-    private function getClassReverseAssociationName(ClassMetadata $class1, ClassMetadata $class2)
+    private function getClassReverseAssociationName(ClassMetadata $class1, $association)
     {
-        foreach ($class2->getAssociationNames() as $class2Side) {
-            $targetClass = $this->getClassByName($class2->getAssociationTargetClass($class2Side));
-            if ($class1->getName() === $targetClass->getName()) {
-                return $class2Side;
-            }
+        if ($class1->getAssociationMapping($association)['isOwningSide']) {
+            return $class1->getAssociationMapping($association)['inversedBy'];
+        } else {
+            return $class1->getAssociationMapping($association)['mappedBy'];
         }
-
-        return null;
     }
 
     /**
@@ -204,7 +201,7 @@ class MetadataGrapher
      */
     private function getClassByName($className)
     {
-        if (!isset($this->classByNames[$className])) {
+        if ( !isset($this->classByNames[$className])) {
             foreach ($this->metadata as $class) {
                 if ($class->getName() === $className) {
                     $this->classByNames[$className] = $class;
