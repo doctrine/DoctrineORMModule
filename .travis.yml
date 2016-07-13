@@ -12,6 +12,8 @@ matrix:
 
 before_script:
   - composer update --prefer-dist
+  - rm -f ./vendor/doctrine/common/lib/Doctrine/Common/Persistence/Mapping/ClassMetadata.php
+  - mv ./build/ClassMetadata.php.travis.dist ./vendor/doctrine/common/lib/Doctrine/Common/Persistence/Mapping/ClassMetadata.php
 
 script:
   - ./vendor/bin/phpunit --coverage-clover ./build/clover.xml

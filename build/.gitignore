@@ -1,3 +1,4 @@
 *
 !.gitignore
 !coverage-checker.php
+!ClassMetadata.php.travis.dist
