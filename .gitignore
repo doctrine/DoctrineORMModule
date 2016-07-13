@@ -1,6 +1,7 @@
-.idea
-vendor
-composer.phar
+.idea/
+vendor/
+.project/
+nbproject/
+phpcs.xml
 phpunit.xml
-phpmd.xml
-phpdox.xml
+clover.xml

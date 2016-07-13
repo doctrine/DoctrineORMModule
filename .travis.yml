@@ -21,7 +21,6 @@ matrix:
       env:
         - DEPS=locked
         - TEST_COVERAGE=true
-        - PATH="$HOME/.local/bin:$PATH"
     - php: 5.6
       env:
         - DEPS=latest
@@ -68,9 +67,8 @@ install:
 
 script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
-  - if [[ $TEST_COVERAGE == 'true' ]]; then php build/coverage-checker.php build/clover.xml 70; fi
   - if [[ $CHECK_CS == 'true' ]]; then composer cs ; fi
 
 after_script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [[ $TEST_COVERAGE == 'true' ]]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover.xml; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then php ocular.phar code-coverage:upload --format=php-clover clover.xml; fi

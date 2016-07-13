@@ -57,7 +57,7 @@ return [
         ],
         'migrations_configuration' => [
             'orm_default' => [
-                'directory' => 'build/',
+                'directory' => __DIR__ . DIRECTORY_SEPARATOR,
             ],
         ],
     ],
