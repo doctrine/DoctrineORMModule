@@ -19,6 +19,7 @@
 
 namespace DoctrineORMModule\Service;
 
+use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
@@ -51,20 +52,20 @@ class SQLLoggerCollectorFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         /** @var $options \DoctrineORMModule\Options\SQLLoggerCollectorOptions */
-        $options = $this->getOptions($serviceLocator);
+        $options = $this->getOptions($container);
 
         // @todo always ask the serviceLocator instead? (add a factory?)
         if ($options->getSqlLogger()) {
-            $debugStackLogger = $serviceLocator->get($options->getSqlLogger());
+            $debugStackLogger = $container->get($options->getSqlLogger());
         } else {
             $debugStackLogger = new DebugStack();
         }
 
         /* @var $configuration \Doctrine\ORM\Configuration */
-        $configuration = $serviceLocator->get($options->getConfiguration());
+        $configuration = $container->get($options->getConfiguration());
 
         if (null !== $configuration->getSQLLogger()) {
             $logger = new LoggerChain();
@@ -79,11 +80,19 @@ class SQLLoggerCollectorFactory implements FactoryInterface
     }
 
     /**
-     * @param  ServiceLocatorInterface $serviceLocator
+     * {@inheritDoc}
+     */
+    public function createService(ServiceLocatorInterface $container)
+    {
+        return $this($container, SQLLoggerCollector::class);
+    }
+
+    /**
+     * @param  ContainerInterface $serviceLocator
      * @return mixed
      * @throws RuntimeException
      */
-    protected function getOptions(ServiceLocatorInterface $serviceLocator)
+    protected function getOptions(ContainerInterface $serviceLocator)
     {
         $options = $serviceLocator->get('Config');
         $options = $options['doctrine'];

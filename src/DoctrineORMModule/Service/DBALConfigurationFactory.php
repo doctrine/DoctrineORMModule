@@ -19,6 +19,7 @@
 
 namespace DoctrineORMModule\Service;
 
+use Interop\Container\ContainerInterface;
 use RuntimeException;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Types\Type;
@@ -49,28 +50,38 @@ class DBALConfigurationFactory implements FactoryInterface
 
     /**
      * {@inheritDoc}
+     *
      * @return \Doctrine\DBAL\Configuration
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config  = new Configuration();
-        $this->setupDBALConfiguration($serviceLocator, $config);
+        $this->setupDBALConfiguration($container, $config);
 
         return $config;
     }
 
     /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @param Configuration           $config
+     * {@inheritDoc}
+     * @return \Doctrine\DBAL\Configuration
      */
-    public function setupDBALConfiguration(ServiceLocatorInterface $serviceLocator, Configuration $config)
+    public function createService(ServiceLocatorInterface $container)
     {
-        $options = $this->getOptions($serviceLocator);
-        $config->setResultCacheImpl($serviceLocator->get($options->resultCache));
+        return $this($container, \Doctrine\DBAL\Configuration::class);
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param Configuration      $config
+     */
+    public function setupDBALConfiguration(ContainerInterface $container, Configuration $config)
+    {
+        $options = $this->getOptions($container);
+        $config->setResultCacheImpl($container->get($options->resultCache));
 
         $sqlLogger = $options->sqlLogger;
-        if (is_string($sqlLogger) and $serviceLocator->has($sqlLogger)) {
-            $sqlLogger = $serviceLocator->get($sqlLogger);
+        if (is_string($sqlLogger) and $container->has($sqlLogger)) {
+            $sqlLogger = $container->get($sqlLogger);
         }
         $config->setSQLLogger($sqlLogger);
 
@@ -84,11 +95,11 @@ class DBALConfigurationFactory implements FactoryInterface
     }
 
     /**
-     * @param  ServiceLocatorInterface $serviceLocator
+     * @param  ContainerInterface $serviceLocator
      * @return mixed
      * @throws RuntimeException
      */
-    public function getOptions(ServiceLocatorInterface $serviceLocator)
+    public function getOptions(ContainerInterface $serviceLocator)
     {
         $options = $serviceLocator->get('Config');
         $options = $options['doctrine'];
