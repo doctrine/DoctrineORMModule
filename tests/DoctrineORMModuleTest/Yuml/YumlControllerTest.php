@@ -54,7 +54,7 @@ class YumlControllerTest extends \PHPUnit_Framework_TestCase
     {
         $this->httpClient     = $this->getMock('Zend\\Http\\Client');
         $this->controller     = new YumlController($this->httpClient);
-        $this->pluginManager  = $this->getMock('Zend\\Mvc\\Controller\\PluginManager');
+        $this->pluginManager  = $this->getMock('Zend\\Mvc\\Controller\\PluginManager', [], [], '', false);
         $this->controller->setPluginManager($this->pluginManager);
     }
 
