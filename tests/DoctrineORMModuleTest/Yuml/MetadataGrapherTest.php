@@ -47,7 +47,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawSimpleEntity()
     {
@@ -60,7 +60,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawSimpleEntityWithFields()
     {
@@ -80,7 +80,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawOneToOneUniDirectionalAssociation()
     {
@@ -107,7 +107,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawOneToOneBiDirectionalAssociation()
     {
@@ -142,7 +142,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawOneToOneBiDirectionalInverseAssociation()
     {
@@ -177,7 +177,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawOneToManyBiDirectionalAssociation()
     {
@@ -212,7 +212,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawOneToManyBiDirectionalInverseAssociation()
     {
@@ -247,7 +247,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawManyToManyUniDirectionalAssociation()
     {
@@ -273,7 +273,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawManyToManyUniDirectionalInverseAssociation()
     {
@@ -300,7 +300,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawManyToManyBiDirectionalAssociation()
     {
@@ -335,7 +335,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawManyToManyBiDirectionalInverseAssociation()
     {
@@ -370,7 +370,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawManyToManyAssociationWithoutKnownInverseSide()
     {
@@ -391,7 +391,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawInheritance()
     {
@@ -412,7 +412,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawInheritedFields()
     {
@@ -435,7 +435,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      */
     public function testDrawInheritedAssociations()
     {
@@ -485,7 +485,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Doctrine\ORM\MetadataGrapher\YUMLMetadataGrapher
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      * @dataProvider injectMultipleRelationsWithBothBiAndMonoDirectional
      */
     public function testDrawMultipleClassRelatedBothBiAndMonoDirectional($class1, $class2, $class3, $expected)
@@ -623,6 +623,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      * @dataProvider injectTwoClassesWithTwoDifferentRelationsOneToManyBidirectionnal
      */
     public function testMultipleRelationsManyToOneBeetweenTwoSameClasses($class1, $class2, $expected)

@@ -201,7 +201,7 @@ class MetadataGrapher
      */
     private function getClassByName($className)
     {
-        if ( !isset($this->classByNames[$className])) {
+        if (!isset($this->classByNames[$className])) {
             foreach ($this->metadata as $class) {
                 if ($class->getName() === $className) {
                     $this->classByNames[$className] = $class;
