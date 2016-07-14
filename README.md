@@ -16,7 +16,6 @@ Installation of this module uses composer. For composer documentation, please re
 
 ```sh
 php composer.phar require doctrine/doctrine-orm-module
-# (When asked for a version, type `0.*`)
 ```
 
 Then add `DoctrineModule` and `DoctrineORMModule` to your `config/application.config.php` and create directory
