@@ -17,6 +17,14 @@
  * <http://www.doctrine-project.org>.
  */
 
+namespace DoctrineORMModule;
+
+use Doctrine\DBAL\Tools\Console\Command as DBALCommand;
+use Doctrine\ORM\Tools\Console\Command as ORMCommand;
+use DoctrineModule\Form\Element;
+use Zend\Router\Http\Literal;
+use Zend\ServiceManager\Factory\InvokableFactory;
+
 return [
     'doctrine' => [
         'connection' => [
@@ -186,65 +194,80 @@ return [
     ],
 
     'service_manager' => [
-        'factories' => [
-            'Doctrine\ORM\EntityManager' => 'DoctrineORMModule\Service\EntityManagerAliasCompatFactory',
-        ],
-        'invokables' => [
+        'aliases' => [
             // DBAL commands
-            'doctrine.dbal_cmd.runsql' => '\Doctrine\DBAL\Tools\Console\Command\RunSqlCommand',
-            'doctrine.dbal_cmd.import' => '\Doctrine\DBAL\Tools\Console\Command\ImportCommand',
+            'doctrine.dbal_cmd.runsql' => DBALCommand\RunSqlCommand::class,
+            'doctrine.dbal_cmd.import' => DBALCommand\ImportCommand::class,
             // ORM Commands
-            'doctrine.orm_cmd.clear_cache_metadata' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand',
-            'doctrine.orm_cmd.clear_cache_result' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand',
-            'doctrine.orm_cmd.clear_cache_query' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand',
-            'doctrine.orm_cmd.schema_tool_create' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand',
-            'doctrine.orm_cmd.schema_tool_update' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand',
-            'doctrine.orm_cmd.schema_tool_drop' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand',
-            'doctrine.orm_cmd.convert_d1_schema' => '\Doctrine\ORM\Tools\Console\Command\ConvertDoctrine1SchemaCommand',
-            'doctrine.orm_cmd.generate_entities' => '\Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand',
-            'doctrine.orm_cmd.generate_proxies' => '\Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand',
-            'doctrine.orm_cmd.convert_mapping' => '\Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand',
-            'doctrine.orm_cmd.run_dql' => '\Doctrine\ORM\Tools\Console\Command\RunDqlCommand',
-            'doctrine.orm_cmd.validate_schema' => '\Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand',
-            'doctrine.orm_cmd.info' => '\Doctrine\ORM\Tools\Console\Command\InfoCommand',
-            'doctrine.orm_cmd.ensure_production_settings'
-                => '\Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand',
-            'doctrine.orm_cmd.generate_repositories'
-                => '\Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand',
+            'doctrine.orm_cmd.clear_cache_metadata'       => ORMCommand\ClearCache\MetadataCommand::class,
+            'doctrine.orm_cmd.clear_cache_result'         => ORMCommand\ClearCache\ResultCommand::class,
+            'doctrine.orm_cmd.clear_cache_query'          => ORMCommand\ClearCache\QueryCommand::class,
+            'doctrine.orm_cmd.schema_tool_create'         => ORMCommand\SchemaTool\CreateCommand::class,
+            'doctrine.orm_cmd.schema_tool_update'         => ORMCommand\SchemaTool\UpdateCommand::class,
+            'doctrine.orm_cmd.schema_tool_drop'           => ORMCommand\SchemaTool\DropCommand::class,
+            'doctrine.orm_cmd.convert_d1_schema'          => ORMCommand\ConvertDoctrine1SchemaCommand::class,
+            'doctrine.orm_cmd.generate_entities'          => ORMCommand\GenerateEntitiesCommand::class,
+            'doctrine.orm_cmd.generate_proxies'           => ORMCommand\GenerateProxiesCommand::class,
+            'doctrine.orm_cmd.convert_mapping'            => ORMCommand\ConvertMappingCommand::class,
+            'doctrine.orm_cmd.run_dql'                    => ORMCommand\RunDqlCommand::class,
+            'doctrine.orm_cmd.validate_schema'            => ORMCommand\ValidateSchemaCommand::class,
+            'doctrine.orm_cmd.info'                       => ORMCommand\InfoCommand::class,
+            'doctrine.orm_cmd.ensure_production_settings' => ORMCommand\EnsureProductionSettingsCommand::class,
+            'doctrine.orm_cmd.generate_repositories'      => ORMCommand\GenerateRepositoriesCommand::class,
+        ],
+        'factories' => [
+            'Doctrine\ORM\EntityManager' => Service\EntityManagerAliasCompatFactory::class,
+            DBALCommand\RunSqlCommand::class                  => InvokableFactory::class,
+            DBALCommand\ImportCommand::class                  => InvokableFactory::class,
+            ORMCommand\ClearCache\MetadataCommand::class      => InvokableFactory::class,
+            ORMCommand\ClearCache\ResultCommand::class        => InvokableFactory::class,
+            ORMCommand\ClearCache\QueryCommand::class         => InvokableFactory::class,
+            ORMCommand\SchemaTool\CreateCommand::class        => InvokableFactory::class,
+            ORMCommand\SchemaTool\UpdateCommand::class        => InvokableFactory::class,
+            ORMCommand\SchemaTool\DropCommand::class          => InvokableFactory::class,
+            ORMCommand\ConvertDoctrine1SchemaCommand::class   => InvokableFactory::class,
+            ORMCommand\GenerateEntitiesCommand::class         => InvokableFactory::class,
+            ORMCommand\GenerateProxiesCommand::class          => InvokableFactory::class,
+            ORMCommand\ConvertMappingCommand::class           => InvokableFactory::class,
+            ORMCommand\RunDqlCommand::class                   => InvokableFactory::class,
+            ORMCommand\ValidateSchemaCommand::class           => InvokableFactory::class,
+            ORMCommand\InfoCommand::class                     => InvokableFactory::class,
+            ORMCommand\EnsureProductionSettingsCommand::class => InvokableFactory::class,
+            ORMCommand\GenerateRepositoriesCommand::class     => InvokableFactory::class,
         ],
     ],
 
     // Factory mappings - used to define which factory to use to instantiate a particular doctrine
     // service type
     'doctrine_factories' => [
-        'connection'               => 'DoctrineORMModule\Service\DBALConnectionFactory',
-        'configuration'            => 'DoctrineORMModule\Service\ConfigurationFactory',
-        'entitymanager'            => 'DoctrineORMModule\Service\EntityManagerFactory',
-        'entity_resolver'          => 'DoctrineORMModule\Service\EntityResolverFactory',
-        'sql_logger_collector'     => 'DoctrineORMModule\Service\SQLLoggerCollectorFactory',
-        'mapping_collector'        => 'DoctrineORMModule\Service\MappingCollectorFactory',
-        'formannotationbuilder'    => 'DoctrineORMModule\Service\FormAnnotationBuilderFactory',
-        'migrations_configuration' => 'DoctrineORMModule\Service\MigrationsConfigurationFactory',
-        'migrations_cmd'           => 'DoctrineORMModule\Service\MigrationsCommandFactory',
+        'connection'               => Service\DBALConnectionFactory::class,
+        'configuration'            => Service\ConfigurationFactory::class,
+        'entitymanager'            => Service\EntityManagerFactory::class,
+        'entity_resolver'          => Service\EntityResolverFactory::class,
+        'sql_logger_collector'     => Service\SQLLoggerCollectorFactory::class,
+        'mapping_collector'        => Service\MappingCollectorFactory::class,
+        'formannotationbuilder'    => Service\FormAnnotationBuilderFactory::class,
+        'migrations_configuration' => Service\MigrationsConfigurationFactory::class,
+        'migrations_cmd'           => Service\MigrationsCommandFactory::class,
     ],
 
     // Zend\Form\FormElementManager configuration
     'form_elements' => [
         'aliases' => [
-            'objectselect'        => 'DoctrineModule\Form\Element\ObjectSelect',
-            'objectradio'         => 'DoctrineModule\Form\Element\ObjectRadio',
-            'objectmulticheckbox' => 'DoctrineModule\Form\Element\ObjectMultiCheckbox',
+            'objectselect'        => Element\ObjectSelect::class,
+            'objectradio'         => Element\ObjectRadio::class,
+            'objectmulticheckbox' => Element\ObjectMultiCheckbox::class,
         ],
         'factories' => [
-            'DoctrineModule\Form\Element\ObjectSelect'        => 'DoctrineORMModule\Service\ObjectSelectFactory',
-            'DoctrineModule\Form\Element\ObjectRadio'         => 'DoctrineORMModule\Service\ObjectRadioFactory',
-            'DoctrineModule\Form\Element\ObjectMultiCheckbox' => 'DoctrineORMModule\Service\ObjectMultiCheckboxFactory',
+            Element\ObjectSelect::class        => Service\ObjectSelectFactory::class,
+            Element\ObjectRadio::class         => Service\ObjectRadioFactory::class,
+            Element\ObjectMultiCheckbox::class => Service\ObjectMultiCheckboxFactory::class,
         ],
     ],
 
     'hydrators' => [
         'factories' => [
-            'DoctrineModule\Stdlib\Hydrator\DoctrineObject' => 'DoctrineORMModule\Service\DoctrineObjectHydratorFactory',
+            \DoctrineModule\Stdlib\Hydrator\DoctrineObject::class => Service\DoctrineObjectHydratorFactory::class,
         ],
     ],
 
@@ -257,11 +280,11 @@ return [
     'router' => [
         'routes' => [
             'doctrine_orm_module_yuml' => [
-                'type' => \Zend\Router\Http\Literal::class,
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/ocra_service_manager_yuml',
                     'defaults' => [
-                        'controller' => 'DoctrineORMModule\\Yuml\\YumlController',
+                        'controller' => Yuml\YumlController::class,
                         'action'     => 'index',
                     ],
                 ],
