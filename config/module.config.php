@@ -22,10 +22,18 @@ namespace DoctrineORMModule;
 use Doctrine\DBAL\Tools\Console\Command as DBALCommand;
 use Doctrine\ORM\Tools\Console\Command as ORMCommand;
 use DoctrineModule\Form\Element;
+use DoctrineORMModule\Yuml\YumlController;
+use DoctrineORMModule\Yuml\YumlControllerFactory;
 use Zend\Router\Http\Literal;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
+    'controllers' => [
+        'factories' => [
+            YumlController::class => YumlControllerFactory::class,
+        ],
+    ],
+
     'doctrine' => [
         'connection' => [
             // Configuration for service `doctrine.connection.orm_default` service

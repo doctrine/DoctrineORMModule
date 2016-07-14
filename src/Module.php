@@ -26,7 +26,6 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
@@ -42,7 +41,6 @@ use Zend\Stdlib\ArrayUtils;
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class Module implements
-    ControllerProviderInterface,
     ConfigProviderInterface,
     InitProviderInterface,
     DependencyIndicatorInterface
@@ -69,14 +67,6 @@ class Module implements
     public function getConfig()
     {
         return include __DIR__ . '/../config/module.config.php';
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getControllerConfig()
-    {
-        return include __DIR__ . '/../config/controllers.config.php';
     }
 
     /**

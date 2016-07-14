@@ -17,29 +17,26 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModule;
+namespace DoctrineORMModule\Yuml;
 
-use DoctrineORMModule\Yuml\YumlController;
+use Interop\Container\ContainerInterface;
 use Zend\Http\Client;
-use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 
-return [
-    'factories' => [
-        // Yuml controller, used to generate Yuml graphs since
-        // yuml.me doesn't do redirects on its own
-        YumlController::class => function (AbstractPluginManager $pluginManager) {
-            $config = $pluginManager->getServiceLocator()->get('Config');
+class YumlControllerFactory
+{
+    public function __invoke(ContainerInterface $container)
+    {
+        $config = $container->get('config');
 
-            if (! isset($config['zenddevelopertools']['toolbar']['enabled'])
-                || ! $config['zenddevelopertools']['toolbar']['enabled']
-            ) {
-                throw new ServiceNotFoundException(sprintf('Service %s could not be found', YumlController::class));
-            }
-
-            return new YumlController(
-                new Client('http://yuml.me/diagram/plain/class/', ['timeout' => 30])
+        if (empty($config['zenddevelopertools']['toolbar']['enabled'])) {
+            throw new ServiceNotFoundException(
+                sprintf('Service %s could not be found', YumlController::class)
             );
-        },
-    ],
-];
+        }
+
+        return new YumlController(
+            new Client('http://yuml.me/diagram/plain/class/', ['timeout' => 30])
+        );
+    }
+}
