@@ -83,7 +83,6 @@ class AdapterTestIgnore extends TestCase
 
         $this->assertEquals($itemsCount, $this->paginatorAdapter->count());
         $this->assertEquals($itemsCount, count($this->paginatorAdapter->getItems(0, $itemsCount + 100)));
-
     }
 
     public function testGetsItemsAtOffsetZero()
