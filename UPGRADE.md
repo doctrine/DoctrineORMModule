@@ -1,3 +1,5 @@
+# 1.0.0
+
 # 0.11.0
  * [#459](https://github.com/doctrine/DoctrineORMModule/pull/459) Added ServiceManager v3 support
  * [#460](https://github.com/doctrine/DoctrineORMModule/pull/460) Add .gitattributes to remove unneeded files
