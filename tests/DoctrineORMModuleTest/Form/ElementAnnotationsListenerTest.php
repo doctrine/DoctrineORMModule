@@ -180,7 +180,6 @@ class ElementAnnotationsListenerTest extends TestCase
         $elementSpec['spec']['options']['empty_option'] = 'foo';
 
         $this->assertEquals('foo', $elementSpec['spec']['options']['empty_option']);
-
     }
 
     public function testHandleRequiredField()
