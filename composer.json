@@ -71,6 +71,11 @@
             "DoctrineORMModuleTest\\": "tests/"
         }
     },
+    "extra": {
+        "zf": {
+            "component": "DoctrineORMModule"
+        }
+    },
     "scripts": {
         "check": [
             "@cs",
