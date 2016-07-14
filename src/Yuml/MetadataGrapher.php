@@ -210,7 +210,7 @@ class MetadataGrapher
             }
         }
 
-        return isset($this->classByNames[$className])? $this->classByNames[$className]: null;
+        return isset($this->classByNames[$className]) ? $this->classByNames[$className] : null;
     }
 
     /**
