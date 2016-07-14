@@ -73,7 +73,8 @@
     },
     "extra": {
         "zf": {
-            "component": "DoctrineORMModule"
+            "component": "DoctrineORMModule",
+            "config-provider": "DoctrineORMModule\\ConfigProvider"
         }
     },
     "scripts": {

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "feff6b7ca390cbe3e62ac5f062cc7214",
-    "content-hash": "6c63b2ea45ab2f717a6e98b98703a5a6",
+    "hash": "a9c231376136d3e3def0539cb1986ebf",
+    "content-hash": "7ea4e81add5a7faf3795ce160f18a33c",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -388,12 +388,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/webimpress/DoctrineModule.git",
-                "reference": "8605582eba2f414615e72f322518dfabc0ae8d7e"
+                "reference": "4389c6d2aeb886f9368c30a3292c991268392980"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webimpress/DoctrineModule/zipball/8605582eba2f414615e72f322518dfabc0ae8d7e",
-                "reference": "8605582eba2f414615e72f322518dfabc0ae8d7e",
+                "url": "https://api.github.com/repos/webimpress/DoctrineModule/zipball/4389c6d2aeb886f9368c30a3292c991268392980",
+                "reference": "4389c6d2aeb886f9368c30a3292c991268392980",
                 "shasum": ""
             },
             "require": {
@@ -428,7 +428,8 @@
             "type": "library",
             "extra": {
                 "zf": {
-                    "component": "DoctrineModule"
+                    "component": "DoctrineModule",
+                    "config-provider": "DoctrineModule\\ConfigProvider"
                 }
             },
             "autoload": {
@@ -493,7 +494,7 @@
             "support": {
                 "source": "https://github.com/webimpress/DoctrineModule/tree/feature/zf3-support"
             },
-            "time": "2016-07-14 19:56:50"
+            "time": "2016-07-14 22:27:39"
         },
         {
             "name": "doctrine/inflector",
