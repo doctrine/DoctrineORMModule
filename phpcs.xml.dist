@@ -16,6 +16,7 @@
     </rule>
 
     <!-- Paths to check -->
+    <file>config</file>
     <file>src</file>
     <file>tests</file>
 </ruleset>
