@@ -35,7 +35,7 @@ class MetadataGrapher
      *
      * @var array
      */
-    protected $visitedAssociations = array();
+    protected $visitedAssociations = [];
 
     /**
      * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata[]
@@ -47,7 +47,7 @@ class MetadataGrapher
      *
      * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata[]
      */
-    private $classByNames = array();
+    private $classByNames = [];
 
     /**
      * Generate a YUML compatible `dsl_text` to describe a given array
@@ -60,8 +60,8 @@ class MetadataGrapher
     public function generateFromMetadata(array $metadata)
     {
         $this->metadata            = $metadata;
-        $this->visitedAssociations = array();
-        $str                       = array();
+        $this->visitedAssociations = [];
+        $str                       = [];
 
         foreach ($metadata as $class) {
             $parent = $this->getParent($class);
@@ -170,9 +170,9 @@ class MetadataGrapher
 
         $className    = $class->getName();
         $classText    = '[' . str_replace('\\', '.', $className);
-        $fields       = array();
+        $fields       = [];
         $parent       = $this->getParent($class);
-        $parentFields = $parent ? $parent->getFieldNames() : array();
+        $parentFields = $parent ? $parent->getFieldNames() : [];
 
         foreach ($class->getFieldNames() as $fieldName) {
             if (in_array($fieldName, $parentFields)) {
@@ -249,7 +249,7 @@ class MetadataGrapher
                 return false;
             }
 
-            $this->visitedAssociations[$className] = array();
+            $this->visitedAssociations[$className] = [];
 
             return true;
         }
@@ -259,7 +259,7 @@ class MetadataGrapher
         }
 
         if (!isset($this->visitedAssociations[$className])) {
-            $this->visitedAssociations[$className] = array();
+            $this->visitedAssociations[$className] = [];
         }
 
         $this->visitedAssociations[$className][$association] = true;

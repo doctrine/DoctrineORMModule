@@ -55,7 +55,7 @@ class SecondLevelCacheConfiguration extends AbstractOptions
      *
      * @var array
      */
-    protected $regions = array();
+    protected $regions = [];
 
     /**
      * @param boolean $enabled

@@ -81,7 +81,7 @@ class MappingCollectorTest extends PHPUnit_Framework_TestCase
             ->metadataFactory
             ->expects($this->any())
             ->method('getAllMetadata')
-            ->will($this->returnValue(array($m1, $m2)));
+            ->will($this->returnValue([$m1, $m2]));
 
         $this->collector->collect($this->getMock('Zend\\Mvc\\MvcEvent'));
 
@@ -101,7 +101,7 @@ class MappingCollectorTest extends PHPUnit_Framework_TestCase
 
         $m1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
         $m1->expects($this->any())->method('getName')->will($this->returnValue('M1'));
-        $this->metadataFactory->expects($this->any())->method('getAllMetadata')->will($this->returnValue(array($m1)));
+        $this->metadataFactory->expects($this->any())->method('getAllMetadata')->will($this->returnValue([$m1]));
 
         $this->collector->collect($this->getMock('Zend\\Mvc\\MvcEvent'));
 
@@ -117,7 +117,7 @@ class MappingCollectorTest extends PHPUnit_Framework_TestCase
     {
         $m1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
         $m1->expects($this->any())->method('getName')->will($this->returnValue('M1'));
-        $this->metadataFactory->expects($this->any())->method('getAllMetadata')->will($this->returnValue(array($m1)));
+        $this->metadataFactory->expects($this->any())->method('getAllMetadata')->will($this->returnValue([$m1]));
 
         $this->collector->collect($this->getMock('Zend\\Mvc\\MvcEvent'));
 

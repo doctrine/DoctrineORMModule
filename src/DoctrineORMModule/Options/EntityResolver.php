@@ -22,7 +22,7 @@ class EntityResolver extends AbstractOptions
      *
      * @var array
      */
-    protected $resolvers = array();
+    protected $resolvers = [];
 
     /**
      * @param  string $eventManager

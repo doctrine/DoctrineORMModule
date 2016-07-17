@@ -52,7 +52,7 @@ class DBALConfiguration extends AbstractOptions
      *
      * @var array
      */
-    protected $types = array();
+    protected $types = [];
 
     /**
      * @param string $resultCache
