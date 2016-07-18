@@ -3,16 +3,18 @@
 If you want to set a cache for query, result and metadata, you can specify this inside your `module.config.php`
 
 ```php
-'doctrine' => [
-    'configuration' => [
-        'orm_default' => [
-            'query_cache'       => 'filesystem',
-            'result_cache'      => 'array',
-            'metadata_cache'    => 'apc',
-            'hydration_cache'   => 'memcached',
+return [
+    'doctrine' => [
+        'configuration' => [
+            'orm_default' => [
+                'query_cache'       => 'filesystem',
+                'result_cache'      => 'array',
+                'metadata_cache'    => 'apc',
+                'hydration_cache'   => 'memcached',
+            ],
         ],
     ],
-],
+];
 ```
 
 The previous configuration take in consideration different cache adapters. You can specify any other adapter that implements
@@ -21,16 +23,18 @@ the `Doctrine\Common\Cache\Cache` interface. Find more [here](http://doctrine-or
 #### Example with Redis
 
 ```php
-'doctrine' => [
-    'configuration' => [
-        'orm_default' => [
-            'query_cache'       => 'redis',
-            'result_cache'      => 'redis',
-            'metadata_cache'    => 'redis',
-            'hydration_cache'   => 'redis',
+return [
+    'doctrine' => [
+        'configuration' => [
+            'orm_default' => [
+                'query_cache'       => 'redis',
+                'result_cache'      => 'redis',
+                'metadata_cache'    => 'redis',
+                'hydration_cache'   => 'redis',
+            ],
         ],
     ],
-],
+];
 ```
 
 In this case you have to specify a custom factory in your `service_manager` configuration to create a
@@ -38,19 +42,21 @@ In this case you have to specify a custom factory in your `service_manager` conf
 
 ```php
 // module.config.php
-'service_manager' => [
-    'factories' => [
-        __NAMESPACE__ . '\Cache\Redis' => __NAMESPACE__ . '\Cache\RedisFactory',
-    ],
-],
-'doctrine' => [
-    'cache' => [
-        'redis' => [
-            'namespace' => __NAMESPACE__ . '_Doctrine',
-            'instance'  => __NAMESPACE__ . '\Cache\Redis',
+return [
+    'service_manager' => [
+        'factories' => [
+            __NAMESPACE__ . '\Cache\Redis' => __NAMESPACE__ . '\Cache\RedisFactory',
         ],
     ],
-],
+    'doctrine' => [
+        'cache' => [
+            'redis' => [
+                'namespace' => __NAMESPACE__ . '_Doctrine',
+                'instance'  => __NAMESPACE__ . '\Cache\Redis',
+            ],
+        ],
+    ],
+];
 ```
 
 ```php
@@ -80,29 +86,31 @@ Read more about [Caching](http://doctrine-orm.readthedocs.org/en/latest/referenc
 ### How to enable and configure Second Level Cache
 
 ```php
-'doctrine' => [
-   'configuration' => [
-       'orm_default' => [
-           'result_cache' => 'redis', // Second level cache reuse the cache defined in result cache
-           'second_level_cache' => [
-               'enabled'               => true,
-               'default_lifetime'      => 200,
-               'default_lock_lifetime' => 500,
-               'file_lock_region_directory' => __DIR__ . '/../my_dir',
-               'regions' => [
-                   'My\FirstRegion\Name' => [
-                       'lifetime'      => 800,
-                       'lock_lifetime' => 1000
-                   ],
-                   'My\SecondRegion\Name' => [
-                       'lifetime'      => 10,
-                       'lock_lifetime' => 20
+return [
+    'doctrine' => [
+       'configuration' => [
+           'orm_default' => [
+               'result_cache' => 'redis', // Second level cache reuse the cache defined in result cache
+               'second_level_cache' => [
+                   'enabled'               => true,
+                   'default_lifetime'      => 200,
+                   'default_lock_lifetime' => 500,
+                   'file_lock_region_directory' => __DIR__ . '/../my_dir',
+                   'regions' => [
+                       'My\FirstRegion\Name' => [
+                           'lifetime'      => 800,
+                           'lock_lifetime' => 1000
+                       ],
+                       'My\SecondRegion\Name' => [
+                           'lifetime'      => 10,
+                           'lock_lifetime' => 20
+                       ],
                    ],
                ],
            ],
        ],
-   ],
-],
+    ],
+];
 ```
 
 You also need to add the `Cache` annotation to your model ([read more](http://doctrine-orm.readthedocs.org/en/latest/reference/second-level-cache.html#entity-cache-definition)).
