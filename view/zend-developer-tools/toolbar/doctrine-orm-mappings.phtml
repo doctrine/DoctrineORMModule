@@ -19,7 +19,7 @@
         </span>
         <form action="<?php echo $this->url('doctrine_orm_module_yuml'); ?>" method="post" target="_blank">
             <?php
-                $grapher = new \DoctrineORMModule\Yuml\MetadataGrapher();
+                $grapher = new \Onurb\Doctrine\ORMMetadataGrapher\YUMLMetadataGrapher();
                 $graph   = $grapher->generateFromMetadata($collector->getClasses());
             ?>
             <input type="hidden" name="dsl_text" value="<?php echo $this->escapeHtmlAttr($graph); ?>"/>
