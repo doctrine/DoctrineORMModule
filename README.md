@@ -31,30 +31,30 @@ configuration for each of your entities namespaces:
 
 ```php
 <?php
-return array(
-    'doctrine' => array(
-        'driver' => array(
+return [
+    'doctrine' => [
+        'driver' => [
             // defines an annotation driver with two paths, and names it `my_annotation_driver`
-            'my_annotation_driver' => array(
+            'my_annotation_driver' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(
+                'paths' => [
                     'path/to/my/entities',
-                    'another/path'
-                ),
-            ),
+                    'another/path',
+                ],
+            ],
 
             // default metadata driver, aggregates all other drivers into a single one.
             // Override `orm_default` only if you know what you're doing
-            'orm_default' => array(
-                'drivers' => array(
+            'orm_default' => [
+                'drivers' => [
                     // register `my_annotation_driver` for any entity under namespace `My\Namespace`
-                    'My\Namespace' => 'my_annotation_driver'
-                )
-            )
-        )
-    )
-);
+                    'My\Namespace' => 'my_annotation_driver',
+                ],
+            ],
+        ],
+    ],
+];
 ```
 
 ## Connection settings
@@ -63,23 +63,23 @@ Connection parameters can be defined in the application configuration:
 
 ```php
 <?php
-return array(
-    'doctrine' => array(
-        'connection' => array(
+return [
+    'doctrine' => [
+        'connection' => [
             // default connection name
-            'orm_default' => array(
+            'orm_default' => [
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-                'params' => array(
+                'params' => [
                     'host'     => 'localhost',
                     'port'     => '3306',
                     'user'     => 'username',
                     'password' => 'password',
                     'dbname'   => 'database',
-                )
-            )
-        )
-    ),
-);
+                ],
+            ],
+        ],
+    ],
+];
 ```
 
 #### Full configuration options

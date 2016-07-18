@@ -41,10 +41,10 @@ class Module
 {
     public function getConfig()
     {
-        return array(
-            'doctrine' => array(
-                'sql_logger_collector' => array(
-                    'other_orm' => array(
+        return [
+            'doctrine' => [
+                'sql_logger_collector' => [
+                    'other_orm' => [
                         // name of the sql logger collector (used by ZendDeveloperTools)
                         'name' => 'other_orm',
 
@@ -54,39 +54,39 @@ class Module
                         // uncomment following if you want to use a particular SQL logger instead of relying on
                         // the attached one
                         //'sql_logger' => 'service_name_of_my_dbal_sql_logger',
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
 
-            'zenddevelopertools' => array(
+            'zenddevelopertools' => [
 
                 // registering the profiler with ZendDeveloperTools
-                'profiler' => array(
-                    'collectors' => array(
+                'profiler' => [
+                    'collectors' => [
                         // reference to the service we have defined
                         'other_orm' => 'doctrine.sql_logger_collector.other_orm',
-                    ),
-                ),
+                    ],
+                ],
 
                 // registering a new toolbar item with ZendDeveloperTools (name must be the same of the collector name)
-                'toolbar' => array(
-                    'entries' => array(
+                'toolbar' => [
+                    'entries' => [
                         // this is actually a name of a view script to use - you can use your custom one
                         'other_orm' => 'zend-developer-tools/toolbar/doctrine-orm',
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
     }
 
     public function getServiceConfiguration()
     {
-        return array(
-            'factories' => array(
+        return [
+            'factories' => [
                 // defining a service (any name is valid as long as you use it consistently across this example)
                 'doctrine.sql_logger_collector.other_orm' => new \DoctrineORMModule\Service\SQLLoggerCollectorFactory('other_orm'),
-            ),
-        );
+            ],
+        ];
     }
 
     public function onBootstrap(\Zend\EventManager\EventInterface $e)
@@ -94,7 +94,7 @@ class Module
         $config = $e->getTarget()->getServiceManager()->get('Config');
 
         if (
-            isset($config['zenddevelopertools']['profiler']['enabled']) 
+            isset($config['zenddevelopertools']['profiler']['enabled'])
             && $config['zenddevelopertools']['profiler']['enabled']
         ) {
             // when ZendDeveloperTools is enabled, initialize the sql collector
