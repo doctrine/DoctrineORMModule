@@ -22,8 +22,8 @@ use Zend\Http\Client;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 
-return array(
-    'factories' => array(
+return [
+    'factories' => [
         // Yuml controller, used to generate Yuml graphs since
         // yuml.me doesn't do redirects on its own
         'DoctrineORMModule\\Yuml\\YumlController'  => function (AbstractPluginManager $pluginManager) {
@@ -38,8 +38,8 @@ return array(
             }
 
             return new YumlController(
-                new Client('http://yuml.me/diagram/plain/class/', array('timeout' => 30))
+                new Client('http://yuml.me/diagram/plain/class/', ['timeout' => 30])
             );
         },
-    ),
-);
+    ],
+];

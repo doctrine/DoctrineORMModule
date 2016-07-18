@@ -54,21 +54,21 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testDoctrineMappingTypeReturnCorrectParent()
     {
-        $config = array(
-            'doctrine' => array(
-                'connection' => array(
-                    'orm_default' => array(
+        $config = [
+            'doctrine' => [
+                'connection' => [
+                    'orm_default' => [
                         'driverClass'   => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
-                        'params' => array(
+                        'params' => [
                             'memory' => true,
-                        ),
-                        'doctrineTypeMappings' => array(
-                            'money' => 'string'
-                        ),
-                    )
-                ),
-            ),
-        );
+                        ],
+                        'doctrineTypeMappings' => [
+                            'money' => 'string',
+                        ],
+                    ],
+                ],
+            ],
+        ];
         $configurationMock = $this->getMockBuilder('Doctrine\ORM\Configuration')
             ->disableOriginalConstructor()
             ->getMock();
@@ -84,31 +84,31 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testDoctrineAddCustomCommentedType()
     {
-        $config = array(
-            'doctrine' => array(
-                'connection' => array(
-                    'orm_default' => array(
+        $config = [
+            'doctrine' => [
+                'connection' => [
+                    'orm_default' => [
                         'driverClass'   => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
-                        'params' => array(
+                        'params' => [
                             'memory' => true,
-                        ),
-                        'doctrineTypeMappings' => array(
+                        ],
+                        'doctrineTypeMappings' => [
                             'money' => 'money',
-                        ),
-                        'doctrineCommentedTypes' => array(
-                            'money'
-                        ),
-                    )
-                ),
-                'configuration' => array(
-                    'orm_default' => array(
-                        'types' => array(
+                        ],
+                        'doctrineCommentedTypes' => [
+                            'money',
+                        ],
+                    ],
+                ],
+                'configuration' => [
+                    'orm_default' => [
+                        'types' => [
                             'money' => 'DoctrineORMModuleTest\Assets\Types\MoneyType',
-                        ),
-                    ),
-                ),
-            ),
-        );
+                        ],
+                    ],
+                ],
+            ],
+        ];
         $this->serviceManager->setService('Config', $config);
         $this->serviceManager->setService('Configuration', $config);
         $this->serviceManager->setService(

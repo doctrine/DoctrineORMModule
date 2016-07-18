@@ -57,7 +57,7 @@ class YumlController extends AbstractActionController
         /* @var $request \Zend\Http\Request */
         $request = $this->getRequest();
         $this->httpClient->setMethod(Request::METHOD_POST);
-        $this->httpClient->setParameterPost(array('dsl_text' => $request->getPost('dsl_text')));
+        $this->httpClient->setParameterPost(['dsl_text' => $request->getPost('dsl_text')]);
         $response = $this->httpClient->send();
 
         if (!$response->isSuccess()) {

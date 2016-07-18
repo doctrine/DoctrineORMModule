@@ -52,39 +52,39 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     {
         $this->listeners[] = $events->attach(
             AnnotationBuilder::EVENT_CONFIGURE_FIELD,
-            array($this, 'handleFilterField')
+            [$this, 'handleFilterField']
         );
         $this->listeners[] = $events->attach(
             AnnotationBuilder::EVENT_CONFIGURE_FIELD,
-            array($this, 'handleTypeField')
+            [$this, 'handleTypeField']
         );
         $this->listeners[] = $events->attach(
             AnnotationBuilder::EVENT_CONFIGURE_FIELD,
-            array($this, 'handleValidatorField')
+            [$this, 'handleValidatorField']
         );
         $this->listeners[] = $events->attach(
             AnnotationBuilder::EVENT_CONFIGURE_FIELD,
-            array($this, 'handleRequiredField')
+            [$this, 'handleRequiredField']
         );
         $this->listeners[] = $events->attach(
             AnnotationBuilder::EVENT_EXCLUDE_FIELD,
-            array($this, 'handleExcludeField')
+            [$this, 'handleExcludeField']
         );
         $this->listeners[] = $events->attach(
             AnnotationBuilder::EVENT_CONFIGURE_ASSOCIATION,
-            array($this, 'handleToOne')
+            [$this, 'handleToOne']
         );
         $this->listeners[] = $events->attach(
             AnnotationBuilder::EVENT_CONFIGURE_ASSOCIATION,
-            array($this, 'handleToMany')
+            [$this, 'handleToMany']
         );
         $this->listeners[] = $events->attach(
             AnnotationBuilder::EVENT_CONFIGURE_ASSOCIATION,
-            array($this, 'handleRequiredAssociation')
+            [$this, 'handleRequiredAssociation']
         );
         $this->listeners[] = $events->attach(
             AnnotationBuilder::EVENT_EXCLUDE_ASSOCIATION,
-            array($this, 'handleExcludeAssociation')
+            [$this, 'handleExcludeAssociation']
         );
     }
 
@@ -177,12 +177,12 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         switch ($metadata->getTypeOfField($event->getParam('name'))) {
             case 'bool':
             case 'boolean':
-                $inputSpec['filters'][] = array('name' => 'Boolean');
+                $inputSpec['filters'][] = ['name' => 'Boolean'];
                 break;
             case 'bigint':
             case 'integer':
             case 'smallint':
-                $inputSpec['filters'][] = array('name' => 'Int');
+                $inputSpec['filters'][] = ['name' => 'Int'];
                 break;
             case 'datetime':
             case 'datetimetz':
@@ -190,7 +190,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
             case 'time':
             case 'string':
             case 'text':
-                $inputSpec['filters'][] = array('name' => 'StringTrim');
+                $inputSpec['filters'][] = ['name' => 'StringTrim'];
                 break;
         }
     }
@@ -330,32 +330,32 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         switch ($metadata->getTypeOfField($event->getParam('name'))) {
             case 'bool':
             case 'boolean':
-                $inputSpec['validators'][] = array(
+                $inputSpec['validators'][] = [
                     'name'    => 'InArray',
-                    'options' => array('haystack' => array('0', '1'))
-                );
+                    'options' => ['haystack' => ['0', '1']],
+                ];
                 break;
             case 'float':
-                $inputSpec['validators'][] = array('name' => 'Float');
+                $inputSpec['validators'][] = ['name' => 'Float'];
                 break;
             case 'bigint':
             case 'integer':
             case 'smallint':
-                $inputSpec['validators'][] = array('name' => 'Int');
+                $inputSpec['validators'][] = ['name' => 'Int'];
                 break;
             case 'string':
                 $elementSpec = $event->getParam('elementSpec');
                 if (isset($elementSpec['spec']['type']) &&
-                    in_array($elementSpec['spec']['type'], array('File', 'Zend\Form\Element\File'))
+                    in_array($elementSpec['spec']['type'], ['File', 'Zend\Form\Element\File'])
                 ) {
                     return;
                 }
 
                 if (isset($mapping['length'])) {
-                    $inputSpec['validators'][] = array(
+                    $inputSpec['validators'][] = [
                         'name'    => 'StringLength',
-                        'options' => array('max' => $mapping['length'])
-                    );
+                        'options' => ['max' => $mapping['length']],
+                    ];
                 }
                 break;
         }
@@ -397,12 +397,12 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
      */
     protected function mergeAssociationOptions(ArrayObject $elementSpec, $targetEntity)
     {
-        $options = isset($elementSpec['spec']['options']) ? $elementSpec['spec']['options'] : array();
+        $options = isset($elementSpec['spec']['options']) ? $elementSpec['spec']['options'] : [];
         $options = array_merge(
-            array(
+            [
                 'object_manager' => $this->objectManager,
-                'target_class'   => $targetEntity
-            ),
+                'target_class'   => $targetEntity,
+            ],
             $options
         );
 
@@ -419,7 +419,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
      */
     protected function prepareEvent(EventInterface $event)
     {
-        foreach (array('elementSpec', 'inputSpec') as $type) {
+        foreach (['elementSpec', 'inputSpec'] as $type) {
             if (!$event->getParam($type)) {
                 $event->setParam($type, new ArrayObject());
             }
@@ -429,13 +429,13 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $inputSpec   = $event->getParam('inputSpec');
 
         if (!isset($elementSpec['spec'])) {
-            $elementSpec['spec'] = array();
+            $elementSpec['spec'] = [];
         }
         if (!isset($inputSpec['filters'])) {
-            $inputSpec['filters'] = array();
+            $inputSpec['filters'] = [];
         }
         if (!isset($inputSpec['validators'])) {
-            $inputSpec['validators'] = array();
+            $inputSpec['validators'] = [];
         }
     }
 }

@@ -89,7 +89,7 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $entityNamespaces = array();
+    protected $entityNamespaces = [];
 
     /**
      * Keys must be function names and values the FQCN of the implementing class.
@@ -97,7 +97,7 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $datetimeFunctions = array();
+    protected $datetimeFunctions = [];
 
     /**
      * Keys must be function names and values the FQCN of the implementing class.
@@ -105,7 +105,7 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $stringFunctions = array();
+    protected $stringFunctions = [];
 
     /**
      * Keys must be function names and values the FQCN of the implementing class.
@@ -113,7 +113,7 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $numericFunctions = array();
+    protected $numericFunctions = [];
 
     /**
      * Keys must be the name of the custom filter and the value must be
@@ -121,14 +121,14 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $filters = array();
+    protected $filters = [];
 
     /**
      * Keys must be the name of the query and values the DQL query string.
      *
      * @var array
      */
-    protected $namedQueries = array();
+    protected $namedQueries = [];
 
     /**
      * Keys must be the name of the query and the value is an array containing
@@ -136,7 +136,7 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $namedNativeQueries = array();
+    protected $namedNativeQueries = [];
 
     /**
      * Keys must be the name of the custom hydration method and the value must be
@@ -144,7 +144,7 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $customHydrationModes = array();
+    protected $customHydrationModes = [];
 
     /**
      * Naming strategy or name of the naming strategy service to be set in ORM
