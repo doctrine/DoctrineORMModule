@@ -252,61 +252,61 @@ class ElementAnnotationsListenerTest extends TestCase
 
     public function eventValidatorProvider()
     {
-        return array(
-            array('bool', 'InArray'),
-            array('boolean', 'InArray'),
-            array('bigint', 'Int'),
-            array('float', 'Float'),
-            array('integer', 'Int'),
-            array('smallint', 'Int'),
-            array('datetime', null),
-            array('datetimetz', null),
-            array('date', null),
-            array('time', null),
-            array('string', 'StringLength'),
-            array('stringNullable', null),
-            array('text', null),
-        );
+        return [
+            ['bool', 'InArray'],
+            ['boolean', 'InArray'],
+            ['bigint', 'Int'],
+            ['float', 'Float'],
+            ['integer', 'Int'],
+            ['smallint', 'Int'],
+            ['datetime', null],
+            ['datetimetz', null],
+            ['date', null],
+            ['time', null],
+            ['string', 'StringLength'],
+            ['stringNullable', null],
+            ['text', null],
+        ];
     }
 
     public function eventFilterProvider()
     {
-        return array(
-            array('bool', 'Boolean'),
-            array('boolean', 'Boolean'),
-            array('bigint', 'Int'),
-            array('integer', 'Int'),
-            array('smallint', 'Int'),
-            array('datetime', 'StringTrim'),
-            array('datetimetz', 'StringTrim'),
-            array('date', 'StringTrim'),
-            array('time', 'StringTrim'),
-            array('string', 'StringTrim'),
-            array('text', 'StringTrim'),
-        );
+        return [
+            ['bool', 'Boolean'],
+            ['boolean', 'Boolean'],
+            ['bigint', 'Int'],
+            ['integer', 'Int'],
+            ['smallint', 'Int'],
+            ['datetime', 'StringTrim'],
+            ['datetimetz', 'StringTrim'],
+            ['date', 'StringTrim'],
+            ['time', 'StringTrim'],
+            ['string', 'StringTrim'],
+            ['text', 'StringTrim'],
+        ];
     }
 
     public function eventTypeProvider()
     {
-        return array(
-            array('bool', 'Zend\Form\Element\Checkbox'),
-            array('boolean', 'Zend\Form\Element\Checkbox'),
-            array('bigint', 'Zend\Form\Element\Number'),
-            array('integer', 'Zend\Form\Element\Number'),
-            array('smallint', 'Zend\Form\Element\Number'),
-            array('datetime', 'Zend\Form\Element\DateTime'),
-            array('datetimetz', 'Zend\Form\Element\DateTime'),
-            array('date', 'Zend\Form\Element\Date'),
-            array('time', 'Zend\Form\Element\Time'),
-            array('string', 'Zend\Form\Element'),
-            array('text', 'Zend\Form\Element\Textarea'),
-        );
+        return [
+            ['bool', 'Zend\Form\Element\Checkbox'],
+            ['boolean', 'Zend\Form\Element\Checkbox'],
+            ['bigint', 'Zend\Form\Element\Number'],
+            ['integer', 'Zend\Form\Element\Number'],
+            ['smallint', 'Zend\Form\Element\Number'],
+            ['datetime', 'Zend\Form\Element\DateTime'],
+            ['datetimetz', 'Zend\Form\Element\DateTime'],
+            ['date', 'Zend\Form\Element\Date'],
+            ['time', 'Zend\Form\Element\Time'],
+            ['string', 'Zend\Form\Element'],
+            ['text', 'Zend\Form\Element\Textarea'],
+        ];
     }
 
     public function eventNameProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 'handleFilterField',
                 'handleTypeField',
                 'handleValidatorField',
@@ -316,8 +316,8 @@ class ElementAnnotationsListenerTest extends TestCase
                 'handleExcludeAssociation',
                 'handleToOne',
                 'handleToMany'
-            )
-        );
+            ]
+        ];
     }
 
     protected function getMetadataEvent()

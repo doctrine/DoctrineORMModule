@@ -32,13 +32,13 @@ class DBALConnectionTest extends PHPUnit_Framework_TestCase
     {
         $options = new DBALConnection();
         $options->setDoctrineCommentedTypes([]);
-        $this->assertSame(array(), $options->getDoctrineCommentedTypes());
+        $this->assertSame([], $options->getDoctrineCommentedTypes());
     }
 
     public function testSetGetCommentedTypes()
     {
         $options = new DBALConnection();
-        $options->setDoctrineCommentedTypes(array('mytype'));
-        $this->assertSame(array('mytype'), $options->getDoctrineCommentedTypes());
+        $options->setDoctrineCommentedTypes(['mytype']);
+        $this->assertSame(['mytype'], $options->getDoctrineCommentedTypes());
     }
 }

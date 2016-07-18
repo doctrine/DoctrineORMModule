@@ -17,11 +17,11 @@
  * <http://www.doctrine-project.org>.
  */
 
-return array(
-    'doctrine' => array(
-        'connection' => array(
+return [
+    'doctrine' => [
+        'connection' => [
             // Configuration for service `doctrine.connection.orm_default` service
-            'orm_default' => array(
+            'orm_default' => [
                 // configuration instance to use. The retrieved service name will
                 // be `doctrine.configuration.$thisSetting`
                 'configuration' => 'orm_default',
@@ -32,21 +32,21 @@ return array(
 
                 // connection parameters, see
                 // http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
-                'params' => array(
+                'params' => [
                     'host'     => 'localhost',
                     'port'     => '3306',
                     'user'     => 'username',
                     'password' => 'password',
                     'dbname'   => 'database',
-                )
-            ),
-        ),
+                ]
+            ],
+        ],
 
         // Configuration details for the ORM.
         // See http://docs.doctrine-project.org/en/latest/reference/configuration.html
-        'configuration' => array(
+        'configuration' => [
             // Configuration for service `doctrine.configuration.orm_default` service
-            'orm_default' => array(
+            'orm_default' => [
                 // metadata cache instance to use. The retrieved service name will
                 // be `doctrine.cache.$thisSetting`
                 'metadata_cache'    => 'array',
@@ -79,38 +79,38 @@ return array(
                 'proxy_namespace'   => 'DoctrineORMModule\Proxy',
 
                 // SQL filters. See http://docs.doctrine-project.org/en/latest/reference/filters.html
-                'filters'           => array(),
+                'filters'           => [],
 
                 // Custom DQL functions.
                 // You can grab common MySQL ones at https://github.com/beberlei/DoctrineExtensions
                 // Further docs at http://docs.doctrine-project.org/en/latest/cookbook/dql-user-defined-functions.html
-                'datetime_functions' => array(),
-                'string_functions' => array(),
-                'numeric_functions' => array(),
+                'datetime_functions' => [],
+                'string_functions' => [],
+                'numeric_functions' => [],
 
                 // Second level cache configuration (see doc to learn about configuration)
-                'second_level_cache' => array()
-            )
-        ),
+                'second_level_cache' => []
+            ]
+        ],
 
         // Metadata Mapping driver configuration
-        'driver' => array(
+        'driver' => [
             // Configuration for service `doctrine.driver.orm_default` service
-            'orm_default' => array(
+            'orm_default' => [
                 // By default, the ORM module uses a driver chain. This allows multiple
                 // modules to define their own entities
                 'class'   => 'Doctrine\ORM\Mapping\Driver\DriverChain',
 
                 // Map of driver names to be used within this driver chain, indexed by
                 // entity namespace
-                'drivers' => array()
-            )
-        ),
+                'drivers' => []
+            ]
+        ],
 
         // Entity Manager instantiation settings
-        'entitymanager' => array(
+        'entitymanager' => [
             // configuration for the `doctrine.entitymanager.orm_default` service
-            'orm_default' => array(
+            'orm_default' => [
                 // connection instance to use. The retrieved service name will
                 // be `doctrine.connection.$thisSetting`
                 'connection'    => 'orm_default',
@@ -118,78 +118,78 @@ return array(
                 // configuration instance to use. The retrieved service name will
                 // be `doctrine.configuration.$thisSetting`
                 'configuration' => 'orm_default'
-            )
-        ),
+            ]
+        ],
 
-        'eventmanager' => array(
+        'eventmanager' => [
             // configuration for the `doctrine.eventmanager.orm_default` service
-            'orm_default' => array()
-        ),
+            'orm_default' => []
+        ],
 
         // SQL logger collector, used when ZendDeveloperTools and its toolbar are active
-        'sql_logger_collector' => array(
+        'sql_logger_collector' => [
             // configuration for the `doctrine.sql_logger_collector.orm_default` service
-            'orm_default' => array(),
-        ),
+            'orm_default' => [],
+        ],
 
         // mappings collector, used when ZendDeveloperTools and its toolbar are active
-        'mapping_collector' => array(
+        'mapping_collector' => [
             // configuration for the `doctrine.sql_logger_collector.orm_default` service
-            'orm_default' => array(),
-        ),
+            'orm_default' => [],
+        ],
 
         // form annotation builder configuration
-        'formannotationbuilder' => array(
+        'formannotationbuilder' => [
             // Configuration for service `doctrine.formannotationbuilder.orm_default` service
-            'orm_default' => array(),
-        ),
+            'orm_default' => [],
+        ],
 
         // entity resolver configuration, allows mapping associations to interfaces
-        'entity_resolver' => array(
+        'entity_resolver' => [
             // configuration for the `doctrine.entity_resolver.orm_default` service
-            'orm_default' => array()
-        ),
+            'orm_default' => []
+        ],
 
         // authentication service configuration
-        'authentication' => array(
+        'authentication' => [
             // configuration for the `doctrine.authentication.orm_default` authentication service
-            'orm_default' => array(
+            'orm_default' => [
                 // name of the object manager to use. By default, the EntityManager is used
                 'objectManager' => 'doctrine.entitymanager.orm_default',
                 //'identityClass' => 'Application\Model\User',
                 //'identityProperty' => 'username',
                 //'credentialProperty' => 'password'
-            ),
-        ),
+            ],
+        ],
 
         // migrations configuration
-        'migrations_configuration' => array(
-            'orm_default' => array(
+        'migrations_configuration' => [
+            'orm_default' => [
                 'directory' => 'data/DoctrineORMModule/Migrations',
                 'name'      => 'Doctrine Database Migrations',
                 'namespace' => 'DoctrineORMModule\Migrations',
                 'table'     => 'migrations',
                 'column'    => 'version',
-            ),
-        ),
+            ],
+        ],
 
         // migrations commands base config
-        'migrations_cmd' => array(
-            'generate' => array(),
-            'execute'  => array(),
-            'migrate'  => array(),
-            'status'   => array(),
-            'version'  => array(),
-            'diff'     => array(),
-            'latest'   => array()
-        ),
-    ),
+        'migrations_cmd' => [
+            'generate' => [],
+            'execute'  => [],
+            'migrate'  => [],
+            'status'   => [],
+            'version'  => [],
+            'diff'     => [],
+            'latest'   => []
+        ],
+    ],
 
-    'service_manager' => array(
-        'factories' => array(
+    'service_manager' => [
+        'factories' => [
             'Doctrine\ORM\EntityManager' => 'DoctrineORMModule\Service\EntityManagerAliasCompatFactory',
-        ),
-        'invokables' => array(
+        ],
+        'invokables' => [
             // DBAL commands
             'doctrine.dbal_cmd.runsql' => '\Doctrine\DBAL\Tools\Console\Command\RunSqlCommand',
             'doctrine.dbal_cmd.import' => '\Doctrine\DBAL\Tools\Console\Command\ImportCommand',
@@ -211,12 +211,12 @@ return array(
                 => '\Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand',
             'doctrine.orm_cmd.generate_repositories'
                 => '\Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand',
-        ),
-    ),
+        ],
+    ],
 
     // Factory mappings - used to define which factory to use to instantiate a particular doctrine
     // service type
-    'doctrine_factories' => array(
+    'doctrine_factories' => [
         'connection'               => 'DoctrineORMModule\Service\DBALConnectionFactory',
         'configuration'            => 'DoctrineORMModule\Service\ConfigurationFactory',
         'entitymanager'            => 'DoctrineORMModule\Service\EntityManagerFactory',
@@ -226,27 +226,27 @@ return array(
         'formannotationbuilder'    => 'DoctrineORMModule\Service\FormAnnotationBuilderFactory',
         'migrations_configuration' => 'DoctrineORMModule\Service\MigrationsConfigurationFactory',
         'migrations_cmd'           => 'DoctrineORMModule\Service\MigrationsCommandFactory',
-    ),
+    ],
 
     // Zend\Form\FormElementManager configuration
-    'form_elements' => array(
-        'aliases' => array(
+    'form_elements' => [
+        'aliases' => [
             'objectselect'        => 'DoctrineModule\Form\Element\ObjectSelect',
             'objectradio'         => 'DoctrineModule\Form\Element\ObjectRadio',
             'objectmulticheckbox' => 'DoctrineModule\Form\Element\ObjectMultiCheckbox',
-        ),
-        'factories' => array(
+        ],
+        'factories' => [
             'DoctrineModule\Form\Element\ObjectSelect'        => 'DoctrineORMModule\Service\ObjectSelectFactory',
             'DoctrineModule\Form\Element\ObjectRadio'         => 'DoctrineORMModule\Service\ObjectRadioFactory',
             'DoctrineModule\Form\Element\ObjectMultiCheckbox' => 'DoctrineORMModule\Service\ObjectMultiCheckboxFactory',
-        ),
-    ),
+        ],
+    ],
 
-    'hydrators' => array(
-        'factories' => array(
+    'hydrators' => [
+        'factories' => [
             'DoctrineModule\Stdlib\Hydrator\DoctrineObject' => 'DoctrineORMModule\Service\DoctrineObjectHydratorFactory'
-        )
-    ),
+        ]
+    ],
 
     ////////////////////////////////////////////////////////////////////
     // `zendframework/zend-developer-tools` specific settings         //
@@ -254,42 +254,42 @@ return array(
     // zend developer tools                                           //
     ////////////////////////////////////////////////////////////////////
 
-    'router' => array(
-        'routes' => array(
-            'doctrine_orm_module_yuml' => array(
+    'router' => [
+        'routes' => [
+            'doctrine_orm_module_yuml' => [
                 'type' => 'Zend\\Mvc\\Router\\Http\\Literal',
-                'options' => array(
+                'options' => [
                     'route' => '/ocra_service_manager_yuml',
-                    'defaults' => array(
+                    'defaults' => [
                         'controller' => 'DoctrineORMModule\\Yuml\\YumlController',
                         'action'     => 'index',
-                    ),
-                ),
-            ),
-        ),
-    ),
+                    ],
+                ],
+            ],
+        ],
+    ],
 
-    'view_manager' => array(
-        'template_map' => array(
+    'view_manager' => [
+        'template_map' => [
             'zend-developer-tools/toolbar/doctrine-orm-queries'
                 => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-queries.phtml',
             'zend-developer-tools/toolbar/doctrine-orm-mappings'
                 => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-mappings.phtml',
-        ),
-    ),
+        ],
+    ],
 
-    'zenddevelopertools' => array(
-        'profiler' => array(
-            'collectors' => array(
+    'zenddevelopertools' => [
+        'profiler' => [
+            'collectors' => [
                 'doctrine.sql_logger_collector.orm_default' => 'doctrine.sql_logger_collector.orm_default',
                 'doctrine.mapping_collector.orm_default'    => 'doctrine.mapping_collector.orm_default',
-            ),
-        ),
-        'toolbar' => array(
-            'entries' => array(
+            ],
+        ],
+        'toolbar' => [
+            'entries' => [
                 'doctrine.sql_logger_collector.orm_default' => 'zend-developer-tools/toolbar/doctrine-orm-queries',
                 'doctrine.mapping_collector.orm_default'    => 'zend-developer-tools/toolbar/doctrine-orm-mappings',
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];
