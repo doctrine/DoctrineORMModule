@@ -17,10 +17,11 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModuleTest\Util;
+namespace DoctrineORMModuleTest;
 
-use Zend\ServiceManager\ServiceManager;
+use Zend\Mvc\Application;
 use Zend\Mvc\Service\ServiceManagerConfig;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * Utility used to retrieve a freshly bootstrapped application's service manager
@@ -32,36 +33,38 @@ use Zend\Mvc\Service\ServiceManagerConfig;
 class ServiceManagerFactory
 {
     /**
-     * @var array
+     * @return array
      */
-    protected static $config;
-
-    /**
-     * @param array $config
-     */
-    public static function setConfig(array $config)
+    public static function getConfiguration()
     {
-        static::$config = $config;
+        $r = new \ReflectionClass(Application::class);
+        $requiredParams = $r->getConstructor()->getNumberOfRequiredParameters();
+
+        $configFile = $requiredParams == 1 ? 'TestConfigurationV3.php' : 'TestConfigurationV2.php';
+
+        return include __DIR__ . '/../' . $configFile;
     }
 
     /**
-     * Builds a new service manager
+     * Builds a new ServiceManager instance
      *
-     * @return \Zend\ServiceManager\ServiceManager
+     * @param  array|null     $configuration
+     * @return ServiceManager
      */
-    public static function getServiceManager()
+    public static function getServiceManager(array $configuration = null)
     {
-        $serviceManager = new ServiceManager();
+        $configuration        = $configuration ?: static::getConfiguration();
+        $serviceManager       = new ServiceManager();
         $serviceManagerConfig = new ServiceManagerConfig(
-            isset(static::$config['service_manager']) ? static::$config['service_manager'] : array()
+            isset($configuration['service_manager']) ? $configuration['service_manager'] : array()
         );
         $serviceManagerConfig->configureServiceManager($serviceManager);
-        $serviceManager->setService('ApplicationConfig', static::$config);
+        $serviceManager->setService('ApplicationConfig', $configuration);
 
         /** @var $moduleManager \Zend\ModuleManager\ModuleManager */
         $moduleManager = $serviceManager->get('ModuleManager');
         $moduleManager->loadModules();
-        //$serviceManager->setAllowOverride(true);
+
         return $serviceManager;
     }
 }
