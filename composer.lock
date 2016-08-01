@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a0ab3a7d37aa9e35111d1a987009f65e",
-    "content-hash": "3ea915609b3f86ab34379dea950ef020",
+    "hash": "45beef2ffb1e8259615c05329c171276",
+    "content-hash": "c7a777bd348da4d97cb29784869d9a94",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -384,16 +384,16 @@
         },
         {
             "name": "doctrine/doctrine-module",
-            "version": "dev-feature/zf3compat",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webimpress/DoctrineModule.git",
-                "reference": "4e2a72aab5eb23b428b12cfacd6dcfd48e0a6270"
+                "url": "https://github.com/doctrine/DoctrineModule.git",
+                "reference": "4329f63dc191cbc2fabe5949c19365e9e0d040b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webimpress/DoctrineModule/zipball/4e2a72aab5eb23b428b12cfacd6dcfd48e0a6270",
-                "reference": "4e2a72aab5eb23b428b12cfacd6dcfd48e0a6270",
+                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/4329f63dc191cbc2fabe5949c19365e9e0d040b1",
+                "reference": "4329f63dc191cbc2fabe5949c19365e9e0d040b1",
                 "shasum": ""
             },
             "require": {
@@ -435,11 +435,7 @@
                     "DoctrineModule\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-0": {
-                    "DoctrineModuleTest\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -450,11 +446,6 @@
                     "homepage": "http://www.spiffyjr.me/"
                 },
                 {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com",
-                    "homepage": "http://marco-pivetta.com/"
-                },
-                {
                     "name": "Guilherme Blanco",
                     "email": "guilhermeblanco@hotmail.com"
                 },
@@ -462,6 +453,11 @@
                     "name": "Michaël Gallego",
                     "email": "mic.gallego@gmail.com",
                     "homepage": "http://www.michaelgallego.fr"
+                },
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "homepage": "http://marco-pivetta.com/"
                 }
             ],
             "description": "Zend Framework 2 Module that provides Doctrine basic functionality required for ORM and ODM modules",
@@ -471,10 +467,7 @@
                 "module",
                 "zf2"
             ],
-            "support": {
-                "source": "https://github.com/webimpress/DoctrineModule/tree/feature/zf3compat"
-            },
-            "time": "2016-07-26 14:54:51"
+            "time": "2016-08-01 09:46:47"
         },
         {
             "name": "doctrine/inflector",

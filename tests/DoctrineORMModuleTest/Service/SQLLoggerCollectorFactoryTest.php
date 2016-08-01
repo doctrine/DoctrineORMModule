@@ -52,7 +52,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
         $configuration = new ORMConfiguration();
         $this->services->setService('doctrine.configuration.orm_default', $configuration);
         $this->services->setService(
-            'Config',
+            'config',
             array(
                 'doctrine' => array(
                     'sql_logger_collector' => array(
@@ -71,7 +71,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
         $configuration = new ORMConfiguration();
         $this->services->setService('configuration_service_id', $configuration);
         $this->services->setService(
-            'Config',
+            'config',
             array(
                 'doctrine' => array(
                     'sql_logger_collector' => array(
@@ -104,7 +104,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
         $this->services->setService('doctrine.configuration.orm_default', $configuration);
         $this->services->setService('custom_logger', $injectedLogger);
         $this->services->setService(
-            'Config',
+            'config',
             array(
                 'doctrine' => array(
                     'sql_logger_collector' => array(
@@ -128,7 +128,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
         $this->services->setService('doctrine.configuration.orm_default', $configuration);
         $this->services->setService('logger_service_id', $logger);
         $this->services->setService(
-            'Config',
+            'config',
             array(
                 'doctrine' => array(
                     'sql_logger_collector' => array(
@@ -147,7 +147,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
     {
         $this->services->setService('doctrine.configuration.orm_default', new ORMConfiguration());
         $this->services->setService(
-            'Config',
+            'config',
             array(
                 'doctrine' => array(
                     'sql_logger_collector' => array(
