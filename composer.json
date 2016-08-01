@@ -31,15 +31,9 @@
             "email": "guilhermeblanco@hotmail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/webimpress/DoctrineModule"
-        }
-    ],
     "require":           {
         "php":                               "^5.6 || ^7.0",
-        "doctrine/doctrine-module":          "dev-feature/zf3compat",
+        "doctrine/doctrine-module":          "dev-master",
         "doctrine/orm":                      ">=2.5,<2.7",
         "doctrine/dbal":                     ">=2.4,<2.7",
         "symfony/console":                   "^2.3 || ^3.0",

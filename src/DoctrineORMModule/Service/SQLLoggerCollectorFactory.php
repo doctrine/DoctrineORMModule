@@ -94,7 +94,7 @@ class SQLLoggerCollectorFactory implements FactoryInterface
      */
     protected function getOptions(ContainerInterface $serviceLocator)
     {
-        $options = $serviceLocator->get('Config');
+        $options = $serviceLocator->get('config');
         $options = $options['doctrine'];
         $options = isset($options['sql_logger_collector'][$this->name])
             ? $options['sql_logger_collector'][$this->name]
