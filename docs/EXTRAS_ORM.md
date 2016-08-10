@@ -114,3 +114,34 @@ return array(
 Now using Schema-Tool, whenever it detects a column having the "tinyint" it will convert it into a "tinyint"
 Doctrine Type instance for Schema representation. Keep in mind that you can easily produce clashes this 
 way, each database type can only map to exactly one Doctrine mapping type.
+
+## Doctrine Paginator Adapter
+You can use DoctrinePaginator to lazy-loading your data. You can use it like this in your Repository class
+
+```php
+<?php
+namespace Application\Repository;
+
+use Doctrine\ORM\EntityRepository;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as PaginatorAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
+use Zend\Paginator\Paginator
+
+class UserRepository extends EntityRepository
+{
+    public function findUsersPaginate()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        // exemple of DQL
+        $qb->select('u')->from('Application\Entity\User', 'u');
+        
+        $query = $qb->getQuery();
+        
+        $paginatorAdapter = new PaginatorAdapter(new DoctrinePaginator($query, true));
+        // set true if you have joints. By default it's true
+        return new Paginator($paginatorAdapter);
+    }
+}
+```
+Now your method findUsersPaginate() return a Paginor. You can use this like a normal paginator to set 
+itemCountPerPage and currentPageNumber
