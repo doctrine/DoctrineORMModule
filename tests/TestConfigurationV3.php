@@ -16,8 +16,8 @@
  * and is licensed under the MIT license. For more information, see
  * <http://www.doctrine-project.org>.
  */
-return array(
-    'modules' => array(
+return [
+    'modules' => [
         'Zend\Cache',
         'Zend\Form',
         'Zend\Hydrator',
@@ -27,11 +27,11 @@ return array(
         'Zend\Validator',
         'DoctrineModule',
         'DoctrineORMModule',
-    ),
-    'module_listener_options' => array(
-        'config_glob_paths' => array(
+    ],
+    'module_listener_options' => [
+        'config_glob_paths' => [
             __DIR__ . '/testing.config.php',
-        ),
-        'module_paths' => array(),
-    ),
-);
+        ],
+        'module_paths' => [],
+    ],
+];

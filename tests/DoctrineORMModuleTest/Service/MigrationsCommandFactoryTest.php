@@ -69,7 +69,7 @@ class MigrationsCommandFactoryTest extends TestCase
     {
         $factory = new MigrationsCommandFactory('unknowncommand');
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $factory->createService($this->serviceLocator);
     }
 }

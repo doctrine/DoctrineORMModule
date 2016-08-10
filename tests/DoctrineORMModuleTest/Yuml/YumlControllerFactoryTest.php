@@ -37,7 +37,8 @@ class YumlControllerFactoryTest extends PHPUnit_Framework_TestCase
             ],
         ];
 
-        $serviceLocator = $this->getMock(ServiceLocatorInterface::class);
+        $serviceLocator = $this->getMockBuilder(ServiceLocatorInterface::class)
+            ->getMock();
         $pluginManager = $this->getMockBuilder(AbstractPluginManager::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -61,7 +62,8 @@ class YumlControllerFactoryTest extends PHPUnit_Framework_TestCase
             ],
         ];
 
-        $serviceLocator = $this->getMock(ServiceLocatorInterface::class);
+        $serviceLocator = $this->getMockBuilder(ServiceLocatorInterface::class)
+            ->getMock();
         $pluginManager = $this->getMockBuilder(AbstractPluginManager::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -71,7 +73,7 @@ class YumlControllerFactoryTest extends PHPUnit_Framework_TestCase
 
         $factory = new YumlControllerFactory();
 
-        $this->setExpectedException(\Zend\ServiceManager\Exception\ServiceNotFoundException::class);
+        $this->expectException(\Zend\ServiceManager\Exception\ServiceNotFoundException::class);
         $factory->createService($pluginManager);
     }
 
@@ -81,7 +83,8 @@ class YumlControllerFactoryTest extends PHPUnit_Framework_TestCase
             'zenddevelopertools' => [],
         ];
 
-        $serviceLocator = $this->getMock(ServiceLocatorInterface::class);
+        $serviceLocator = $this->getMockBuilder(ServiceLocatorInterface::class)
+            ->getMock();
         $pluginManager = $this->getMockBuilder(AbstractPluginManager::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -91,7 +94,7 @@ class YumlControllerFactoryTest extends PHPUnit_Framework_TestCase
 
         $factory = new YumlControllerFactory();
 
-        $this->setExpectedException(\Zend\ServiceManager\Exception\ServiceNotFoundException::class);
+        $this->expectException(\Zend\ServiceManager\Exception\ServiceNotFoundException::class);
         $factory->createService($pluginManager);
     }
 }

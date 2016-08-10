@@ -51,12 +51,13 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawSimpleEntity()
     {
-        $class = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class->expects($this->any())->method('getName')->will($this->returnValue('Simple\\Entity'));
-        $class->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
-        $class->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
+        $class->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
+        $class->expects($this->any())->method('getAssociationNames')->will($this->returnValue([]));
 
-        $this->assertSame('[Simple.Entity]', $this->grapher->generateFromMetadata(array($class)));
+        $this->assertSame('[Simple.Entity]', $this->grapher->generateFromMetadata([$class]));
     }
 
     /**
@@ -64,10 +65,11 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawSimpleEntityWithFields()
     {
-        $class = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class->expects($this->any())->method('getName')->will($this->returnValue('Simple\\Entity'));
-        $class->expects($this->any())->method('getFieldNames')->will($this->returnValue(array('a', 'b', 'c')));
-        $class->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
+        $class->expects($this->any())->method('getFieldNames')->will($this->returnValue(['a', 'b', 'c']));
+        $class->expects($this->any())->method('getAssociationNames')->will($this->returnValue([]));
         $class->expects($this->any())->method('isIdentifier')->will(
             $this->returnCallback(
                 function ($field) {
@@ -76,7 +78,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertSame('[Simple.Entity|+a;b;c]', $this->grapher->generateFromMetadata(array($class)));
+        $this->assertSame('[Simple.Entity|+a;b;c]', $this->grapher->generateFromMetadata([$class]));
     }
 
     /**
@@ -84,20 +86,22 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawOneToOneUniDirectionalAssociation()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class1->expects($this->any())->method('getName')->will($this->returnValue('A'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('b')));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['b']));
         $class1->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('B'));
         $class1->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class1->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $class2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class2 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class2->expects($this->any())->method('getName')->will($this->returnValue('B'));
-        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
-        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue([]));
+        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $this->assertSame('[A]-b 1>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
+        $this->assertSame('[A]-b 1>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
     /**
@@ -105,24 +109,26 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawOneToOneBiDirectionalAssociation()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class1->expects($this->any())->method('getName')->will($this->returnValue('A'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('b')));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['b']));
         $class1->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('B'));
         $class1->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class1->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $class2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class2 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class2->expects($this->any())->method('getName')->will($this->returnValue('B'));
-        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('a')));
+        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['a']));
         $class2->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('A'));
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
         $class2->expects($this->any())->method('getAssociationMappedByTargetField')->will($this->returnValue('b'));
-        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $this->assertSame('[A]<>a 1-b 1>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
+        $this->assertSame('[A]<>a 1-b 1>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
     /**
@@ -130,24 +136,26 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawOneToOneBiDirectionalInverseAssociation()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class1->expects($this->any())->method('getName')->will($this->returnValue('A'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('b')));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['b']));
         $class1->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('B'));
         $class1->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $class1->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
         $class1->expects($this->any())->method('getAssociationMappedByTargetField')->will($this->returnValue('a'));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $class2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class2 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class2->expects($this->any())->method('getName')->will($this->returnValue('B'));
-        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('a')));
+        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['a']));
         $class2->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('A'));
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
-        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $this->assertSame('[A]<a 1-b 1<>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
+        $this->assertSame('[A]<a 1-b 1<>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
     /**
@@ -155,24 +163,26 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawOneToManyBiDirectionalAssociation()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class1->expects($this->any())->method('getName')->will($this->returnValue('A'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('b')));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['b']));
         $class1->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('B'));
         $class1->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class1->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $class2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class2 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class2->expects($this->any())->method('getName')->will($this->returnValue('B'));
-        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('a')));
+        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['a']));
         $class2->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('A'));
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
         $class2->expects($this->any())->method('getAssociationMappedByTargetField')->will($this->returnValue('b'));
-        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $this->assertSame('[A]<>a 1-b *>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
+        $this->assertSame('[A]<>a 1-b *>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
     /**
@@ -180,24 +190,26 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawOneToManyBiDirectionalInverseAssociation()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class1->expects($this->any())->method('getName')->will($this->returnValue('A'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('b')));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['b']));
         $class1->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('B'));
         $class1->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class1->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $class2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class2 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class2->expects($this->any())->method('getName')->will($this->returnValue('B'));
-        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('a')));
+        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['a']));
         $class2->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('A'));
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
         $class2->expects($this->any())->method('getAssociationMappedByTargetField')->will($this->returnValue('b'));
-        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $this->assertSame('[A]<>a *-b 1>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
+        $this->assertSame('[A]<>a *-b 1>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
     /**
@@ -205,20 +217,22 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawManyToManyUniDirectionalAssociation()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class1->expects($this->any())->method('getName')->will($this->returnValue('A'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('b')));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['b']));
         $class1->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('B'));
         $class1->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class1->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $class2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class2 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class2->expects($this->any())->method('getName')->will($this->returnValue('B'));
-        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
-        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue([]));
+        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $this->assertSame('[A]-b *>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
+        $this->assertSame('[A]-b *>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
     /**
@@ -226,20 +240,22 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawManyToManyUniDirectionalInverseAssociation()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class1->expects($this->any())->method('getName')->will($this->returnValue('A'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue([]));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $class2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class2 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class2->expects($this->any())->method('getName')->will($this->returnValue('B'));
-        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('a')));
+        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['a']));
         $class2->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('A'));
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
-        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $this->assertSame('[A],[B]-a *>[A]', $this->grapher->generateFromMetadata(array($class1, $class2)));
+        $this->assertSame('[A],[B]-a *>[A]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
     /**
@@ -247,24 +263,26 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawManyToManyBiDirectionalAssociation()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class1->expects($this->any())->method('getName')->will($this->returnValue('A'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('b')));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['b']));
         $class1->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('B'));
         $class1->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class1->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $class2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class2 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class2->expects($this->any())->method('getName')->will($this->returnValue('B'));
-        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('a')));
+        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['a']));
         $class2->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('A'));
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
         $class2->expects($this->any())->method('getAssociationMappedByTargetField')->will($this->returnValue('b'));
-        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $this->assertSame('[A]<>a *-b *>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
+        $this->assertSame('[A]<>a *-b *>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
     /**
@@ -272,24 +290,26 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawManyToManyBiDirectionalInverseAssociation()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class1->expects($this->any())->method('getName')->will($this->returnValue('A'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('b')));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['b']));
         $class1->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('B'));
         $class1->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $class1->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
         $class1->expects($this->any())->method('getAssociationMappedByTargetField')->will($this->returnValue('a'));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $class2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class2 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class2->expects($this->any())->method('getName')->will($this->returnValue('B'));
-        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('a')));
+        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['a']));
         $class2->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('A'));
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
-        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $this->assertSame('[A]<a *-b *<>[B]', $this->grapher->generateFromMetadata(array($class1, $class2)));
+        $this->assertSame('[A]<a *-b *<>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
     /**
@@ -297,15 +317,16 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawManyToManyAssociationWithoutKnownInverseSide()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class1->expects($this->any())->method('getName')->will($this->returnValue('A'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('b')));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['b']));
         $class1->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('B'));
         $class1->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class1->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $this->assertSame('[A]<>-b *>[B]', $this->grapher->generateFromMetadata(array($class1)));
+        $this->assertSame('[A]<>-b *>[B]', $this->grapher->generateFromMetadata([$class1]));
     }
 
     /**
@@ -313,19 +334,21 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawInheritance()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
-        $class2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
-        $child  = get_class($this->getMock('stdClass'));
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
+        $class2 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
+        $child  = get_class($this->getMockBuilder('stdClass')->getMock());
         $class1->expects($this->any())->method('getName')->will($this->returnValue('stdClass'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue([]));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
         $class2->expects($this->any())->method('getName')->will($this->returnValue($child));
-        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
-        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue([]));
+        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
         $this->assertSame(
             '[stdClass]^[' . str_replace('\\', '.', $child) . ']',
-            $this->grapher->generateFromMetadata(array($class2, $class1))
+            $this->grapher->generateFromMetadata([$class2, $class1])
         );
     }
 
@@ -334,21 +357,23 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawInheritedFields()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
-        $class2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
-        $child  = get_class($this->getMock('stdClass'));
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
+        $class2 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
+        $child  = get_class($this->getMockBuilder('stdClass')->getMock());
 
         $class1->expects($this->any())->method('getName')->will($this->returnValue('stdClass'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array('inherited')));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue([]));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(['inherited']));
 
         $class2->expects($this->any())->method('getName')->will($this->returnValue($child));
-        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
-        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array('inherited', 'field2')));
+        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue([]));
+        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(['inherited', 'field2']));
 
         $this->assertSame(
             '[stdClass|inherited]^[' . str_replace('\\', '.', $child) . '|field2]',
-            $this->grapher->generateFromMetadata(array($class2, $class1))
+            $this->grapher->generateFromMetadata([$class2, $class1])
         );
     }
 
@@ -357,21 +382,25 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function testDrawInheritedAssociations()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
-        $class2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
-        $class3 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
-        $class4 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
-        $child  = get_class($this->getMock('stdClass'));
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
+        $class2 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
+        $class3 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
+        $class4 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
+        $child  = get_class($this->getMockBuilder('stdClass')->getMock());
 
         $class1->expects($this->any())->method('getName')->will($this->returnValue('stdClass'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('a')));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['a']));
         $class1->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('A'));
         $class1->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class1->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
         $class2->expects($this->any())->method('getName')->will($this->returnValue($child));
-        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('a', 'b')));
+        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['a', 'b']));
         $class2
             ->expects($this->any())
             ->method('getAssociationTargetClass')
@@ -384,20 +413,20 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
             );
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
-        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
         $class3->expects($this->any())->method('getName')->will($this->returnValue('A'));
-        $class3->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
-        $class3->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class3->expects($this->any())->method('getAssociationNames')->will($this->returnValue([]));
+        $class3->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
         $class4->expects($this->any())->method('getName')->will($this->returnValue('B'));
-        $class4->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array()));
-        $class4->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class4->expects($this->any())->method('getAssociationNames')->will($this->returnValue([]));
+        $class4->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
         $childName = str_replace('\\', '.', $child);
         $this->assertSame(
             '[stdClass]<>-a *>[A],[stdClass]^[' . $childName . '],[' . $childName . ']<>-b *>[B]',
-            $this->grapher->generateFromMetadata(array($class1, $class2))
+            $this->grapher->generateFromMetadata([$class1, $class2])
         );
     }
 
@@ -409,7 +438,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
     {
         $this->assertSame(
             $expected,
-            $this->grapher->generateFromMetadata(array($class1, $class2,$class3))
+            $this->grapher->generateFromMetadata([$class1, $class2,$class3])
         );
     }
 
@@ -421,42 +450,45 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
      */
     public function injectMultipleRelationsWithBothBiAndMonoDirectional()
     {
-        $class1 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class1 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class1->expects($this->any())->method('getName')->will($this->returnValue('A'));
-        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('c')));
+        $class1->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['c']));
         $class1->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('C'));
         $class1->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class1->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
-        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class1->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $class2 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class2 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class2->expects($this->any())->method('getName')->will($this->returnValue('B'));
-        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('c')));
+        $class2->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['c']));
         $class2->expects($this->any())->method('getAssociationTargetClass')->will($this->returnValue('C'));
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(false));
-        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class2->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        $class3 = $this->getMock('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata');
+        $class3 = $this->getMockBuilder('Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata')
+            ->getMock();
         $class3->expects($this->any())->method('getName')->will($this->returnValue('C'));
-        $class3->expects($this->any())->method('getAssociationNames')->will($this->returnValue(array('b')));
+        $class3->expects($this->any())->method('getAssociationNames')->will($this->returnValue(['b']));
         $class3
             ->expects($this->any())
             ->method('getAssociationTargetClass')
             ->with($this->logicalOr($this->equalTo('b'), $this->equalTo('c')))
-            ->will($this->returnCallback(array($this,'getAssociationTargetClassMock')));
+            ->will($this->returnCallback([$this,'getAssociationTargetClassMock']));
         $class3->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(true));
         $class3->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
-        $class3->expects($this->any())->method('getFieldNames')->will($this->returnValue(array()));
+        $class3->expects($this->any())->method('getFieldNames')->will($this->returnValue([]));
 
-        return array(
-            array($class1, $class2, $class3, '[A]-c 1>[C],[B]<>b *-c 1>[C]'),
-            array($class1, $class3, $class2, '[A]-c 1>[C],[C]<c 1-b *<>[B]'),
-            array($class2, $class1, $class3, '[B]<>b *-c 1>[C],[A]-c 1>[C]'),
-            array($class2, $class3, $class1, '[B]<>b *-c 1>[C],[A]-c 1>[C]'),
-            array($class3, $class1, $class2, '[C]<c 1-b *<>[B],[A]-c 1>[C]'),
-            array($class3, $class2, $class1, '[C]<c 1-b *<>[B],[A]-c 1>[C]')
-        );
+        return [
+            [$class1, $class2, $class3, '[A]-c 1>[C],[B]<>b *-c 1>[C]'],
+            [clone $class1, clone $class3, clone $class2, '[A]-c 1>[C],[C]<c 1-b *<>[B]'],
+            [clone $class2, clone $class1, clone $class3, '[B]<>b *-c 1>[C],[A]-c 1>[C]'],
+            [clone $class2, clone $class3, clone $class1, '[B]<>b *-c 1>[C],[A]-c 1>[C]'],
+            [clone $class3, clone $class1, clone $class2, '[C]<c 1-b *<>[B],[A]-c 1>[C]'],
+            [clone $class3, clone $class2, clone $class1, '[C]<c 1-b *<>[B],[A]-c 1>[C]']
+        ];
     }
 
     /**
