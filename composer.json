@@ -1,13 +1,13 @@
 {
     "name":              "doctrine/doctrine-orm-module",
-    "description":       "Zend Framework 2 Module that provides Doctrine ORM functionality",
+    "description":       "Zend Framework Module that provides Doctrine ORM functionality",
     "type":              "library",
     "license":           "MIT",
     "keywords":          [
         "doctrine",
         "orm",
         "module",
-        "zf2"
+        "zf"
     ],
     "homepage":          "http://www.doctrine-project.org/",
     "authors":           [
