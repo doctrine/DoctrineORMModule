@@ -1,13 +1,13 @@
 {
     "name":              "doctrine/doctrine-orm-module",
-    "description":       "Zend Framework 2 Module that provides Doctrine ORM functionality",
+    "description":       "Zend Framework Module that provides Doctrine ORM functionality",
     "type":              "library",
     "license":           "MIT",
     "keywords":          [
         "doctrine",
         "orm",
         "module",
-        "zf2"
+        "zf"
     ],
     "homepage":          "http://www.doctrine-project.org/",
     "authors":           [
@@ -44,8 +44,8 @@
         "symfony/console":                   "^2.3 || ^3.0",
         "zendframework/zend-stdlib":         "^2.7.7 || ^3.0.1",
         "zendframework/zend-hydrator":       "^1.1 || ^2.2.1",
-        "zendframework/zend-mvc":            "^2.7.10 || ^3.0.2",
-        "zendframework/zend-servicemanager": "^2.7.6 || ^3.1.1"
+        "zendframework/zend-mvc":            "^2.7.10 || ^3.0.1",
+        "zendframework/zend-servicemanager": "^2.7.6 || ^3.1"
     },
     "require-dev":       {
         "phpunit/phpunit":                    "^4.8",
