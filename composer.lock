@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "45beef2ffb1e8259615c05329c171276",
-    "content-hash": "c7a777bd348da4d97cb29784869d9a94",
+    "hash": "fd687b4d2ed237578a6df52dcd612a1e",
+    "content-hash": "6822914c330fd68d10753040ee806123",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -384,16 +384,16 @@
         },
         {
             "name": "doctrine/doctrine-module",
-            "version": "dev-master",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineModule.git",
-                "reference": "4329f63dc191cbc2fabe5949c19365e9e0d040b1"
+                "reference": "9407d04d0b08e7071dab05c9d068cefda9dc5a6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/4329f63dc191cbc2fabe5949c19365e9e0d040b1",
-                "reference": "4329f63dc191cbc2fabe5949c19365e9e0d040b1",
+                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/9407d04d0b08e7071dab05c9d068cefda9dc5a6f",
+                "reference": "9407d04d0b08e7071dab05c9d068cefda9dc5a6f",
                 "shasum": ""
             },
             "require": {
@@ -405,9 +405,9 @@
                 "zendframework/zend-cache": "^2.7.1",
                 "zendframework/zend-form": "^2.9",
                 "zendframework/zend-hydrator": "^1.1 || ^2.2.1",
-                "zendframework/zend-mvc": "^2.7.10 || ^3.0.2",
+                "zendframework/zend-mvc": "^2.7.10 || ^3.0.1",
                 "zendframework/zend-paginator": "^2.7",
-                "zendframework/zend-servicemanager": "^2.7.6 || ^3.1.1",
+                "zendframework/zend-servicemanager": "^2.7.6 || ^3.1",
                 "zendframework/zend-stdlib": "^2.7.7 || ^3.0.1",
                 "zendframework/zend-validator": "^2.8.1"
             },
@@ -430,6 +430,11 @@
                 "bin/doctrine-module"
             ],
             "type": "library",
+            "extra": {
+                "zf": {
+                    "module": "DoctrineModule"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "DoctrineModule\\": "src/"
@@ -460,14 +465,14 @@
                     "homepage": "http://marco-pivetta.com/"
                 }
             ],
-            "description": "Zend Framework 2 Module that provides Doctrine basic functionality required for ORM and ODM modules",
+            "description": "Zend Framework Module that provides Doctrine basic functionality required for ORM and ODM modules",
             "homepage": "http://www.doctrine-project.org/",
             "keywords": [
                 "doctrine",
                 "module",
-                "zf2"
+                "zf"
             ],
-            "time": "2016-08-01 09:46:47"
+            "time": "2016-10-03 19:40:55"
         },
         {
             "name": "doctrine/inflector",
@@ -3986,9 +3991,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "doctrine/doctrine-module": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
