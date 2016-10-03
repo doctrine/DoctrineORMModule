@@ -60,7 +60,7 @@ key in you configuration file:
 return array(
     'doctrine' => array(
         'configuration' => array(
-            'my_dbal_default' => array(
+            'orm_default' => array(
                 'types' => array(
                     // You can override a default type
                     'date' => 'My\DBAL\Types\DateType',
