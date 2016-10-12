@@ -33,7 +33,7 @@
     ],
     "require":           {
         "php":                               "^5.6 || ^7.0",
-        "doctrine/doctrine-module":          "dev-master",
+        "doctrine/doctrine-module":          "^1.2",
         "doctrine/orm":                      ">=2.5,<2.7",
         "doctrine/dbal":                     ">=2.4,<2.7",
         "symfony/console":                   "^2.3 || ^3.0",
@@ -43,7 +43,7 @@
         "zendframework/zend-servicemanager": "^2.7.6 || ^3.1.1"
     },
     "require-dev":       {
-        "phpunit/phpunit":                    "^5.5.0",
+        "phpunit/phpunit":                    "^5.6.0",
         "squizlabs/php_codesniffer":          "^2.6.2",
         "doctrine/data-fixtures":             "^1.2.1",
         "doctrine/migrations":                "^1.4.1",
