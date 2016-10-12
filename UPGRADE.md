@@ -1,9 +1,21 @@
+# 1.1.0
+- [#484](https://github.com/doctrine/DoctrineORMModule/pull/484) Remove 0.x hint for composer installs.
+- [#488](https://github.com/doctrine/DoctrineORMModule/pull/488) Fix: Streamline configuration examples
+- [#493](https://github.com/doctrine/DoctrineORMModule/pull/493) ZF3 compatibility
+- [#494](https://github.com/doctrine/DoctrineORMModule/pull/494) Hotfix router config
+- [#498](https://github.com/doctrine/DoctrineORMModule/pull/498) Expose to `zend-component-installer` as module `DoctrineORMModule`
+- [#500](https://github.com/doctrine/DoctrineORMModule/pull/500) ZF3 Composer dependencies - hotfix
+- [#496](https://github.com/doctrine/DoctrineORMModule/pull/496) Fix: Missing view helper "zendDeveloperToolsTime"
+- [#492](https://github.com/doctrine/DoctrineORMModule/pull/492) Update to EXTRA_ORM.md to correct config key
+- [#505](https://github.com/doctrine/DoctrineORMModule/pull/505) Require stable version of DoctrineModule 1.2.0 instead of dev-master
+
 # 1.0.0
 
 # 0.11.0
  * [#459](https://github.com/doctrine/DoctrineORMModule/pull/459) Added ServiceManager v3 support
  * [#460](https://github.com/doctrine/DoctrineORMModule/pull/460) Add .gitattributes to remove unneeded files
  * [#453](https://github.com/doctrine/DoctrineORMModule/pull/453) Added an option to configure the ORM quote strategy
+
 # 0.10.0
 
  * [#450](https://github.com/doctrine/DoctrineORMModule/pull/450) Use stable release for DoctrineModule
