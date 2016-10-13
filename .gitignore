@@ -3,3 +3,4 @@ vendor/
 phpunit.xml
 .project/
 nbproject/
+composer.phar
