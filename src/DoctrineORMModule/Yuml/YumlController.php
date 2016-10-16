@@ -60,7 +60,7 @@ class YumlController extends AbstractActionController
         $this->httpClient->setParameterPost(['dsl_text' => $request->getPost('dsl_text')]);
         $response = $this->httpClient->send();
 
-        if (!$response->isSuccess()) {
+        if (! $response->isSuccess()) {
             throw new \UnexpectedValueException('HTTP Request failed');
         }
 

@@ -90,9 +90,9 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
                             'memory' => true,
                         ],
                         'doctrineTypeMappings' => [
-                            'money' => 'string'
+                            'money' => 'string',
                         ],
-                    ]
+                    ],
                 ],
             ],
         ];
@@ -123,9 +123,9 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
                             'money' => 'money',
                         ],
                         'doctrineCommentedTypes' => [
-                            'money'
+                            'money',
                         ],
-                    ]
+                    ],
                 ],
                 'configuration' => [
                     'orm_default' => [

@@ -1,6 +1,6 @@
 # Extra goodies included with DoctrineModule
-The items listed below are entirely optional and are intended to enhance integration between Zend Framework 2 and
-Doctrine 2 .
+The items listed below are entirely optional and are intended to enhance integration between Zend Framework and
+Doctrine 2.
 
 ## ObjectExists and NoObjectExists Validators
 The ObjectExists and NoObjectExists are validators similar to Zend\Validator\Db validators. You can
@@ -10,16 +10,16 @@ want to fine tune the results.
 
 ```php
 <?php
-$validator = new \DoctrineModule\Validator\NoObjectExists(array(
+$validator = new \DoctrineModule\Validator\NoObjectExists([
     // object repository to lookup
     'object_repository' => $serviceLocator->get('Doctrine\ORM\EntityManager')->getRepository('My\Entity\User'),
 
     // fields to match
-    'fields' => array('username'),
-));
+    'fields' => ['username'],
+]);
 
 // following works also with simple values if the number of fields to be matched is 1
-echo $validator->isValid(array('username' => 'test')) ? 'Valid' : 'Invalid! Duplicate found!';
+echo $validator->isValid(['username' => 'test']) ? 'Valid' : 'Invalid! Duplicate found!';
 ```
 
 ## Authentication adapter for Zend\Authentication
@@ -57,21 +57,21 @@ key in you configuration file:
 
 ```php
 <?php
-return array(
-    'doctrine' => array(
-        'configuration' => array(
-            'orm_default' => array(
-                'types' => array(
+return [
+    'doctrine' => [
+        'configuration' => [
+            'orm_default' => [
+                'types' => [
                     // You can override a default type
                     'date' => 'My\DBAL\Types\DateType',
 
                     // And set new ones
                     'tinyint' => 'My\DBAL\Types\TinyIntType',
-                ),
-            ),
-        ),
-    ),
-);
+                ],
+            ],
+        ],
+    ],
+];
 ```
 
 You are now able to use them, for example, in your ORM entities:
@@ -93,24 +93,24 @@ class User
 }
 ```
 
-To have Schema-Tool convert the underlying database type of your new "tinyint" directly into an instance 
+To have Schema-Tool convert the underlying database type of your new "tinyint" directly into an instance
 of TinyIntType you have to additionally register this mapping with your database platform.
 
 ```php
 <?php
-return array(
-    'doctrine' => array(
-        'connection' => array(
-            'orm_default' => array(
-                'doctrine_type_mappings' => array(
+return [
+    'doctrine' => [
+        'connection' => [
+            'orm_default' => [
+                'doctrine_type_mappings' => [
                     'tinyint' => 'tinyint',
-                ),
-            ),
-        ),
-    ),
-);
+                ],
+            ],
+        ],
+    ],
+];
 ```
 
 Now using Schema-Tool, whenever it detects a column having the "tinyint" it will convert it into a "tinyint"
-Doctrine Type instance for Schema representation. Keep in mind that you can easily produce clashes this 
+Doctrine Type instance for Schema representation. Keep in mind that you can easily produce clashes this
 way, each database type can only map to exactly one Doctrine mapping type.

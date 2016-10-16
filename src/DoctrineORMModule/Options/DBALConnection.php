@@ -77,17 +77,17 @@ class DBALConnection extends AbstractOptions
      *
      * @var array
      */
-    protected $params = array();
+    protected $params = [];
 
     /**
      * @var array
      */
-    protected $doctrineTypeMappings = array();
+    protected $doctrineTypeMappings = [];
 
     /**
      * @var array
      */
-    protected $doctrineCommentedTypes = array();
+    protected $doctrineCommentedTypes = [];
 
     /**
      * @param string $configuration

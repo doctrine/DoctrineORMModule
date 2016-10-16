@@ -77,9 +77,9 @@ install:
   - composer show
 
 script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then ./vendor/bin/phpunit --coverage-clover ./build/clover.xml ; else ./vendor/bin/phpunit ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then php build/coverage-checker.php build/clover.xml 70 ; fi
-  - if [[ $CHECK_CS == 'true' ]]; then ./vendor/bin/phpcs --standard=PSR2 ./src/ ./tests/ ./config/ ; fi
+  - if [[ $CHECK_CS == 'true' ]]; then composer cs-check ; fi
 
 after_script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
