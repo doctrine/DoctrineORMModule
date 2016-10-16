@@ -88,27 +88,27 @@ Read more about [Caching](http://doctrine-orm.readthedocs.org/en/latest/referenc
 ```php
 return [
     'doctrine' => [
-       'configuration' => [
-           'orm_default' => [
-               'result_cache' => 'redis', // Second level cache reuse the cache defined in result cache
-               'second_level_cache' => [
-                   'enabled'               => true,
-                   'default_lifetime'      => 200,
-                   'default_lock_lifetime' => 500,
-                   'file_lock_region_directory' => __DIR__ . '/../my_dir',
-                   'regions' => [
-                       'My\FirstRegion\Name' => [
-                           'lifetime'      => 800,
-                           'lock_lifetime' => 1000
-                       ],
-                       'My\SecondRegion\Name' => [
-                           'lifetime'      => 10,
-                           'lock_lifetime' => 20
-                       ],
-                   ],
-               ],
-           ],
-       ],
+        'configuration' => [
+            'orm_default' => [
+                'result_cache' => 'redis', // Second level cache reuse the cache defined in result cache
+                'second_level_cache' => [
+                    'enabled'               => true,
+                    'default_lifetime'      => 200,
+                    'default_lock_lifetime' => 500,
+                    'file_lock_region_directory' => __DIR__ . '/../my_dir',
+                    'regions' => [
+                        'My\FirstRegion\Name' => [
+                            'lifetime'      => 800,
+                            'lock_lifetime' => 1000,
+                        ],
+                        'My\SecondRegion\Name' => [
+                            'lifetime'      => 10,
+                            'lock_lifetime' => 20,
+                        ],
+                    ],
+                ],
+            ],
+        ],
     ],
 ];
 ```

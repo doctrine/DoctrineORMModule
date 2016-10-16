@@ -76,31 +76,31 @@ class AnnotationBuilder extends ZendAnnotationBuilder
         $metadata     = $this->objectManager->getClassMetadata(is_object($entity) ? get_class($entity) : $entity);
         $inputFilter  = $formSpec['input_filter'];
 
-        $formElements = array(
+        $formElements = [
             'DoctrineModule\Form\Element\ObjectSelect',
             'DoctrineModule\Form\Element\ObjectMultiCheckbox',
             'DoctrineModule\Form\Element\ObjectRadio',
-        );
+        ];
 
         foreach ($formSpec['elements'] as $key => $elementSpec) {
             $name          = isset($elementSpec['spec']['name']) ? $elementSpec['spec']['name'] : null;
             $isFormElement = (isset($elementSpec['spec']['type']) &&
                               in_array($elementSpec['spec']['type'], $formElements));
 
-            if (!$name) {
+            if (! $name) {
                 continue;
             }
 
-            if (!isset($inputFilter[$name])) {
+            if (! isset($inputFilter[$name])) {
                 $inputFilter[$name] = new \ArrayObject();
             }
 
-            $params = array(
+            $params = [
                 'metadata'    => $metadata,
                 'name'        => $name,
                 'elementSpec' => $elementSpec,
-                'inputSpec'   => $inputFilter[$name]
-            );
+                'inputSpec'   => $inputFilter[$name],
+            ];
 
             if ($this->checkForExcludeElementFromMetadata($metadata, $name)) {
                 $elementSpec = $formSpec['elements'];
@@ -115,14 +115,14 @@ class AnnotationBuilder extends ZendAnnotationBuilder
                 continue;
             }
 
-            if ($metadata->hasField($name) || (!$metadata->hasAssociation($name) && $isFormElement)) {
+            if ($metadata->hasField($name) || (! $metadata->hasAssociation($name) && $isFormElement)) {
                 $this->getEventManager()->trigger(static::EVENT_CONFIGURE_FIELD, $this, $params);
             } elseif ($metadata->hasAssociation($name)) {
                 $this->getEventManager()->trigger(static::EVENT_CONFIGURE_ASSOCIATION, $this, $params);
             }
         }
 
-        $formSpec['options'] = array('prefer_form_input_filter' => true);
+        $formSpec['options'] = ['prefer_form_input_filter' => true];
 
         return $formSpec;
     }
@@ -134,7 +134,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
      */
     protected function checkForExcludeElementFromMetadata(ClassMetadata $metadata, $name)
     {
-        $params = array('metadata' => $metadata, 'name' => $name);
+        $params = ['metadata' => $metadata, 'name' => $name];
         $result = false;
 
         if ($metadata->hasField($name)) {

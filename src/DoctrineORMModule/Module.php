@@ -58,7 +58,7 @@ class Module implements
                 $manager->getEvent()->getParam('ServiceManager')->get('doctrine.sql_logger_collector.orm_default');
             }
         );
-        $events->getSharedManager()->attach('doctrine', 'loadCli.post', array($this, 'initializeConsole'));
+        $events->getSharedManager()->attach('doctrine', 'loadCli.post', [$this, 'initializeConsole']);
     }
 
     /**
@@ -82,7 +82,7 @@ class Module implements
      */
     public function getModuleDependencies()
     {
-        return array('DoctrineModule');
+        return ['DoctrineModule'];
     }
 
     /**
@@ -99,7 +99,7 @@ class Module implements
         /* @var $serviceLocator \Zend\ServiceManager\ServiceLocatorInterface */
         $serviceLocator = $event->getParam('ServiceManager');
 
-        $commands = array(
+        $commands = [
             'doctrine.dbal_cmd.runsql',
             'doctrine.dbal_cmd.import',
             'doctrine.orm_cmd.clear_cache_metadata',
@@ -117,12 +117,12 @@ class Module implements
             'doctrine.orm_cmd.run_dql',
             'doctrine.orm_cmd.validate_schema',
             'doctrine.orm_cmd.info',
-        );
+        ];
 
         if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
             $commands = ArrayUtils::merge(
                 $commands,
-                array(
+                [
                     'doctrine.migrations_cmd.execute',
                     'doctrine.migrations_cmd.generate',
                     'doctrine.migrations_cmd.migrate',
@@ -130,11 +130,11 @@ class Module implements
                     'doctrine.migrations_cmd.version',
                     'doctrine.migrations_cmd.diff',
                     'doctrine.migrations_cmd.latest',
-                )
+                ]
             );
         }
 
-        $cli->addCommands(array_map(array($serviceLocator, 'get'), $commands));
+        $cli->addCommands(array_map([$serviceLocator, 'get'], $commands));
 
         /* @var $entityManager \Doctrine\ORM\EntityManager */
         $entityManager = $serviceLocator->get('doctrine.entitymanager.orm_default');

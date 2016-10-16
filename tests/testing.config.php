@@ -28,7 +28,7 @@ return [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => [
-                    __DIR__ . '/DoctrineORMModuleTest/Assets/Entity'
+                    __DIR__ . '/DoctrineORMModuleTest/Assets/Entity',
                 ],
             ],
             'orm_default' => [
