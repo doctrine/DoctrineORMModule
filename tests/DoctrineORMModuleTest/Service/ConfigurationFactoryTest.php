@@ -45,7 +45,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $this->serviceManager->setService('doctrine.cache.array', new ArrayCache());
         $this->serviceManager->setService(
             'doctrine.driver.orm_default',
-            $this->getMockBuilder('Doctrine\Common\Persistence\Mapping\Driver\MappingDriver')->getMock()
+            $this->createMock(\Doctrine\Common\Persistence\Mapping\Driver\MappingDriver::class)
         );
     }
 
@@ -60,13 +60,12 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         ];
         $this->serviceManager->setService('config', $config);
         $ormConfig = $this->factory->createService($this->serviceManager);
-        $this->assertInstanceOf('Doctrine\ORM\Mapping\NamingStrategy', $ormConfig->getNamingStrategy());
+        $this->assertInstanceOf(\Doctrine\ORM\Mapping\NamingStrategy::class, $ormConfig->getNamingStrategy());
     }
 
     public function testWillInstantiateConfigWithNamingStrategyObject()
     {
-        $namingStrategy = $this->getMockBuilder('Doctrine\ORM\Mapping\NamingStrategy')
-            ->getMock();
+        $namingStrategy = $this->createMock(\Doctrine\ORM\Mapping\NamingStrategy::class);
 
         $config = [
             'doctrine' => [
@@ -85,8 +84,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testWillInstantiateConfigWithNamingStrategyReference()
     {
-        $namingStrategy = $this->getMockBuilder('Doctrine\ORM\Mapping\NamingStrategy')
-            ->getMock();
+        $namingStrategy = $this->createMock(\Doctrine\ORM\Mapping\NamingStrategy::class);
         $config = [
             'doctrine' => [
                 'configuration' => [
@@ -114,14 +112,13 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
             ],
         ];
         $this->serviceManager->setService('config', $config);
-        $this->expectException('Zend\ServiceManager\Exception\InvalidArgumentException');
+        $this->expectException(\Zend\ServiceManager\Exception\InvalidArgumentException::class);
         $this->factory->createService($this->serviceManager);
     }
 
     public function testWillInstantiateConfigWithQuoteStrategyObject()
     {
-        $quoteStrategy = $this->getMockBuilder('Doctrine\ORM\Mapping\QuoteStrategy')
-            ->getMock();
+        $quoteStrategy = $this->createMock(\Doctrine\ORM\Mapping\QuoteStrategy::class);
 
         $config = [
             'doctrine' => [
@@ -140,8 +137,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testWillInstantiateConfigWithQuoteStrategyReference()
     {
-        $quoteStrategy = $this->getMockBuilder('Doctrine\ORM\Mapping\QuoteStrategy')
-            ->getMock();
+        $quoteStrategy = $this->createMock(\Doctrine\ORM\Mapping\QuoteStrategy::class);
         $config = [
             'doctrine' => [
                 'configuration' => [
@@ -169,7 +165,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
             ],
         ];
         $this->serviceManager->setService('config', $config);
-        $this->expectException('Zend\ServiceManager\Exception\InvalidArgumentException');
+        $this->expectException(\Zend\ServiceManager\Exception\InvalidArgumentException::class);
         $this->factory->createService($this->serviceManager);
     }
 
@@ -187,20 +183,18 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $this->serviceManager->setService('config', $config);
         $factory = new ConfigurationFactory('test_default');
         $ormConfig = $factory->createService($this->serviceManager);
-        $this->assertInstanceOf('Doctrine\Common\Cache\ArrayCache', $ormConfig->getHydrationCacheImpl());
+        $this->assertInstanceOf(\Doctrine\Common\Cache\ArrayCache::class, $ormConfig->getHydrationCacheImpl());
     }
 
     public function testCanSetDefaultRepositoryClass()
     {
-        $repositoryClass = 'DoctrineORMModuleTest\Assets\RepositoryClass';
-
         $config = [
             'doctrine' => [
                 'configuration' => [
                     'test_default' => [
 
                         'hydration_cache' => 'array',
-                        'default_repository_class_name' => $repositoryClass,
+                        'default_repository_class_name' => \DoctrineORMModuleTest\Assets\RepositoryClass::class,
                     ],
                 ],
             ],
@@ -209,7 +203,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
         $factory = new ConfigurationFactory('test_default');
         $ormConfig = $factory->createService($this->serviceManager);
-        $this->assertInstanceOf('Doctrine\Common\Cache\ArrayCache', $ormConfig->getHydrationCacheImpl());
+        $this->assertInstanceOf(\Doctrine\Common\Cache\ArrayCache::class, $ormConfig->getHydrationCacheImpl());
     }
 
     public function testAcceptsMetadataFactory()
@@ -242,7 +236,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $this->serviceManager->setService('config', $config);
         $factory = new ConfigurationFactory('test_default');
         $ormConfig = $factory->createService($this->serviceManager);
-        $this->assertEquals('Doctrine\ORM\Mapping\ClassMetadataFactory', $ormConfig->getClassMetadataFactoryName());
+        $this->assertEquals(\Doctrine\ORM\Mapping\ClassMetadataFactory::class, $ormConfig->getClassMetadataFactoryName());
     }
 
     public function testWillInstantiateConfigWithoutEntityListenerResolverSetting()
@@ -259,13 +253,12 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
         $ormConfig = $this->factory->createService($this->serviceManager);
 
-        $this->assertInstanceOf('Doctrine\ORM\Mapping\EntityListenerResolver', $ormConfig->getEntityListenerResolver());
+        $this->assertInstanceOf(\Doctrine\ORM\Mapping\EntityListenerResolver::class, $ormConfig->getEntityListenerResolver());
     }
 
     public function testWillInstantiateConfigWithEntityListenerResolverObject()
     {
-        $entityListenerResolver = $this->getMockBuilder('Doctrine\ORM\Mapping\EntityListenerResolver')
-            ->getMock();
+        $entityListenerResolver = $this->createMock(\Doctrine\ORM\Mapping\EntityListenerResolver::class);
 
         $config = [
             'doctrine' => [
@@ -286,8 +279,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testWillInstantiateConfigWithEntityListenerResolverReference()
     {
-        $entityListenerResolver = $this->getMockBuilder('Doctrine\ORM\Mapping\EntityListenerResolver')
-            ->getMock();
+        $entityListenerResolver = $this->createMock(\Doctrine\ORM\Mapping\EntityListenerResolver::class);
 
         $config = [
             'doctrine' => [
@@ -360,10 +352,10 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         $ormConfig        = $this->factory->createService($this->serviceManager);
         $secondLevelCache = $ormConfig->getSecondLevelCacheConfiguration();
         
-        $this->assertInstanceOf('Doctrine\ORM\Cache\CacheConfiguration', $secondLevelCache);
+        $this->assertInstanceOf(\Doctrine\ORM\Cache\CacheConfiguration::class, $secondLevelCache);
 
         $cacheFactory = $secondLevelCache->getCacheFactory();
-        $this->assertInstanceOf('Doctrine\ORM\Cache\DefaultCacheFactory', $cacheFactory);
+        $this->assertInstanceOf(\Doctrine\ORM\Cache\DefaultCacheFactory::class, $cacheFactory);
         $this->assertEquals('my_dir', $cacheFactory->getFileLockRegionDirectory());
 
         $regionsConfiguration = $secondLevelCache->getRegionsConfiguration();
@@ -380,6 +372,6 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
         // reflection here
         $reflProperty = new \ReflectionProperty($cacheFactory, 'cache');
         $reflProperty->setAccessible(true);
-        $this->assertInstanceOf('Doctrine\Common\Cache\ArrayCache', $reflProperty->getValue($cacheFactory));
+        $this->assertInstanceOf(\Doctrine\Common\Cache\ArrayCache::class, $reflProperty->getValue($cacheFactory));
     }
 }

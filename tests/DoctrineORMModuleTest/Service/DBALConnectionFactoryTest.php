@@ -59,7 +59,7 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
+                        'driverClass'   => \Doctrine\DBAL\Driver\PDOSqlite\Driver::class,
                         'params' => [
                             'memory' => true,
                         ],
@@ -70,7 +70,7 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
                 ],
             ],
         ];
-        $configurationMock = $this->getMockBuilder('Doctrine\ORM\Configuration')
+        $configurationMock = $this->getMockBuilder(\Doctrine\ORM\Configuration::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -89,7 +89,7 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
+                        'driverClass'   => \Doctrine\DBAL\Driver\PDOSqlite\Driver::class,
                         'params' => [
                             'memory' => true,
                         ],
@@ -104,7 +104,7 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
                 'configuration' => [
                     'orm_default' => [
                         'types' => [
-                            'money' => 'DoctrineORMModuleTest\Assets\Types\MoneyType',
+                            'money' => \DoctrineORMModuleTest\Assets\Types\MoneyType::class,
                         ],
                     ],
                 ],
@@ -114,7 +114,7 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
         $this->serviceManager->setService('Configuration', $config);
         $this->serviceManager->setService(
             'doctrine.driver.orm_default',
-            $this->getMockBuilder('Doctrine\Common\Persistence\Mapping\Driver\MappingDriver')->getMock()
+            $this->createMock(\Doctrine\Common\Persistence\Mapping\Driver\MappingDriver::class)
         );
         $configurationFactory = new ConfigurationFactory('orm_default');
         $this->serviceManager->setService(
@@ -125,7 +125,7 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
         $platform = $dbal->getDatabasePlatform();
         $type = Type::getType($platform->getDoctrineTypeMapping("money"));
 
-        $this->assertInstanceOf('DoctrineORMModuleTest\Assets\Types\MoneyType', $type);
+        $this->assertInstanceOf(\DoctrineORMModuleTest\Assets\Types\MoneyType::class, $type);
         $this->assertTrue($platform->isCommentedDoctrineType($type));
     }
 }

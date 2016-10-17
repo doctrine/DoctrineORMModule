@@ -37,8 +37,7 @@ class YumlControllerFactoryTest extends PHPUnit_Framework_TestCase
             ],
         ];
 
-        $serviceLocator = $this->getMockBuilder(ServiceLocatorInterface::class)
-            ->getMock();
+        $serviceLocator = $this->createMock(ServiceLocatorInterface::class);
         $pluginManager = $this->getMockBuilder(AbstractPluginManager::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -62,8 +61,7 @@ class YumlControllerFactoryTest extends PHPUnit_Framework_TestCase
             ],
         ];
 
-        $serviceLocator = $this->getMockBuilder(ServiceLocatorInterface::class)
-            ->getMock();
+        $serviceLocator = $this->createMock(ServiceLocatorInterface::class);
         $pluginManager = $this->getMockBuilder(AbstractPluginManager::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -83,8 +81,7 @@ class YumlControllerFactoryTest extends PHPUnit_Framework_TestCase
             'zenddevelopertools' => [],
         ];
 
-        $serviceLocator = $this->getMockBuilder(ServiceLocatorInterface::class)
-            ->getMock();
+        $serviceLocator = $this->createMock(ServiceLocatorInterface::class);
         $pluginManager = $this->getMockBuilder(AbstractPluginManager::class)
             ->disableOriginalConstructor()
             ->getMock();
