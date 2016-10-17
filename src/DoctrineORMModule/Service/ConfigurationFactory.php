@@ -23,6 +23,7 @@ use Doctrine\ORM\Cache\CacheConfiguration;
 use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Cache\RegionsConfiguration;
 use Doctrine\ORM\Mapping\EntityListenerResolver;
+use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
 use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationFactory;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -38,7 +39,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /** @var $options \DoctrineORMModule\Options\Configuration */
+        /** @var $options DoctrineORMModuleConfiguration */
         $options = $this->getOptions($container);
         $config  = new Configuration();
 
@@ -166,8 +167,11 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         return $this($container, Configuration::class);
     }
 
+    /**
+     * @return string
+     */
     protected function getOptionsClass()
     {
-        return 'DoctrineORMModule\Options\Configuration';
+        return DoctrineORMModuleConfiguration::class;
     }
 }
