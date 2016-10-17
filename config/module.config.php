@@ -18,6 +18,7 @@
  */
 
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
+use Doctrine\DBAL\Tools\Console;
 use Doctrine\ORM\Tools\Console\Command;
 use DoctrineModule\Form\Element;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
@@ -198,8 +199,8 @@ return array(
         ),
         'invokables' => array(
             // DBAL commands
-            'doctrine.dbal_cmd.runsql' => \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand::class,
-            'doctrine.dbal_cmd.import' => \Doctrine\DBAL\Tools\Console\Command\ImportCommand::class,
+            'doctrine.dbal_cmd.runsql' => Console\Command\RunSqlCommand::class,
+            'doctrine.dbal_cmd.import' => Console\Command\ImportCommand::class,
             // ORM Commands
             'doctrine.orm_cmd.clear_cache_metadata' => Command\ClearCache\MetadataCommand::class,
             'doctrine.orm_cmd.clear_cache_result' => Command\ClearCache\ResultCommand::class,
