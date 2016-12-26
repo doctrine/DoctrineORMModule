@@ -2,8 +2,11 @@
 
 namespace DoctrineORMModuleTest\Form;
 
+use DateTime;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
+use DoctrineORMModule\Stdlib\Hydrator\DoctrineEntity;
 use DoctrineORMModuleTest\Assets\Entity\FormEntity;
+use DoctrineORMModuleTest\Assets\Entity\FormDateSelect;
 use DoctrineORMModuleTest\Assets\Entity\Issue237;
 use DoctrineORMModuleTest\Framework\TestCase;
 use Zend\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
@@ -98,6 +101,40 @@ class AnnotationBuilderTest extends TestCase
             }
         }
         $this->assertTrue($userDefinedTypeOverridesListenerType);
+    }
+    
+    /**
+     * @link https://github.com/doctrine/DoctrineORMModule/issues/515
+     */
+    public function testEnsureDateSelectElementCanHydrate()
+    {
+        // Create form
+        $now      = new DateTime(date('Y-m-d'));
+        $entity   = new FormDateSelect;
+        $hydrator = new DoctrineEntity($this->getEntityManager());
+        $form     = $this->builder->createForm($entity);
+        $form->setHydrator($hydrator);
+        $form->bind($entity);
+        
+        // Set data for the DateSelect form element
+        $form->setData([
+            'date' => [
+                'day'   => $now->format('d'),
+                'month' => $now->format('m'),
+                'year'  => $now->format('Y'),
+            ],
+        ]);
+        
+        // Clean entity
+        $isValid = true;
+        if (!$form->isValid()) {
+            $isValid = false;
+        }
+        $cleanEntity = $form->getData();
+        
+        $this->assertTrue($isValid);
+        $this->assertInstanceOf('DateTime', $cleanEntity->getDate());
+        $this->assertEquals($now, $cleanEntity->getDate()->getTimestamp());
     }
 
     /**
