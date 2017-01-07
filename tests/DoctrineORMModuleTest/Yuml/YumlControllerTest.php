@@ -63,9 +63,9 @@ class YumlControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testIndexActionWillRedirectToYuml()
     {
-        $response = $this->getMock('Zend\\Http\\Response');
+        $response           = $this->getMock('Zend\\Http\\Response');
         $controllerResponse = $this->getMock('Zend\\Http\\Response');
-        $redirect = $this->getMock('Zend\\Mvc\\Controller\\Plugin\\Redirect');
+        $redirect           = $this->getMock('Zend\\Mvc\\Controller\\Plugin\\Redirect');
         $this->httpClient->expects($this->any())->method('send')->will($this->returnValue($response));
         $response->expects($this->any())->method('isSuccess')->will($this->returnValue(true));
         $response->expects($this->any())->method('getBody')->will($this->returnValue('short-url'));
@@ -77,7 +77,7 @@ class YumlControllerTest extends \PHPUnit_Framework_TestCase
         $redirect
             ->expects($this->any())
             ->method('toUrl')
-            ->with('http://yuml.me/short-url')
+            ->with('https://yuml.me/short-url')
             ->will($this->returnValue($controllerResponse));
 
         $this->assertSame($controllerResponse, $this->controller->indexAction());
