@@ -71,7 +71,7 @@ class YumlControllerFactory implements FactoryInterface
         }
 
         return new YumlController(
-            new Client('http://yuml.me/diagram/plain/class/', ['timeout' => 30])
+            new Client('https://yuml.me/diagram/plain/class/', ['timeout' => 30])
         );
     }
 }
