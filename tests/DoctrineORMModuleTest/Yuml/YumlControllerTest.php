@@ -83,7 +83,7 @@ class YumlControllerTest extends \PHPUnit_Framework_TestCase
         $redirect
             ->expects($this->any())
             ->method('toUrl')
-            ->with('http://yuml.me/short-url')
+            ->with('https://yuml.me/short-url')
             ->will($this->returnValue($controllerResponse));
 
         $this->assertSame($controllerResponse, $this->controller->indexAction());
