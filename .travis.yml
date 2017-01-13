@@ -31,8 +31,17 @@ matrix:
     - php: 7
       env:
         - DEPS=locked
-        - CS_CHECK=true
     - php: 7
+      env:
+        - DEPS=latest
+    - php: 7.1
+      env:
+        - DEPS=lowest
+    - php: 7.1
+      env:
+        - DEPS=locked
+        - CS_CHECK=true
+    - php: 7.1
       env:
         - DEPS=latest
     - php: nightly
