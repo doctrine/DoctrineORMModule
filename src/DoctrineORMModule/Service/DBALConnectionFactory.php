@@ -60,16 +60,12 @@ class DBALConnectionFactory extends AbstractFactory
         $eventManager  = $container->get($options->getEventManager());
 
         $connection = DriverManager::getConnection($params, $configuration, $eventManager);
+        foreach ($options->getDoctrineTypeMappings() as $dbType => $doctrineType) {
+            $connection->getDatabasePlatform()->registerDoctrineTypeMapping($dbType, $doctrineType);
+        }
 
-        if (count($options->getDoctrineTypeMappings()) > 0 || $options->getDoctrineCommentedTypes() > 0) {
-            $platform = $connection->getDatabasePlatform();
-            foreach ($options->getDoctrineTypeMappings() as $dbType => $doctrineType) {
-                $platform->registerDoctrineTypeMapping($dbType, $doctrineType);
-            }
-
-            foreach ($options->getDoctrineCommentedTypes() as $type) {
-                $platform->markDoctrineTypeCommented(Type::getType($type));
-            }
+        foreach ($options->getDoctrineCommentedTypes() as $type) {
+            $connection->getDatabasePlatform()->markDoctrineTypeCommented(Type::getType($type));
         }
 
         return $connection;
