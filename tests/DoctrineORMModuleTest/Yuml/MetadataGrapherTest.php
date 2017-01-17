@@ -487,7 +487,7 @@ class MetadataGrapherTest extends PHPUnit_Framework_TestCase
             [clone $class2, clone $class1, clone $class3, '[B]<>b *-c 1>[C],[A]-c 1>[C]'],
             [clone $class2, clone $class3, clone $class1, '[B]<>b *-c 1>[C],[A]-c 1>[C]'],
             [clone $class3, clone $class1, clone $class2, '[C]<c 1-b *<>[B],[A]-c 1>[C]'],
-            [clone $class3, clone $class2, clone $class1, '[C]<c 1-b *<>[B],[A]-c 1>[C]']
+            [clone $class3, clone $class2, clone $class1, '[C]<c 1-b *<>[B],[A]-c 1>[C]'],
         ];
     }
 

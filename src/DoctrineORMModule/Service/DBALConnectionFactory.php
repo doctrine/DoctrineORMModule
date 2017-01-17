@@ -49,11 +49,11 @@ class DBALConnectionFactory extends AbstractFactory
             $pdo = $container->get($pdo);
         }
 
-        $params = array(
+        $params = [
             'driverClass'  => $options->getDriverClass(),
             'wrapperClass' => $options->getWrapperClass(),
             'pdo'          => $pdo,
-        );
+        ];
         $params = array_merge($params, $options->getParams());
 
         $configuration = $container->get($options->getConfiguration());
