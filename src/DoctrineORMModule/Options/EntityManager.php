@@ -35,6 +35,13 @@ class EntityManager extends AbstractOptions
     protected $entityResolver = 'orm_default';
 
     /**
+     * Array of default - enabled SQL Filters in this entity manager
+     *
+     * @var array
+     */
+    protected $filters = array();
+
+    /**
      * @param  string $configuration
      * @return self
      */
@@ -91,5 +98,32 @@ class EntityManager extends AbstractOptions
     public function getEntityResolver()
     {
         return 'doctrine.entity_resolver.' . $this->entityResolver;
+    }
+
+    /**
+     * @param array
+     * @return self
+     */
+    public function setFilters($filters)
+    {
+        $this->filters = array();
+
+        foreach ($filters as $index => $filterOrParams) {
+            if (is_array($filterOrParams)) {
+                $this->filters[$index] = $filterOrParams;
+            } else {
+                $this->filters[$filterOrParams] = array();
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFilters()
+    {
+        return $this->filters;
     }
 }

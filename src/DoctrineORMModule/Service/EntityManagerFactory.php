@@ -43,7 +43,17 @@ class EntityManagerFactory extends AbstractFactory
         //       rely on its factory code
         $container->get($options->getEntityResolver());
 
-        return EntityManager::create($connection, $config);
+        $em = EntityManager::create($connection, $config);
+
+        foreach ($options->getFilters() as $filterName => $params) {
+            $filter = $em->getFilters()->enable($filterName);
+
+            foreach ($params as $name => $value) {
+                $filter->setParameter($name, $value);
+            }
+        }
+
+        return $em;
     }
 
     /**
