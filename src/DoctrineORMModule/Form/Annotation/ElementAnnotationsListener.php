@@ -303,7 +303,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                 $type = 'Zend\Form\Element\Textarea';
                 break;
             default:
-                $type = 'Zend\Form\Element';
+                $type = isset($elementSpec['spec']['type'])?$elementSpec['spec']['type']:'Zend\Form\Element';
                 break;
         }
 
