@@ -248,6 +248,15 @@ return array(
         )
     ),
 
+    'controller_plugins' => array(
+        'factories' => array(
+             'DoctrineModule\Controller\Plugin\Params' => 'DoctrineORMModule\Service\ParamsPluginFactory',
+        ),
+        'aliases' => array(
+            'ormParams' => 'DoctrineModule\Controller\Plugin\Params',
+        ),
+    ),
+
     ////////////////////////////////////////////////////////////////////
     // `zendframework/zend-developer-tools` specific settings         //
     // ignore these if you're not developing additional features for  //
