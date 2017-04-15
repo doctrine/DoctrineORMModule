@@ -269,6 +269,14 @@ return array(
         ),
     ),
 
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+
+            )
+        )
+    ),
+
     'view_manager' => array(
         'template_map' => array(
             'zend-developer-tools/toolbar/doctrine-orm-queries'
