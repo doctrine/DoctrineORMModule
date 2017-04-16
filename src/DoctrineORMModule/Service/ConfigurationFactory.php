@@ -69,6 +69,8 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         foreach ($options->getFilters() as $name => $class) {
             $config->addFilter($name, $class);
         }
+        
+        $config->setDefaultQueryHints($options->getDefaultQueryHints());
 
         $config->setMetadataCacheImpl($container->get($options->getMetadataCache()));
         $config->setQueryCacheImpl($container->get($options->getQueryCache()));
