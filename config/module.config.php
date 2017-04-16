@@ -89,7 +89,10 @@ return array(
                 'numeric_functions' => array(),
 
                 // Second level cache configuration (see doc to learn about configuration)
-                'second_level_cache' => array()
+                'second_level_cache' => array(),
+                
+                // Add suport for default Query Hints
+                'defaultQueryHints' => array()
             )
         ),
 
