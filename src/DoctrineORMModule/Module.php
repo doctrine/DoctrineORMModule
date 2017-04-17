@@ -133,8 +133,10 @@ class Module implements
                 )
             );
         }
-
-        $cli->addCommands(array_map(array($serviceLocator, 'get'), $commands));
+        
+        foreach($commands as $command) {
+            $cli->add($serviceLocator->get($command));
+        }
 
         /* @var $entityManager \Doctrine\ORM\EntityManager */
         $entityManager = $serviceLocator->get('doctrine.entitymanager.orm_default');
