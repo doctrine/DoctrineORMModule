@@ -97,4 +97,12 @@ class ConfigurationOptionsTest extends TestCase
         $this->expectException('Zend\Stdlib\Exception\InvalidArgumentException');
         $options->setEntityListenerResolver(new \stdClass());
     }
+    
+    public function testDefaultQueryHint()
+    {
+        $options = new Configuration();
+
+        $options->setDefaultQueryHints(['test']);
+        $this->assertSame(['test'], $options->getDefaultQueryHints());
+    }
 }
