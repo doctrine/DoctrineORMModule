@@ -21,6 +21,8 @@ namespace DoctrineORMModule;
 
 use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputOption;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
@@ -134,10 +136,25 @@ class Module implements
             );
         }
 
-        $cli->addCommands(array_map(array($serviceLocator, 'get'), $commands));
+        foreach ($commands as $commandName) {
+            /* @var $command \Symfony\Component\Console\Command\Command */
+            $command = $serviceLocator->get($commandName);
+            $command->getDefinition()->addOption(new InputOption(
+                'entitymanager',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The name of the entitymanager to use. If none is provided, it will use orm_default.'
+            ));
+
+            $cli->add($command);
+        }
+
+        $arguments = new ArgvInput();
+        $entityManagerName = $arguments->getParameterOption('--entitymanager');
+        $entityManagerName = !empty($entityManagerName) ? $entityManagerName : 'orm_default';
 
         /* @var $entityManager \Doctrine\ORM\EntityManager */
-        $entityManager = $serviceLocator->get('doctrine.entitymanager.orm_default');
+        $entityManager = $serviceLocator->get('doctrine.entitymanager.' . $entityManagerName);
         $helperSet     = $cli->getHelperSet();
 
         if (class_exists('Symfony\Component\Console\Helper\QuestionHelper')) {
