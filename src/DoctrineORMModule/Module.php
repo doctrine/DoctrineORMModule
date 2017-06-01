@@ -140,21 +140,22 @@ class Module implements
             /* @var $command \Symfony\Component\Console\Command\Command */
             $command = $serviceLocator->get($commandName);
             $command->getDefinition()->addOption(new InputOption(
-                'entitymanager',
+                'object-manager',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'The name of the entitymanager to use. If none is provided, it will use orm_default.'
+                'The name of the object-manager to use.',
+                'doctrine.entitymanager.orm_default'
             ));
 
             $cli->add($command);
         }
 
         $arguments = new ArgvInput();
-        $entityManagerName = $arguments->getParameterOption('--entitymanager');
-        $entityManagerName = !empty($entityManagerName) ? $entityManagerName : 'orm_default';
+        $objectManagerName = $arguments->getParameterOption('--object-manager');
+        $objectManagerName = !empty($objectManagerName) ? $objectManagerName : 'doctrine.entitymanager.orm_default';
 
-        /* @var $entityManager \Doctrine\ORM\EntityManager */
-        $entityManager = $serviceLocator->get('doctrine.entitymanager.' . $entityManagerName);
+        /* @var $entityManager \Doctrine\ORM\EntityManagerInterface */
+        $entityManager = $serviceLocator->get($objectManagerName);
         $helperSet     = $cli->getHelperSet();
 
         if (class_exists('Symfony\Component\Console\Helper\QuestionHelper')) {

@@ -127,7 +127,7 @@ class CliTest extends PHPUnit_Framework_TestCase
         $application = new Application();
         $event = new Event('loadCli.post', $application, ['ServiceManager' => $this->serviceManager]);
 
-        $_SERVER['argv'][] = '--entitymanager=some_other_name';
+        $_SERVER['argv'][] = '--object-manager=doctrine.entitymanager.some_other_name';
 
         $module = new Module();
         $module->initializeConsole($event);
@@ -151,18 +151,16 @@ class CliTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf($className, $command);
 
         // check for the entity-manager option
-        $this->assertTrue($command->getDefinition()->hasOption('entitymanager'));
+        $this->assertTrue($command->getDefinition()->hasOption('object-manager'));
 
-        $entityManagerOption = $command->getDefinition()->getOption('entitymanager');
+        $entityManagerOption = $command->getDefinition()->getOption('object-manager');
 
         $this->assertTrue($entityManagerOption->isValueOptional());
         $this->assertFalse($entityManagerOption->isValueRequired());
         $this->assertFalse($entityManagerOption->isArray());
         $this->assertNull($entityManagerOption->getShortcut());
-        $this->assertSame(
-            'The name of the entitymanager to use. If none is provided, it will use orm_default.',
-            $entityManagerOption->getDescription()
-        );
+        $this->assertSame('doctrine.entitymanager.orm_default', $entityManagerOption->getDefault());
+        $this->assertSame('The name of the object-manager to use.', $entityManagerOption->getDescription());
     }
 
     /**
