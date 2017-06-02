@@ -43,7 +43,7 @@ class EntityResolverFactory extends AbstractFactory
         $targetEntityListener = new ResolveTargetEntityListener();
 
         foreach ($resolvers as $oldEntity => $newEntity) {
-            $targetEntityListener->addResolveTargetEntity($oldEntity, $newEntity, array());
+            $targetEntityListener->addResolveTargetEntity($oldEntity, $newEntity, []);
         }
 
         // Starting from Doctrine ORM 2.5, the listener implements EventSubscriber

@@ -212,7 +212,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
             'doctrine' => [
                 'configuration' => [
                     'test_default' => [
-                        'classMetadataFactoryName' => 'Factory'
+                        'classMetadataFactoryName' => 'Factory',
                     ],
                 ],
             ],
@@ -333,15 +333,15 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
                             'regions' => [
                                 'my_first_region' => [
                                     'lifetime'      => 800,
-                                    'lock_lifetime' => 1000
+                                    'lock_lifetime' => 1000,
                                 ],
 
                                 'my_second_region' => [
                                     'lifetime'      => 10,
-                                    'lock_lifetime' => 20
-                                ]
-                            ]
-                        ]
+                                    'lock_lifetime' => 20,
+                                ],
+                            ],
+                        ],
                     ],
                 ],
             ],
@@ -351,7 +351,7 @@ class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
 
         $ormConfig        = $this->factory->createService($this->serviceManager);
         $secondLevelCache = $ormConfig->getSecondLevelCacheConfiguration();
-        
+
         $this->assertInstanceOf(\Doctrine\ORM\Cache\CacheConfiguration::class, $secondLevelCache);
 
         $cacheFactory = $secondLevelCache->getCacheFactory();

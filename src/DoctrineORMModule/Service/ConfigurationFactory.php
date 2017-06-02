@@ -79,7 +79,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
 
         if ($namingStrategy = $options->getNamingStrategy()) {
             if (is_string($namingStrategy)) {
-                if (!$container->has($namingStrategy)) {
+                if (! $container->has($namingStrategy)) {
                     throw new InvalidArgumentException(sprintf('Naming strategy "%s" not found', $namingStrategy));
                 }
 
@@ -91,7 +91,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
 
         if ($quoteStrategy = $options->getQuoteStrategy()) {
             if (is_string($quoteStrategy)) {
-                if (!$container->has($quoteStrategy)) {
+                if (! $container->has($quoteStrategy)) {
                     throw new InvalidArgumentException(sprintf('Quote strategy "%s" not found', $quoteStrategy));
                 }
 
@@ -103,7 +103,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
 
         if ($repositoryFactory = $options->getRepositoryFactory()) {
             if (is_string($repositoryFactory)) {
-                if (!$container->has($repositoryFactory)) {
+                if (! $container->has($repositoryFactory)) {
                     throw new InvalidArgumentException(
                         sprintf('Repository factory "%s" not found', $repositoryFactory)
                     );

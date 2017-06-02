@@ -21,6 +21,8 @@ namespace DoctrineORMModule;
 
 use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputOption;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
@@ -58,7 +60,7 @@ class Module implements
                 $manager->getEvent()->getParam('ServiceManager')->get('doctrine.sql_logger_collector.orm_default');
             }
         );
-        $events->getSharedManager()->attach('doctrine', 'loadCli.post', array($this, 'initializeConsole'));
+        $events->getSharedManager()->attach('doctrine', 'loadCli.post', [$this, 'initializeConsole']);
     }
 
     /**
@@ -82,7 +84,7 @@ class Module implements
      */
     public function getModuleDependencies()
     {
-        return array('DoctrineModule');
+        return ['DoctrineModule'];
     }
 
     /**
@@ -99,7 +101,7 @@ class Module implements
         /* @var $serviceLocator \Zend\ServiceManager\ServiceLocatorInterface */
         $serviceLocator = $event->getParam('ServiceManager');
 
-        $commands = array(
+        $commands = [
             'doctrine.dbal_cmd.runsql',
             'doctrine.dbal_cmd.import',
             'doctrine.orm_cmd.clear_cache_metadata',
@@ -117,12 +119,12 @@ class Module implements
             'doctrine.orm_cmd.run_dql',
             'doctrine.orm_cmd.validate_schema',
             'doctrine.orm_cmd.info',
-        );
+        ];
 
         if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
             $commands = ArrayUtils::merge(
                 $commands,
-                array(
+                [
                     'doctrine.migrations_cmd.execute',
                     'doctrine.migrations_cmd.generate',
                     'doctrine.migrations_cmd.migrate',
@@ -130,14 +132,30 @@ class Module implements
                     'doctrine.migrations_cmd.version',
                     'doctrine.migrations_cmd.diff',
                     'doctrine.migrations_cmd.latest',
-                )
+                ]
             );
         }
 
-        $cli->addCommands(array_map(array($serviceLocator, 'get'), $commands));
+        foreach ($commands as $commandName) {
+            /* @var $command \Symfony\Component\Console\Command\Command */
+            $command = $serviceLocator->get($commandName);
+            $command->getDefinition()->addOption(new InputOption(
+                'object-manager',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The name of the object manager to use.',
+                'doctrine.entitymanager.orm_default'
+            ));
 
-        /* @var $entityManager \Doctrine\ORM\EntityManager */
-        $entityManager = $serviceLocator->get('doctrine.entitymanager.orm_default');
+            $cli->add($command);
+        }
+
+        $arguments = new ArgvInput();
+        $objectManagerName = ($arguments->getParameterOption('--object-manager')) ?:
+            'doctrine.entitymanager.orm_default';
+
+        /* @var $objectManager \Doctrine\ORM\EntityManagerInterface */
+        $objectManager = $serviceLocator->get($objectManagerName);
         $helperSet     = $cli->getHelperSet();
 
         if (class_exists('Symfony\Component\Console\Helper\QuestionHelper')) {
@@ -146,7 +164,7 @@ class Module implements
             $helperSet->set(new DialogHelper(), 'dialog');
         }
 
-        $helperSet->set(new ConnectionHelper($entityManager->getConnection()), 'db');
-        $helperSet->set(new EntityManagerHelper($entityManager), 'em');
+        $helperSet->set(new ConnectionHelper($objectManager->getConnection()), 'db');
+        $helperSet->set(new EntityManagerHelper($objectManager), 'em');
     }
 }

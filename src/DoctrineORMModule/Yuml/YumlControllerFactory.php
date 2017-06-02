@@ -62,8 +62,8 @@ class YumlControllerFactory implements FactoryInterface
     {
         $config = $container->get('config');
 
-        if (!isset($config['zenddevelopertools']['toolbar']['enabled'])
-            || !$config['zenddevelopertools']['toolbar']['enabled']
+        if (! isset($config['zenddevelopertools']['toolbar']['enabled'])
+            || ! $config['zenddevelopertools']['toolbar']['enabled']
         ) {
             throw new ServiceNotFoundException(
                 sprintf('Service %s could not be found', YumlController::class)
@@ -71,7 +71,7 @@ class YumlControllerFactory implements FactoryInterface
         }
 
         return new YumlController(
-            new Client('http://yuml.me/diagram/plain/class/', ['timeout' => 30])
+            new Client('https://yuml.me/diagram/plain/class/', ['timeout' => 30])
         );
     }
 }

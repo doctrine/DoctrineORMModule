@@ -51,24 +51,23 @@ class DBALConnectionFactory extends AbstractFactory
             $pdo = $container->get($pdo);
         }
 
-        $params = array(
+        $params = [
             'driverClass'  => $options->getDriverClass(),
             'wrapperClass' => $options->getWrapperClass(),
             'pdo'          => $pdo,
-        );
+        ];
         $params = array_merge($params, $options->getParams());
 
         $configuration = $container->get($options->getConfiguration());
         $eventManager  = $container->get($options->getEventManager());
 
         $connection = DriverManager::getConnection($params, $configuration, $eventManager);
-        $platform = $connection->getDatabasePlatform();
         foreach ($options->getDoctrineTypeMappings() as $dbType => $doctrineType) {
-            $platform->registerDoctrineTypeMapping($dbType, $doctrineType);
+            $connection->getDatabasePlatform()->registerDoctrineTypeMapping($dbType, $doctrineType);
         }
 
         foreach ($options->getDoctrineCommentedTypes() as $type) {
-            $platform->markDoctrineTypeCommented(Type::getType($type));
+            $connection->getDatabasePlatform()->markDoctrineTypeCommented(Type::getType($type));
         }
 
         return $connection;

@@ -315,8 +315,8 @@ class ElementAnnotationsListenerTest extends TestCase
                 'handleExcludeField',
                 'handleExcludeAssociation',
                 'handleToOne',
-                'handleToMany'
-            ]
+                'handleToMany',
+            ],
         ];
     }
 

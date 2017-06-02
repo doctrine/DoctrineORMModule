@@ -77,7 +77,7 @@ class FormAnnotationBuilderFactory extends AbstractFactory
     private function getFormFactory(ContainerInterface $services)
     {
         $elements = null;
-        
+
         if ($services->has('FormElementManager')) {
             $elements = $services->get('FormElementManager');
         }

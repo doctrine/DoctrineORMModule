@@ -53,6 +53,32 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
         $this->serviceManager->setService('doctrine.eventmanager.orm_default', new EventManager());
     }
 
+    public function testNoConnectWithoutCustomMappingsAndCommentedTypes()
+    {
+        $config = [
+            'doctrine' => [
+                'connection' => [
+                    'orm_default' => [
+                        'driverClass'   => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
+                        'params' => [
+                            'memory' => true,
+                        ],
+                    ]
+                ],
+            ],
+        ];
+        $configurationMock = $this->getMockBuilder('Doctrine\ORM\Configuration')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->serviceManager->setService('doctrine.configuration.orm_default', $configurationMock);
+        $this->serviceManager->setService('config', $config);
+        $this->serviceManager->setService('Configuration', $config);
+
+        $dbal = $this->factory->createService($this->serviceManager);
+        $this->assertFalse($dbal->isConnected());
+    }
+
     public function testDoctrineMappingTypeReturnCorrectParent()
     {
         $config = [
@@ -64,9 +90,9 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
                             'memory' => true,
                         ],
                         'doctrineTypeMappings' => [
-                            'money' => 'string'
+                            'money' => 'string',
                         ],
-                    ]
+                    ],
                 ],
             ],
         ];
@@ -97,9 +123,9 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
                             'money' => 'money',
                         ],
                         'doctrineCommentedTypes' => [
-                            'money'
+                            'money',
                         ],
-                    ]
+                    ],
                 ],
                 'configuration' => [
                     'orm_default' => [

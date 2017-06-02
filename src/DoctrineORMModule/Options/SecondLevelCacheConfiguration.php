@@ -49,13 +49,13 @@ class SecondLevelCacheConfiguration extends AbstractOptions
     /**
      * Configure the lifetime and lock lifetime per region. You must pass an associative array like this:
      *
-     * array(
-     *     'My\Region' => array('lifetime' => 200, 'lock_lifetime' => 400)
-     * )
+     * [
+     *     'My\Region' => ['lifetime' => 200, 'lock_lifetime' => 400],
+     * ]
      *
      * @var array
      */
-    protected $regions = array();
+    protected $regions = [];
 
     /**
      * @param boolean $enabled

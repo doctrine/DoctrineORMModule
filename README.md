@@ -1,8 +1,8 @@
-# Doctrine 2 ORM Module for Zend Framework 2
+# Doctrine 2 ORM Module for Zend Framework
 
 [![Master branch build status](https://secure.travis-ci.org/doctrine/DoctrineORMModule.png?branch=master)](http://travis-ci.org/doctrine/DoctrineORMModule) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/doctrine/DoctrineORMModule/badges/quality-score.png?s=1e2a047fb1bb0f66937bcbc3a61f960c8089c835)](https://scrutinizer-ci.com/g/doctrine/DoctrineORMModule/) [![Code Coverage](https://scrutinizer-ci.com/g/doctrine/DoctrineORMModule/badges/coverage.png?s=377656ded5ffaaf4635acfb26729caa212fb5d76)](https://scrutinizer-ci.com/g/doctrine/DoctrineORMModule/) [![Latest Stable Version](https://poser.pugx.org/doctrine/doctrine-orm-module/v/stable.png)](https://packagist.org/packages/doctrine/doctrine-orm-module) [![Total Downloads](https://poser.pugx.org/doctrine/doctrine-orm-module/downloads.png)](https://packagist.org/packages/doctrine/doctrine-orm-module)
 
-DoctrineORMModule integrates Doctrine 2 ORM with Zend Framework 2 quickly and easily.
+DoctrineORMModule integrates Doctrine 2 ORM with Zend Framework quickly and easily.
 
   - Doctrine 2 ORM support
   - Multiple ORM entity managers
@@ -15,7 +15,7 @@ Installation of this module uses composer. For composer documentation, please re
 [getcomposer.org](http://getcomposer.org/).
 
 ```sh
-php composer.phar require doctrine/doctrine-orm-module
+composer require doctrine/doctrine-orm-module
 ```
 
 Then add `DoctrineModule` and `DoctrineORMModule` to your `config/application.config.php` and create directory
@@ -40,7 +40,7 @@ return [
                 'cache' => 'array',
                 'paths' => [
                     'path/to/my/entities',
-                    'another/path'
+                    'another/path',
                 ],
             ],
 
@@ -49,7 +49,7 @@ return [
             'orm_default' => [
                 'drivers' => [
                     // register `my_annotation_driver` for any entity under namespace `My\Namespace`
-                    'My\Namespace' => 'my_annotation_driver'
+                    'My\Namespace' => 'my_annotation_driver',
                 ],
             ],
         ],
@@ -75,9 +75,9 @@ return [
                     'user'     => 'username',
                     'password' => 'password',
                     'dbname'   => 'database',
-                ]
-            ]
-        ]
+                ],
+            ],
+        ],
     ],
 ];
 ```

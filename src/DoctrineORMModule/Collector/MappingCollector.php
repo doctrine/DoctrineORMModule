@@ -50,12 +50,12 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
     /**
      * @var ClassMetadataFactory|null
      */
-    protected $classMetadataFactory = array();
+    protected $classMetadataFactory = [];
 
     /**
      * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata[] indexed by class name
      */
-    protected $classes = array();
+    protected $classes = [];
 
     /**
      * @param ClassMetadataFactory $classMetadataFactory
@@ -88,13 +88,13 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
      */
     public function collect(MvcEvent $mvcEvent)
     {
-        if (!$this->classMetadataFactory) {
+        if (! $this->classMetadataFactory) {
             return;
         }
 
         /* @var $metadata \Doctrine\Common\Persistence\Mapping\ClassMetadata[] */
         $metadata      = $this->classMetadataFactory->getAllMetadata();
-        $this->classes = array();
+        $this->classes = [];
 
         foreach ($metadata as $class) {
             $this->classes[$class->getName()] = $class;
@@ -116,10 +116,10 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
     public function serialize()
     {
         return serialize(
-            array(
+            [
                 'name'    => $this->name,
                 'classes' => $this->classes,
-            )
+            ]
         );
     }
 
