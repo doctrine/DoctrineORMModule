@@ -11,6 +11,7 @@ env:
   global:
     - COMPOSER_ARGS="--no-interaction"
     - LATEST_DEPS="zendframework/zend-mvc-console"
+    - LEGACY_DEPS="phpunit/phpunit"
 
 matrix:
   fast_finish: true
@@ -70,10 +71,11 @@ before_install:
   - travis_retry composer self-update
 
 install:
+  - travis_retry composer install $COMPOSER_ARGS
+  - if [[ $TRAVIS_PHP_VERSION =~ ^5.6 ]]; then travis_retry composer update $COMPOSER_ARGS --with-dependencies $LEGACY_DEPS ; fi
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer require --dev --no-update $COMPOSER_ARGS $LATEST_DEPS ; fi
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
-  - travis_retry composer install $COMPOSER_ARGS
   - composer show
 
 script:

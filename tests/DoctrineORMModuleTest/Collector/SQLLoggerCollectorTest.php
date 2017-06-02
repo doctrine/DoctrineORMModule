@@ -19,7 +19,7 @@
 
 namespace DoctrineORMModuleTest\Collector;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Collector\SQLLoggerCollector;
 use Doctrine\DBAL\Logging\DebugStack;
 use Zend\Mvc\MvcEvent;
@@ -61,6 +61,7 @@ class SQLLoggerCollectorTest extends TestCase
     public function testCollect()
     {
         $this->collector->collect(new MvcEvent());
+        $this->addToAssertionCount(1);
     }
 
     public function testCanHide()

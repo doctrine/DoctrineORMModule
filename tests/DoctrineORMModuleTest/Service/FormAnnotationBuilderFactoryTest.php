@@ -20,7 +20,7 @@
 namespace DoctrineORMModuleTest\Service;
 
 use DoctrineORMModule\Service\FormAnnotationBuilderFactory;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Zend\ServiceManager\ServiceManager;
 
 /**
@@ -28,7 +28,7 @@ use Zend\ServiceManager\ServiceManager;
  *
  * @covers \DoctrineORMModule\Service\FormAnnotationBuilderFactory
  */
-class FormAnnotationBuilderFactoryTest extends PHPUnit_Framework_TestCase
+class FormAnnotationBuilderFactoryTest extends TestCase
 {
     /**
      * @group #352

@@ -19,7 +19,7 @@
 
 namespace DoctrineORMModuleTest\Collector;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Collector\MappingCollector;
 
 /**
@@ -28,7 +28,7 @@ use DoctrineORMModule\Collector\MappingCollector;
  * @author  Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class MappingCollectorTest extends PHPUnit_Framework_TestCase
+class MappingCollectorTest extends TestCase
 {
     /**
      * @var \Doctrine\Common\Persistence\Mapping\ClassMetadataFactory|\PHPUnit_Framework_MockObject_MockObject

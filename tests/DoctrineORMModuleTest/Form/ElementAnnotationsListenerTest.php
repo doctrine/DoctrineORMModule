@@ -26,6 +26,8 @@ class ElementAnnotationsListenerTest extends TestCase
     {
         $event = $this->getMetadataEvent();
         $this->listener->{$method}($event);
+
+        $this->addToAssertionCount(1);
     }
 
     public function testToOne()

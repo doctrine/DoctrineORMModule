@@ -19,7 +19,7 @@
 
 namespace DoctrineORMModuleTest\Options;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
 
 class SQLLoggerCollectorOptionsTest extends TestCase

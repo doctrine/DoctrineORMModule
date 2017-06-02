@@ -20,7 +20,7 @@ namespace DoctrineORMModuleTest\Service;
 
 use DoctrineORMModule\Service\MigrationsCommandFactory;
 use DoctrineORMModuleTest\ServiceManagerFactory;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for {@see \DoctrineORMModule\Service\MigrationsCommandFactory}
