@@ -59,7 +59,7 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
+                        'driverClass'   => \Doctrine\DBAL\Driver\PDOSqlite\Driver::class,
                         'params' => [
                             'memory' => true,
                         ],
@@ -67,7 +67,7 @@ class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
                 ],
             ],
         ];
-        $configurationMock = $this->getMockBuilder('Doctrine\ORM\Configuration')
+        $configurationMock = $this->getMockBuilder(\Doctrine\ORM\Configuration::class)
             ->disableOriginalConstructor()
             ->getMock();
 
