@@ -19,7 +19,7 @@
 
 namespace DoctrineORMModuleTest\Service;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Service\SQLLoggerCollectorFactory;
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\ORM\Configuration as ORMConfiguration;

@@ -20,14 +20,14 @@
 namespace DoctrineORMModuleTest\Framework;
 
 use DoctrineORMModuleTest\ServiceManagerFactory;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 
 /**
  * Base test case for tests using the entity manager
  */
-class TestCase extends PHPUnit_Framework_TestCase
+class TestCase extends PHPUnitTestCase
 {
     /**
      * @var boolean

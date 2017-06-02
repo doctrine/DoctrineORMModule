@@ -20,7 +20,7 @@
 namespace DoctrineORMModuleTest\Yuml;
 
 use DoctrineORMModule\Yuml\MetadataGrapher;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for the metadata to string converter
@@ -29,7 +29,7 @@ use PHPUnit_Framework_TestCase;
  * @link    http://www.doctrine-project.org/
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class MetadataGrapherTest extends PHPUnit_Framework_TestCase
+class MetadataGrapherTest extends TestCase
 {
     /**
      * @var MetadataGrapher

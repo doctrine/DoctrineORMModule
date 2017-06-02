@@ -19,13 +19,13 @@
 
 namespace DoctrineORMModuleTest\Yuml;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Yuml\YumlController;
 use DoctrineORMModule\Yuml\YumlControllerFactory;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class YumlControllerFactoryTest extends PHPUnit_Framework_TestCase
+class YumlControllerFactoryTest extends TestCase
 {
     public function testCreateService()
     {

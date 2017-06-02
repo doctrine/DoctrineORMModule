@@ -19,12 +19,12 @@
 
 namespace DoctrineORMModuleTest\Service;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Service\ConfigurationFactory;
 use Doctrine\Common\Cache\ArrayCache;
 use Zend\ServiceManager\ServiceManager;
 
-class ConfigurationFactoryTest extends PHPUnit_Framework_TestCase
+class ConfigurationFactoryTest extends TestCase
 {
     /**
      * @var ServiceManager

@@ -20,7 +20,7 @@
 namespace DoctrineORMModuleTest;
 
 use DoctrineORMModule\Module;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Zend\EventManager\Event;
 
@@ -31,7 +31,7 @@ use Zend\EventManager\Event;
  * @link    http://www.doctrine-project.org/
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class CliTest extends PHPUnit_Framework_TestCase
+class CliTest extends TestCase
 {
     /**
      * @var \Zend\ServiceManager\ServiceManager

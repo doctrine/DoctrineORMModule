@@ -19,7 +19,7 @@
 
 namespace DoctrineORMModuleTest\Service;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use DoctrineORMModuleTest\Assets\Types\MoneyType;
 use DoctrineORMModule\Service\DBALConnectionFactory;
 use Doctrine\DBAL\Types\Type;
@@ -31,7 +31,7 @@ use DoctrineORMModule\Service\ConfigurationFactory;
 /**
  * @covers \DoctrineORMModule\Service\DBALConnectionFactory
  */
-class DBALConnectionFactoryTest extends PHPUnit_Framework_TestCase
+class DBALConnectionFactoryTest extends TestCase
 {
     /**
      * @var ServiceManager

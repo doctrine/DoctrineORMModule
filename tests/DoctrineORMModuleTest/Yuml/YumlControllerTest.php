@@ -20,6 +20,7 @@
 namespace DoctrineORMModuleTest\Yuml;
 
 use DoctrineORMModule\Yuml\YumlController;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for Yuml redirector controller
@@ -28,7 +29,7 @@ use DoctrineORMModule\Yuml\YumlController;
  * @link    http://www.doctrine-project.org/
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
-class YumlControllerTest extends \PHPUnit_Framework_TestCase
+class YumlControllerTest extends TestCase
 {
     /**
      * @var YumlController
