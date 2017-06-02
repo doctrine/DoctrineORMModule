@@ -21,6 +21,8 @@ namespace DoctrineORMModule;
 
 use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputOption;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
@@ -134,10 +136,26 @@ class Module implements
             );
         }
 
-        $cli->addCommands(array_map(array($serviceLocator, 'get'), $commands));
+        foreach ($commands as $commandName) {
+            /* @var $command \Symfony\Component\Console\Command\Command */
+            $command = $serviceLocator->get($commandName);
+            $command->getDefinition()->addOption(new InputOption(
+                'object-manager',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The name of the object manager to use.',
+                'doctrine.entitymanager.orm_default'
+            ));
 
-        /* @var $entityManager \Doctrine\ORM\EntityManager */
-        $entityManager = $serviceLocator->get('doctrine.entitymanager.orm_default');
+            $cli->add($command);
+        }
+
+        $arguments = new ArgvInput();
+        $objectManagerName = ($arguments->getParameterOption('--object-manager')) ?:
+            'doctrine.entitymanager.orm_default';
+
+        /* @var $objectManager \Doctrine\ORM\EntityManagerInterface */
+        $objectManager = $serviceLocator->get($objectManagerName);
         $helperSet     = $cli->getHelperSet();
 
         if (class_exists('Symfony\Component\Console\Helper\QuestionHelper')) {
@@ -146,7 +164,7 @@ class Module implements
             $helperSet->set(new DialogHelper(), 'dialog');
         }
 
-        $helperSet->set(new ConnectionHelper($entityManager->getConnection()), 'db');
-        $helperSet->set(new EntityManagerHelper($entityManager), 'em');
+        $helperSet->set(new ConnectionHelper($objectManager->getConnection()), 'db');
+        $helperSet->set(new EntityManagerHelper($objectManager), 'em');
     }
 }
