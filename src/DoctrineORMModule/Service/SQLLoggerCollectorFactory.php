@@ -19,6 +19,7 @@
 
 namespace DoctrineORMModule\Service;
 
+use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -54,7 +55,7 @@ class SQLLoggerCollectorFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /** @var $options \DoctrineORMModule\Options\SQLLoggerCollectorOptions */
+        /** @var $options SQLLoggerCollectorOptions */
         $options = $this->getOptions($container);
 
         // @todo always ask the serviceLocator instead? (add a factory?)
@@ -119,6 +120,6 @@ class SQLLoggerCollectorFactory implements FactoryInterface
      */
     protected function getOptionsClass()
     {
-        return 'DoctrineORMModule\Options\SQLLoggerCollectorOptions';
+        return SQLLoggerCollectorOptions::class;
     }
 }

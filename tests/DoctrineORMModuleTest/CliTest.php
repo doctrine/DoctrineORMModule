@@ -81,12 +81,12 @@ class CliTest extends PHPUnit_Framework_TestCase
 
         /* @var $emHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
         $emHelper = $helperSet->get('em');
-        $this->assertInstanceOf('Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper', $emHelper);
+        $this->assertInstanceOf(\Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper::class, $emHelper);
         $this->assertSame($this->objectManager, $emHelper->getEntityManager());
 
         /* @var $dbHelper \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper */
         $dbHelper = $helperSet->get('db');
-        $this->assertInstanceOf('Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper', $dbHelper);
+        $this->assertInstanceOf(\Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper::class, $dbHelper);
         $this->assertSame($this->objectManager->getConnection(), $dbHelper->getConnection());
     }
 
@@ -100,7 +100,7 @@ class CliTest extends PHPUnit_Framework_TestCase
 
         /* @var $entityManagerHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
         $entityManagerHelper = $application->getHelperSet()->get('entityManager');
-        $this->assertInstanceOf('Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper', $entityManagerHelper);
+        $this->assertInstanceOf(\Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper::class, $entityManagerHelper);
         $this->assertSame($this->objectManager, $entityManagerHelper->getEntityManager());
     }
 
@@ -109,11 +109,11 @@ class CliTest extends PHPUnit_Framework_TestCase
      */
     public function testEntityManagerUsedCanBeSpecifiedInCommandLineArgument()
     {
-        $connection = $this->getMockBuilder('Doctrine\DBAL\Connection')
+        $connection = $this->getMockBuilder(\Doctrine\DBAL\Connection::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $entityManager = $this->getMockbuilder('Doctrine\ORM\EntityManager')
+        $entityManager = $this->getMockbuilder(\Doctrine\ORM\EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -134,7 +134,7 @@ class CliTest extends PHPUnit_Framework_TestCase
 
         /* @var $entityManagerHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
         $entityManagerHelper = $application->getHelperSet()->get('entityManager');
-        $this->assertInstanceOf('Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper', $entityManagerHelper);
+        $this->assertInstanceOf(\Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper::class, $entityManagerHelper);
         $this->assertSame($entityManager, $entityManagerHelper->getEntityManager());
     }
 
@@ -171,63 +171,63 @@ class CliTest extends PHPUnit_Framework_TestCase
         return [
             [
                 'dbal:import',
-                'Doctrine\DBAL\Tools\Console\Command\ImportCommand',
+                \Doctrine\DBAL\Tools\Console\Command\ImportCommand::class,
             ],
             [
                 'dbal:run-sql',
-                'Doctrine\DBAL\Tools\Console\Command\RunSqlCommand',
+                \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand::class,
             ],
             [
                 'orm:clear-cache:query',
-                'Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand',
+                \Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand::class,
             ],
             [
                 'orm:clear-cache:result',
-                'Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand',
+                \Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand::class,
             ],
             [
                 'orm:generate-proxies',
-                'Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand',
+                \Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand::class,
             ],
             [
                 'orm:ensure-production-settings',
-                'Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand',
+                \Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand::class,
             ],
             [
                 'orm:info',
-                'Doctrine\ORM\Tools\Console\Command\InfoCommand',
+                \Doctrine\ORM\Tools\Console\Command\InfoCommand::class,
             ],
             [
                 'orm:schema-tool:create',
-                'Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand',
+                \Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand::class,
             ],
             [
                 'orm:schema-tool:update',
-                'Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand',
+                \Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand::class,
             ],
             [
                 'orm:schema-tool:drop',
-                'Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand',
+                \Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand::class,
             ],
             [
                 'orm:validate-schema',
-                'Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand',
+                \Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand::class,
             ],
             [
                 'orm:run-dql',
-                'Doctrine\ORM\Tools\Console\Command\RunDqlCommand',
+                \Doctrine\ORM\Tools\Console\Command\RunDqlCommand::class,
             ],
             [
                 'migrations:generate',
-                'Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand',
+                \Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand::class,
             ],
             [
                 'migrations:diff',
-                'Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand',
+                \Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand::class,
             ],
             [
                 'migrations:execute',
-                'Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand',
+                \Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand::class,
             ],
         ];
     }

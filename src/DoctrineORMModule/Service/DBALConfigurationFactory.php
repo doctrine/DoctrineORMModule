@@ -19,6 +19,7 @@
 
 namespace DoctrineORMModule\Service;
 
+use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
 use Interop\Container\ContainerInterface;
 use RuntimeException;
 use Doctrine\DBAL\Configuration;
@@ -124,6 +125,6 @@ class DBALConfigurationFactory implements FactoryInterface
      */
     protected function getOptionsClass()
     {
-        return 'DoctrineModule\Options\Configuration';
+        return DoctrineORMModuleConfiguration::class;
     }
 }

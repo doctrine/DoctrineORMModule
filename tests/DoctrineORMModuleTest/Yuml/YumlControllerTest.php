@@ -52,10 +52,9 @@ class YumlControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->httpClient     = $this->getMockBuilder('Zend\\Http\\Client')
-            ->getMock();
+        $this->httpClient     = $this->createMock(\Zend\Http\Client::class);
         $this->controller     = new YumlController($this->httpClient);
-        $this->pluginManager  = $this->getMockBuilder('Zend\\Mvc\\Controller\\PluginManager')
+        $this->pluginManager  = $this->getMockBuilder(\Zend\Mvc\Controller\PluginManager::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->controller->setPluginManager($this->pluginManager);
@@ -66,12 +65,9 @@ class YumlControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testIndexActionWillRedirectToYuml()
     {
-        $response = $this->getMockBuilder('Zend\\Http\\Response')
-            ->getMock();
-        $controllerResponse = $this->getMockBuilder('Zend\\Http\\Response')
-            ->getMock();
-        $redirect = $this->getMockBuilder('Zend\\Mvc\\Controller\\Plugin\\Redirect')
-            ->getMock();
+        $response = $this->createMock(\Zend\Http\Response::class);
+        $controllerResponse = $this->createMock(\Zend\Http\Response::class);
+        $redirect = $this->createMock(\Zend\Mvc\Controller\Plugin\Redirect::class);
         $this->httpClient->expects($this->any())->method('send')->will($this->returnValue($response));
         $response->expects($this->any())->method('isSuccess')->will($this->returnValue(true));
         $response->expects($this->any())->method('getBody')->will($this->returnValue('short-url'));
@@ -94,12 +90,11 @@ class YumlControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testIndexActionWillFailOnMalformedResponse()
     {
-        $response = $this->getMockBuilder('Zend\\Http\\Response')
-            ->getMock();
+        $response = $this->createMock(\Zend\Http\Response::class);
         $this->httpClient->expects($this->any())->method('send')->will($this->returnValue($response));
         $response->expects($this->any())->method('isSuccess')->will($this->returnValue(false));
 
-        $this->expectException('UnexpectedValueException');
+        $this->expectException(\UnexpectedValueException::class);
         $this->controller->indexAction();
     }
 }

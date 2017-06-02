@@ -62,7 +62,7 @@ class AdapterTestIgnore extends TestCase
             ->getEntityManager()
             ->createQueryBuilder()
             ->select('t')
-            ->from('DoctrineORMModuleTest\Assets\Entity\Test', 't')
+            ->from(\DoctrineORMModuleTest\Assets\Entity\Test::class, 't')
             ->orderBy('t.id', 'ASC');
 
         $this->paginator = new DoctrinePaginator($this->qb);

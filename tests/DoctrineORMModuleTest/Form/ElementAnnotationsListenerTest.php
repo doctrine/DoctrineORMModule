@@ -39,10 +39,10 @@ class ElementAnnotationsListenerTest extends TestCase
         $elementSpec = $event->getParam('elementSpec');
         $this->assertEquals($this->getEntityManager(), $elementSpec['spec']['options']['object_manager']);
         $this->assertEquals(
-            'DoctrineORMModuleTest\Assets\Entity\TargetEntity',
+            \DoctrineORMModuleTest\Assets\Entity\TargetEntity::class,
             $elementSpec['spec']['options']['target_class']
         );
-        $this->assertEquals('DoctrineORMModule\Form\Element\EntitySelect', $elementSpec['spec']['type']);
+        $this->assertEquals(\DoctrineORMModule\Form\Element\EntitySelect::class, $elementSpec['spec']['type']);
     }
 
     public function testToOneMergesOptions()
@@ -98,10 +98,10 @@ class ElementAnnotationsListenerTest extends TestCase
         $this->assertTrue($elementSpec['spec']['attributes']['multiple']);
         $this->assertEquals($this->getEntityManager(), $elementSpec['spec']['options']['object_manager']);
         $this->assertEquals(
-            'DoctrineORMModuleTest\Assets\Entity\FormEntityTarget',
+            \DoctrineORMModuleTest\Assets\Entity\FormEntityTarget::class,
             $elementSpec['spec']['options']['target_class']
         );
-        $this->assertEquals('DoctrineORMModule\Form\Element\EntitySelect', $elementSpec['spec']['type']);
+        $this->assertEquals(\DoctrineORMModule\Form\Element\EntitySelect::class, $elementSpec['spec']['type']);
         $this->assertFalse($inputSpec['required']);
     }
 
@@ -289,17 +289,17 @@ class ElementAnnotationsListenerTest extends TestCase
     public function eventTypeProvider()
     {
         return [
-            ['bool', 'Zend\Form\Element\Checkbox'],
-            ['boolean', 'Zend\Form\Element\Checkbox'],
-            ['bigint', 'Zend\Form\Element\Number'],
-            ['integer', 'Zend\Form\Element\Number'],
-            ['smallint', 'Zend\Form\Element\Number'],
-            ['datetime', 'Zend\Form\Element\DateTime'],
-            ['datetimetz', 'Zend\Form\Element\DateTime'],
-            ['date', 'Zend\Form\Element\Date'],
-            ['time', 'Zend\Form\Element\Time'],
-            ['string', 'Zend\Form\Element'],
-            ['text', 'Zend\Form\Element\Textarea'],
+            ['bool', \Zend\Form\Element\Checkbox::class],
+            ['boolean', \Zend\Form\Element\Checkbox::class],
+            ['bigint', \Zend\Form\Element\Number::class],
+            ['integer', \Zend\Form\Element\Number::class],
+            ['smallint', \Zend\Form\Element\Number::class],
+            ['datetime', \Zend\Form\Element\DateTime::class],
+            ['datetimetz', \Zend\Form\Element\DateTime::class],
+            ['date', \Zend\Form\Element\Date::class],
+            ['time', \Zend\Form\Element\Time::class],
+            ['string', \Zend\Form\Element::class],
+            ['text', \Zend\Form\Element\Textarea::class],
         ];
     }
 
@@ -323,7 +323,7 @@ class ElementAnnotationsListenerTest extends TestCase
     protected function getMetadataEvent()
     {
         $event    = new Event();
-        $metadata = $this->getEntityManager()->getClassMetadata('DoctrineORMModuleTest\Assets\Entity\FormEntity');
+        $metadata = $this->getEntityManager()->getClassMetadata(\DoctrineORMModuleTest\Assets\Entity\FormEntity::class);
         $event->setParam('metadata', $metadata);
 
         return $event;

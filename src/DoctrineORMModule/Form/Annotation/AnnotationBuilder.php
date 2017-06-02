@@ -21,6 +21,7 @@ namespace DoctrineORMModule\Form\Annotation;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
+use DoctrineModule\Form\Element;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
 
@@ -77,9 +78,9 @@ class AnnotationBuilder extends ZendAnnotationBuilder
         $inputFilter  = $formSpec['input_filter'];
 
         $formElements = [
-            'DoctrineModule\Form\Element\ObjectSelect',
-            'DoctrineModule\Form\Element\ObjectMultiCheckbox',
-            'DoctrineModule\Form\Element\ObjectRadio',
+            Element\ObjectSelect::class,
+            Element\ObjectMultiCheckbox::class,
+            Element\ObjectRadio::class,
         ];
 
         foreach ($formSpec['elements'] as $key => $elementSpec) {

@@ -17,6 +17,14 @@
  * <http://www.doctrine-project.org>.
  */
 
+use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
+use Doctrine\DBAL\Tools\Console;
+use Doctrine\ORM\Tools\Console\Command;
+use DoctrineModule\Form\Element;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use DoctrineORMModule\Service;
+use DoctrineORMModule\Yuml;
+
 return [
     'doctrine' => [
         'connection' => [
@@ -99,7 +107,7 @@ return [
             'orm_default' => [
                 // By default, the ORM module uses a driver chain. This allows multiple
                 // modules to define their own entities
-                'class'   => 'Doctrine\ORM\Mapping\Driver\DriverChain',
+                'class'   => MappingDriverChain::class,
 
                 // Map of driver names to be used within this driver chain, indexed by
                 // entity namespace
@@ -187,65 +195,62 @@ return [
 
     'service_manager' => [
         'factories' => [
-            'Doctrine\ORM\EntityManager' => 'DoctrineORMModule\Service\EntityManagerAliasCompatFactory',
+            'Doctrine\ORM\EntityManager' => Service\EntityManagerAliasCompatFactory::class,
         ],
         'invokables' => [
             // DBAL commands
-            'doctrine.dbal_cmd.runsql' => '\Doctrine\DBAL\Tools\Console\Command\RunSqlCommand',
-            'doctrine.dbal_cmd.import' => '\Doctrine\DBAL\Tools\Console\Command\ImportCommand',
+            'doctrine.dbal_cmd.runsql' => Console\Command\RunSqlCommand::class,
+            'doctrine.dbal_cmd.import' => Console\Command\ImportCommand::class,
             // ORM Commands
-            'doctrine.orm_cmd.clear_cache_metadata' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand',
-            'doctrine.orm_cmd.clear_cache_result' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand',
-            'doctrine.orm_cmd.clear_cache_query' => '\Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand',
-            'doctrine.orm_cmd.schema_tool_create' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand',
-            'doctrine.orm_cmd.schema_tool_update' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand',
-            'doctrine.orm_cmd.schema_tool_drop' => '\Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand',
-            'doctrine.orm_cmd.convert_d1_schema' => '\Doctrine\ORM\Tools\Console\Command\ConvertDoctrine1SchemaCommand',
-            'doctrine.orm_cmd.generate_entities' => '\Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand',
-            'doctrine.orm_cmd.generate_proxies' => '\Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand',
-            'doctrine.orm_cmd.convert_mapping' => '\Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand',
-            'doctrine.orm_cmd.run_dql' => '\Doctrine\ORM\Tools\Console\Command\RunDqlCommand',
-            'doctrine.orm_cmd.validate_schema' => '\Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand',
-            'doctrine.orm_cmd.info' => '\Doctrine\ORM\Tools\Console\Command\InfoCommand',
-            'doctrine.orm_cmd.ensure_production_settings'
-                => '\Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand',
-            'doctrine.orm_cmd.generate_repositories'
-                => '\Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand',
+            'doctrine.orm_cmd.clear_cache_metadata' => Command\ClearCache\MetadataCommand::class,
+            'doctrine.orm_cmd.clear_cache_result' => Command\ClearCache\ResultCommand::class,
+            'doctrine.orm_cmd.clear_cache_query' => Command\ClearCache\QueryCommand::class,
+            'doctrine.orm_cmd.schema_tool_create' => Command\SchemaTool\CreateCommand::class,
+            'doctrine.orm_cmd.schema_tool_update' => Command\SchemaTool\UpdateCommand::class,
+            'doctrine.orm_cmd.schema_tool_drop' => Command\SchemaTool\DropCommand::class,
+            'doctrine.orm_cmd.convert_d1_schema' => Command\ConvertDoctrine1SchemaCommand::class,
+            'doctrine.orm_cmd.generate_entities' => Command\GenerateEntitiesCommand::class,
+            'doctrine.orm_cmd.generate_proxies' => Command\GenerateProxiesCommand::class,
+            'doctrine.orm_cmd.convert_mapping' => Command\ConvertMappingCommand::class,
+            'doctrine.orm_cmd.run_dql' => Command\RunDqlCommand::class,
+            'doctrine.orm_cmd.validate_schema' => Command\ValidateSchemaCommand::class,
+            'doctrine.orm_cmd.info' => Command\InfoCommand::class,
+            'doctrine.orm_cmd.ensure_production_settings' => Command\EnsureProductionSettingsCommand::class,
+            'doctrine.orm_cmd.generate_repositories' => Command\GenerateRepositoriesCommand::class,
         ],
     ],
 
     // Factory mappings - used to define which factory to use to instantiate a particular doctrine
     // service type
     'doctrine_factories' => [
-        'connection'               => 'DoctrineORMModule\Service\DBALConnectionFactory',
-        'configuration'            => 'DoctrineORMModule\Service\ConfigurationFactory',
-        'entitymanager'            => 'DoctrineORMModule\Service\EntityManagerFactory',
-        'entity_resolver'          => 'DoctrineORMModule\Service\EntityResolverFactory',
-        'sql_logger_collector'     => 'DoctrineORMModule\Service\SQLLoggerCollectorFactory',
-        'mapping_collector'        => 'DoctrineORMModule\Service\MappingCollectorFactory',
-        'formannotationbuilder'    => 'DoctrineORMModule\Service\FormAnnotationBuilderFactory',
-        'migrations_configuration' => 'DoctrineORMModule\Service\MigrationsConfigurationFactory',
-        'migrations_cmd'           => 'DoctrineORMModule\Service\MigrationsCommandFactory',
+        'connection'               => Service\DBALConnectionFactory::class,
+        'configuration'            => Service\ConfigurationFactory::class,
+        'entitymanager'            => Service\EntityManagerFactory::class,
+        'entity_resolver'          => Service\EntityResolverFactory::class,
+        'sql_logger_collector'     => Service\SQLLoggerCollectorFactory::class,
+        'mapping_collector'        => Service\MappingCollectorFactory::class,
+        'formannotationbuilder'    => Service\FormAnnotationBuilderFactory::class,
+        'migrations_configuration' => Service\MigrationsConfigurationFactory::class,
+        'migrations_cmd'           => Service\MigrationsCommandFactory::class,
     ],
 
     // Zend\Form\FormElementManager configuration
     'form_elements' => [
         'aliases' => [
-            'objectselect'        => 'DoctrineModule\Form\Element\ObjectSelect',
-            'objectradio'         => 'DoctrineModule\Form\Element\ObjectRadio',
-            'objectmulticheckbox' => 'DoctrineModule\Form\Element\ObjectMultiCheckbox',
+            'objectselect'        => Element\ObjectSelect::class,
+            'objectradio'         => Element\ObjectRadio::class,
+            'objectmulticheckbox' => Element\ObjectMultiCheckbox::class,
         ],
         'factories' => [
-            'DoctrineModule\Form\Element\ObjectSelect'        => 'DoctrineORMModule\Service\ObjectSelectFactory',
-            'DoctrineModule\Form\Element\ObjectRadio'         => 'DoctrineORMModule\Service\ObjectRadioFactory',
-            'DoctrineModule\Form\Element\ObjectMultiCheckbox' => 'DoctrineORMModule\Service\ObjectMultiCheckboxFactory',
+            Element\ObjectSelect::class        => Service\ObjectSelectFactory::class,
+            Element\ObjectRadio::class         => Service\ObjectRadioFactory::class,
+            Element\ObjectMultiCheckbox::class => Service\ObjectMultiCheckboxFactory::class,
         ],
     ],
 
     'hydrators' => [
         'factories' => [
-            'DoctrineModule\Stdlib\Hydrator\DoctrineObject'
-                => 'DoctrineORMModule\Service\DoctrineObjectHydratorFactory',
+            DoctrineObject::class => Service\DoctrineObjectHydratorFactory::class
         ],
     ],
 
@@ -262,7 +267,7 @@ return [
                 'options' => [
                     'route' => '/ocra_service_manager_yuml',
                     'defaults' => [
-                        'controller' => 'DoctrineORMModule\\Yuml\\YumlController',
+                        'controller' => Yuml\YumlController::class,
                         'action'     => 'index',
                     ],
                 ],

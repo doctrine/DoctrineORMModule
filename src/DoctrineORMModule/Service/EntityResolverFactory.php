@@ -23,7 +23,9 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Tools\ResolveTargetEntityListener;
 use DoctrineModule\Service\AbstractFactory;
+use DoctrineORMModule\Options\EntityResolver;
 use Interop\Container\ContainerInterface;
+use Zend\EventManager\EventManager;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class EntityResolverFactory extends AbstractFactory
@@ -33,7 +35,7 @@ class EntityResolverFactory extends AbstractFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /* @var $options \DoctrineORMModule\Options\EntityResolver */
+        /* @var $options EntityResolver */
         $options      = $this->getOptions($container, 'entity_resolver');
         $eventManager = $container->get($options->getEventManager());
         $resolvers    = $options->getResolvers();
@@ -59,7 +61,7 @@ class EntityResolverFactory extends AbstractFactory
      */
     public function createService(ServiceLocatorInterface $container)
     {
-        return $this($container, \Zend\EventManager\EventManager::class);
+        return $this($container, EventManager::class);
     }
 
     /**
@@ -69,6 +71,6 @@ class EntityResolverFactory extends AbstractFactory
      */
     public function getOptionsClass()
     {
-        return 'DoctrineORMModule\Options\EntityResolver';
+        return EntityResolver::class;
     }
 }

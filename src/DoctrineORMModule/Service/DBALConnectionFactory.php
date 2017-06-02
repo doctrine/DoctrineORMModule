@@ -19,9 +19,11 @@
 
 namespace DoctrineORMModule\Service;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Types\Type;
 use DoctrineModule\Service\AbstractFactory;
+use DoctrineORMModule\Options\DBALConnection;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -37,11 +39,11 @@ class DBALConnectionFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      *
-     * @return \Doctrine\DBAL\Connection
+     * @return Connection
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /** @var $options \DoctrineORMModule\Options\DBALConnection */
+        /** @var $options DBALConnection */
         $options = $this->getOptions($container, 'connection');
         $pdo     = $options->getPdo();
 
@@ -73,11 +75,11 @@ class DBALConnectionFactory extends AbstractFactory
 
     /**
      * {@inheritDoc}
-     * @return \Doctrine\DBAL\Connection
+     * @return Connection
      */
     public function createService(ServiceLocatorInterface $container)
     {
-        return $this($container, \Doctrine\DBAL\Connection::class);
+        return $this($container, Connection::class);
     }
 
     /**
@@ -87,6 +89,6 @@ class DBALConnectionFactory extends AbstractFactory
      */
     public function getOptionsClass()
     {
-        return 'DoctrineORMModule\Options\DBALConnection';
+        return DBALConnection::class;
     }
 }

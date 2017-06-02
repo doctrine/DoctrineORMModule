@@ -62,8 +62,8 @@ class SQLLoggerCollectorFactoryTest extends TestCase
             ]
         );
         $service = $this->factory->createService($this->services);
-        $this->assertInstanceOf('DoctrineORMModule\Collector\SQLLoggerCollector', $service);
-        $this->assertInstanceOf('Doctrine\DBAL\Logging\SQLLogger', $configuration->getSQLLogger());
+        $this->assertInstanceOf(\DoctrineORMModule\Collector\SQLLoggerCollector::class, $service);
+        $this->assertInstanceOf(\Doctrine\DBAL\Logging\SQLLogger::class, $configuration->getSQLLogger());
     }
 
     public function testCreateSQLLoggerWithCustomConfiguration()
@@ -83,19 +83,17 @@ class SQLLoggerCollectorFactoryTest extends TestCase
             ]
         );
         $this->factory->createService($this->services);
-        $this->assertInstanceOf('Doctrine\DBAL\Logging\SQLLogger', $configuration->getSQLLogger());
+        $this->assertInstanceOf(\Doctrine\DBAL\Logging\SQLLogger::class, $configuration->getSQLLogger());
     }
 
     public function testCreateSQLLoggerWithPreviousExistingLoggerChainsLoggers()
     {
-        $originalLogger = $this->getMockBuilder('Doctrine\DBAL\Logging\SQLLogger')
-            ->getMock();
+        $originalLogger = $this->createMock(\Doctrine\DBAL\Logging\SQLLogger::class);
         $originalLogger
             ->expects($this->once())
             ->method('startQuery')
             ->with($this->equalTo('test query'));
-        $injectedLogger = $this->getMockBuilder('Doctrine\DBAL\Logging\DebugStack')
-            ->getMock();
+        $injectedLogger = $this->createMock(\Doctrine\DBAL\Logging\DebugStack::class);
         $injectedLogger
             ->expects($this->once())
             ->method('startQuery')

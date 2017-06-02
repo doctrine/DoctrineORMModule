@@ -22,10 +22,11 @@ namespace DoctrineORMModule\Form\Annotation;
 use ArrayObject;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use DoctrineModule\Form\Element;
+use DoctrineORMModule\Form\Element\EntitySelect;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
+use Zend\Form\Element as ZendFormElement;
 
 /**
  * @author Kyle Spraggs <theman@spiffyjr.me>
@@ -283,27 +284,27 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
             case 'bigint':
             case 'integer':
             case 'smallint':
-                $type = 'Zend\Form\Element\Number';
+                $type = ZendFormElement\Number::class;
                 break;
             case 'bool':
             case 'boolean':
-                $type = 'Zend\Form\Element\Checkbox';
+                $type = ZendFormElement\Checkbox::class;
                 break;
             case 'date':
-                $type = 'Zend\Form\Element\Date';
+                $type = ZendFormElement\Date::class;
                 break;
             case 'datetimetz':
             case 'datetime':
-                $type = 'Zend\Form\Element\DateTime';
+                $type = ZendFormElement\DateTime::class;
                 break;
             case 'time':
-                $type = 'Zend\Form\Element\Time';
+                $type = ZendFormElement\Time::class;
                 break;
             case 'text':
-                $type = 'Zend\Form\Element\Textarea';
+                $type = ZendFormElement\Textarea::class;
                 break;
             default:
-                $type = 'Zend\Form\Element';
+                $type = ZendFormElement::class;
                 break;
         }
 
@@ -408,7 +409,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
 
         $elementSpec['spec']['options'] = $options;
         if (! isset($elementSpec['spec']['type'])) {
-            $elementSpec['spec']['type'] = 'DoctrineORMModule\Form\Element\EntitySelect';
+            $elementSpec['spec']['type'] = EntitySelect::class;
         }
     }
 

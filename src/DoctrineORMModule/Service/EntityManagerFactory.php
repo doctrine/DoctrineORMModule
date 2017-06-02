@@ -21,6 +21,7 @@ namespace DoctrineORMModule\Service;
 
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Service\AbstractFactory;
+use DoctrineORMModule\Options\EntityManager as DoctrineORMModuleEntityManager;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -33,7 +34,7 @@ class EntityManagerFactory extends AbstractFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /* @var $options \DoctrineORMModule\Options\EntityManager */
+        /* @var $options DoctrineORMModuleEntityManager */
         $options    = $this->getOptions($container, 'entitymanager');
         $connection = $container->get($options->getConnection());
         $config     = $container->get($options->getConfiguration());
@@ -60,6 +61,6 @@ class EntityManagerFactory extends AbstractFactory
      */
     public function getOptionsClass()
     {
-        return 'DoctrineORMModule\Options\EntityManager';
+        return DoctrineORMModuleEntityManager::class;
     }
 }

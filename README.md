@@ -36,7 +36,7 @@ return [
         'driver' => [
             // defines an annotation driver with two paths, and names it `my_annotation_driver`
             'my_annotation_driver' => [
-                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'class' => \Doctrine\ORM\Mapping\Driver\AnnotationDriver::class,
                 'cache' => 'array',
                 'paths' => [
                     'path/to/my/entities',
@@ -68,7 +68,7 @@ return [
         'connection' => [
             // default connection name
             'orm_default' => [
-                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'driverClass' => \Doctrine\DBAL\Driver\PDOMySql\Driver::class,
                 'params' => [
                     'host'     => 'localhost',
                     'port'     => '3306',
@@ -117,5 +117,5 @@ To access the entity manager, use the main service locator:
 ```php
 // for example, in a controller:
 $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-$em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+$em = $this->getServiceLocator()->get(\Doctrine\ORM\EntityManager::class);
 ```

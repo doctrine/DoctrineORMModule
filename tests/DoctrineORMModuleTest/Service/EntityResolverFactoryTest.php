@@ -27,10 +27,10 @@ class EntityResolverFactoryTest extends TestCase
     public function testCanResolveTargetEntity()
     {
         $em            = $this->getEntityManager();
-        $classMetadata = $em->getClassMetadata('DoctrineORMModuleTest\Assets\Entity\ResolveTarget');
+        $classMetadata = $em->getClassMetadata(\DoctrineORMModuleTest\Assets\Entity\ResolveTarget::class);
         $meta          = $classMetadata->associationMappings;
 
-        $this->assertSame('DoctrineORMModuleTest\Assets\Entity\TargetEntity', $meta['target']['targetEntity']);
+        $this->assertSame(\DoctrineORMModuleTest\Assets\Entity\TargetEntity::class, $meta['target']['targetEntity']);
     }
 
     public function testAssertSubscriberIsAdded()

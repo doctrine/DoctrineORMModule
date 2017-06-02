@@ -35,10 +35,10 @@ class FormAnnotationBuilderFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testFormElementManagerGetsInjected()
     {
-        $entityManager      = $this->getMockBuilder('Doctrine\ORM\EntityManager')
+        $entityManager      = $this->getMockBuilder(\Doctrine\ORM\EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $formElementManager = $this->getMockBuilder('Zend\Form\FormElementManager')
+        $formElementManager = $this->getMockBuilder(\Zend\Form\FormElementManager::class)
             ->disableOriginalConstructor()
             ->getMock();
 
