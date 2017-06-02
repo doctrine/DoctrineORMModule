@@ -143,7 +143,7 @@ class Module implements
                 'object-manager',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'The name of the object-manager to use.',
+                'The name of the object manager to use.',
                 'doctrine.entitymanager.orm_default'
             ));
 
@@ -151,11 +151,11 @@ class Module implements
         }
 
         $arguments = new ArgvInput();
-        $objectManagerName = $arguments->getParameterOption('--object-manager');
-        $objectManagerName = !empty($objectManagerName) ? $objectManagerName : 'doctrine.entitymanager.orm_default';
+        $objectManagerName = ($arguments->getParameterOption('--object-manager')) ?:
+            'doctrine.entitymanager.orm_default';
 
-        /* @var $entityManager \Doctrine\ORM\EntityManagerInterface */
-        $entityManager = $serviceLocator->get($objectManagerName);
+        /* @var $objectManager \Doctrine\ORM\EntityManagerInterface */
+        $objectManager = $serviceLocator->get($objectManagerName);
         $helperSet     = $cli->getHelperSet();
 
         if (class_exists('Symfony\Component\Console\Helper\QuestionHelper')) {
@@ -164,7 +164,7 @@ class Module implements
             $helperSet->set(new DialogHelper(), 'dialog');
         }
 
-        $helperSet->set(new ConnectionHelper($entityManager->getConnection()), 'db');
-        $helperSet->set(new EntityManagerHelper($entityManager), 'em');
+        $helperSet->set(new ConnectionHelper($objectManager->getConnection()), 'db');
+        $helperSet->set(new EntityManagerHelper($objectManager), 'em');
     }
 }

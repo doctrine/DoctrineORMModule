@@ -46,7 +46,7 @@ class CliTest extends PHPUnit_Framework_TestCase
     /**
      * @var \Doctrine\ORM\EntityManager
      */
-    protected $entityManager;
+    protected $objectManager;
 
     /**
      * {@inheritDoc}
@@ -70,7 +70,7 @@ class CliTest extends PHPUnit_Framework_TestCase
 
         $application->bootstrap();
         $this->serviceManager = $serviceManager;
-        $this->entityManager  = $serviceManager->get('doctrine.entitymanager.orm_default');
+        $this->objectManager  = $serviceManager->get('doctrine.entitymanager.orm_default');
         $this->cli            = $serviceManager->get('doctrine.cli');
         $this->assertSame(1, $invocations);
     }
@@ -82,12 +82,12 @@ class CliTest extends PHPUnit_Framework_TestCase
         /* @var $emHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
         $emHelper = $helperSet->get('em');
         $this->assertInstanceOf('Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper', $emHelper);
-        $this->assertSame($this->entityManager, $emHelper->getEntityManager());
+        $this->assertSame($this->objectManager, $emHelper->getEntityManager());
 
         /* @var $dbHelper \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper */
         $dbHelper = $helperSet->get('db');
         $this->assertInstanceOf('Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper', $dbHelper);
-        $this->assertSame($this->entityManager->getConnection(), $dbHelper->getConnection());
+        $this->assertSame($this->objectManager->getConnection(), $dbHelper->getConnection());
     }
 
     public function testOrmDefaultIsUsedAsTheEntityManagerIfNoneIsProvided()
@@ -101,7 +101,7 @@ class CliTest extends PHPUnit_Framework_TestCase
         /* @var $entityManagerHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
         $entityManagerHelper = $application->getHelperSet()->get('entityManager');
         $this->assertInstanceOf('Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper', $entityManagerHelper);
-        $this->assertSame($this->entityManager, $entityManagerHelper->getEntityManager());
+        $this->assertSame($this->objectManager, $entityManagerHelper->getEntityManager());
     }
 
     /**
@@ -160,7 +160,7 @@ class CliTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($entityManagerOption->isArray());
         $this->assertNull($entityManagerOption->getShortcut());
         $this->assertSame('doctrine.entitymanager.orm_default', $entityManagerOption->getDefault());
-        $this->assertSame('The name of the object-manager to use.', $entityManagerOption->getDescription());
+        $this->assertSame('The name of the object manager to use.', $entityManagerOption->getDescription());
     }
 
     /**
