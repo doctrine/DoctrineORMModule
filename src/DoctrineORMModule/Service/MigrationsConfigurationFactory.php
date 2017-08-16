@@ -23,6 +23,8 @@ use Doctrine\DBAL\Migrations\Configuration\Configuration;
 use DoctrineModule\Service\AbstractFactory;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Doctrine\DBAL\Migrations\OutputWriter;
 
 /**
  * DBAL Connection ServiceManager factory
@@ -45,7 +47,13 @@ class MigrationsConfigurationFactory extends AbstractFactory
         $connection       = $container->get('doctrine.connection.' . $name);
         $appConfig        = $container->get('config');
         $migrationsConfig = $appConfig['doctrine']['migrations_configuration'][$name];
-        $configuration    = new Configuration($connection);
+
+        $output = new ConsoleOutput;
+        $writer = new OutputWriter(function ($message) use ($output) {
+            return $output->writeln($message);
+        });
+
+        $configuration = new Configuration($connection, $writer);
 
         $configuration->setName($migrationsConfig['name']);
         $configuration->setMigrationsDirectory($migrationsConfig['directory']);
