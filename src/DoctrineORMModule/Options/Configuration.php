@@ -201,7 +201,7 @@ class Configuration extends DBALConfiguration
      * @var SecondLevelCacheConfiguration|null
      */
     protected $secondLevelCache;
-    
+
     /**
      * Configuration for schema filter
      *
