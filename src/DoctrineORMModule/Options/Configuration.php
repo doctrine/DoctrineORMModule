@@ -35,7 +35,7 @@ class Configuration extends DBALConfiguration
      * @var string
      */
     protected $queryCache = 'array';
-    
+
     /**
      * Set the cache key for the result cache. Cache key
      * is assembled as "doctrine.cache.{key}" and pulled from
