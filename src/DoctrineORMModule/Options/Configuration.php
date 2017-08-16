@@ -35,7 +35,7 @@ class Configuration extends DBALConfiguration
      * @var string
      */
     protected $queryCache = 'array';
-
+    
     /**
      * Set the cache key for the result cache. Cache key
      * is assembled as "doctrine.cache.{key}" and pulled from
@@ -201,6 +201,13 @@ class Configuration extends DBALConfiguration
      * @var SecondLevelCacheConfiguration|null
      */
     protected $secondLevelCache;
+    
+    /**
+     * Configuration for schema filter
+     *
+     * @var string|null
+     */
+    protected $schemaFilter;
 
     /**
      * @param  array $datetimeFunctions
@@ -674,6 +681,23 @@ class Configuration extends DBALConfiguration
     public function getSecondLevelCache()
     {
         return $this->secondLevelCache ?: new SecondLevelCacheConfiguration();
+    }
+    
+    /**
+     * @param  string $schemaFilter
+     * @return void
+     */
+    public function setSchemaFilter($schemaFilter)
+    {
+        $this->schemaFilter = $schemaFilter;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSchemaFilter()
+    {
+        return $this->schemaFilter;
     }
 
     /**
