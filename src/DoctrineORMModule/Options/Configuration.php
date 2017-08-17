@@ -203,6 +203,13 @@ class Configuration extends DBALConfiguration
     protected $secondLevelCache;
 
     /**
+     * Configuration option for the filter schema expression
+     *
+     * @var string|null
+     */
+    protected $filterSchemaAssetsExpression;
+
+    /**
      * @param  array $datetimeFunctions
      * @return self
      */
@@ -674,6 +681,23 @@ class Configuration extends DBALConfiguration
     public function getSecondLevelCache()
     {
         return $this->secondLevelCache ?: new SecondLevelCacheConfiguration();
+    }
+    
+    /**
+     * @param  string $filterSchemaAssetsExpression
+     * @return void
+     */
+    public function setFilterSchemaAssetsExpression($filterSchemaAssetsExpression)
+    {
+        $this->filterSchemaAssetsExpression = $filterSchemaAssetsExpression;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFilterSchemaAssetsExpression()
+    {
+        return $this->filterSchemaAssetsExpression;
     }
 
     /**
