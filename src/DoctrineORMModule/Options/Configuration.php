@@ -203,7 +203,7 @@ class Configuration extends DBALConfiguration
     protected $secondLevelCache;
 
     /**
-     * Configuration option for the filter schema expression
+     * Configuration option for the filter schema assets expression
      *
      * @var string|null
      */
@@ -624,6 +624,8 @@ class Configuration extends DBALConfiguration
     public function setClassMetadataFactoryName($factoryName)
     {
         $this->classMetadataFactoryName = (string) $factoryName;
+
+        return $this;
     }
 
     /**
@@ -673,6 +675,8 @@ class Configuration extends DBALConfiguration
     public function setSecondLevelCache(array $secondLevelCache)
     {
         $this->secondLevelCache = new SecondLevelCacheConfiguration($secondLevelCache);
+
+        return $this;
     }
 
     /**
@@ -682,7 +686,7 @@ class Configuration extends DBALConfiguration
     {
         return $this->secondLevelCache ?: new SecondLevelCacheConfiguration();
     }
-    
+
     /**
      * @param  string $filterSchemaAssetsExpression
      * @return void
@@ -690,6 +694,8 @@ class Configuration extends DBALConfiguration
     public function setFilterSchemaAssetsExpression($filterSchemaAssetsExpression)
     {
         $this->filterSchemaAssetsExpression = $filterSchemaAssetsExpression;
+
+        return $this;
     }
 
     /**
@@ -709,6 +715,8 @@ class Configuration extends DBALConfiguration
     public function setDefaultRepositoryClassName($className)
     {
         $this->defaultRepositoryClassName = (string) $className;
+
+        return $this;
     }
 
     /**
