@@ -48,7 +48,7 @@ class MigrationsConfigurationFactory extends AbstractFactory
         $appConfig        = $container->get('config');
         $migrationsConfig = $appConfig['doctrine']['migrations_configuration'][$name];
 
-        $output = new ConsoleOutput;
+        $output = new ConsoleOutput();
         $writer = new OutputWriter(function ($message) use ($output) {
             return $output->writeln($message);
         });
