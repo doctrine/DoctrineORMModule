@@ -153,8 +153,8 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             $config->setSecondLevelCacheConfiguration($cacheConfiguration);
         }
         
-        if($schemaFilter = $options->getSchemaFilter()) {
-            $config->setFilterSchemaAssetsExpression($schemaFilter);
+        if($filterSchemaAssetsExpression = $options->getFilterSchemaAssetsExpression()) {
+            $config->setFilterSchemaAssetsExpression($filterSchemaAssetsExpression);
         }
 
         if ($className = $options->getDefaultRepositoryClassName()) {
