@@ -45,6 +45,16 @@ matrix:
     - php: 7.1
       env:
         - DEPS=latest
+    - php: 7.2
+      env:
+        - DEPS=lowest
+    - php: 7.2
+      env:
+        - DEPS=locked
+        - CS_CHECK=true
+    - php: 7.2
+      env:
+        - DEPS=latest
     - php: nightly
       env:
         - DEPS=lowest
@@ -64,6 +74,7 @@ matrix:
       env:
         - DEPS=latest
   allow_failures:
+    - php: 7.2
     - php: nightly
     - php: hhvm
 
