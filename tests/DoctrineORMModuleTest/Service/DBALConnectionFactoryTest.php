@@ -19,6 +19,7 @@
 
 namespace DoctrineORMModuleTest\Service;
 
+use Doctrine\DBAL\Platforms\AbstractPlatform;
 use PHPUnit\Framework\TestCase;
 use DoctrineORMModuleTest\Assets\Types\MoneyType;
 use DoctrineORMModule\Service\DBALConnectionFactory;
@@ -153,5 +154,37 @@ class DBALConnectionFactoryTest extends TestCase
 
         $this->assertInstanceOf(\DoctrineORMModuleTest\Assets\Types\MoneyType::class, $type);
         $this->assertTrue($platform->isCommentedDoctrineType($type));
+    }
+
+    public function testGettingPlatformFromContainer()
+    {
+        $config = [
+            'doctrine' => [
+                'connection' => [
+                    'orm_default' => [
+                        'driverClass'   => \Doctrine\DBAL\Driver\PDOSqlite\Driver::class,
+                        'params' => [
+                            'platform' => 'platform_service',
+                        ],
+                    ]
+                ],
+            ],
+        ];
+        $configurationMock = $this->getMockBuilder(\Doctrine\ORM\Configuration::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $platformMock = $this->getMockBuilder(AbstractPlatform::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->serviceManager->setService('doctrine.configuration.orm_default', $configurationMock);
+        $this->serviceManager->setService('config', $config);
+        $this->serviceManager->setService('Configuration', $config);
+        $this->serviceManager->setService('platform_service', $platformMock);
+
+        $dbal = $this->factory->createService($this->serviceManager);
+        $platform = $dbal->getDatabasePlatform();
+        $this->assertSame($platformMock, $platform);
     }
 }

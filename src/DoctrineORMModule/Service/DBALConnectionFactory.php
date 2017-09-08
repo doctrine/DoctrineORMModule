@@ -58,6 +58,14 @@ class DBALConnectionFactory extends AbstractFactory
         ];
         $params = array_merge($params, $options->getParams());
 
+        if (
+            array_key_exists('platform', $params)
+            && is_string($params['platform'])
+            && $container->has($params['platform'])
+        ) {
+            $params['platform'] = $container->get($params['platform']);
+        }
+
         $configuration = $container->get($options->getConfiguration());
         $eventManager  = $container->get($options->getEventManager());
 
