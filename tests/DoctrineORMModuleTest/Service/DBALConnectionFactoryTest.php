@@ -19,8 +19,12 @@
 
 namespace DoctrineORMModuleTest\Service;
 
-use PHPUnit\Framework\TestCase;
+use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
+use Doctrine\DBAL\Driver\PDOSqlite\Driver as PDOSqliteDriver;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\ORM\Configuration;
 use DoctrineORMModuleTest\Assets\Types\MoneyType;
+use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Service\DBALConnectionFactory;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\Common\Cache\ArrayCache;
@@ -59,7 +63,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => \Doctrine\DBAL\Driver\PDOSqlite\Driver::class,
+                        'driverClass'   => PDOSqliteDriver::class,
                         'params' => [
                             'memory' => true,
                         ],
@@ -67,7 +71,7 @@ class DBALConnectionFactoryTest extends TestCase
                 ],
             ],
         ];
-        $configurationMock = $this->getMockBuilder(\Doctrine\ORM\Configuration::class)
+        $configurationMock = $this->getMockBuilder(Configuration::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -85,7 +89,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => \Doctrine\DBAL\Driver\PDOSqlite\Driver::class,
+                        'driverClass'   => PDOSqliteDriver::class,
                         'params' => [
                             'memory' => true,
                         ],
@@ -96,7 +100,7 @@ class DBALConnectionFactoryTest extends TestCase
                 ],
             ],
         ];
-        $configurationMock = $this->getMockBuilder(\Doctrine\ORM\Configuration::class)
+        $configurationMock = $this->getMockBuilder(Configuration::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -115,7 +119,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => \Doctrine\DBAL\Driver\PDOSqlite\Driver::class,
+                        'driverClass'   => PDOSqliteDriver::class,
                         'params' => [
                             'memory' => true,
                         ],
@@ -130,7 +134,7 @@ class DBALConnectionFactoryTest extends TestCase
                 'configuration' => [
                     'orm_default' => [
                         'types' => [
-                            'money' => \DoctrineORMModuleTest\Assets\Types\MoneyType::class,
+                            'money' => MoneyType::class,
                         ],
                     ],
                 ],
@@ -140,7 +144,7 @@ class DBALConnectionFactoryTest extends TestCase
         $this->serviceManager->setService('Configuration', $config);
         $this->serviceManager->setService(
             'doctrine.driver.orm_default',
-            $this->createMock(\Doctrine\Common\Persistence\Mapping\Driver\MappingDriver::class)
+            $this->createMock(MappingDriver::class)
         );
         $configurationFactory = new ConfigurationFactory('orm_default');
         $this->serviceManager->setService(
@@ -151,7 +155,39 @@ class DBALConnectionFactoryTest extends TestCase
         $platform = $dbal->getDatabasePlatform();
         $type = Type::getType($platform->getDoctrineTypeMapping("money"));
 
-        $this->assertInstanceOf(\DoctrineORMModuleTest\Assets\Types\MoneyType::class, $type);
+        $this->assertInstanceOf(MoneyType::class, $type);
         $this->assertTrue($platform->isCommentedDoctrineType($type));
+    }
+
+    public function testGettingPlatformFromContainer()
+    {
+        $config = [
+            'doctrine' => [
+                'connection' => [
+                    'orm_default' => [
+                        'driverClass'   => PDOSqliteDriver::class,
+                        'params' => [
+                            'platform' => 'platform_service',
+                        ],
+                    ]
+                ],
+            ],
+        ];
+        $configurationMock = $this->getMockBuilder(Configuration::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $platformMock = $this->getMockBuilder(AbstractPlatform::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->serviceManager->setService('doctrine.configuration.orm_default', $configurationMock);
+        $this->serviceManager->setService('config', $config);
+        $this->serviceManager->setService('Configuration', $config);
+        $this->serviceManager->setService('platform_service', $platformMock);
+
+        $dbal = $this->factory->createService($this->serviceManager);
+        $platform = $dbal->getDatabasePlatform();
+        $this->assertSame($platformMock, $platform);
     }
 }
