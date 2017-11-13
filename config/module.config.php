@@ -22,8 +22,10 @@ use Doctrine\DBAL\Tools\Console;
 use Doctrine\ORM\Tools\Console\Command;
 use DoctrineModule\Form\Element;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use DoctrineORMModule\Listener\PostCliLoadListener;
 use DoctrineORMModule\Service;
 use DoctrineORMModule\Yuml;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'doctrine' => [
@@ -195,6 +197,7 @@ return [
 
     'service_manager' => [
         'factories' => [
+            PostCliLoadListener::class => InvokableFactory::class,
             'Doctrine\ORM\EntityManager' => Service\EntityManagerAliasCompatFactory::class,
         ],
         'invokables' => [

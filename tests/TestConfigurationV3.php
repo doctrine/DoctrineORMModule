@@ -16,6 +16,10 @@
  * and is licensed under the MIT license. For more information, see
  * <http://www.doctrine-project.org>.
  */
+
+use DoctrineORMModule\Listener\PostCliLoadListener;
+use Zend\ServiceManager\Factory\InvokableFactory;
+
 return [
     'modules' => [
         'Zend\Cache',
@@ -33,5 +37,10 @@ return [
             __DIR__ . '/testing.config.php',
         ],
         'module_paths' => [],
+    ],
+    'service_manager' => [
+        'factories' => [
+            PostCliLoadListener::class => InvokableFactory::class,
+        ],
     ],
 ];
