@@ -10,8 +10,13 @@ manager you may specify one directory where migrations are stored.  By conventio
 based on the time they are created and thus self-organize when sorted by name.  This convention avoids
 migrations with duplicate names too.
 
-> Note that in prior versions of doctrine/doctrine-orm-module only one migrations configuration
-> was supported.  This module will have a new major revision when this is released.
+Even though you may configure multiple migrations and you can have multiple object managers per database
+it is not recommended to have more than one migrations directory per database.  However this unusual arrangement
+is possible.
+
+> In prior versions of doctrine/doctrine-orm-module only one migrations configuration
+> was supported.  Because of this change this module will have a new major revision when this is released.
+
 
 
 Configuration
