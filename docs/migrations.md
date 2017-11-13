@@ -1,6 +1,10 @@
 Migrations
 ==========
 
+Migrations are sets of database commands which move your database schema forward and backward along with your
+code base.  Each migration has an `up()` and `down()` function and can accept raw SQL or `$schema` functions
+to dynamically build the database.
+
 You may configure multiple migrations; one for each object manager in your application.  It only makes
 sense to specify one directory of migrations for each object manager.
 
