@@ -17,8 +17,10 @@
  * <http://www.doctrine-project.org>.
  */
 
+use DoctrineORMModule\CliConfigurator;
 use DoctrineORMModule\Listener\PostCliLoadListener;
-use Zend\ServiceManager\Factory\InvokableFactory;
+use DoctrineORMModule\Service\CliConfiguratorFactory;
+use DoctrineORMModule\Service\PostCliLoadListenerFactory;
 
 return [
     'modules' => [
@@ -33,7 +35,8 @@ return [
     ],
     'service_manager' => [
         'factories' => [
-            PostCliLoadListener::class => InvokableFactory::class,
+            PostCliLoadListener::class => PostCliLoadListenerFactory::class,
+            CliConfigurator::class => CliConfiguratorFactory::class,
         ],
     ],
 ];
