@@ -5,8 +5,10 @@ Migrations are sets of database commands which move your database schema forward
 code base.  Each migration has an `up()` and `down()` function and can accept raw SQL or `$schema` functions
 to dynamically build the database.
 
-You may configure multiple migrations; one for each object manager in your application.  It only makes
-sense to specify one directory of migrations for each object manager.
+You may configure multiple migrations; one for each object manager in your application.  For each object
+manager you may specify one directory where migrations are stored.  By convention migrations are named
+based on the time they are created and thus self-organize when sorted by name.  This convention avoids
+migrations with duplicate names too.
 
 > Note that in prior versions of doctrine/doctrine-orm-module only one migrations configuration
 > was supported.  This module will have a new major revision when this is released.
