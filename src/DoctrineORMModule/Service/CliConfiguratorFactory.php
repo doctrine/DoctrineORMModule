@@ -17,33 +17,28 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace DoctrineORMModuleTest\Listener;
+namespace DoctrineORMModule\Service;
 
 use DoctrineORMModule\CliConfigurator;
-use DoctrineORMModule\Listener\PostCliLoadListener;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Application;
-use Zend\EventManager\Event;
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-/**
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Nicolas Eeckeloo <neeckeloo@gmail.com>
- */
-class PostCliLoadListenerTest extends TestCase
+class CliConfiguratorFactory implements FactoryInterface
 {
-    public function testListenerConfigureConsoleApplication()
+    /**
+     * {@inheritDoc}
+     */
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $application = new Application();
-        $event = new Event('loadCli.post', $application);
+        return new CliConfigurator($container);
+    }
 
-        $cliConfigurator = $this->getMockBuilder(CliConfigurator::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $cliConfigurator->expects($this->once())->method('configure')->with($application);
-
-        $listener = new PostCliLoadListener($cliConfigurator);
-        $listener($event);
+    /**
+     * {@inheritDoc}
+     */
+    public function createService(ServiceLocatorInterface $container)
+    {
+        return $this($container, CliConfigurator::class);
     }
 }

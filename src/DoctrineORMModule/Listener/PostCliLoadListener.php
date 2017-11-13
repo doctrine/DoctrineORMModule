@@ -19,17 +19,11 @@
 
 namespace DoctrineORMModule\Listener;
 
-use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
+use DoctrineORMModule\CliConfigurator;
 use Symfony\Component\Console\Helper\DialogHelper;
-use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Input\InputOption;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
-use Zend\Stdlib\ArrayUtils;
 
 /**
  * @license MIT
@@ -38,37 +32,15 @@ use Zend\Stdlib\ArrayUtils;
  */
 class PostCliLoadListener extends AbstractListenerAggregate
 {
-    private $defaultObjectManagerName = 'doctrine.entitymanager.orm_default';
+    /**
+     * @var CliConfigurator
+     */
+    private $cliConfigurator;
 
-    private $commands = [
-        'doctrine.dbal_cmd.runsql',
-        'doctrine.dbal_cmd.import',
-        'doctrine.orm_cmd.clear_cache_metadata',
-        'doctrine.orm_cmd.clear_cache_result',
-        'doctrine.orm_cmd.clear_cache_query',
-        'doctrine.orm_cmd.schema_tool_create',
-        'doctrine.orm_cmd.schema_tool_update',
-        'doctrine.orm_cmd.schema_tool_drop',
-        'doctrine.orm_cmd.ensure_production_settings',
-        'doctrine.orm_cmd.convert_d1_schema',
-        'doctrine.orm_cmd.generate_repositories',
-        'doctrine.orm_cmd.generate_entities',
-        'doctrine.orm_cmd.generate_proxies',
-        'doctrine.orm_cmd.convert_mapping',
-        'doctrine.orm_cmd.run_dql',
-        'doctrine.orm_cmd.validate_schema',
-        'doctrine.orm_cmd.info',
-    ];
-
-    private $migrationCommands = [
-        'doctrine.migrations_cmd.execute',
-        'doctrine.migrations_cmd.generate',
-        'doctrine.migrations_cmd.migrate',
-        'doctrine.migrations_cmd.status',
-        'doctrine.migrations_cmd.version',
-        'doctrine.migrations_cmd.diff',
-        'doctrine.migrations_cmd.latest',
-    ];
+    public function __construct(CliConfigurator $cliConfigurator)
+    {
+        $this->cliConfigurator = $cliConfigurator;
+    }
 
     public function attach(EventManagerInterface $events, $priority = 1)
     {
@@ -78,86 +50,8 @@ class PostCliLoadListener extends AbstractListenerAggregate
     public function __invoke(EventInterface $event)
     {
         /* @var $cli \Symfony\Component\Console\Application */
-        $cli            = $event->getTarget();
-        /* @var $serviceLocator \Zend\ServiceManager\ServiceLocatorInterface */
-        $serviceLocator = $event->getParam('ServiceManager');
+        $cli = $event->getTarget();
 
-        $commands = $this->getAvailableCommands();
-        foreach ($commands as $commandName) {
-            /* @var $command \Symfony\Component\Console\Command\Command */
-            $command = $serviceLocator->get($commandName);
-            $command->getDefinition()->addOption($this->createObjectManagerInputOption());
-
-            $cli->add($command);
-        }
-
-        /* @var $objectManager \Doctrine\ORM\EntityManagerInterface */
-        $objectManager = $serviceLocator->get($this->getObjectManagerName());
-        $helperSet     = $cli->getHelperSet();
-
-        $helpers = $this->getHelpers($objectManager);
-        foreach ($helpers as $name => $instance) {
-            $helperSet->set($instance, $name);
-        }
-    }
-
-    /**
-     * @param EntityManagerInterface $objectManager
-     * @return array
-     */
-    private function getHelpers(EntityManagerInterface $objectManager)
-    {
-        $helpers = [];
-
-        if (class_exists('Symfony\Component\Console\Helper\QuestionHelper')) {
-            $helpers['dialog'] = new QuestionHelper();
-        } else {
-            $helpers['dialog'] = new DialogHelper();
-        }
-
-        $helpers['db'] = new ConnectionHelper($objectManager->getConnection());
-        $helpers['em'] = new EntityManagerHelper($objectManager);
-
-        return $helpers;
-    }
-
-    /**
-     * @return InputOption
-     */
-    private function createObjectManagerInputOption()
-    {
-        return new InputOption(
-            'object-manager',
-            null,
-            InputOption::VALUE_OPTIONAL,
-            'The name of the object manager to use.',
-            $this->defaultObjectManagerName
-        );
-    }
-
-    /**
-     * @return string
-     */
-    private function getObjectManagerName()
-    {
-        $arguments = new ArgvInput();
-
-        if (!$arguments->hasParameterOption('--object-manager')) {
-            return $this->defaultObjectManagerName;
-        }
-
-        return $arguments->getParameterOption('--object-manager');
-    }
-
-    /**
-     * @return array
-     */
-    private function getAvailableCommands()
-    {
-        if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
-            return ArrayUtils::merge($this->commands, $this->migrationCommands);
-        }
-
-        return $this->commands;
+        $this->cliConfigurator->configure($cli);
     }
 }
