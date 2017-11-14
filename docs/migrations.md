@@ -35,7 +35,7 @@ return [
             ],
             'doctrine.entitymanager.orm_other_object_manager' => [
                 'directory' => __DIR__ . '/other/migrations/path',
-                'name' => 'zf-doctrine-audit',
+                'name' => 'Other',
                 'namespace' => 'Other\ObjectManager\Migrations\Namespace',
                 'table' => 'Migrations',
                 'column' => 'version',
