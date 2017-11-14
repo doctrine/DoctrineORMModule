@@ -17,26 +17,33 @@
  * <http://www.doctrine-project.org>.
  */
 
+namespace DoctrineORMModuleTest\Listener;
+
 use DoctrineORMModule\CliConfigurator;
 use DoctrineORMModule\Listener\PostCliLoadListener;
-use DoctrineORMModule\Service\CliConfiguratorFactory;
-use DoctrineORMModule\Service\PostCliLoadListenerFactory;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Console\Application;
+use Zend\EventManager\Event;
 
-return [
-    'modules' => [
-        'DoctrineModule',
-        'DoctrineORMModule',
-    ],
-    'module_listener_options' => [
-        'config_glob_paths' => [
-            __DIR__ . '/testing.config.php',
-        ],
-        'module_paths' => [],
-    ],
-    'service_manager' => [
-        'factories' => [
-            PostCliLoadListener::class => PostCliLoadListenerFactory::class,
-            CliConfigurator::class => CliConfiguratorFactory::class,
-        ],
-    ],
-];
+/**
+ * @license MIT
+ * @link    http://www.doctrine-project.org/
+ * @author  Nicolas Eeckeloo <neeckeloo@gmail.com>
+ */
+class PostCliLoadListenerTest extends TestCase
+{
+    public function testListenerConfigureConsoleApplication()
+    {
+        $application = new Application();
+        $event = new Event('loadCli.post', $application);
+
+        $cliConfigurator = $this->getMockBuilder(CliConfigurator::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $cliConfigurator->expects($this->once())->method('configure')->with($application);
+
+        $listener = new PostCliLoadListener($cliConfigurator);
+        $listener($event);
+    }
+}

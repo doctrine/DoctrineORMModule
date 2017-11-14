@@ -90,54 +90,6 @@ class CliTest extends TestCase
         $this->assertSame($this->objectManager->getConnection(), $dbHelper->getConnection());
     }
 
-    public function testOrmDefaultIsUsedAsTheEntityManagerIfNoneIsProvided()
-    {
-        $application = new Application();
-        $event = new Event('loadCli.post', $application, ['ServiceManager' => $this->serviceManager]);
-
-        $module = new Module();
-        $module->initializeConsole($event);
-
-        /* @var $entityManagerHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
-        $entityManagerHelper = $application->getHelperSet()->get('entityManager');
-        $this->assertInstanceOf(\Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper::class, $entityManagerHelper);
-        $this->assertSame($this->objectManager, $entityManagerHelper->getEntityManager());
-    }
-
-    /**
-     * @backupGlobals enabled
-     */
-    public function testEntityManagerUsedCanBeSpecifiedInCommandLineArgument()
-    {
-        $connection = $this->getMockBuilder(\Doctrine\DBAL\Connection::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $entityManager = $this->getMockbuilder(\Doctrine\ORM\EntityManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $entityManager
-            ->expects($this->atLeastOnce())
-            ->method('getConnection')
-            ->willReturn($connection);
-
-        $this->serviceManager->setService('doctrine.entitymanager.some_other_name', $entityManager);
-
-        $application = new Application();
-        $event = new Event('loadCli.post', $application, ['ServiceManager' => $this->serviceManager]);
-
-        $_SERVER['argv'][] = '--object-manager=doctrine.entitymanager.some_other_name';
-
-        $module = new Module();
-        $module->initializeConsole($event);
-
-        /* @var $entityManagerHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
-        $entityManagerHelper = $application->getHelperSet()->get('entityManager');
-        $this->assertInstanceOf(\Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper::class, $entityManagerHelper);
-        $this->assertSame($entityManager, $entityManagerHelper->getEntityManager());
-    }
-
     /**
      * @param string $commandName
      * @param string $className

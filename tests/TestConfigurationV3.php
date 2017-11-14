@@ -16,6 +16,12 @@
  * and is licensed under the MIT license. For more information, see
  * <http://www.doctrine-project.org>.
  */
+
+use DoctrineORMModule\CliConfigurator;
+use DoctrineORMModule\Listener\PostCliLoadListener;
+use DoctrineORMModule\Service\CliConfiguratorFactory;
+use DoctrineORMModule\Service\PostCliLoadListenerFactory;
+
 return [
     'modules' => [
         'Zend\Cache',
@@ -33,5 +39,11 @@ return [
             __DIR__ . '/testing.config.php',
         ],
         'module_paths' => [],
+    ],
+    'service_manager' => [
+        'factories' => [
+            PostCliLoadListener::class => PostCliLoadListenerFactory::class,
+            CliConfigurator::class => CliConfiguratorFactory::class,
+        ],
     ],
 ];

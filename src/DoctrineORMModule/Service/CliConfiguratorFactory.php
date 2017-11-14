@@ -17,26 +17,28 @@
  * <http://www.doctrine-project.org>.
  */
 
-use DoctrineORMModule\CliConfigurator;
-use DoctrineORMModule\Listener\PostCliLoadListener;
-use DoctrineORMModule\Service\CliConfiguratorFactory;
-use DoctrineORMModule\Service\PostCliLoadListenerFactory;
+namespace DoctrineORMModule\Service;
 
-return [
-    'modules' => [
-        'DoctrineModule',
-        'DoctrineORMModule',
-    ],
-    'module_listener_options' => [
-        'config_glob_paths' => [
-            __DIR__ . '/testing.config.php',
-        ],
-        'module_paths' => [],
-    ],
-    'service_manager' => [
-        'factories' => [
-            PostCliLoadListener::class => PostCliLoadListenerFactory::class,
-            CliConfigurator::class => CliConfiguratorFactory::class,
-        ],
-    ],
-];
+use DoctrineORMModule\CliConfigurator;
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+
+class CliConfiguratorFactory implements FactoryInterface
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    {
+        return new CliConfigurator($container);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function createService(ServiceLocatorInterface $container)
+    {
+        return $this($container, CliConfigurator::class);
+    }
+}

@@ -19,19 +19,12 @@
 
 namespace DoctrineORMModule;
 
-use Symfony\Component\Console\Helper\DialogHelper;
-use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Input\InputOption;
+use DoctrineORMModule\Listener\PostCliLoadListener;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
-use Zend\EventManager\EventInterface;
-use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
-use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
-use Zend\Stdlib\ArrayUtils;
 
 /**
  * Base module for Doctrine ORM.
@@ -53,14 +46,19 @@ class Module implements
     public function init(ModuleManagerInterface $manager)
     {
         $events = $manager->getEventManager();
+        $serviceManager = $manager->getEvent()->getParam('ServiceManager');
+
         // Initialize logger collector once the profiler is initialized itself
         $events->attach(
             'profiler_init',
-            function () use ($manager) {
-                $manager->getEvent()->getParam('ServiceManager')->get('doctrine.sql_logger_collector.orm_default');
+            function () use ($serviceManager) {
+                $serviceManager->get('doctrine.sql_logger_collector.orm_default');
             }
         );
-        $events->getSharedManager()->attach('doctrine', 'loadCli.post', [$this, 'initializeConsole']);
+
+        /* @var $postCliLoadListener PostCliLoadListener */
+        $postCliLoadListener = $serviceManager->get(PostCliLoadListener::class);
+        $postCliLoadListener->attach($events);
     }
 
     /**
@@ -85,86 +83,5 @@ class Module implements
     public function getModuleDependencies()
     {
         return ['DoctrineModule'];
-    }
-
-    /**
-     * Initializes the console with additional commands from the ORM, DBAL and (optionally) DBAL\Migrations
-     *
-     * @param \Zend\EventManager\EventInterface $event
-     *
-     * @return void
-     */
-    public function initializeConsole(EventInterface $event)
-    {
-        /* @var $cli \Symfony\Component\Console\Application */
-        $cli            = $event->getTarget();
-        /* @var $serviceLocator \Zend\ServiceManager\ServiceLocatorInterface */
-        $serviceLocator = $event->getParam('ServiceManager');
-
-        $commands = [
-            'doctrine.dbal_cmd.runsql',
-            'doctrine.dbal_cmd.import',
-            'doctrine.orm_cmd.clear_cache_metadata',
-            'doctrine.orm_cmd.clear_cache_result',
-            'doctrine.orm_cmd.clear_cache_query',
-            'doctrine.orm_cmd.schema_tool_create',
-            'doctrine.orm_cmd.schema_tool_update',
-            'doctrine.orm_cmd.schema_tool_drop',
-            'doctrine.orm_cmd.ensure_production_settings',
-            'doctrine.orm_cmd.convert_d1_schema',
-            'doctrine.orm_cmd.generate_repositories',
-            'doctrine.orm_cmd.generate_entities',
-            'doctrine.orm_cmd.generate_proxies',
-            'doctrine.orm_cmd.convert_mapping',
-            'doctrine.orm_cmd.run_dql',
-            'doctrine.orm_cmd.validate_schema',
-            'doctrine.orm_cmd.info',
-        ];
-
-        if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
-            $commands = ArrayUtils::merge(
-                $commands,
-                [
-                    'doctrine.migrations_cmd.execute',
-                    'doctrine.migrations_cmd.generate',
-                    'doctrine.migrations_cmd.migrate',
-                    'doctrine.migrations_cmd.status',
-                    'doctrine.migrations_cmd.version',
-                    'doctrine.migrations_cmd.diff',
-                    'doctrine.migrations_cmd.latest',
-                ]
-            );
-        }
-
-        foreach ($commands as $commandName) {
-            /* @var $command \Symfony\Component\Console\Command\Command */
-            $command = $serviceLocator->get($commandName);
-            $command->getDefinition()->addOption(new InputOption(
-                'object-manager',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'The name of the object manager to use.',
-                'doctrine.entitymanager.orm_default'
-            ));
-
-            $cli->add($command);
-        }
-
-        $arguments = new ArgvInput();
-        $objectManagerName = ($arguments->getParameterOption('--object-manager')) ?:
-            'doctrine.entitymanager.orm_default';
-
-        /* @var $objectManager \Doctrine\ORM\EntityManagerInterface */
-        $objectManager = $serviceLocator->get($objectManagerName);
-        $helperSet     = $cli->getHelperSet();
-
-        if (class_exists('Symfony\Component\Console\Helper\QuestionHelper')) {
-            $helperSet->set(new QuestionHelper(), 'dialog');
-        } else {
-            $helperSet->set(new DialogHelper(), 'dialog');
-        }
-
-        $helperSet->set(new ConnectionHelper($objectManager->getConnection()), 'db');
-        $helperSet->set(new EntityManagerHelper($objectManager), 'em');
     }
 }
