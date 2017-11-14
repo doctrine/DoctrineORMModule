@@ -20,6 +20,10 @@
 namespace DoctrineORMModule;
 
 use DoctrineORMModule\Listener\PostCliLoadListener;
+use Psr\Container\ContainerInterface;
+use Symfony\Component\Console\Application;
+use Zend\EventManager\EventInterface;
+use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
@@ -38,7 +42,8 @@ class Module implements
     ControllerProviderInterface,
     ConfigProviderInterface,
     InitProviderInterface,
-    DependencyIndicatorInterface
+    DependencyIndicatorInterface,
+    BootstrapListenerInterface
 {
     /**
      * {@inheritDoc}
@@ -83,5 +88,21 @@ class Module implements
     public function getModuleDependencies()
     {
         return ['DoctrineModule'];
+    }
+
+    /**
+     * @param EventInterface $event
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
+    public function onBootstrap(EventInterface $event)
+    {
+        /* @var $container ContainerInterface */
+        $container = $event->getTarget()->getServiceManager();
+        /* @var $doctrineCli Application */
+        $doctrineCli = $container->get('doctrine.cli');
+
+        $eventDispatcher = $container->get('doctrine.cli.event_dispatcher');
+        $doctrineCli->setDispatcher($eventDispatcher);
     }
 }

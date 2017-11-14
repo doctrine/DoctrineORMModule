@@ -23,9 +23,13 @@ use Doctrine\ORM\Tools\Console\Command;
 use DoctrineModule\Form\Element;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use DoctrineORMModule\CliConfigurator;
+use DoctrineORMModule\EventDispatcherFactory;
+use DoctrineORMModule\Listener\MigrationConfigurationListener;
+use DoctrineORMModule\Listener\MigrationConfigurationListenerFactory;
 use DoctrineORMModule\Listener\PostCliLoadListener;
 use DoctrineORMModule\Service;
 use DoctrineORMModule\Yuml;
+use Symfony\Component\Console\ConsoleEvents;
 
 return [
     'doctrine' => [
@@ -193,6 +197,15 @@ return [
             'diff'     => [],
             'latest'   => [],
         ],
+
+        // doctrine cli application configuration
+        'cli' => [
+            'event_dispatcher' => [
+                'listeners' => [
+                    ConsoleEvents::COMMAND => MigrationConfigurationListener::class,
+                ],
+            ],
+        ],
     ],
 
     'service_manager' => [
@@ -200,6 +213,8 @@ return [
             PostCliLoadListener::class => Service\PostCliLoadListenerFactory::class,
             CliConfigurator::class => Service\CliConfiguratorFactory::class,
             'Doctrine\ORM\EntityManager' => Service\EntityManagerAliasCompatFactory::class,
+            'doctrine.cli.event_dispatcher' => EventDispatcherFactory::class,
+            MigrationConfigurationListener::class => MigrationConfigurationListenerFactory::class,
         ],
         'invokables' => [
             // DBAL commands
