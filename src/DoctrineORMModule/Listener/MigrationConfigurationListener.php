@@ -19,9 +19,9 @@
 
 namespace DoctrineORMModule\Listener;
 
-use Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand as MigrationCommand;
-use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Symfony\Component\Console\Event\ConsoleCommandEvent;
+use Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand as MigrationCommand;
 
 /**
  * @license MIT
@@ -44,22 +44,25 @@ final class MigrationConfigurationListener
      */
     public function __invoke(ConsoleCommandEvent $consoleCommandEvent)
     {
-        if (!class_exists(MigrationCommand::class)) {
+        if (! class_exists(MigrationCommand::class)) {
             return;
         }
-        if (!$consoleCommandEvent->getCommand() instanceof MigrationCommand) {
-            return;
-        }
+
         /* @var $command MigrationCommand */
         $command = $consoleCommandEvent->getCommand();
-        $input = $consoleCommandEvent->getInput();
-        $objectManagerName = 'doctrine.entitymanager.orm_default';
-
-        if ($input->hasParameterOption(['--object-manager'])) {
-            $objectManagerName = $input->getParameterOption(['--object-manager']);
+        if (! $command instanceof MigrationCommand) {
+            return;
         }
 
-        $migrationsConfigurationAlias = $this->createMigrationConfigurationAlias($objectManagerName);
+        // Use default if none is specified
+        $objectManagerAlias = 'doctrine.entitymanager.orm_default';
+
+        $input = $consoleCommandEvent->getInput();
+        if ($input->hasParameterOption(['--object-manager'])) {
+            $objectManagerAlias = $input->getParameterOption(['--object-manager']);
+        }
+
+        $migrationsConfigurationAlias = $this->createMigrationConfigurationAlias($objectManagerAlias);
         $migrationConfiguration = $this->container->get($migrationsConfigurationAlias);
 
         $command->setMigrationConfiguration($migrationConfiguration);

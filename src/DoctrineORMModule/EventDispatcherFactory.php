@@ -19,9 +19,9 @@
 
 namespace DoctrineORMModule;
 
-use DoctrineORMModule\Exception\InvalidConfigurationException;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use DoctrineORMModule\Exception\InvalidConfigurationException;
 
 /**
  * @license MIT
@@ -36,12 +36,13 @@ final class EventDispatcherFactory
 
         $config = $container->get('config');
         $eventListenerConfig = isset($config['doctrine']['cli']['event_dispatcher']['listeners']) ?
-            $config['doctrine']['cli']['event_dispatcher']['listeners'] :
-            [];
+            $config['doctrine']['cli']['event_dispatcher']['listeners']: [];
+
         foreach ($eventListenerConfig as $event => $listener) {
-            if (!$container->has($listener)) {
+            if (! $container->has($listener)) {
                 throw new InvalidConfigurationException(
-                    "configuration for doctrine.cli.event_dispatcher.listeners is invalid: Unable to find $listener in container."
+                    'Configuration for doctrine.cli.event_dispatcher.listeners is invalid.  '
+                    . "Unable to find $listener in container."
                 );
             }
             $eventDispatcher->addListener($event, $container->get($listener));

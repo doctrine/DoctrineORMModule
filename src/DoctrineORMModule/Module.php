@@ -19,9 +19,7 @@
 
 namespace DoctrineORMModule;
 
-use DoctrineORMModule\Listener\PostCliLoadListener;
 use Psr\Container\ContainerInterface;
-use Symfony\Component\Console\Application;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
@@ -29,6 +27,8 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
+use Symfony\Component\Console\Application;
+use DoctrineORMModule\Listener\PostCliLoadListener;
 
 /**
  * Base module for Doctrine ORM.
@@ -99,6 +99,7 @@ class Module implements
     {
         /* @var $container ContainerInterface */
         $container = $event->getTarget()->getServiceManager();
+
         /* @var $doctrineCli Application */
         $doctrineCli = $container->get('doctrine.cli');
 
