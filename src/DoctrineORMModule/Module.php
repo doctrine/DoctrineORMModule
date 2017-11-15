@@ -24,7 +24,6 @@ use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
 use Symfony\Component\Console\Application;
@@ -41,31 +40,9 @@ use DoctrineORMModule\Listener\PostCliLoadListener;
 class Module implements
     ControllerProviderInterface,
     ConfigProviderInterface,
-    InitProviderInterface,
     DependencyIndicatorInterface,
     BootstrapListenerInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function init(ModuleManagerInterface $manager)
-    {
-        $events = $manager->getEventManager();
-        $serviceManager = $manager->getEvent()->getParam('ServiceManager');
-
-        // Initialize logger collector once the profiler is initialized itself
-        $events->attach(
-            'profiler_init',
-            function () use ($serviceManager) {
-                $serviceManager->get('doctrine.sql_logger_collector.orm_default');
-            }
-        );
-
-        /* @var $postCliLoadListener PostCliLoadListener */
-        $postCliLoadListener = $serviceManager->get(PostCliLoadListener::class);
-        $postCliLoadListener->attach($events);
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -97,8 +74,24 @@ class Module implements
      */
     public function onBootstrap(EventInterface $event)
     {
+        /* @var $application \Zend\Mvc\Application */
+        $application = $event->getTarget();
         /* @var $container ContainerInterface */
-        $container = $event->getTarget()->getServiceManager();
+        $container = $application->getServiceManager();
+
+        $events = $application->getEventManager();
+
+        // Initialize logger collector once the profiler is initialized itself
+        $events->attach(
+            'profiler_init',
+            function () use ($container) {
+                $container->get('doctrine.sql_logger_collector.orm_default');
+            }
+        );
+
+        /* @var $postCliLoadListener PostCliLoadListener */
+        $postCliLoadListener = $container->get(PostCliLoadListener::class);
+        $postCliLoadListener->attach($events);
 
         /* @var $doctrineCli Application */
         $doctrineCli = $container->get('doctrine.cli');
