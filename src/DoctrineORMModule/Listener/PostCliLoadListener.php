@@ -20,7 +20,6 @@
 namespace DoctrineORMModule\Listener;
 
 use DoctrineORMModule\CliConfigurator;
-use Symfony\Component\Console\Helper\DialogHelper;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;

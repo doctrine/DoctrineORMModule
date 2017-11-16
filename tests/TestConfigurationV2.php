@@ -17,11 +17,6 @@
  * <http://www.doctrine-project.org>.
  */
 
-use DoctrineORMModule\CliConfigurator;
-use DoctrineORMModule\Listener\PostCliLoadListener;
-use DoctrineORMModule\Service\CliConfiguratorFactory;
-use DoctrineORMModule\Service\PostCliLoadListenerFactory;
-
 return [
     'modules' => [
         'DoctrineModule',
@@ -32,11 +27,5 @@ return [
             __DIR__ . '/testing.config.php',
         ],
         'module_paths' => [],
-    ],
-    'service_manager' => [
-        'factories' => [
-            PostCliLoadListener::class => PostCliLoadListenerFactory::class,
-            CliConfigurator::class => CliConfiguratorFactory::class,
-        ],
     ],
 ];

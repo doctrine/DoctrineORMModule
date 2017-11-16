@@ -20,11 +20,12 @@
 namespace DoctrineORMModule;
 
 use DoctrineORMModule\Listener\PostCliLoadListener;
+use Interop\Container\ContainerInterface;
+use Zend\EventManager\EventInterface;
+use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
-use Zend\ModuleManager\ModuleManagerInterface;
 
 /**
  * Base module for Doctrine ORM.
@@ -35,29 +36,33 @@ use Zend\ModuleManager\ModuleManagerInterface;
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class Module implements
+    BootstrapListenerInterface,
     ControllerProviderInterface,
     ConfigProviderInterface,
-    InitProviderInterface,
     DependencyIndicatorInterface
 {
     /**
      * {@inheritDoc}
      */
-    public function init(ModuleManagerInterface $manager)
+    public function onBootstrap(EventInterface $event)
     {
-        $events = $manager->getEventManager();
-        $serviceManager = $manager->getEvent()->getParam('ServiceManager');
+        /* @var $application \Zend\Mvc\Application */
+        $application = $event->getTarget();
+        /* @var $container ContainerInterface */
+        $container = $application->getServiceManager();
+
+        $events = $application->getEventManager();
 
         // Initialize logger collector once the profiler is initialized itself
         $events->attach(
             'profiler_init',
-            function () use ($serviceManager) {
-                $serviceManager->get('doctrine.sql_logger_collector.orm_default');
+            function () use ($container) {
+                $container->get('doctrine.sql_logger_collector.orm_default');
             }
         );
 
         /* @var $postCliLoadListener PostCliLoadListener */
-        $postCliLoadListener = $serviceManager->get(PostCliLoadListener::class);
+        $postCliLoadListener = $container->get(PostCliLoadListener::class);
         $postCliLoadListener->attach($events);
     }
 
