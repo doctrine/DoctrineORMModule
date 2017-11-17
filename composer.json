@@ -48,7 +48,7 @@
         "zendframework/zend-servicemanager": "^2.7.6 || ^3.1"
     },
     "require-dev":       {
-        "phpunit/phpunit":                    "^5.7.17 || ^6.2.1",
+        "phpunit/phpunit": "^6.4.4",
         "squizlabs/php_codesniffer":          "^2.7",
         "doctrine/data-fixtures":             "^1.2.1",
         "doctrine/migrations":                "^1.4.1",
