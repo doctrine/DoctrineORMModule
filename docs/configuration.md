@@ -114,8 +114,9 @@ return [
     'doctrine' => [
         'connection' => [
             'orm_crawler' => [
-                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-                'params' => [
+                'driverClass'   => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'configuration' => 'orm_crawler',
+                'params'        => [
                     'host'     => 'localhost',
                     'port'     => '3306',
                     'user'     => 'root',
