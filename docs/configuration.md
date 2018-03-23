@@ -115,6 +115,7 @@ return [
         'connection' => [
             'orm_crawler' => [
                 'driverClass'   => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'eventmanager'  => 'orm_crawler',
                 'configuration' => 'orm_crawler',
                 'params'        => [
                     'host'     => 'localhost',
@@ -135,7 +136,7 @@ return [
                 'query_cache'       => 'array',
                 'result_cache'      => 'array',
                 'hydration_cache'   => 'array',
-                'driver'            => 'orm_crawler',
+                'driver'            => 'orm_crawler_chain',
                 'generate_proxies'  => true,
                 'proxy_dir'         => 'data/DoctrineORMModule/Proxy',
                 'proxy_namespace'   => 'DoctrineORMModule\Proxy',
@@ -144,17 +145,17 @@ return [
         ],
 
         'driver' => [
-            'Crawler_Driver' => [
+            'orm_crawler_annotation' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => [
                     __DIR__ . '/../src/Crawler/Entity',
                 ],
             ],
-            'orm_crawler' => [
+            'orm_crawler_chain' => [
                 'class'   => 'Doctrine\ORM\Mapping\Driver\DriverChain',
                 'drivers' => [
-                    'Crawler\Entity' =>  'Crawler_Driver',
+                    'Crawler\Entity' =>  'orm_crawler_annotation',
                 ],
             ],
         ],
