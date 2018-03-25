@@ -158,11 +158,12 @@ return [
         // migrations configuration
         'migrations_configuration' => [
             'orm_default' => [
-                'directory' => 'data/DoctrineORMModule/Migrations',
-                'name'      => 'Doctrine Database Migrations',
-                'namespace' => 'DoctrineORMModule\Migrations',
-                'table'     => 'migrations',
-                'column'    => 'version',
+                'directory'       => 'data/DoctrineORMModule/Migrations',
+                'name'            => 'Doctrine Database Migrations',
+                'namespace'       => 'DoctrineORMModule\Migrations',
+                'table'           => 'migrations',
+                'column'          => 'version',
+                'custom_template' => false,
             ],
         ],
 
