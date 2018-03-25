@@ -48,6 +48,10 @@ class MigrationsConfigurationFactory extends AbstractFactory
             $configuration->setMigrationsColumnName($migrationsConfig['column']);
         }
 
+        if (method_exists($configuration, 'setCustomTemplate')) {
+            $configuration->setCustomTemplate($migrationsConfig['custom_template']);
+        }
+
         return $configuration;
     }
 
