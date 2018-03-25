@@ -10,7 +10,7 @@ return [
                 'namespace' => 'Migrations  Namespace',
                 'table' => 'migrations_table',
                 'column' => 'version',
-                'custom_template' => false,
+                'custom_template' => null,
             ],
         ],
     ],

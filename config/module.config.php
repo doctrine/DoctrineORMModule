@@ -163,7 +163,7 @@ return [
                 'namespace'       => 'DoctrineORMModule\Migrations',
                 'table'           => 'migrations',
                 'column'          => 'version',
-                'custom_template' => false,
+                'custom_template' => null,
             ],
         ],
 
