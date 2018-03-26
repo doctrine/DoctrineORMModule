@@ -113,7 +113,7 @@ class AnnotationBuilderTest extends TestCase
             ->getValidatorChain()
             ->getValidators();
 
-        $this->assertEquals(0, count($validators));
+        $this->assertCount(0, $validators);
     }
 
     /**

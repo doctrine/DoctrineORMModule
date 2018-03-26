@@ -13,7 +13,7 @@ class SQLLoggerCollectorOptionsTest extends TestCase
         $options->setSqlLogger('sql-logger-name');
         $this->assertSame('sql-logger-name', $options->getSqlLogger());
         $options->setSqlLogger(null);
-        $this->assertSame(null, $options->getSqlLogger());
+        $this->assertNull($options->getSqlLogger());
     }
 
     public function testSetGetConfiguration()
