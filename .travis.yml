@@ -26,6 +26,9 @@ matrix:
     - php: 7.1
       env:
         - DEPS=latest
+    - php: 7.1
+      env:
+        - DEPS=dev
     - php: 7.2
       env:
         - DEPS=lowest
@@ -36,6 +39,9 @@ matrix:
     - php: 7.2
       env:
         - DEPS=latest
+    - php: 7.2
+      env:
+        - DEPS=dev
     - php: nightly
       env:
         - DEPS=lowest
@@ -53,6 +59,7 @@ before_install:
   - travis_retry composer self-update
 
 install:
+  - if [[ $DEPS == 'dev' ]]; then travis_retry composer config minimum-stability dev ; fi
   - travis_retry composer install $COMPOSER_ARGS
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer require --dev --no-update $COMPOSER_ARGS $LATEST_DEPS ; fi
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi

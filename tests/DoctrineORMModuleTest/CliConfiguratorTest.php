@@ -1,47 +1,26 @@
 <?php
-/*
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
- * <http://www.doctrine-project.org>.
- */
 
-namespace DoctrineORMModuleTest;
+namespace DoctrineORMModuleTest\Listener;
 
-use DoctrineORMModule\Module;
+use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
+use DoctrineORMModule\CliConfigurator;
+use DoctrineORMModuleTest\ServiceManagerFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
-use Zend\EventManager\Event;
 
 /**
- * Tests used to verify that command line functionality is active
- *
  * @license MIT
  * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
+ * @author  Nicolas Eeckeloo <neeckeloo@gmail.com>
  */
-class CliTest extends TestCase
+class CliConfiguratorTest extends TestCase
 {
     /**
      * @var \Zend\ServiceManager\ServiceManager
      */
     protected $serviceManager;
-
-    /**
-     * @var \Symfony\Component\Console\Application
-     */
-    protected $cli;
 
     /**
      * @var \Doctrine\ORM\EntityManager
@@ -53,31 +32,68 @@ class CliTest extends TestCase
      */
     public function setUp()
     {
-        $serviceManager     = ServiceManagerFactory::getServiceManager();
-        /* @var $sharedEventManager \Zend\EventManager\SharedEventManagerInterface */
-        $sharedEventManager = $serviceManager->get('SharedEventManager');
-        /* @var $application \Zend\Mvc\Application */
-        $application        = $serviceManager->get('Application');
-        $invocations        = 0;
+        $this->serviceManager = ServiceManagerFactory::getServiceManager();
+        $this->objectManager  = $this->serviceManager->get('doctrine.entitymanager.orm_default');
+    }
 
-        $sharedEventManager->attach(
-            'doctrine',
-            'loadCli.post',
-            function () use (&$invocations) {
-                $invocations += 1;
-            }
-        );
+    public function testOrmDefaultIsUsedAsTheEntityManagerIfNoneIsProvided()
+    {
+        $application = new Application();
 
-        $application->bootstrap();
-        $this->serviceManager = $serviceManager;
-        $this->objectManager  = $serviceManager->get('doctrine.entitymanager.orm_default');
-        $this->cli            = $serviceManager->get('doctrine.cli');
-        $this->assertSame(1, $invocations);
+        $cliConfigurator = new CliConfigurator($this->serviceManager);
+        $cliConfigurator->configure($application);
+
+        /* @var $entityManagerHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
+        $entityManagerHelper = $application->getHelperSet()->get('entityManager');
+
+        $this->assertInstanceOf(EntityManagerHelper::class, $entityManagerHelper);
+        $this->assertSame($this->objectManager, $entityManagerHelper->getEntityManager());
+    }
+
+    /**
+     * @backupGlobals enabled
+     */
+    public function testEntityManagerUsedCanBeSpecifiedInCommandLineArgument()
+    {
+        $objectManagerName = 'doctrine.entitymanager.some_other_name';
+
+        $connection = $this->getMockBuilder(Connection::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $entityManager = $this->getMockbuilder(EntityManager::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $entityManager
+            ->expects($this->atLeastOnce())
+            ->method('getConnection')
+            ->willReturn($connection);
+
+        $this->serviceManager->setService($objectManagerName, $entityManager);
+
+        $application = new Application();
+
+        $_SERVER['argv'][] = '--object-manager=' . $objectManagerName;
+
+        $cliConfigurator = new CliConfigurator($this->serviceManager);
+        $cliConfigurator->configure($application);
+
+        /* @var $entityManagerHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
+        $entityManagerHelper = $application->getHelperSet()->get('entityManager');
+
+        $this->assertInstanceOf(EntityManagerHelper::class, $entityManagerHelper);
+        $this->assertSame($entityManager, $entityManagerHelper->getEntityManager());
     }
 
     public function testValidHelpers()
     {
-        $helperSet = $this->cli->getHelperSet();
+        $application = new Application();
+
+        $cliConfigurator = new CliConfigurator($this->serviceManager);
+        $cliConfigurator->configure($application);
+
+        $helperSet = $application->getHelperSet();
 
         /* @var $emHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
         $emHelper = $helperSet->get('em');
@@ -90,54 +106,6 @@ class CliTest extends TestCase
         $this->assertSame($this->objectManager->getConnection(), $dbHelper->getConnection());
     }
 
-    public function testOrmDefaultIsUsedAsTheEntityManagerIfNoneIsProvided()
-    {
-        $application = new Application();
-        $event = new Event('loadCli.post', $application, ['ServiceManager' => $this->serviceManager]);
-
-        $module = new Module();
-        $module->initializeConsole($event);
-
-        /* @var $entityManagerHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
-        $entityManagerHelper = $application->getHelperSet()->get('entityManager');
-        $this->assertInstanceOf(\Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper::class, $entityManagerHelper);
-        $this->assertSame($this->objectManager, $entityManagerHelper->getEntityManager());
-    }
-
-    /**
-     * @backupGlobals enabled
-     */
-    public function testEntityManagerUsedCanBeSpecifiedInCommandLineArgument()
-    {
-        $connection = $this->getMockBuilder(\Doctrine\DBAL\Connection::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $entityManager = $this->getMockbuilder(\Doctrine\ORM\EntityManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $entityManager
-            ->expects($this->atLeastOnce())
-            ->method('getConnection')
-            ->willReturn($connection);
-
-        $this->serviceManager->setService('doctrine.entitymanager.some_other_name', $entityManager);
-
-        $application = new Application();
-        $event = new Event('loadCli.post', $application, ['ServiceManager' => $this->serviceManager]);
-
-        $_SERVER['argv'][] = '--object-manager=doctrine.entitymanager.some_other_name';
-
-        $module = new Module();
-        $module->initializeConsole($event);
-
-        /* @var $entityManagerHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
-        $entityManagerHelper = $application->getHelperSet()->get('entityManager');
-        $this->assertInstanceOf(\Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper::class, $entityManagerHelper);
-        $this->assertSame($entityManager, $entityManagerHelper->getEntityManager());
-    }
-
     /**
      * @param string $commandName
      * @param string $className
@@ -146,8 +114,13 @@ class CliTest extends TestCase
      */
     public function testValidCommands($commandName, $className)
     {
+        $application = new Application();
+
+        $cliConfigurator = new CliConfigurator($this->serviceManager);
+        $cliConfigurator->configure($application);
+
         /* @var $command \Symfony\Component\Console\Command\Command */
-        $command = $this->cli->get($commandName);
+        $command = $application->get($commandName);
         $this->assertInstanceOf($className, $command);
 
         // check for the entity-manager option
