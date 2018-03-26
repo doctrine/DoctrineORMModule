@@ -114,8 +114,10 @@ return [
     'doctrine' => [
         'connection' => [
             'orm_crawler' => [
-                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-                'params' => [
+                'driverClass'   => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'eventmanager'  => 'orm_crawler',
+                'configuration' => 'orm_crawler',
+                'params'        => [
                     'host'     => 'localhost',
                     'port'     => '3306',
                     'user'     => 'root',
@@ -134,7 +136,7 @@ return [
                 'query_cache'       => 'array',
                 'result_cache'      => 'array',
                 'hydration_cache'   => 'array',
-                'driver'            => 'orm_crawler',
+                'driver'            => 'orm_crawler_chain',
                 'generate_proxies'  => true,
                 'proxy_dir'         => 'data/DoctrineORMModule/Proxy',
                 'proxy_namespace'   => 'DoctrineORMModule\Proxy',
@@ -143,17 +145,17 @@ return [
         ],
 
         'driver' => [
-            'Crawler_Driver' => [
+            'orm_crawler_annotation' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => [
                     __DIR__ . '/../src/Crawler/Entity',
                 ],
             ],
-            'orm_crawler' => [
+            'orm_crawler_chain' => [
                 'class'   => 'Doctrine\ORM\Mapping\Driver\DriverChain',
                 'drivers' => [
-                    'Crawler\Entity' =>  'Crawler_Driver',
+                    'Crawler\Entity' =>  'orm_crawler_annotation',
                 ],
             ],
         ],
@@ -180,28 +182,16 @@ return [
 ];
 ```
 
-Module.php
-```php
-public function getServiceConfig()
-{
-    return [
-        'factories' => [
-            'doctrine.connection.orm_crawler'           => new \DoctrineORMModule\Service\DBALConnectionFactory('orm_crawler'),
-            'doctrine.configuration.orm_crawler'        => new \DoctrineORMModule\Service\ConfigurationFactory('orm_crawler'),
-            'doctrine.entitymanager.orm_crawler'        => new \DoctrineORMModule\Service\EntityManagerFactory('orm_crawler'),
+The `DoctrineModule\ServiceFactory\AbstractDoctrineServiceFactory` will create the following objects as needed:
+* 'doctrine.connection.orm_crawler'
+* 'doctrine.configuration.orm_crawler'
+* 'doctrine.entitymanager.orm_crawler'
+* 'doctrine.driver.orm_crawler'
+* 'doctrine.eventmanager.orm_crawler'
+* 'doctrine.entity_resolver.orm_crawler'
+* 'doctrine.sql_logger_collector.orm_crawler'
 
-            'doctrine.driver.orm_crawler'               => new \DoctrineModule\Service\DriverFactory('orm_crawler'),
-            'doctrine.eventmanager.orm_crawler'         => new \DoctrineModule\Service\EventManagerFactory('orm_crawler'),
-            'doctrine.entity_resolver.orm_crawler'      => new \DoctrineORMModule\Service\EntityResolverFactory('orm_crawler'),
-            'doctrine.sql_logger_collector.orm_crawler' => new \DoctrineORMModule\Service\SQLLoggerCollectorFactory('orm_crawler'),
-
-            'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function(\Zend\ServiceManager\ServiceLocatorInterface $sl) {
-                return new \DoctrineORMModule\Form\Annotation\AnnotationBuilder($sl->get('doctrine.entitymanager.orm_crawler'));
-            },
-        ],
-    ];
-}
-```
+You can retrieve them from the service manager via their keys.
 
 ### How to Use Naming Strategy
 
