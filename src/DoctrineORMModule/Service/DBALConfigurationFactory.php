@@ -87,7 +87,7 @@ class DBALConfigurationFactory implements FactoryInterface
     {
         $options = $serviceLocator->get('config');
         $options = $options['doctrine'];
-        $options = isset($options['configuration'][$this->name]) ? $options['configuration'][$this->name] : null;
+        $options = $options['configuration'][$this->name] ?? null;
 
         if (null === $options) {
             throw new RuntimeException(

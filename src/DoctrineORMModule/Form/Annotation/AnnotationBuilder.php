@@ -67,7 +67,7 @@ class AnnotationBuilder extends ZendAnnotationBuilder
         ];
 
         foreach ($formSpec['elements'] as $key => $elementSpec) {
-            $name          = isset($elementSpec['spec']['name']) ? $elementSpec['spec']['name'] : null;
+            $name          = $elementSpec['spec']['name'] ?? null;
             $isFormElement = (isset($elementSpec['spec']['type']) &&
                               in_array($elementSpec['spec']['type'], $formElements));
 
