@@ -6,7 +6,6 @@ use Doctrine\ORM\Tools\Console\Command;
 use DoctrineModule\Form\Element;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use DoctrineORMModule\CliConfigurator;
-use DoctrineORMModule\Listener\PostCliLoadListener;
 use DoctrineORMModule\Service;
 use DoctrineORMModule\Yuml;
 
@@ -181,7 +180,6 @@ return [
 
     'service_manager' => [
         'factories' => [
-            PostCliLoadListener::class => Service\PostCliLoadListenerFactory::class,
             CliConfigurator::class => Service\CliConfiguratorFactory::class,
             'Doctrine\ORM\EntityManager' => Service\EntityManagerAliasCompatFactory::class,
         ],

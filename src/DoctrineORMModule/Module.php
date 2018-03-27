@@ -30,22 +30,22 @@ class Module implements
      */
     public function init(ModuleManagerInterface $manager)
     {
-        $events = $manager->getEventManager();
-        $serviceManager = $manager->getEvent()->getParam('ServiceManager');
-
-        $events->getSharedManager()->attach('doctrine', 'loadCli.post', [$this, 'initializeConsole'], 1);
-    }
-
-    /**
-     * Initialize the Doctrine console
-     *
-     * @param EventInterface
-     */
-    public function initializeConsole(EventInterface $event)
-    {
-        $container = $event->getParam('ServiceManager');
-        $cliConfigurator = $container->get(CliConfigurator::class);
-        $cliConfigurator->configure($event->getTarget());
+        // Initialize the console
+        $manager
+            ->getEventManager()
+            ->getSharedManager()
+            ->attach(
+                'doctrine',
+                'loadCli.post',
+                function (EventInterface $event) {
+                    $event
+                        ->getParam('ServiceManager')
+                        ->get(CliConfigurator::class)
+                        ->configure($event->getTarget())
+                        ;
+                },
+                1
+            );
     }
 
     /**
