@@ -2,13 +2,14 @@
 
 namespace DoctrineORMModule;
 
-use DoctrineORMModule\Listener\PostCliLoadListener;
 use Interop\Container\ContainerInterface;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
+use Zend\ModuleManager\ModuleManagerInterface;
+use DoctrineORMModule\CliConfigurator;
 
 /**
  * Base module for Doctrine ORM.
@@ -27,10 +28,34 @@ class Module implements
     /**
      * {@inheritDoc}
      */
+    public function init(ModuleManagerInterface $manager)
+    {
+        // Initialize the console
+        $manager
+            ->getEventManager()
+            ->getSharedManager()
+            ->attach(
+                'doctrine',
+                'loadCli.post',
+                function (EventInterface $event) {
+                    $event
+                        ->getParam('ServiceManager')
+                        ->get(CliConfigurator::class)
+                        ->configure($event->getTarget())
+                        ;
+                },
+                1
+            );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function onBootstrap(EventInterface $event)
     {
         /* @var $application \Zend\Mvc\Application */
         $application = $event->getTarget();
+
         /* @var $container ContainerInterface */
         $container = $application->getServiceManager();
 
@@ -43,10 +68,6 @@ class Module implements
                 $container->get('doctrine.sql_logger_collector.orm_default');
             }
         );
-
-        /* @var $postCliLoadListener PostCliLoadListener */
-        $postCliLoadListener = $container->get(PostCliLoadListener::class);
-        $postCliLoadListener->attach($events);
     }
 
     /**
