@@ -80,9 +80,7 @@ class SQLLoggerCollectorFactory implements FactoryInterface
     {
         $options = $serviceLocator->get('config');
         $options = $options['doctrine'];
-        $options = isset($options['sql_logger_collector'][$this->name])
-            ? $options['sql_logger_collector'][$this->name]
-            : null;
+        $options = $options['sql_logger_collector'][$this->name] ?? null;
 
         if (null === $options) {
             throw new RuntimeException(
