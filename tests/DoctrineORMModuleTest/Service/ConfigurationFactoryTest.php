@@ -219,7 +219,10 @@ class ConfigurationFactoryTest extends TestCase
         $this->serviceManager->setService('config', $config);
         $factory = new ConfigurationFactory('test_default');
         $ormConfig = $factory->createService($this->serviceManager);
-        $this->assertEquals(\Doctrine\ORM\Mapping\ClassMetadataFactory::class, $ormConfig->getClassMetadataFactoryName());
+        $this->assertEquals(
+            \Doctrine\ORM\Mapping\ClassMetadataFactory::class,
+            $ormConfig->getClassMetadataFactoryName()
+        );
     }
 
     public function testWillInstantiateConfigWithoutEntityListenerResolverSetting()
@@ -236,7 +239,10 @@ class ConfigurationFactoryTest extends TestCase
 
         $ormConfig = $this->factory->createService($this->serviceManager);
 
-        $this->assertInstanceOf(\Doctrine\ORM\Mapping\EntityListenerResolver::class, $ormConfig->getEntityListenerResolver());
+        $this->assertInstanceOf(
+            \Doctrine\ORM\Mapping\EntityListenerResolver::class,
+            $ormConfig->getEntityListenerResolver()
+        );
     }
 
     public function testWillInstantiateConfigWithEntityListenerResolverObject()

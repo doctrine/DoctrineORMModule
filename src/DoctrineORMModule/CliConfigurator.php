@@ -123,7 +123,7 @@ class CliConfigurator
     {
         $arguments = new ArgvInput();
 
-        if (!$arguments->hasParameterOption('--object-manager')) {
+        if (! $arguments->hasParameterOption('--object-manager')) {
             return $this->defaultObjectManagerName;
         }
 
