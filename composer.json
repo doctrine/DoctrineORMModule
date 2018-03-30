@@ -44,11 +44,11 @@
         "symfony/console":                   "^2.3 || ^3.0 || ^4.0",
         "zendframework/zend-stdlib":         "^2.7.7 || ^3.0.1",
         "zendframework/zend-hydrator":       "^1.1 || ^2.2.1",
-        "zendframework/zend-mvc":            "^2.7.10 || ^3.0.1",
+        "zendframework/zend-mvc":            "^2.7.13 || ^3.0.1",
         "zendframework/zend-servicemanager": "^2.7.6 || ^3.1"
     },
     "require-dev":       {
-        "phpunit/phpunit":                    "^6.5",
+        "phpunit/phpunit":                    "^7.0.3",
         "squizlabs/php_codesniffer":          "^2.7",
         "doctrine/data-fixtures":             "^1.2.1",
         "doctrine/migrations":                "^1.4.1",
