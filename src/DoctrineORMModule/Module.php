@@ -4,12 +4,12 @@ namespace DoctrineORMModule;
 
 use Interop\Container\ContainerInterface;
 use Zend\EventManager\EventInterface;
-use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
 use DoctrineORMModule\CliConfigurator;
+use ZendDeveloperTools\ProfilerEvent;
 
 /**
  * Base module for Doctrine ORM.
@@ -20,7 +20,6 @@ use DoctrineORMModule\CliConfigurator;
  * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class Module implements
-    BootstrapListenerInterface,
     ControllerProviderInterface,
     ConfigProviderInterface,
     DependencyIndicatorInterface
@@ -46,28 +45,19 @@ class Module implements
                 },
                 1
             );
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function onBootstrap(EventInterface $event)
-    {
-        /* @var $application \Zend\Mvc\Application */
-        $application = $event->getTarget();
-
-        /* @var $container ContainerInterface */
-        $container = $application->getServiceManager();
-
-        $events = $application->getEventManager();
-
-        // Initialize logger collector once the profiler is initialized itself
-        $events->attach(
-            'profiler_init',
-            function () use ($container) {
-                $container->get('doctrine.sql_logger_collector.orm_default');
-            }
-        );
+        // Initialize logger collector in ZendDeveloperTools
+        if (class_exists(ProfilerEvent::class)) {
+            $manager
+                ->getEventManager()
+                ->attach(
+                    ProfilerEvent::EVENT_PROFILER_INIT,
+                    function ($event) {
+                        $container = $event->getTarget()->getParam('ServiceManager');
+                        $container->get('doctrine.sql_logger_collector.orm_default');
+                    }
+                );
+        }
     }
 
     /**
