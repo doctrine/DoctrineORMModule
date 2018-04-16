@@ -10,7 +10,6 @@ cache:
 env:
   global:
     - COMPOSER_ARGS="--no-interaction"
-    - LATEST_DEPS="zendframework/zend-mvc-console"
     - LEGACY_DEPS="phpunit/phpunit"
 
 matrix:
@@ -60,7 +59,7 @@ before_install:
 install:
   - if [[ $DEPS == 'dev' ]]; then travis_retry composer config minimum-stability dev ; fi
   - travis_retry composer install $COMPOSER_ARGS
-  - if [[ $DEPS == 'latest' ]]; then travis_retry composer require --dev --no-update $COMPOSER_ARGS $LATEST_DEPS ; fi
+  - travis_retry composer require --dev --no-update $COMPOSER_ARGS zendframework/zend-mvc-console
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
   - composer show
