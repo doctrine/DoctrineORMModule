@@ -3,6 +3,7 @@
 namespace DoctrineORMModule\Yuml;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Exception;
 
 /**
  * Utility to generate Yuml compatible strings from metadata graphs
@@ -132,6 +133,9 @@ class MetadataGrapher
     {
         foreach ($class2->getAssociationNames() as $class2Side) {
             $targetClass = $this->getClassByName($class2->getAssociationTargetClass($class2Side));
+            if (! $targetClass) {
+                throw new Exception("Invalid class name for AssociationTargetClass $class2Side");
+            }
             if ($class1->getName() === $targetClass->getName()) {
                 return $class2Side;
             }
