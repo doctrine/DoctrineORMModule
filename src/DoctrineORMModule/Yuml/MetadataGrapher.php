@@ -132,7 +132,9 @@ class MetadataGrapher
     {
         foreach ($class2->getAssociationNames() as $class2Side) {
             $targetClass = $this->getClassByName($class2->getAssociationTargetClass($class2Side));
-            if ($class1->getName() === $targetClass->getName()) {
+            if (! is_null($class1)
+                && ! is_null($targetClass)
+                && $class1->getName() === $targetClass->getName()) {
                 return $class2Side;
             }
         }
