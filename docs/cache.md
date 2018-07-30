@@ -1,6 +1,6 @@
 ### Caching queries, results and metadata
 
-If you want to set a cache for query, result and metadata, you can specify this inside your `module.config.php`
+If you want to set a cache for query, result and metadata, you can specify this inside your `config/autoload/local.php`
 
 ```php
 return [
