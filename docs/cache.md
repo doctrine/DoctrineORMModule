@@ -18,7 +18,7 @@ return [
 ```
 
 The previous configuration take in consideration different cache adapters. You can specify any other adapter that implements
-the `Doctrine\Common\Cache\Cache` interface. Find more [here](http://doctrine-orm.readthedocs.org/en/latest/reference/caching.html).
+the `Doctrine\Common\Cache\Cache` interface. Find more [here](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/caching.html).
 
 #### Example with Redis
 
@@ -78,7 +78,7 @@ class RedisFactory implements FactoryInterface
 }
 ```
 
-Read more about [Caching](http://doctrine-orm.readthedocs.org/en/latest/reference/caching.html).
+Read more about [Caching](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/caching.html).
 
 
 
@@ -113,5 +113,5 @@ return [
 ];
 ```
 
-You also need to add the `Cache` annotation to your model ([read more](http://doctrine-orm.readthedocs.org/en/latest/reference/second-level-cache.html#entity-cache-definition)).
+You also need to add the `Cache` annotation to your model ([read more](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/second-level-cache.html#entity-cache-definition)).
 Read more about [Second Level Cache](http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/second-level-cache.html).
