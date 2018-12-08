@@ -195,7 +195,7 @@ You can retrieve them from the service manager via their keys.
 
 ### How to Use Naming Strategy
 
-[Official documentation](http://doctrine-orm.readthedocs.org/en/latest/reference/namingstrategy.html)
+[Official documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/namingstrategy.html)
 
 Zend Configuration
 
@@ -218,7 +218,7 @@ return [
 
 ### How to Use Quote Strategy
 
-[Official documentation](http://doctrine-orm.readthedocs.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words)
+[Official documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/basic-mapping.html#quoting-reserved-words)
 
 Zend Configuration
 
