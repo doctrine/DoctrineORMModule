@@ -50,7 +50,7 @@ class MigrationsCommandFactoryTest extends TestCase
         $factory = new MigrationsCommandFactory('execute');
 
         $this->assertInstanceOf(
-            \Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand::class,
+            \Doctrine\Migrations\Tools\Console\Command\ExecuteCommand::class,
             $factory->createService($this->serviceLocator)
         );
     }
@@ -60,7 +60,7 @@ class MigrationsCommandFactoryTest extends TestCase
         $factory = new MigrationsCommandFactory('diff');
 
         $this->assertInstanceOf(
-            \Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand::class,
+            \Doctrine\Migrations\Tools\Console\Command\DiffCommand::class,
             $factory->createService($this->serviceLocator)
         );
     }

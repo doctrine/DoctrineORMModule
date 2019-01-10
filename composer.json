@@ -51,7 +51,7 @@
         "phpunit/phpunit":                    "^7.0.3",
         "squizlabs/php_codesniffer":          "^2.7",
         "doctrine/data-fixtures":             "^1.2.1",
-        "doctrine/migrations":                "^1.4.1",
+        "doctrine/migrations":                "^1.4.1 || ^2.0",
         "zendframework/zend-console":         "^2.6",
         "zendframework/zend-developer-tools": "^1.1",
         "zendframework/zend-i18n":            "^2.7.3",
@@ -65,6 +65,9 @@
         "doctrine/migrations":                "doctrine migrations if you want to keep your schema definitions versioned"
     },
     "autoload":          {
+        "files": [
+            "src/autoload.php"
+        ],
         "psr-0": {
             "DoctrineORMModule\\": "src/"
         }

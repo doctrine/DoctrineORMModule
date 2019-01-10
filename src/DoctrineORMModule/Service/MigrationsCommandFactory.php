@@ -46,21 +46,21 @@ class MigrationsCommandFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
-     * @return \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand
+     * @return \Doctrine\Migrations\Tools\Console\Command\AbstractCommand
      * @throws \InvalidArgumentException
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $className = 'Doctrine\DBAL\Migrations\Tools\Console\Command\\' . $this->name . 'Command';
+        $className = 'Doctrine\Migrations\Tools\Console\Command\\' . $this->name . 'Command';
 
         if (! class_exists($className)) {
             throw new \InvalidArgumentException();
         }
 
         // @TODO currently hardcoded: `orm_default` should be injected
-        /* @var $configuration \Doctrine\DBAL\Migrations\Configuration\Configuration */
+        /* @var $configuration \Doctrine\Migrations\Configuration\Configuration */
         $configuration = $container->get('doctrine.migrations_configuration.orm_default');
-        /* @var $command \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand */
+        /* @var $command \Doctrine\Migrations\Tools\Console\Command\AbstractCommand */
         $command       = new $className;
 
         $command->setMigrationConfiguration($configuration);
@@ -70,11 +70,11 @@ class MigrationsCommandFactory implements FactoryInterface
 
     /**
      * @param \Zend\ServiceManager\ServiceLocatorInterface $container
-     * @return \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand
+     * @return \Doctrine\Migrations\Tools\Console\Command\AbstractCommand
      * @throws \InvalidArgumentException
      */
     public function createService(ServiceLocatorInterface $container)
     {
-        return $this($container, 'Doctrine\DBAL\Migrations\Tools\Console\Command\\' . $this->name . 'Command');
+        return $this($container, 'Doctrine\Migrations\Tools\Console\Command\\' . $this->name . 'Command');
     }
 }

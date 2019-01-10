@@ -19,8 +19,8 @@
 
 namespace TravisDoctrineMigrations;
 
-use Doctrine\DBAL\Migrations\AbstractMigration,
-    Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Schema\Schema,
+    Doctrine\Migrations\AbstractMigration;
 
 /**
  * Empty test migration used for testing

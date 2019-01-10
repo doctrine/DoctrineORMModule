@@ -192,15 +192,15 @@ class CliConfiguratorTest extends TestCase
             ],
             [
                 'migrations:generate',
-                \Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand::class,
+                \Doctrine\Migrations\Tools\Console\Command\GenerateCommand::class,
             ],
             [
                 'migrations:diff',
-                \Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand::class,
+                \Doctrine\Migrations\Tools\Console\Command\DiffCommand::class,
             ],
             [
                 'migrations:execute',
-                \Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand::class,
+                \Doctrine\Migrations\Tools\Console\Command\ExecuteCommand::class,
             ],
         ];
     }

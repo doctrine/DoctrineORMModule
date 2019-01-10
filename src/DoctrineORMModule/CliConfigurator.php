@@ -3,6 +3,7 @@
 namespace DoctrineORMModule;
 
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
+use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Interop\Container\ContainerInterface;
@@ -135,7 +136,7 @@ class CliConfigurator
      */
     private function getAvailableCommands()
     {
-        if (class_exists('Doctrine\\DBAL\\Migrations\\Version')) {
+        if (class_exists(VersionCommand::class)) {
             return ArrayUtils::merge($this->commands, $this->migrationCommands);
         }
 
