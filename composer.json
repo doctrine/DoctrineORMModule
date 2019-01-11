@@ -39,13 +39,13 @@
     "require":           {
         "php":                               "^7.1",
         "doctrine/doctrine-module":          "^2.1.3",
-        "doctrine/orm":                      "^2.6.0",
+        "doctrine/orm":                      "^2.6.3",
         "doctrine/dbal":                     "^2.6.0",
-        "symfony/console":                   "^2.3 || ^3.0 || ^4.0",
-        "zendframework/zend-stdlib":         "^2.7.7 || ^3.0.1",
-        "zendframework/zend-hydrator":       "^1.1 || ^2.2.1",
-        "zendframework/zend-mvc":            "^2.7.13 || ^3.0.1",
-        "zendframework/zend-servicemanager": "^2.7.6 || ^3.1"
+        "symfony/console":                   "^3.3 || ^4.0",
+        "zendframework/zend-stdlib":         "^3.2.1",
+        "zendframework/zend-hydrator":       "^2.3",
+        "zendframework/zend-mvc":            "^3.1",
+        "zendframework/zend-servicemanager": "^3.3"
     },
     "require-dev":       {
         "phpunit/phpunit":                    "^7.0.3",
@@ -57,6 +57,7 @@
         "zendframework/zend-i18n":            "^2.7.3",
         "zendframework/zend-log":             "^2.9",
         "zendframework/zend-modulemanager":   "^2.7.2",
+        "zendframework/zend-mvc-console":     "^1.2",
         "zendframework/zend-serializer":      "^2.8"
     },
     "suggest":           {
