@@ -2,12 +2,12 @@
 
 namespace DoctrineORMModule\Service;
 
-use Doctrine\DBAL\Migrations\Configuration\Configuration;
+use Doctrine\Migrations\Configuration\Configuration;
+use Doctrine\Migrations\OutputWriter;
 use DoctrineModule\Service\AbstractFactory;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Doctrine\DBAL\Migrations\OutputWriter;
 
 /**
  * DBAL Connection ServiceManager factory
@@ -21,7 +21,7 @@ class MigrationsConfigurationFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      *
-     * @return \Doctrine\DBAL\Migrations\Configuration\Configuration
+     * @return Configuration
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
@@ -58,11 +58,11 @@ class MigrationsConfigurationFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      *
-     * @return \Doctrine\DBAL\Migrations\Configuration\Configuration
+     * @return Configuration
      */
     public function createService(ServiceLocatorInterface $container)
     {
-        return $this($container, \Doctrine\DBAL\Migrations\Configuration\Configuration::class);
+        return $this($container, Configuration::class);
     }
 
     /**
