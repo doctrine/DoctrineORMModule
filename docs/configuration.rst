@@ -6,12 +6,14 @@ Register a Custom DQL Function
 
 .. code:: php
 
+    namespace Db;
+
     return [
         'doctrine' => [
             'configuration' => [
                 'orm_default' => [
                     'numeric_functions' => [
-                        'ROUND' => 'Db\DoctrineExtensions\Query\Mysql\Round',
+                        'ROUND' => Db\DoctrineExtensions\Query\Mysql\Round::class,
                     ],
                 ],
             ],
@@ -37,8 +39,8 @@ Register a Type mapping
     ];
 
 
-How to add new type
--------------------
+How to add a new type
+---------------------
 
 .. code:: php
 
@@ -129,6 +131,7 @@ Set a Custom Default Repository
 How to Use Two Connections
 --------------------------
 
+In this example we create an 'orm_crawler' ORM connection.
 See also `this blog article <https://blog.tomhanderson.com/2016/03/zf2-doctrine-configure-second-object.html>`__.
 
 .. code:: php
@@ -204,14 +207,16 @@ See also `this blog article <https://blog.tomhanderson.com/2016/03/zf2-doctrine-
         ],
     ];
 
-The ``DoctrineModule\ServiceFactory\AbstractDoctrineServiceFactory``
-will create the following objects as needed: \*
-'doctrine.connection.orm\_crawler' \*
-'doctrine.configuration.orm\_crawler' \*
-'doctrine.entitymanager.orm\_crawler' \* 'doctrine.driver.orm\_crawler'
-\* 'doctrine.eventmanager.orm\_crawler' \*
-'doctrine.entity\_resolver.orm\_crawler' \*
-'doctrine.sql\_logger\_collector.orm\_crawler'
+The ``DoctrineModule\ServiceFactory\AbstractDoctrineServiceFactory`` will create the following objects as needed:
+
+    * doctrine.connection.orm_crawler
+    * doctrine.configuration.orm_crawler
+    * doctrine.entitymanager.orm_crawler
+    * doctrine.driver.orm_crawler
+    * doctrine.eventmanager.orm_crawler
+    * doctrine.entity_resolver.orm_crawler
+    * doctrine.sql_logger_collector.orm_crawler
+
 
 You can retrieve them from the service manager via their keys.
 
@@ -219,8 +224,8 @@ You can retrieve them from the service manager via their keys.
 How to Use Naming Strategy
 --------------------------
 
-`Official
-documentation <https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/namingstrategy.html>`__
+`Official documentation 
+<https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/namingstrategy.html>`__
 
 Zend Configuration
 
@@ -245,7 +250,7 @@ How to Use Quote Strategy
 -------------------------
 
 `Official
-documentation <https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/basic-mapping.html#quoting-reserved-words>`__
+documentation <https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/basic-mapping.html#quoting-reserved-words>`__
 
 Zend Configuration
 

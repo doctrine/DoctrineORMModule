@@ -10,4 +10,5 @@ This module works with Zend Framework 2 and 3.
     configuration
     cache
     migrations
-    EXTRAS_ORM
+    miscellaneous
+
