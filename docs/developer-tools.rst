@@ -26,7 +26,6 @@ Once ``ZendDeveloperTools`` is enabled, having
 get logged and displayed in the toolbar.
 
 .. figure:: http://github.com/doctrine/DoctrineORMModule/raw/master/docs/images/zf2-zend-developer-tools-doctrine-module.png
-   :alt: 
 
 Customization
 -------------
@@ -121,6 +120,3 @@ This example will simply generate a new icon in the toolbar, with the
 log results of your ``other_orm`` connection:
 
 .. figure:: http://github.com/doctrine/DoctrineORMModule/raw/master/docs/images/zend-developer-tools-multiple-entity-managers.png
-   :alt: 
-
-
