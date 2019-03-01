@@ -52,8 +52,8 @@ class Module implements
                 ->getEventManager()
                 ->attach(
                     ProfilerEvent::EVENT_PROFILER_INIT,
-                    function ($event) {
-                        $container = $event->getTarget()->getParam('ServiceManager');
+                    function ($event) use ($manager) {
+                        $container = $manager->getEvent()->getParam('ServiceManager');
                         $container->get('doctrine.sql_logger_collector.orm_default');
                     }
                 );
