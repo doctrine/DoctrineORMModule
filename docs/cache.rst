@@ -131,4 +131,4 @@ How to enable and configure Second Level Cache
 You also need to add the ``Cache`` annotation to your model (`read
 more <https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/second-level-cache.html#entity-cache-definition>`__).
 Read more about `Second Level
-Cache <http://docs.doctrine-project.org/projects/doctrine-orm/en/current/reference/second-level-cache.html>`__.
+Cache <https://docs.doctrine-project.org/projects/doctrine-orm/en/current/reference/second-level-cache.html>`__.
