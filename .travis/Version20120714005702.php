@@ -30,7 +30,7 @@ class Version20120714005702 extends AbstractMigration
     /**
      * {@inheritDoc}
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema) : void
     {
         $this->addSql("SELECT 'Migration succeeded!'");
     }
@@ -38,7 +38,7 @@ class Version20120714005702 extends AbstractMigration
     /**
      * {@inheritDoc}
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema) : void
     {
     }
 }
