@@ -53,17 +53,17 @@ matrix:
     - php: 7.3
       env:
         - DEPS=dev
-    - php: nightly
+    - php: 7.4snapshot
       env:
         - DEPS=lowest
-    - php: nightly
+    - php: 7.4snapshot
       env:
         - DEPS=locked
-    - php: nightly
+    - php: 7.4snapshot
       env:
         - DEPS=latest
   allow_failures:
-    - php: nightly
+    - php: 7.4snapshot
 
 before_install:
   - mysql -e 'CREATE DATABASE `database`;'
