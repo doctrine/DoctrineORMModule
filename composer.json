@@ -33,6 +33,7 @@
     ],
     "extra": {
         "zf": {
+            "config-provider": "DoctrineORMModule\\ConfigProvider",
             "module": "DoctrineORMModule"
         }
     },
