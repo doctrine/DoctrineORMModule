@@ -31,12 +31,20 @@ class MigrationsConfigurationFactory extends AbstractFactory
         $appConfig        = $container->get('config');
         $migrationsConfig = $appConfig['doctrine']['migrations_configuration'][$name];
 
-        $output = new ConsoleOutput();
-        $writer = new OutputWriter(function ($message) use ($output) {
-            return $output->writeln($message);
-        });
+        $configuration = new Configuration($connection);
 
-        $configuration = new Configuration($connection, $writer);
+        $output = new ConsoleOutput();
+        $writerCallback = static function ($message) use ($output) {
+            $output->writeln($message);
+        };
+
+        $outputWriter = $configuration->getOutputWriter();
+        if (method_exists($outputWriter, 'setCallback')) {
+            $outputWriter->setCallback($writerCallback);
+        } else {
+            // Fallback for doctrine-migrations v1.x
+            $configuration->setOutputWriter(new OutputWriter($writerCallback));
+        }
 
         $configuration->setName($migrationsConfig['name']);
         $configuration->setMigrationsDirectory($migrationsConfig['directory']);
