@@ -83,7 +83,7 @@ script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then php build/coverage-checker.php build/clover.xml 70 ; fi
   - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
-  - ./.travis/run-cli.sh
+  - cat .travis/run-cli.sh | xargs -L 1 php
 
 after_script:
   - rm -Rf config/application.config.php
