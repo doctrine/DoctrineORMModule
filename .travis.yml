@@ -5,6 +5,9 @@ cache:
     - $HOME/.composer/cache
     - vendor
 
+services:
+  - mysql
+
 env:
   global:
     - COMPOSER_ARGS="--no-interaction"
@@ -50,17 +53,20 @@ matrix:
     - php: 7.3
       env:
         - DEPS=dev
-    - php: nightly
+    - php: 7.4snapshot
       env:
         - DEPS=lowest
-    - php: nightly
+    - php: 7.4snapshot
       env:
         - DEPS=locked
-    - php: nightly
+    - php: 7.4snapshot
       env:
         - DEPS=latest
   allow_failures:
-    - php: nightly
+    - php: 7.4snapshot
+
+before_install:
+  - mysql -e 'CREATE DATABASE `database`;'
 
 install:
   - if [[ $DEPS == 'dev' ]]; then travis_retry composer config minimum-stability dev ; fi
@@ -69,11 +75,17 @@ install:
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
   - composer show
 
+before_script:
+  - rm -Rf .travis/cache
+  - cp .travis/config/application.config.php config/application.config.php
+
 script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then php build/coverage-checker.php build/clover.xml 70 ; fi
   - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
+  - cat .travis/run-cli.sh | xargs -L 1 php
 
 after_script:
+  - rm -Rf config/application.config.php
   - if [[ $TEST_COVERAGE == 'true' ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover.xml; fi
