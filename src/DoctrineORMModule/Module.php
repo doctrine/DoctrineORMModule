@@ -2,13 +2,11 @@
 
 namespace DoctrineORMModule;
 
-use Interop\Container\ContainerInterface;
 use Zend\EventManager\EventInterface;
-use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
-use DoctrineORMModule\CliConfigurator;
 use ZendDeveloperTools\ProfilerEvent;
 
 /**
