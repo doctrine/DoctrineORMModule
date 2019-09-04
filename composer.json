@@ -44,7 +44,6 @@
         "doctrine/dbal":                     "^2.6.0",
         "symfony/console":                   "^3.3 || ^4.0",
         "zendframework/zend-stdlib":         "^3.2.1",
-        "zendframework/zend-hydrator":       "^2.3",
         "zendframework/zend-mvc":            "^3.1",
         "zendframework/zend-servicemanager": "^3.3"
     },
