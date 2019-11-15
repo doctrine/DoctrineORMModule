@@ -173,4 +173,57 @@ class DBALConnectionFactoryTest extends TestCase
         $platform = $dbal->getDatabasePlatform();
         $this->assertSame($platformMock, $platform);
     }
+
+    public function testWithoutUseSavepoints()
+    {
+        $config = [
+            'doctrine' => [
+                'connection' => [
+                    'orm_default' => [
+                        'driverClass'   => PDOSqliteDriver::class,
+                        'params' => [
+                            'memory' => true,
+                        ],
+                    ]
+                ],
+            ],
+        ];
+        $configurationMock = $this->getMockBuilder(Configuration::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->serviceManager->setService('doctrine.configuration.orm_default', $configurationMock);
+        $this->serviceManager->setService('config', $config);
+        $this->serviceManager->setService('Configuration', $config);
+
+        $dbal = $this->factory->createService($this->serviceManager);
+        $this->assertFalse($dbal->getNestTransactionsWithSavepoints());
+    }
+
+    public function testWithUseSavepoints()
+    {
+        $config = [
+            'doctrine' => [
+                'connection' => [
+                    'orm_default' => [
+                        'driverClass'   => PDOSqliteDriver::class,
+                        'use_savepoints' => true,
+                        'params' => [
+                            'memory' => true,
+                        ],
+                    ]
+                ],
+            ],
+        ];
+        $configurationMock = $this->getMockBuilder(Configuration::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->serviceManager->setService('doctrine.configuration.orm_default', $configurationMock);
+        $this->serviceManager->setService('config', $config);
+        $this->serviceManager->setService('Configuration', $config);
+
+        $dbal = $this->factory->createService($this->serviceManager);
+        $this->assertTrue($dbal->getNestTransactionsWithSavepoints());
+    }
 }
