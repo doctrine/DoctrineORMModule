@@ -60,6 +60,10 @@ class DBALConnectionFactory extends AbstractFactory
             $connection->getDatabasePlatform()->markDoctrineTypeCommented(Type::getType($type));
         }
 
+        if ($options->useSavepoints()) {
+            $connection->setNestTransactionsWithSavepoints(true);
+        }
+
         return $connection;
     }
 

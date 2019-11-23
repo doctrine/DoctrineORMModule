@@ -74,6 +74,11 @@ class DBALConnection extends AbstractOptions
     protected $doctrineCommentedTypes = [];
 
     /**
+     * @var bool
+     */
+    protected $useSavepoints = false;
+
+    /**
      * @param string $configuration
      */
     public function setConfiguration($configuration)
@@ -203,5 +208,21 @@ class DBALConnection extends AbstractOptions
     public function getWrapperClass()
     {
         return $this->wrapperClass;
+    }
+
+    /**
+     * @return bool
+     */
+    public function useSavepoints()
+    {
+        return $this->useSavepoints;
+    }
+
+    /**
+     * @param bool $useSavepoints
+     */
+    public function setUseSavepoints($useSavepoints)
+    {
+        $this->useSavepoints = $useSavepoints;
     }
 }
