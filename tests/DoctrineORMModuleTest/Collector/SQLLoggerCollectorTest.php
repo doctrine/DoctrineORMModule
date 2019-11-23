@@ -69,6 +69,7 @@ class SQLLoggerCollectorTest extends TestCase
         $this->assertEquals(0, $this->collector->getQueryTime());
 
         $this->logger->startQuery('some sql');
+        sleep(1);
         $this->logger->stopQuery();
         $time = microtime(true) - $start;
         $time1 = $this->collector->getQueryTime();
