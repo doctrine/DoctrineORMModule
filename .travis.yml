@@ -62,8 +62,6 @@ matrix:
     - php: 7.4snapshot
       env:
         - DEPS=latest
-  allow_failures:
-    - php: 7.4snapshot
 
 before_install:
   - mysql -e 'CREATE DATABASE `database`;'
