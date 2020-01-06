@@ -2,15 +2,15 @@
 
 namespace DoctrineORMModule\Collector;
 
-use ZendDeveloperTools\Collector\CollectorInterface;
-use ZendDeveloperTools\Collector\AutoHideInterface;
+use Laminas\DeveloperTools\Collector\CollectorInterface;
+use Laminas\DeveloperTools\Collector\AutoHideInterface;
 
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 
 use Doctrine\DBAL\Logging\DebugStack;
 
 /**
- * Collector to be used in ZendDeveloperTools to record and display SQL queries
+ * Collector to be used in LaminasDeveloperTools to record and display SQL queries
  *
  * @license MIT
  * @link    www.doctrine-project.org

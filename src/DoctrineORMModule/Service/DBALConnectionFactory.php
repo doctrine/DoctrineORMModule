@@ -8,7 +8,7 @@ use Doctrine\DBAL\Types\Type;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\DBALConnection;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * DBAL Connection ServiceManager factory

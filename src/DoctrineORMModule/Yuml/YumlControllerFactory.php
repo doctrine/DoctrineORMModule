@@ -4,11 +4,11 @@ namespace DoctrineORMModule\Yuml;
 
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
-use Zend\Http\Client;
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\Client;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class YumlControllerFactory implements FactoryInterface
 {
@@ -45,8 +45,8 @@ class YumlControllerFactory implements FactoryInterface
     {
         $config = $container->get('config');
 
-        if (! isset($config['zenddevelopertools']['toolbar']['enabled'])
-            || ! $config['zenddevelopertools']['toolbar']['enabled']
+        if (! isset($config['Laminasdevelopertools']['toolbar']['enabled'])
+            || ! $config['Laminasdevelopertools']['toolbar']['enabled']
         ) {
             throw new ServiceNotFoundException(
                 sprintf('Service %s could not be found', YumlController::class)

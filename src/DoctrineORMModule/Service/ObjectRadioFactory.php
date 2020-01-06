@@ -5,8 +5,8 @@ namespace DoctrineORMModule\Service;
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Form\Element\ObjectRadio;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
 
 /**
  * Factory for {@see ObjectRadio}

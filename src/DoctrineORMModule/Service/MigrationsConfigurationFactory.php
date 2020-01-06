@@ -6,7 +6,7 @@ use Doctrine\Migrations\Configuration\Configuration;
 use Doctrine\Migrations\OutputWriter;
 use DoctrineModule\Service\AbstractFactory;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**

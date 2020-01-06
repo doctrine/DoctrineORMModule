@@ -20,8 +20,8 @@ namespace DoctrineORMModule\Service;
 
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class DoctrineObjectHydratorFactory implements FactoryInterface
 {

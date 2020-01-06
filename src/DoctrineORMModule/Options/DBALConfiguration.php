@@ -2,7 +2,7 @@
 
 namespace DoctrineORMModule\Options;
 
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 /**
  * Configuration options for a DBAL Connection

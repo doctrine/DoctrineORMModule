@@ -4,8 +4,8 @@ namespace DoctrineORMModule\Service;
 
 use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
 use DoctrineORMModule\Collector\SQLLoggerCollector;
 use Doctrine\DBAL\Logging\DebugStack;

@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\EntityManager as DoctrineORMModuleEntityManager;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class EntityManagerFactory extends AbstractFactory
 {

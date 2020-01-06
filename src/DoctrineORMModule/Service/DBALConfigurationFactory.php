@@ -7,8 +7,8 @@ use Interop\Container\ContainerInterface;
 use RuntimeException;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Types\Type;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * DBAL Configuration ServiceManager factory

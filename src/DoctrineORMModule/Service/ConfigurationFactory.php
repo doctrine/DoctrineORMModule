@@ -9,8 +9,8 @@ use Doctrine\ORM\Mapping\EntityListenerResolver;
 use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
 use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationFactory;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\Exception\InvalidArgumentException;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Doctrine\ORM\Configuration;
 
 class ConfigurationFactory extends DoctrineConfigurationFactory

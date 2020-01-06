@@ -19,8 +19,8 @@
 namespace DoctrineORMModule\Service;
 
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Service factory for migrations command
@@ -69,7 +69,7 @@ class MigrationsCommandFactory implements FactoryInterface
     }
 
     /**
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $container
+     * @param \Laminas\ServiceManager\ServiceLocatorInterface $container
      * @return \Doctrine\Migrations\Tools\Console\Command\AbstractCommand
      * @throws \InvalidArgumentException
      */
