@@ -5,15 +5,15 @@ namespace DoctrineORMModuleTest\Yuml;
 use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Yuml\YumlController;
 use DoctrineORMModule\Yuml\YumlControllerFactory;
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class YumlControllerFactoryTest extends TestCase
 {
     public function testCreateService()
     {
         $config = [
-            'zenddevelopertools' => [
+            'laminas-developer-tools' => [
                 'toolbar' => [
                     'enabled' => true,
                 ],
@@ -37,7 +37,7 @@ class YumlControllerFactoryTest extends TestCase
     public function testCreateServiceWithNotEnabledToolbar()
     {
         $config = [
-            'zenddevelopertools' => [
+            'laminas-developer-tools' => [
                 'toolbar' => [
                     'enabled' => false,
                 ],
@@ -54,14 +54,14 @@ class YumlControllerFactoryTest extends TestCase
 
         $factory = new YumlControllerFactory();
 
-        $this->expectException(\Zend\ServiceManager\Exception\ServiceNotFoundException::class);
+        $this->expectException(\Laminas\ServiceManager\Exception\ServiceNotFoundException::class);
         $factory->createService($pluginManager);
     }
 
     public function testCreateServiceWithNoConfigKey()
     {
         $config = [
-            'zenddevelopertools' => [],
+            'laminas-developer-tools' => [],
         ];
 
         $serviceLocator = $this->createMock(ServiceLocatorInterface::class);
@@ -74,7 +74,7 @@ class YumlControllerFactoryTest extends TestCase
 
         $factory = new YumlControllerFactory();
 
-        $this->expectException(\Zend\ServiceManager\Exception\ServiceNotFoundException::class);
+        $this->expectException(\Laminas\ServiceManager\Exception\ServiceNotFoundException::class);
         $factory->createService($pluginManager);
     }
 }

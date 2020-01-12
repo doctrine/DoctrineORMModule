@@ -1,31 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Service;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Collector\MappingCollector;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use function assert;
 
 /**
  * Service factory responsible for instantiating {@see \DoctrineORMModule\Collector\MappingCollector}
  *
- * @license MIT
  * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class MappingCollectorFactory extends AbstractFactory
 {
     /**
      * {@inheritDoc}
      *
-     * @return \DoctrineORMModule\Collector\MappingCollector
+     * @return MappingCollector
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $name          = $this->getName();
-        /* @var $objectManager \Doctrine\Common\Persistence\ObjectManager */
         $objectManager = $container->get('doctrine.entitymanager.' . $name);
+        assert($objectManager instanceof ObjectManager);
 
         return new MappingCollector($objectManager->getMetadataFactory(), 'doctrine.mapping_collector.' . $name);
     }
@@ -33,11 +35,11 @@ class MappingCollectorFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      *
-     * @return \DoctrineORMModule\Collector\MappingCollector
+     * @return MappingCollector
      */
     public function createService(ServiceLocatorInterface $container)
     {
-        return $this($container, \DoctrineORMModule\Collector\MappingCollector::class);
+        return $this($container, MappingCollector::class);
     }
 
     /**

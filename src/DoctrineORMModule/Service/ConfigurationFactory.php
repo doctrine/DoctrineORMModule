@@ -1,17 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Service;
 
 use Doctrine\ORM\Cache\CacheConfiguration;
 use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Cache\RegionsConfiguration;
+use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Mapping\EntityListenerResolver;
 use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
 use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationFactory;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\Exception\InvalidArgumentException;
-use Doctrine\ORM\Configuration;
+use Laminas\ServiceManager\Exception\InvalidArgumentException;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use function assert;
+use function is_string;
+use function sprintf;
 
 class ConfigurationFactory extends DoctrineConfigurationFactory
 {
@@ -20,11 +25,11 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
      *
      * @return Configuration
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        /** @var $options DoctrineORMModuleConfiguration */
         $options = $this->getOptions($container);
-        $config  = new Configuration();
+        assert($options instanceof DoctrineORMModuleConfiguration);
+        $config = new Configuration();
 
         $config->setAutoGenerateProxyClasses($options->getGenerateProxies());
         $config->setProxyDir($options->getProxyDir());
@@ -36,6 +41,8 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         $config->setCustomStringFunctions($options->getStringFunctions());
         $config->setCustomNumericFunctions($options->getNumericFunctions());
 
+        //$options->getClassMetadataFactoryName();
+        // Cannot access classMetadataFactoryName before initialization
         $config->setClassMetadataFactoryName($options->getClassMetadataFactoryName());
 
         foreach ($options->getNamedQueries() as $name => $query) {
@@ -43,7 +50,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         }
 
         foreach ($options->getNamedNativeQueries() as $name => $query) {
-            $config->addNamedNativeQuery($name, $query['sql'], new $query['rsm']);
+            $config->addNamedNativeQuery($name, $query['sql'], new $query['rsm']());
         }
 
         foreach ($options->getCustomHydrationModes() as $modeName => $hydrator) {
@@ -60,7 +67,8 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         $config->setHydrationCacheImpl($container->get($options->getHydrationCache()));
         $config->setMetadataDriverImpl($container->get($options->getDriver()));
 
-        if ($namingStrategy = $options->getNamingStrategy()) {
+        $namingStrategy = $options->getNamingStrategy();
+        if ($namingStrategy) {
             if (is_string($namingStrategy)) {
                 if (! $container->has($namingStrategy)) {
                     throw new InvalidArgumentException(sprintf('Naming strategy "%s" not found', $namingStrategy));
@@ -72,7 +80,8 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             }
         }
 
-        if ($quoteStrategy = $options->getQuoteStrategy()) {
+        $quoteStrategy = $options->getQuoteStrategy();
+        if ($quoteStrategy) {
             if (is_string($quoteStrategy)) {
                 if (! $container->has($quoteStrategy)) {
                     throw new InvalidArgumentException(sprintf('Quote strategy "%s" not found', $quoteStrategy));
@@ -84,7 +93,8 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             }
         }
 
-        if ($repositoryFactory = $options->getRepositoryFactory()) {
+        $repositoryFactory = $options->getRepositoryFactory();
+        if ($repositoryFactory) {
             if (is_string($repositoryFactory)) {
                 if (! $container->has($repositoryFactory)) {
                     throw new InvalidArgumentException(
@@ -98,7 +108,8 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             }
         }
 
-        if ($entityListenerResolver = $options->getEntityListenerResolver()) {
+        $entityListenerResolver = $options->getEntityListenerResolver();
+        if ($entityListenerResolver) {
             if ($entityListenerResolver instanceof EntityListenerResolver) {
                 $config->setEntityListenerResolver($entityListenerResolver);
             } else {
@@ -119,9 +130,11 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
                     $regionsConfig->setLifetime($regionName, $regionConfig['lifetime']);
                 }
 
-                if (isset($regionConfig['lock_lifetime'])) {
-                    $regionsConfig->setLockLifetime($regionName, $regionConfig['lock_lifetime']);
+                if (! isset($regionConfig['lock_lifetime'])) {
+                    continue;
                 }
+
+                $regionsConfig->setLockLifetime($regionName, $regionConfig['lock_lifetime']);
             }
 
             // As Second Level Cache caches queries results, we reuse the result cache impl
@@ -136,11 +149,13 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             $config->setSecondLevelCacheConfiguration($cacheConfiguration);
         }
 
-        if ($filterSchemaAssetsExpression = $options->getFilterSchemaAssetsExpression()) {
+        $filterSchemaAssetsExpression = $options->getFilterSchemaAssetsExpression();
+        if ($filterSchemaAssetsExpression) {
             $config->setFilterSchemaAssetsExpression($filterSchemaAssetsExpression);
         }
 
-        if ($className = $options->getDefaultRepositoryClassName()) {
+        $className = $options->getDefaultRepositoryClassName();
+        if ($className) {
             $config->setDefaultRepositoryClassName($className);
         }
 
@@ -149,15 +164,12 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         return $config;
     }
 
-    public function createService(ServiceLocatorInterface $container)
+    public function createService(ServiceLocatorInterface $container) : Configuration
     {
         return $this($container, Configuration::class);
     }
 
-    /**
-     * @return string
-     */
-    protected function getOptionsClass()
+    protected function getOptionsClass() : string
     {
         return DoctrineORMModuleConfiguration::class;
     }

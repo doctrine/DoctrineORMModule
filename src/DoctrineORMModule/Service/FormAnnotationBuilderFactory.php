@@ -1,31 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Service;
 
+use Doctrine\ORM\EntityManager;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use Interop\Container\ContainerInterface;
-use Zend\Form\Factory;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Form\Factory;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use function assert;
 
 /**
  * Service factory responsible for instantiating {@see \DoctrineORMModule\Form\Annotation\AnnotationBuilder}
  *
- * @license MIT
  * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class FormAnnotationBuilderFactory extends AbstractFactory
 {
     /**
      * {@inheritDoc}
      *
-     * @return \DoctrineORMModule\Form\Annotation\AnnotationBuilder
+     * @return AnnotationBuilder
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        /* @var $entityManager \Doctrine\ORM\EntityManager */
         $entityManager = $container->get('doctrine.entitymanager.' . $this->getName());
+        assert($entityManager instanceof EntityManager);
 
         $annotationBuilder = new AnnotationBuilder($entityManager);
 
@@ -37,11 +39,11 @@ class FormAnnotationBuilderFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      *
-     * @return \DoctrineORMModule\Form\Annotation\AnnotationBuilder
+     * @return AnnotationBuilder
      */
     public function createService(ServiceLocatorInterface $container)
     {
-        return $this($container, \DoctrineORMModule\Form\Annotation\AnnotationBuilder::class);
+        return $this($container, AnnotationBuilder::class);
     }
 
     /**
@@ -53,11 +55,8 @@ class FormAnnotationBuilderFactory extends AbstractFactory
 
     /**
      * Retrieve the form factory
-     *
-     * @param  ContainerInterface $services
-     * @return Factory
      */
-    private function getFormFactory(ContainerInterface $services)
+    private function getFormFactory(ContainerInterface $services) : Factory
     {
         $elements = null;
 

@@ -5,7 +5,7 @@ namespace DoctrineORMModuleTest\Collector;
 use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Collector\SQLLoggerCollector;
 use Doctrine\DBAL\Logging\DebugStack;
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 
 class SQLLoggerCollectorTest extends TestCase
 {
@@ -24,7 +24,7 @@ class SQLLoggerCollectorTest extends TestCase
      */
     protected $collector;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->logger = new DebugStack();
@@ -38,7 +38,7 @@ class SQLLoggerCollectorTest extends TestCase
 
     public function testGetPriority()
     {
-        $this->assertInternalType('int', $this->collector->getPriority());
+        $this->assertIsInt($this->collector->getPriority());
     }
 
     public function testCollect()

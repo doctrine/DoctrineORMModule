@@ -1,50 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Options;
 
-use DoctrineORMModule\Options\DBALConfiguration;
-use Doctrine\ORM\Mapping\EntityListenerResolver;
-use Doctrine\ORM\Mapping\NamingStrategy;
-use Doctrine\ORM\Repository\RepositoryFactory;
-use Zend\Stdlib\AbstractOptions;
-use Zend\Stdlib\Exception\InvalidArgumentException;
+use Laminas\Stdlib\AbstractOptions;
 
 /**
  * Configuration options for Second Level Cache
  *
- * @license MIT
  * @link    http://www.doctrine-project.org/
- * @author  Michaël Gallego <mic.gallego@gmail.com>
  */
 class SecondLevelCacheConfiguration extends AbstractOptions
 {
     /**
      * Enable the second level cache configuration
-     *
-     * @var bool
      */
-    protected $enabled = false;
+    protected bool $enabled = false;
 
     /**
      * Default lifetime
-     *
-     * @var int
      */
-    protected $defaultLifetime = 3600;
+    protected int $defaultLifetime = 3600;
 
     /**
      * Default lock lifetime
-     *
-     * @var int
      */
-    protected $defaultLockLifetime = 60;
+    protected int $defaultLockLifetime = 60;
 
     /**
      * The file lock region directory (needed for some cache usage)
-     *
-     * @var string
      */
-    protected $fileLockRegionDirectory = '';
+    protected string $fileLockRegionDirectory = '';
 
     /**
      * Configure the lifetime and lock lifetime per region. You must pass an associative array like this:
@@ -53,86 +40,62 @@ class SecondLevelCacheConfiguration extends AbstractOptions
      *     'My\Region' => ['lifetime' => 200, 'lock_lifetime' => 400],
      * ]
      *
-     * @var array
+     * @var mixed[]
      */
-    protected $regions = [];
+    protected array $regions = [];
 
-    /**
-     * @param boolean $enabled
-     */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled) : void
     {
         $this->enabled = (bool) $enabled;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isEnabled()
+    public function isEnabled() : bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @param int $defaultLifetime
-     */
-    public function setDefaultLifetime($defaultLifetime)
+    public function setDefaultLifetime(int $defaultLifetime) : void
     {
         $this->defaultLifetime = (int) $defaultLifetime;
     }
 
-    /**
-     * @return int
-     */
-    public function getDefaultLifetime()
+    public function getDefaultLifetime() : int
     {
         return $this->defaultLifetime;
     }
 
-    /**
-     * @param int $defaultLockLifetime
-     */
-    public function setDefaultLockLifetime($defaultLockLifetime)
+    public function setDefaultLockLifetime(int $defaultLockLifetime) : void
     {
         $this->defaultLockLifetime = (int) $defaultLockLifetime;
     }
 
-    /**
-     * @return int
-     */
-    public function getDefaultLockLifetime()
+    public function getDefaultLockLifetime() : int
     {
         return $this->defaultLockLifetime;
     }
 
-    /**
-     * @param string $fileLockRegionDirectory
-     */
-    public function setFileLockRegionDirectory($fileLockRegionDirectory)
+    public function setFileLockRegionDirectory(string $fileLockRegionDirectory) : void
     {
         $this->fileLockRegionDirectory = (string) $fileLockRegionDirectory;
     }
 
-    /**
-     * @return string
-     */
-    public function getFileLockRegionDirectory()
+    public function getFileLockRegionDirectory() : string
     {
         return $this->fileLockRegionDirectory;
     }
 
     /**
-     * @param array $regions
+     * @param mixed[] $regions
      */
-    public function setRegions(array $regions)
+    public function setRegions(array $regions) : void
     {
         $this->regions = $regions;
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getRegions()
+    public function getRegions() : array
     {
         return $this->regions;
     }

@@ -4,3 +4,4 @@ phpunit.xml
 .project/
 nbproject/
 composer.phar
+.phpunit.result.cache

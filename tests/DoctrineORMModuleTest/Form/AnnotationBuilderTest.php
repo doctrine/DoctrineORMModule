@@ -6,7 +6,7 @@ use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use DoctrineORMModuleTest\Assets\Entity\FormEntity;
 use DoctrineORMModuleTest\Assets\Entity\Issue237;
 use DoctrineORMModuleTest\Framework\TestCase;
-use Zend\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
+use Laminas\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
 
 class AnnotationBuilderTest extends TestCase
 {
@@ -15,7 +15,7 @@ class AnnotationBuilderTest extends TestCase
      */
     protected $builder;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->builder = new AnnotationBuilder($this->getEntityManager());
     }

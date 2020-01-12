@@ -5,7 +5,7 @@ namespace DoctrineORMModuleTest\Form;
 use ArrayObject;
 use DoctrineORMModule\Form\Annotation\ElementAnnotationsListener;
 use DoctrineORMModuleTest\Framework\TestCase;
-use Zend\EventManager\Event;
+use Laminas\EventManager\Event;
 
 class ElementAnnotationsListenerTest extends TestCase
 {
@@ -14,7 +14,7 @@ class ElementAnnotationsListenerTest extends TestCase
      */
     protected $listener;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->listener = new ElementAnnotationsListener($this->getEntityManager());
     }
@@ -291,17 +291,17 @@ class ElementAnnotationsListenerTest extends TestCase
     public function eventTypeProvider()
     {
         return [
-            ['bool', \Zend\Form\Element\Checkbox::class],
-            ['boolean', \Zend\Form\Element\Checkbox::class],
-            ['bigint', \Zend\Form\Element\Number::class],
-            ['integer', \Zend\Form\Element\Number::class],
-            ['smallint', \Zend\Form\Element\Number::class],
-            ['datetime', \Zend\Form\Element\DateTime::class],
-            ['datetimetz', \Zend\Form\Element\DateTime::class],
-            ['date', \Zend\Form\Element\Date::class],
-            ['time', \Zend\Form\Element\Time::class],
-            ['string', \Zend\Form\Element::class],
-            ['text', \Zend\Form\Element\Textarea::class],
+            ['bool', \Laminas\Form\Element\Checkbox::class],
+            ['boolean', \Laminas\Form\Element\Checkbox::class],
+            ['bigint', \Laminas\Form\Element\Number::class],
+            ['integer', \Laminas\Form\Element\Number::class],
+            ['smallint', \Laminas\Form\Element\Number::class],
+            ['datetime', \Laminas\Form\Element\DateTime::class],
+            ['datetimetz', \Laminas\Form\Element\DateTime::class],
+            ['date', \Laminas\Form\Element\Date::class],
+            ['time', \Laminas\Form\Element\Time::class],
+            ['string', \Laminas\Form\Element::class],
+            ['text', \Laminas\Form\Element\Textarea::class],
         ];
     }
 

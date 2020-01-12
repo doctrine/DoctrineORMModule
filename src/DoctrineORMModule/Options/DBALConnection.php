@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Options;
 
 use Doctrine\DBAL\Driver\PDOMySql\Driver;
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
+use PDO;
 
 /**
  * DBAL Connection options
  *
- * @license MIT
  * @link    http://www.doctrine-project.org/
- * @author  Kyle Spraggs <theman@spiffyjr.me>
  */
 class DBALConnection extends AbstractOptions
 {
@@ -18,119 +19,91 @@ class DBALConnection extends AbstractOptions
      * Set the configuration key for the Configuration. Configuration key
      * is assembled as "doctrine.configuration.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $configuration = 'orm_default';
+    protected string $configuration = 'orm_default';
 
     /**
      * Set the eventmanager key for the EventManager. EventManager key
      * is assembled as "doctrine.eventmanager.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $eventmanager = 'orm_default';
+    protected string $eventmanager = 'orm_default';
 
     /**
      * Set the PDO instance, if any, to use. If a string is set
      * then the alias is pulled from the service locator.
      *
-     * @var null|string|\PDO
+     * @var string|PDO|null
      */
     protected $pdo = null;
 
     /**
      * Setting the driver is deprecated. You should set the
      * driver class directly instead.
-     *
-     * @var string
      */
-    protected $driverClass = Driver::class;
+    protected string $driverClass = Driver::class;
 
     /**
      * Set the wrapper class for the driver. In general, this should not
      * need to be changed.
-     *
-     * @var string|null
      */
-    protected $wrapperClass = null;
+    protected ?string $wrapperClass = null;
 
     /**
      * Driver specific connection parameters.
      *
-     * @var array
+     * @var string[]
      */
-    protected $params = [];
+    protected array $params = [];
 
-    /**
-     * @var array
-     */
-    protected $doctrineTypeMappings = [];
+    /** @var mixed[] */
+    protected array $doctrineTypeMappings = [];
 
-    /**
-     * @var array
-     */
-    protected $doctrineCommentedTypes = [];
+    /** @var mixed[] */
+    protected array $doctrineCommentedTypes = [];
 
-    /**
-     * @var bool
-     */
-    protected $useSavepoints = false;
+    protected bool $useSavepoints = false;
 
-    /**
-     * @param string $configuration
-     */
-    public function setConfiguration($configuration)
+    public function setConfiguration(string $configuration) : void
     {
         $this->configuration = $configuration;
     }
 
-    /**
-     * @return string
-     */
-    public function getConfiguration()
+    public function getConfiguration() : string
     {
-        return "doctrine.configuration.{$this->configuration}";
+        return 'doctrine.configuration.' . $this->configuration;
     }
 
-    /**
-     * @param string $eventmanager
-     */
-    public function setEventmanager($eventmanager)
+    public function setEventmanager(string $eventmanager) : void
     {
         $this->eventmanager = $eventmanager;
     }
 
-    /**
-     * @return string
-     */
-    public function getEventmanager()
+    public function getEventmanager() : string
     {
-        return "doctrine.eventmanager.{$this->eventmanager}";
+        return 'doctrine.eventmanager.' . $this->eventmanager;
     }
 
     /**
-     * @param array $params
+     * @param mixed[] $params
      */
-    public function setParams($params)
+    public function setParams(array $params) : void
     {
         $this->params = $params;
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getParams()
+    public function getParams() : array
     {
         return $this->params;
     }
 
     /**
-     * @param  array                                     $doctrineTypeMappings
-     * @return \DoctrineORMModule\Options\DBALConnection
+     * @param mixed[] $doctrineTypeMappings
      */
-    public function setDoctrineTypeMappings($doctrineTypeMappings)
+    public function setDoctrineTypeMappings(array $doctrineTypeMappings) : \DoctrineORMModule\Options\DBALConnection
     {
         $this->doctrineTypeMappings = (array) $doctrineTypeMappings;
 
@@ -138,90 +111,71 @@ class DBALConnection extends AbstractOptions
     }
 
     /**
-     *
-     * @return array
+     * @return mixed[]
      */
-    public function getDoctrineTypeMappings()
+    public function getDoctrineTypeMappings() : array
     {
         return $this->doctrineTypeMappings;
     }
 
     /**
-     * @param  array                                     $doctrineCommentedTypes
+     * @param mixed[] $doctrineCommentedTypes
      */
-    public function setDoctrineCommentedTypes(array $doctrineCommentedTypes)
+    public function setDoctrineCommentedTypes(array $doctrineCommentedTypes) : void
     {
         $this->doctrineCommentedTypes = $doctrineCommentedTypes;
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getDoctrineCommentedTypes()
+    public function getDoctrineCommentedTypes() : array
     {
         return $this->doctrineCommentedTypes;
     }
 
-    /**
-     * @param null|string $driverClass
-     */
-    public function setDriverClass($driverClass)
+    public function setDriverClass(?string $driverClass) : void
     {
         $this->driverClass = $driverClass;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getDriverClass()
+    public function getDriverClass() : ?string
     {
         return $this->driverClass;
     }
 
     /**
-     * @param null|\PDO|string $pdo
+     * @param PDO|string|null $pdo
      */
-    public function setPdo($pdo)
+    public function setPdo($pdo) : void
     {
         $this->pdo = $pdo;
     }
 
     /**
-     * @return null|\PDO|string
+     * @return PDO|string|null
      */
     public function getPdo()
     {
         return $this->pdo;
     }
 
-    /**
-     * @param string $wrapperClass
-     */
-    public function setWrapperClass($wrapperClass)
+    public function setWrapperClass(string $wrapperClass) : void
     {
         $this->wrapperClass = $wrapperClass;
     }
 
-    /**
-     * @return string
-     */
-    public function getWrapperClass()
+    public function getWrapperClass() : ?string
     {
         return $this->wrapperClass;
     }
 
-    /**
-     * @return bool
-     */
-    public function useSavepoints()
+    public function useSavepoints() : bool
     {
         return $this->useSavepoints;
     }
 
-    /**
-     * @param bool $useSavepoints
-     */
-    public function setUseSavepoints($useSavepoints)
+    public function setUseSavepoints(bool $useSavepoints) : void
     {
         $this->useSavepoints = $useSavepoints;
     }

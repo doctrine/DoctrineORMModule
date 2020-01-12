@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -18,25 +21,26 @@
 
 namespace DoctrineORMModule\Service;
 
+use Doctrine\Migrations\Configuration\Configuration;
+use Doctrine\Migrations\Tools\Console\Command\AbstractCommand;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use InvalidArgumentException;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use function assert;
+use function class_exists;
+use function strtolower;
+use function ucfirst;
 
 /**
  * Service factory for migrations command
- *
- * @license MIT
- * @author Aleksandr Sandrovskiy <a.sandrovsky@gmail.com>
  */
 class MigrationsCommandFactory implements FactoryInterface
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
     /**
-     * @param $name
+     * {@inheritDoc}
      */
     public function __construct($name)
     {
@@ -46,22 +50,23 @@ class MigrationsCommandFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
-     * @return \Doctrine\Migrations\Tools\Console\Command\AbstractCommand
-     * @throws \InvalidArgumentException
+     * @return AbstractCommand
+     *
+     * @throws InvalidArgumentException
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $className = 'Doctrine\Migrations\Tools\Console\Command\\' . $this->name . 'Command';
 
         if (! class_exists($className)) {
-            throw new \InvalidArgumentException();
+            throw new InvalidArgumentException();
         }
 
-        // @TODO currently hardcoded: `orm_default` should be injected
-        /* @var $configuration \Doctrine\Migrations\Configuration\Configuration */
         $configuration = $container->get('doctrine.migrations_configuration.orm_default');
-        /* @var $command \Doctrine\Migrations\Tools\Console\Command\AbstractCommand */
-        $command       = new $className;
+        // @TODO currently hardcoded: `orm_default` should be injected
+        assert($configuration instanceof Configuration);
+        $command = new $className();
+        assert($command instanceof AbstractCommand);
 
         $command->setMigrationConfiguration($configuration);
 
@@ -69,11 +74,9 @@ class MigrationsCommandFactory implements FactoryInterface
     }
 
     /**
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $container
-     * @return \Doctrine\Migrations\Tools\Console\Command\AbstractCommand
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public function createService(ServiceLocatorInterface $container)
+    public function createService(ServiceLocatorInterface $container) : AbstractCommand
     {
         return $this($container, 'Doctrine\Migrations\Tools\Console\Command\\' . $this->name . 'Command');
     }

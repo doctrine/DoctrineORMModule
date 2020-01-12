@@ -21,7 +21,7 @@ class ConfigurationOptionsTest extends TestCase
         $options->setNamingStrategy($namingStrategy);
         $this->assertSame($namingStrategy, $options->getNamingStrategy());
 
-        $this->expectException(\Zend\Stdlib\Exception\InvalidArgumentException::class);
+        $this->expectException(\Laminas\Stdlib\Exception\InvalidArgumentException::class);
         $options->setNamingStrategy(new \stdClass());
     }
 
@@ -38,7 +38,7 @@ class ConfigurationOptionsTest extends TestCase
         $options->setQuoteStrategy($quoteStrategy);
         $this->assertSame($quoteStrategy, $options->getQuoteStrategy());
 
-        $this->expectException(\Zend\Stdlib\Exception\InvalidArgumentException::class);
+        $this->expectException(\Laminas\Stdlib\Exception\InvalidArgumentException::class);
         $options->setQuoteStrategy(new \stdClass());
     }
 
@@ -55,7 +55,7 @@ class ConfigurationOptionsTest extends TestCase
         $options->setRepositoryFactory($repositoryFactory);
         $this->assertSame($repositoryFactory, $options->getRepositoryFactory());
 
-        $this->expectException(\Zend\Stdlib\Exception\InvalidArgumentException::class);
+        $this->expectException(\Laminas\Stdlib\Exception\InvalidArgumentException::class);
         $options->setRepositoryFactory(new \stdClass());
     }
 
@@ -74,7 +74,7 @@ class ConfigurationOptionsTest extends TestCase
         $options->setEntityListenerResolver($entityListenerResolver);
         $this->assertSame($entityListenerResolver, $options->getEntityListenerResolver());
 
-        $this->expectException(\Zend\Stdlib\Exception\InvalidArgumentException::class);
+        $this->expectException(\Laminas\Stdlib\Exception\InvalidArgumentException::class);
         $options->setEntityListenerResolver(new \stdClass());
     }
 }

@@ -1,29 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Form\Annotation;
 
 use ArrayObject;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use DoctrineORMModule\Form\Element\EntitySelect;
-use Zend\EventManager\AbstractListenerAggregate;
-use Zend\EventManager\EventInterface;
-use Zend\EventManager\EventManagerInterface;
-use Zend\Form\Element as ZendFormElement;
+use Laminas\EventManager\AbstractListenerAggregate;
+use Laminas\EventManager\EventInterface;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\Form\Element as LaminasFormElement;
+use function array_key_exists;
+use function array_merge;
+use function assert;
+use function in_array;
 
-/**
- * @author Kyle Spraggs <theman@spiffyjr.me>
- */
 class ElementAnnotationsListener extends AbstractListenerAggregate
 {
-    /**
-     * @var \Doctrine\Common\Persistence\ObjectManager
-     */
-    protected $objectManager;
+    protected ObjectManager $objectManager;
 
-    /**
-     * @param ObjectManager $objectManager
-     */
     public function __construct(ObjectManager $objectManager)
     {
         $this->objectManager = $objectManager;
@@ -73,14 +71,13 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     }
 
     /**
-     * @param EventInterface $event
      * @internal
      */
-    public function handleToOne(EventInterface $event)
+    public function handleToOne(EventInterface $event) : void
     {
-        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $metadata = $event->getParam('metadata');
-        $mapping  = $this->getAssociationMapping($event);
+        assert($metadata instanceof ClassMetadata);
+        $mapping = $this->getAssociationMapping($event);
         if (! $mapping || ! $metadata->isSingleValuedAssociation($event->getParam('name'))) {
             return;
         }
@@ -90,22 +87,21 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     }
 
     /**
-     * @param EventInterface $event
      * @internal
      */
-    public function handleToMany(EventInterface $event)
+    public function handleToMany(EventInterface $event) : void
     {
-        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $metadata = $event->getParam('metadata');
-        $mapping  = $this->getAssociationMapping($event);
+        assert($metadata instanceof ClassMetadata);
+        $mapping = $this->getAssociationMapping($event);
         if (! $mapping || ! $metadata->isCollectionValuedAssociation($event->getParam('name'))) {
             return;
         }
 
         $this->prepareEvent($event);
 
-        /** @var \ArrayObject $elementSpec */
-        $elementSpec           = $event->getParam('elementSpec');
+        $elementSpec = $event->getParam('elementSpec');
+        assert($elementSpec instanceof ArrayObject);
         $inputSpec             = $event->getParam('inputSpec');
         $inputSpec['required'] = false;
 
@@ -115,27 +111,23 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     }
 
     /**
-     * @param EventInterface $event
      * @internal
-     * @return bool
      */
-    public function handleExcludeAssociation(EventInterface $event)
+    public function handleExcludeAssociation(EventInterface $event) : bool
     {
-        /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
         $metadata = $event->getParam('metadata');
+        assert($metadata instanceof ClassMetadataInfo);
 
         return $metadata && $metadata->isAssociationInverseSide($event->getParam('name'));
     }
 
     /**
-     * @param EventInterface $event
      * @internal
-     * @return bool
      */
-    public function handleExcludeField(EventInterface $event)
+    public function handleExcludeField(EventInterface $event) : bool
     {
-        /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
-        $metadata    = $event->getParam('metadata');
+        $metadata = $event->getParam('metadata');
+        assert($metadata instanceof ClassMetadataInfo);
         $identifiers = $metadata->getIdentifierFieldNames();
 
         return in_array($event->getParam('name'), $identifiers) &&
@@ -143,13 +135,12 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     }
 
     /**
-     * @param EventInterface $event
      * @internal
      */
-    public function handleFilterField(EventInterface $event)
+    public function handleFilterField(EventInterface $event) : void
     {
-        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $metadata = $event->getParam('metadata');
+        assert($metadata instanceof ClassMetadata);
         if (! $metadata || ! $metadata->hasField($event->getParam('name'))) {
             return;
         }
@@ -180,14 +171,13 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     }
 
     /**
-     * @param EventInterface $event
      * @internal
      */
-    public function handleRequiredAssociation(EventInterface $event)
+    public function handleRequiredAssociation(EventInterface $event) : void
     {
-        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $metadata = $event->getParam('metadata');
-        $mapping  = $this->getAssociationMapping($event);
+        assert($metadata instanceof ClassMetadata);
+        $mapping = $this->getAssociationMapping($event);
         if (! $mapping) {
             return;
         }
@@ -210,6 +200,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                     ) {
                         $elementSpec['spec']['options']['empty_option'] = 'NULL';
                     }
+
                     break;
                 }
             }
@@ -219,15 +210,14 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     }
 
     /**
-     * @param EventInterface $event
      * @internal
      */
-    public function handleRequiredField(EventInterface $event)
+    public function handleRequiredField(EventInterface $event) : void
     {
         $this->prepareEvent($event);
 
-        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
-        $metadata  = $event->getParam('metadata');
+        $metadata = $event->getParam('metadata');
+        assert($metadata instanceof ClassMetadata);
         $inputSpec = $event->getParam('inputSpec');
 
         if (! $metadata || ! $metadata->hasField($event->getParam('name'))) {
@@ -238,14 +228,13 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     }
 
     /**
-     * @param EventInterface $event
      * @internal
      */
-    public function handleTypeField(EventInterface $event)
+    public function handleTypeField(EventInterface $event) : void
     {
-        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $metadata = $event->getParam('metadata');
-        $mapping  = $this->getFieldMapping($event);
+        assert($metadata instanceof ClassMetadata);
+        $mapping = $this->getFieldMapping($event);
         if (! $mapping) {
             return;
         }
@@ -256,6 +245,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
 
         if (isset($elementSpec['spec']['options']['target_class'])) {
             $this->mergeAssociationOptions($elementSpec, $elementSpec['spec']['options']['target_class']);
+
             return;
         }
 
@@ -267,27 +257,27 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
             case 'bigint':
             case 'integer':
             case 'smallint':
-                $type = ZendFormElement\Number::class;
+                $type = LaminasFormElement\Number::class;
                 break;
             case 'bool':
             case 'boolean':
-                $type = ZendFormElement\Checkbox::class;
+                $type = LaminasFormElement\Checkbox::class;
                 break;
             case 'date':
-                $type = ZendFormElement\Date::class;
+                $type = LaminasFormElement\Date::class;
                 break;
             case 'datetimetz':
             case 'datetime':
-                $type = ZendFormElement\DateTime::class;
+                $type = LaminasFormElement\DateTime::class;
                 break;
             case 'time':
-                $type = ZendFormElement\Time::class;
+                $type = LaminasFormElement\Time::class;
                 break;
             case 'text':
-                $type = ZendFormElement\Textarea::class;
+                $type = LaminasFormElement\Textarea::class;
                 break;
             default:
-                $type = ZendFormElement::class;
+                $type = LaminasFormElement::class;
                 break;
         }
 
@@ -295,13 +285,12 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     }
 
     /**
-     * @param EventInterface $event
      * @internal
      */
-    public function handleValidatorField(EventInterface $event)
+    public function handleValidatorField(EventInterface $event) : void
     {
-        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
-        $mapping  = $this->getFieldMapping($event);
+        $mapping = $this->getFieldMapping($event);
+
         $metadata = $event->getParam('metadata');
         if (! $mapping) {
             return;
@@ -330,7 +319,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
             case 'string':
                 $elementSpec = $event->getParam('elementSpec');
                 if (isset($elementSpec['spec']['type']) &&
-                    in_array($elementSpec['spec']['type'], ['File', 'Zend\Form\Element\File'])
+                    in_array($elementSpec['spec']['type'], ['File', 'Laminas\Form\Element\File'])
                 ) {
                     return;
                 }
@@ -341,18 +330,18 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                         'options' => ['max' => $mapping['length']],
                     ];
                 }
+
                 break;
         }
     }
 
     /**
-     * @param EventInterface $event
-     * @return array|null
+     * @return mixed[]
      */
-    protected function getFieldMapping(EventInterface $event)
+    protected function getFieldMapping(EventInterface $event) : ?array
     {
-        /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
         $metadata = $event->getParam('metadata');
+        assert($metadata instanceof ClassMetadataInfo);
         if ($metadata && $metadata->hasField($event->getParam('name'))) {
             return $metadata->getFieldMapping($event->getParam('name'));
         }
@@ -361,13 +350,12 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     }
 
     /**
-     * @param EventInterface $event
-     * @return array|null
+     * @return mixed[]
      */
-    protected function getAssociationMapping(EventInterface $event)
+    protected function getAssociationMapping(EventInterface $event) : ?array
     {
-        /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
         $metadata = $event->getParam('metadata');
+        assert($metadata instanceof ClassMetadataInfo);
         if ($metadata && $metadata->hasAssociation($event->getParam('name'))) {
             return $metadata->getAssociationMapping($event->getParam('name'));
         }
@@ -375,11 +363,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         return null;
     }
 
-    /**
-     * @param ArrayObject $elementSpec
-     * @param string $targetEntity
-     */
-    protected function mergeAssociationOptions(ArrayObject $elementSpec, $targetEntity)
+    protected function mergeAssociationOptions(ArrayObject $elementSpec, string $targetEntity) : void
     {
         $options = $elementSpec['spec']['options'] ?? [];
         $options = array_merge(
@@ -391,22 +375,24 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         );
 
         $elementSpec['spec']['options'] = $options;
-        if (! isset($elementSpec['spec']['type'])) {
-            $elementSpec['spec']['type'] = EntitySelect::class;
+        if (isset($elementSpec['spec']['type'])) {
+            return;
         }
+
+        $elementSpec['spec']['type'] = EntitySelect::class;
     }
 
     /**
      * Normalizes event setting all expected parameters.
-     *
-     * @param EventInterface $event
      */
-    protected function prepareEvent(EventInterface $event)
+    protected function prepareEvent(EventInterface $event) : void
     {
         foreach (['elementSpec', 'inputSpec'] as $type) {
-            if (! $event->getParam($type)) {
-                $event->setParam($type, new ArrayObject());
+            if ($event->getParam($type)) {
+                continue;
             }
+
+            $event->setParam($type, new ArrayObject());
         }
 
         $elementSpec = $event->getParam('elementSpec');
@@ -415,11 +401,15 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         if (! isset($elementSpec['spec'])) {
             $elementSpec['spec'] = [];
         }
+
         if (! isset($inputSpec['filters'])) {
             $inputSpec['filters'] = [];
         }
-        if (! isset($inputSpec['validators'])) {
-            $inputSpec['validators'] = [];
+
+        if (isset($inputSpec['validators'])) {
+            return;
         }
+
+        $inputSpec['validators'] = [];
     }
 }

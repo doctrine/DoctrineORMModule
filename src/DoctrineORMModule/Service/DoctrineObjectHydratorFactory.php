@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -20,15 +23,15 @@ namespace DoctrineORMModule\Service;
 
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class DoctrineObjectHydratorFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         return new DoctrineObject($container->get('doctrine.entitymanager.orm_default'));
     }

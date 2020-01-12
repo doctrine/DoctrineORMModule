@@ -1,34 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Service;
 
-use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
-use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use RuntimeException;
-use DoctrineORMModule\Collector\SQLLoggerCollector;
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\DBAL\Logging\LoggerChain;
+use Doctrine\ORM\Configuration;
+use DoctrineORMModule\Collector\SQLLoggerCollector;
+use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
+use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use RuntimeException;
+use function assert;
+use function sprintf;
 
 /**
  * DBAL Configuration ServiceManager factory
  *
- * @license MIT
  * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class SQLLoggerCollectorFactory implements FactoryInterface
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @param string $name
-     */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -36,10 +33,10 @@ class SQLLoggerCollectorFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        /** @var $options SQLLoggerCollectorOptions */
         $options = $this->getOptions($container);
+        assert($options instanceof SQLLoggerCollectorOptions);
 
         // @todo always ask the serviceLocator instead? (add a factory?)
         if ($options->getSqlLogger()) {
@@ -48,10 +45,10 @@ class SQLLoggerCollectorFactory implements FactoryInterface
             $debugStackLogger = new DebugStack();
         }
 
-        /* @var $configuration \Doctrine\ORM\Configuration */
         $configuration = $container->get($options->getConfiguration());
+        assert($configuration instanceof Configuration);
 
-        if (null !== $configuration->getSQLLogger()) {
+        if ($configuration->getSQLLogger() !== null) {
             $logger = new LoggerChain();
             $logger->addLogger($debugStackLogger);
             $logger->addLogger($configuration->getSQLLogger());
@@ -72,8 +69,8 @@ class SQLLoggerCollectorFactory implements FactoryInterface
     }
 
     /**
-     * @param  ContainerInterface $serviceLocator
      * @return mixed
+     *
      * @throws RuntimeException
      */
     protected function getOptions(ContainerInterface $serviceLocator)
@@ -82,7 +79,7 @@ class SQLLoggerCollectorFactory implements FactoryInterface
         $options = $options['doctrine'];
         $options = $options['sql_logger_collector'][$this->name] ?? null;
 
-        if (null === $options) {
+        if ($options === null) {
             throw new RuntimeException(
                 sprintf(
                     'Configuration with name "%s" could not be found in "doctrine.sql_logger_collector".',

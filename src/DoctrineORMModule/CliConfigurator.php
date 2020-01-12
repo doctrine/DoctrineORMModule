@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule;
 
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
@@ -7,23 +9,25 @@ use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Interop\Container\ContainerInterface;
+use Laminas\Stdlib\ArrayUtils;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputOption;
-use Zend\Stdlib\ArrayUtils;
+use function assert;
+use function class_exists;
 
 /**
- * @license MIT
  * @link    www.doctrine-project.org
- * @author  Nicolas Eeckeloo <neeckeloo@gmail.com>
  */
 class CliConfigurator
 {
-    private $defaultObjectManagerName = 'doctrine.entitymanager.orm_default';
+    private string $defaultObjectManagerName = 'doctrine.entitymanager.orm_default';
 
-    private $commands = [
+    /** @var string[] An array of functions. */
+    private array $commands = [
         'doctrine.dbal_cmd.runsql',
         'doctrine.dbal_cmd.import',
         'doctrine.orm_cmd.clear_cache_metadata',
@@ -43,7 +47,8 @@ class CliConfigurator
         'doctrine.orm_cmd.info',
     ];
 
-    private $migrationCommands = [
+    /** @var string[] An array of functions. */
+    private array $migrationCommands = [
         'doctrine.migrations_cmd.execute',
         'doctrine.migrations_cmd.generate',
         'doctrine.migrations_cmd.migrate',
@@ -53,29 +58,26 @@ class CliConfigurator
         'doctrine.migrations_cmd.latest',
     ];
 
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
-    public function configure(Application $cli)
+    public function configure(Application $cli) : void
     {
         $commands = $this->getAvailableCommands();
         foreach ($commands as $commandName) {
-            /* @var $command \Symfony\Component\Console\Command\Command */
             $command = $this->container->get($commandName);
+            assert($command instanceof Command);
             $command->getDefinition()->addOption($this->createObjectManagerInputOption());
 
             $cli->add($command);
         }
 
-        /* @var $objectManager \Doctrine\ORM\EntityManagerInterface */
         $objectManager = $this->container->get($this->getObjectManagerName());
+        assert($objectManager instanceof EntityManagerInterface);
 
         $helpers = $this->getHelpers($objectManager);
         foreach ($helpers as $name => $instance) {
@@ -84,10 +86,9 @@ class CliConfigurator
     }
 
     /**
-     * @param EntityManagerInterface $objectManager
-     * @return array
+     * @return mixed[]
      */
-    private function getHelpers(EntityManagerInterface $objectManager)
+    private function getHelpers(EntityManagerInterface $objectManager) : array
     {
         $helpers = [];
 
@@ -103,10 +104,7 @@ class CliConfigurator
         return $helpers;
     }
 
-    /**
-     * @return InputOption
-     */
-    private function createObjectManagerInputOption()
+    private function createObjectManagerInputOption() : InputOption
     {
         return new InputOption(
             'object-manager',
@@ -117,10 +115,7 @@ class CliConfigurator
         );
     }
 
-    /**
-     * @return string
-     */
-    private function getObjectManagerName()
+    private function getObjectManagerName() : string
     {
         $arguments = new ArgvInput();
 
@@ -132,9 +127,9 @@ class CliConfigurator
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    private function getAvailableCommands()
+    private function getAvailableCommands() : array
     {
         if (class_exists(VersionCommand::class)) {
             return ArrayUtils::merge($this->commands, $this->migrationCommands);

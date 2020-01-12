@@ -5,7 +5,7 @@ namespace DoctrineORMModuleTest\Service;
 use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Service\ConfigurationFactory;
 use Doctrine\Common\Cache\ArrayCache;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 class ConfigurationFactoryTest extends TestCase
 {
@@ -21,7 +21,7 @@ class ConfigurationFactoryTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->serviceManager = new ServiceManager();
         $this->factory = new ConfigurationFactory('test_default');
@@ -95,7 +95,7 @@ class ConfigurationFactoryTest extends TestCase
             ],
         ];
         $this->serviceManager->setService('config', $config);
-        $this->expectException(\Zend\ServiceManager\Exception\InvalidArgumentException::class);
+        $this->expectException(\Laminas\ServiceManager\Exception\InvalidArgumentException::class);
         $this->factory->createService($this->serviceManager);
     }
 
@@ -148,7 +148,7 @@ class ConfigurationFactoryTest extends TestCase
             ],
         ];
         $this->serviceManager->setService('config', $config);
-        $this->expectException(\Zend\ServiceManager\Exception\InvalidArgumentException::class);
+        $this->expectException(\Laminas\ServiceManager\Exception\InvalidArgumentException::class);
         $this->factory->createService($this->serviceManager);
     }
 

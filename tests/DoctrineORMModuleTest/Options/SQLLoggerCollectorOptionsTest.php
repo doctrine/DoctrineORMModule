@@ -31,7 +31,5 @@ class SQLLoggerCollectorOptionsTest extends TestCase
         $this->assertSame('orm_default', $options->getName()); // testing defaults too!
         $options->setName('collector-name');
         $this->assertSame('collector-name', $options->getName());
-        $options->setName(null);
-        $this->assertSame('', $options->getName());
     }
 }

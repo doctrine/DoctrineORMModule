@@ -12,7 +12,7 @@ use DoctrineORMModule\Service\DBALConnectionFactory;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\EventManager;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 use DoctrineORMModule\Service\ConfigurationFactory;
 
 /**
@@ -32,7 +32,7 @@ class DBALConnectionFactoryTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->serviceManager = new ServiceManager();
         $this->factory = new DBALConnectionFactory('orm_default');

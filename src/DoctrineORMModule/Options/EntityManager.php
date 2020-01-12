@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Options;
 
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 class EntityManager extends AbstractOptions
 {
@@ -10,54 +12,37 @@ class EntityManager extends AbstractOptions
      * Set the configuration key for the Configuration. Configuration key
      * is assembled as "doctrine.configuration.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $configuration = 'orm_default';
+    protected string $configuration = 'orm_default';
 
     /**
      * Set the connection key for the Connection. Connection key
      * is assembled as "doctrine.connection.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $connection = 'orm_default';
+    protected string $connection = 'orm_default';
 
     /**
      * Set the connection key for the EntityResolver, which is
      * a service of type {@see \Doctrine\ORM\Tools\ResolveTargetEntityListener}.
      * The EntityResolver service name is assembled
      * as "doctrine.entity_resolver.{key}"
-     *
-     * @var string
      */
-    protected $entityResolver = 'orm_default';
+    protected string $entityResolver = 'orm_default';
 
-    /**
-     * @param  string $configuration
-     * @return self
-     */
-    public function setConfiguration($configuration)
+    public function setConfiguration(string $configuration) : self
     {
         $this->configuration = $configuration;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getConfiguration()
+    public function getConfiguration() : string
     {
-        return "doctrine.configuration.{$this->configuration}";
+        return 'doctrine.configuration.' . $this->configuration;
     }
 
-    /**
-     * @param  string $connection
-     * @return self
-     */
-    public function setConnection($connection)
+    public function setConnection(string $connection) : self
     {
         $this->connection = $connection;
 
@@ -65,19 +50,14 @@ class EntityManager extends AbstractOptions
     }
 
     /**
-     * @return string
      * @return self
      */
-    public function getConnection()
+    public function getConnection() : string
     {
         return 'doctrine.connection.' . $this->connection;
     }
 
-    /**
-     * @param  string $entityResolver
-     * @return self
-     */
-    public function setEntityResolver($entityResolver)
+    public function setEntityResolver(string $entityResolver) : self
     {
         $this->entityResolver = (string) $entityResolver;
 
@@ -85,10 +65,9 @@ class EntityManager extends AbstractOptions
     }
 
     /**
-     * @return string
      * @return self
      */
-    public function getEntityResolver()
+    public function getEntityResolver() : string
     {
         return 'doctrine.entity_resolver.' . $this->entityResolver;
     }

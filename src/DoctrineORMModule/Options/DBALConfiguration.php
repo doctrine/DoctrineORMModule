@@ -1,15 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Options;
 
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 /**
  * Configuration options for a DBAL Connection
  *
- * @license MIT
  * @link    http://www.doctrine-project.org/
- * @author  Kyle Spraggs <theman@spiffyjr.me>
  */
 class DBALConfiguration extends AbstractOptions
 {
@@ -17,70 +17,58 @@ class DBALConfiguration extends AbstractOptions
      * Set the cache key for the result cache. Cache key
      * is assembled as "doctrine.cache.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $resultCache = 'array';
+    protected string $resultCache = 'array';
 
     /**
      * Set the class name of the SQL Logger, or null, to disable.
-     *
-     * @var string
      */
-    protected $sqlLogger = null;
+    protected ?string $sqlLogger = null;
 
     /**
      * Keys must be the name of the type identifier and value is
      * the class name of the Type
      *
-     * @var array
+     * @var string[]
      */
-    protected $types = [];
+    protected array $types = [];
 
-    /**
-     * @param string $resultCache
-     */
-    public function setResultCache($resultCache)
+    public function setResultCache(string $resultCache) : self
     {
         $this->resultCache = $resultCache;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getResultCache()
+    public function getResultCache() : string
     {
         return 'doctrine.cache.' . $this->resultCache;
     }
 
-    /**
-     * @param string $sqlLogger
-     */
-    public function setSqlLogger($sqlLogger)
+    public function setSqlLogger(string $sqlLogger) : void
     {
         $this->sqlLogger = $sqlLogger;
     }
 
-    /**
-     * @return string
-     */
-    public function getSqlLogger()
+    public function getSqlLogger() : ?string
     {
         return $this->sqlLogger;
     }
 
     /**
-     * @param array $types
+     * @param string[] $types
      */
-    public function setTypes(array $types)
+    public function setTypes(array $types) : self
     {
         $this->types = $types;
+
+        return $this;
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getTypes()
+    public function getTypes() : array
     {
         return $this->types;
     }

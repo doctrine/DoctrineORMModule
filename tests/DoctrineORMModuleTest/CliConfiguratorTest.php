@@ -18,7 +18,7 @@ use Symfony\Component\Console\Application;
 class CliConfiguratorTest extends TestCase
 {
     /**
-     * @var \Zend\ServiceManager\ServiceManager
+     * @var \Laminas\ServiceManager\ServiceManager
      */
     protected $serviceManager;
 
@@ -30,7 +30,7 @@ class CliConfiguratorTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->serviceManager = ServiceManagerFactory::getServiceManager();
         $this->objectManager  = $this->serviceManager->get('doctrine.entitymanager.orm_default');

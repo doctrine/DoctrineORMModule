@@ -1,83 +1,64 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Options;
 
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 /**
  * Configuration options for an collector
  *
- * @license MIT
  * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class SQLLoggerCollectorOptions extends AbstractOptions
 {
-    /**
-     * @var string name to be assigned to the collector
-     */
-    protected $name = 'orm_default';
+    /** @var string name to be assigned to the collector */
+    protected string $name = 'orm_default';
 
-    /**
-     * @var string|null service name of the configuration where the logger has to be put
-     */
-    protected $configuration;
+    /** @var string|null service name of the configuration where the logger has to be put */
+    protected ?string $configuration = null;
 
-    /**
-     * @var string|null service name of the SQLLogger to be used
-     */
-    protected $sqlLogger;
+    /** @var string|null service name of the SQLLogger to be used */
+    protected ?string $sqlLogger = null;
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(string $name) : self
     {
-        $this->name = (string) $name;
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
      * Name of the collector
-     *
-     * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
 
-    /**
-     * @param string|null $configuration
-     */
-    public function setConfiguration($configuration)
+    public function setConfiguration(?string $configuration) : void
     {
         $this->configuration = $configuration ? (string) $configuration : null;
     }
 
     /**
      * Configuration service name (where to set the logger)
-     *
-     * @return string
      */
-    public function getConfiguration()
+    public function getConfiguration() : string
     {
         return $this->configuration ? $this->configuration : 'doctrine.configuration.orm_default';
     }
 
-    /**
-     * @param string|null $sqlLogger
-     */
-    public function setSqlLogger($sqlLogger)
+    public function setSqlLogger(?string $sqlLogger) : void
     {
         $this->sqlLogger = $sqlLogger ? (string) $sqlLogger : null;
     }
 
     /**
      * SQLLogger service name
-     *
-     * @return string|null
      */
-    public function getSqlLogger()
+    public function getSqlLogger() : ?string
     {
         return $this->sqlLogger;
     }
