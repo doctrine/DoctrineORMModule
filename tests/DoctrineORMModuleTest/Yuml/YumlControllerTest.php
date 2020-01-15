@@ -1,32 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Yuml;
 
 use DoctrineORMModule\Yuml\YumlController;
+use Laminas\Http\Client;
+use Laminas\Http\Response;
+use Laminas\Mvc\Controller\Plugin\Redirect;
+use Laminas\Mvc\Controller\PluginManager;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
+use UnexpectedValueException;
 
 /**
  * Tests for Yuml redirector controller
  *
- * @license MIT
  * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class YumlControllerTest extends TestCase
 {
-    /**
-     * @var YumlController
-     */
-    protected $controller;
+    protected YumlController $controller;
 
-    /**
-     * @var \Laminas\Http\Client|\PHPUnit_Framework_MockObject_MockObject
-     */
+    /** @var Client|PHPUnit_Framework_MockObject_MockObject */
     protected $httpClient;
 
-    /**
-     * @var \Laminas\Mvc\Controller\PluginManager|\PHPUnit_Framework_MockObject_MockObject
-     */
+    /** @var PluginManager|PHPUnit_Framework_MockObject_MockObject */
     protected $pluginManager;
 
     /**
@@ -34,11 +33,11 @@ class YumlControllerTest extends TestCase
      *
      * @covers \DoctrineORMModule\Yuml\YumlController::__construct
      */
-    protected function setUp(): void
+    protected function setUp() : void
     {
-        $this->httpClient     = $this->createMock(\Laminas\Http\Client::class);
-        $this->controller     = new YumlController($this->httpClient);
-        $this->pluginManager  = $this->getMockBuilder(\Laminas\Mvc\Controller\PluginManager::class)
+        $this->httpClient    = $this->createMock(Client::class);
+        $this->controller    = new YumlController($this->httpClient);
+        $this->pluginManager = $this->getMockBuilder(PluginManager::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->controller->setPluginManager($this->pluginManager);
@@ -47,11 +46,11 @@ class YumlControllerTest extends TestCase
     /**
      * @covers \DoctrineORMModule\Yuml\YumlController::indexAction
      */
-    public function testIndexActionWillRedirectToYuml()
+    public function testIndexActionWillRedirectToYuml() : void
     {
-        $response = $this->createMock(\Laminas\Http\Response::class);
-        $controllerResponse = $this->createMock(\Laminas\Http\Response::class);
-        $redirect = $this->createMock(\Laminas\Mvc\Controller\Plugin\Redirect::class);
+        $response           = $this->createMock(Response::class);
+        $controllerResponse = $this->createMock(Response::class);
+        $redirect           = $this->createMock(Redirect::class);
         $this->httpClient->expects($this->any())->method('send')->will($this->returnValue($response));
         $response->expects($this->any())->method('isSuccess')->will($this->returnValue(true));
         $response->expects($this->any())->method('getBody')->will($this->returnValue('short-url'));
@@ -72,13 +71,13 @@ class YumlControllerTest extends TestCase
     /**
      * @covers \DoctrineORMModule\Yuml\YumlController::indexAction
      */
-    public function testIndexActionWillFailOnMalformedResponse()
+    public function testIndexActionWillFailOnMalformedResponse() : void
     {
-        $response = $this->createMock(\Laminas\Http\Response::class);
+        $response = $this->createMock(Response::class);
         $this->httpClient->expects($this->any())->method('send')->will($this->returnValue($response));
         $response->expects($this->any())->method('isSuccess')->will($this->returnValue(false));
 
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
         $this->controller->indexAction();
     }
 }

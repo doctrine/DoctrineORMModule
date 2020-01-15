@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Assets\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -15,29 +17,24 @@ class Country
      * @ORM\Column(type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $name;
+    /** @ORM\Column(type="string", nullable=true) */
+    protected string $name;
 
-    /**
-     * @return int|null
-     */
-    public function getId()
+    public function getId() : ?int
     {
         return $this->id;
     }
 
-    public function setName($name)
+    public function setName(string $name) : self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }

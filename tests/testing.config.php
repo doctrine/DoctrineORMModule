@@ -1,30 +1,37 @@
 <?php
+
+declare(strict_types=1);
+
+use Doctrine\DBAL\Driver\PDOSqlite\Driver;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use DoctrineORMModuleTest\Assets\Entity\TargetEntity;
+use DoctrineORMModuleTest\Assets\Entity\TargetInterface;
+use DoctrineORMModuleTest\Assets\RepositoryClass;
+
 return [
     'doctrine' => [
         'configuration' => [
             'orm_default' => [
-                'default_repository_class_name' => \DoctrineORMModuleTest\Assets\RepositoryClass::class,
+                'default_repository_class_name' => RepositoryClass::class,
             ],
         ],
         'driver' => [
             'DoctrineORMModuleTest\Assets\Entity' => [
-                'class' => \Doctrine\ORM\Mapping\Driver\AnnotationDriver::class,
+                'class' => AnnotationDriver::class,
                 'cache' => 'array',
                 'paths' => [
                     __DIR__ . '/DoctrineORMModuleTest/Assets/Entity',
                 ],
             ],
             'orm_default' => [
-                'drivers' => [
-                    'DoctrineORMModuleTest\Assets\Entity' => 'DoctrineORMModuleTest\Assets\Entity',
-                ],
+                'drivers' => ['DoctrineORMModuleTest\Assets\Entity' => 'DoctrineORMModuleTest\Assets\Entity'],
             ],
         ],
         'entity_resolver' => [
             'orm_default' => [
                 'resolvers' => [
-                    \DoctrineORMModuleTest\Assets\Entity\TargetInterface::class
-                        => \DoctrineORMModuleTest\Assets\Entity\TargetEntity::class,
+                    TargetInterface::class
+                        => TargetEntity::class,
                 ],
             ],
         ],
@@ -32,16 +39,12 @@ return [
             'orm_default' => [
                 'configuration' => 'orm_default',
                 'eventmanager'  => 'orm_default',
-                'driverClass'   => \Doctrine\DBAL\Driver\PDOSqlite\Driver::class,
-                'params' => [
-                    'memory' => true,
-                ],
+                'driverClass'   => Driver::class,
+                'params' => ['memory' => true],
             ],
         ],
         'migrations_configuration' => [
-            'orm_default' => [
-                'directory' => 'build/',
-            ],
+            'orm_default' => ['directory' => 'build/'],
         ],
     ],
 ];

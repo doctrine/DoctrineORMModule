@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Service;
 
+use Doctrine\ORM\EntityManager;
 use DoctrineORMModule\Service\FormAnnotationBuilderFactory;
-use PHPUnit\Framework\TestCase;
+use Laminas\Form\FormElementManager;
 use Laminas\ServiceManager\ServiceManager;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for {@see \DoctrineORMModule\Service\FormAnnotationBuilderFactory}
@@ -16,12 +20,12 @@ class FormAnnotationBuilderFactoryTest extends TestCase
     /**
      * @group #352
      */
-    public function testFormElementManagerGetsInjected()
+    public function testFormElementManagerGetsInjected() : void
     {
-        $entityManager      = $this->getMockBuilder(\Doctrine\ORM\EntityManager::class)
+        $entityManager      = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $formElementManager = $this->getMockBuilder(\Laminas\Form\FormElementManager::class)
+        $formElementManager = $this->getMockBuilder(FormElementManager::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -31,7 +35,7 @@ class FormAnnotationBuilderFactoryTest extends TestCase
         $serviceManager->setService('FormElementManager', $formElementManager);
 
         $annotationBuilderFactory = new FormAnnotationBuilderFactory('test');
-        $annotationBuilder = $annotationBuilderFactory->createService($serviceManager);
+        $annotationBuilder        = $annotationBuilderFactory->createService($serviceManager);
 
         $this->assertSame($formElementManager, $annotationBuilder->getFormFactory()->getFormElementManager());
     }

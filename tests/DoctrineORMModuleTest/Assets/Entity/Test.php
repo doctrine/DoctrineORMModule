@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Assets\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -15,64 +17,43 @@ class Test
      * @ORM\Column(type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $username;
+    /** @ORM\Column(type="string", nullable=true) */
+    protected string $username;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $password;
+    /** @ORM\Column(type="string", nullable=true) */
+    protected string $password;
 
-    /**
-     * @return int|null
-     */
-    public function getId()
+    public function getId() : ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param string $password
-     */
-    public function setPassword($password)
+    public function setPassword(string $password) : void
     {
         $this->password = (string) $password;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPassword()
+    public function getPassword() : ?string
     {
         return $this->password;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername($username)
+    public function setUsername(string $username) : void
     {
         $this->username = (string) $username;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getUsername()
+    public function getUsername() : ?string
     {
         return $this->username;
     }
 
     /**
      * Used for testing DoctrineEntity form element
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString() : string
     {
         return (string) $this->username;
     }

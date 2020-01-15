@@ -1,20 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Options;
 
-use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Options\EntityManager;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for {@see \DoctrineORMModule\Options\EntityManager}
  *
  * @covers \DoctrineORMModule\Options\EntityManager
- *
- * @author Marco Pivetta <ocramius@gmail.com>
  */
 class EntityManagerTest extends TestCase
 {
-    public function testSetGetResolver()
+    public function testSetGetResolver() : void
     {
         $options = new EntityManager();
 

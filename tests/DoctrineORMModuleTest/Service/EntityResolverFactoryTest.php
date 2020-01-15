@@ -1,22 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\ORM\Events;
-use DoctrineORMModuleTest\Framework\TestCase as TestCase;
+use DoctrineORMModuleTest\Assets\Entity\ResolveTarget;
+use DoctrineORMModuleTest\Assets\Entity\TargetEntity;
+use DoctrineORMModuleTest\Framework\TestCase;
 
 class EntityResolverFactoryTest extends TestCase
 {
-    public function testCanResolveTargetEntity()
+    public function testCanResolveTargetEntity() : void
     {
         $em            = $this->getEntityManager();
-        $classMetadata = $em->getClassMetadata(\DoctrineORMModuleTest\Assets\Entity\ResolveTarget::class);
+        $classMetadata = $em->getClassMetadata(ResolveTarget::class);
         $meta          = $classMetadata->associationMappings;
 
-        $this->assertSame(\DoctrineORMModuleTest\Assets\Entity\TargetEntity::class, $meta['target']['targetEntity']);
+        $this->assertSame(TargetEntity::class, $meta['target']['targetEntity']);
     }
 
-    public function testAssertSubscriberIsAdded()
+    public function testAssertSubscriberIsAdded() : void
     {
         $evm = $this->getEntityManager()->getEventManager();
 

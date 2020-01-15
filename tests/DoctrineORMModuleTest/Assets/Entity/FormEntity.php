@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Assets\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -8,8 +10,6 @@ use Laminas\Form\Annotation as Form;
 /**
  * @ORM\Entity
  * @ORM\Table(name="doctrine_orm_module_form_entity")
- *
- * @author Kyle Spraggs <theman@spiffyjr.me>
  */
 class FormEntity
 {
@@ -17,122 +17,111 @@ class FormEntity
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
-    protected $id;
+    protected int $id;
+
+    /** @ORM\Column(type="bool") */
+    protected bool $bool;
+
+    /** @ORM\Column(type="boolean") */
+    protected bool $boolean;
+
+    /** @ORM\Column(type="float") */
+    protected float $float;
+
+    /** @ORM\Column(type="bigint") */
+    protected int $bigint;
+
+    /** @ORM\Column(type="integer") */
+    protected int $integer;
+
+    /** @ORM\Column(type="smallint") */
+    protected int $smallint;
+
+    /** @ORM\Column(type="datetime") */
+    protected DateTime $datetime;
+
+    /** @ORM\Column(type="datetimetz") */
+    protected DateTimeTZ $datetimetz;
+
+    /** @ORM\Column(type="date") */
+    protected Date $date;
+
+    /** @ORM\Column(type="time") */
+    protected Time $time;
+
+    /** @ORM\Column(type="text") */
+    protected string $text;
+
+    /** @ORM\Column(type="string", nullable=false, length=20) */
+    protected string $string;
+
+    /** @ORM\Column(type="string", nullable=true) */
+    protected string $stringNullable;
 
     /**
-     * @ORM\Column(type="bool")
-     */
-    protected $bool;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $boolean;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    protected $float;
-
-    /**
-     * @ORM\Column(type="bigint")
-     */
-    protected $bigint;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $integer;
-
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    protected $smallint;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $datetime;
-
-    /**
-     * @ORM\Column(type="datetimetz")
-     */
-    protected $datetimetz;
-
-    /**
-     * @ORM\Column(type="date")
-     */
-    protected $date;
-
-    /**
-     * @ORM\Column(type="time")
-     */
-    protected $time;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    protected $text;
-
-    /**
-     * @ORM\Column(type="string", nullable=false, length=20)
-     */
-    protected $string;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $stringNullable;
-
-    /**
-     * @ORM\OneToOne(targetEntity="TargetInterface")
+     * @ORM\OneToOne(targetEntity="Target")
+     *
+     * @var mixed
      */
     protected $targetOne;
 
     /**
-     * @ORM\OneToOne(targetEntity="TargetInterface")
+     * @ORM\OneToOne(targetEntity="Target")
      * @ORM\JoinColumn(nullable=true)
+     *
+     * @var mixed
      */
     protected $targetOneNullable;
 
    /**
-    * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")
-    * @ORM\OneToOne(targetEntity="TargetInterface")
+    * @ORM\OneToOne(targetEntity="Target")
     * @ORM\JoinColumn(nullable=true)
+    *
+    * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")
     * @Form\Options({"empty_option":null})
+    *
+    * @var mixed
     */
     protected $noDisplayEmptyOption;
 
     /**
      * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntity")
+     *
+     * @var mixed
      */
     protected $targetMany;
 
     /**
      * @ORM\Column(type="integer")
+     *
      * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
      * @Form\Type("Radio")
      */
-    protected $specificType;
+    protected int $specificType;
 
     /**
      * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntityMulti")
+     *
      * @Form\Type("DoctrineORMModule\Form\Element\EntityMultiCheckbox")
+     *
+     * @var mixed
      */
     protected $specificMultiType;
 
     /**
      * @ORM\Column(type="integer")
+     *
      * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
      * @Form\Attributes({"type":"textarea"})
      */
-    protected $specificAttributeType;
+    protected int $specificAttributeType;
 
     /**
      * @ORM\Column(type="string", length=256)
-     * @Form\Type("File")
      * @ORM\JoinColumn(nullable=true)
+     *
+     * @Form\Type("File")
      * @Form\Options({"label":"Image"})
      */
-    protected $image;
+    protected string $image;
 }

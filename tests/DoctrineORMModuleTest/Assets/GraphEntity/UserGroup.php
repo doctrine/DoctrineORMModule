@@ -1,36 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Assets\GraphEntity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Part of the test assets used to produce a demo of graphs in the ZDT integration
  *
- * @license MIT
  * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  *
  * @ORM\Entity()
  */
 class UserGroup
 {
     /**
-     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|User[]
      * @ORM\ManyToMany(targetEntity="User", inversedBy="groups")
+     *
+     * @var Collection|User[]
      */
-    protected $users;
+    protected Collection $users;
 
-    /* */
     public function __construct()
     {
         $this->users = new ArrayCollection();

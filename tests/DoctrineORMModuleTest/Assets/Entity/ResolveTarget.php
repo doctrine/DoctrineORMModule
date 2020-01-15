@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Assets\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -14,10 +16,12 @@ class ResolveTarget
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="TargetInterface")
+     * @ORM\OneToOne(targetEntity="Target")
+     *
+     * @var mixed $target
      */
     protected $target;
 }
