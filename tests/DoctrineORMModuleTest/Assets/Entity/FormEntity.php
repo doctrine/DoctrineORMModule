@@ -50,7 +50,7 @@ class FormEntity
     protected Time $time;
 
     /** @ORM\Column(type="text") */
-    protected string $text;
+    protected $text;
 
     /** @ORM\Column(type="string", nullable=false, length=20) */
     protected string $string;
@@ -59,14 +59,14 @@ class FormEntity
     protected string $stringNullable;
 
     /**
-     * @ORM\OneToOne(targetEntity="Target")
+     * @ORM\OneToOne(targetEntity="TargetEntity")
      *
      * @var mixed
      */
     protected $targetOne;
 
     /**
-     * @ORM\OneToOne(targetEntity="Target")
+     * @ORM\OneToOne(targetEntity="TargetEntity")
      * @ORM\JoinColumn(nullable=true)
      *
      * @var mixed
@@ -74,7 +74,7 @@ class FormEntity
     protected $targetOneNullable;
 
    /**
-    * @ORM\OneToOne(targetEntity="Target")
+    * @ORM\OneToOne(targetEntity="TargetEntity")
     * @ORM\JoinColumn(nullable=true)
     *
     * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")

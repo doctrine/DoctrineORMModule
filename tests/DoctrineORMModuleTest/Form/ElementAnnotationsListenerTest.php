@@ -50,6 +50,7 @@ class ElementAnnotationsListenerTest extends TestCase
 
         $elementSpec = $event->getParam('elementSpec');
         $this->assertEquals($this->getEntityManager(), $elementSpec['spec']['options']['object_manager']);
+
         $this->assertEquals(
             TargetEntity::class,
             $elementSpec['spec']['options']['target_class']
@@ -147,7 +148,7 @@ class ElementAnnotationsListenerTest extends TestCase
     /**
      * @dataProvider eventFilterProvider
      */
-    public function testHandleFilterField(string $name, string $type) : void
+    public function testHandleFilterField(string $name, ?string $type) : void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -243,7 +244,7 @@ class ElementAnnotationsListenerTest extends TestCase
     /**
      * @dataProvider eventValidatorProvider
      */
-    public function testHandlevalidatorField(string $name, string $type) : void
+    public function testHandleValidatorField(string $name, ?string $type) : void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();

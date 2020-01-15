@@ -19,9 +19,7 @@ class ResolveTarget
     protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Target")
-     *
-     * @var mixed $target
+     * @ORM\OneToOne(targetEntity="TargetEntity")
      */
-    protected $target;
+    protected TargetEntity $target;
 }

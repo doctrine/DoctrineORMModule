@@ -51,7 +51,7 @@ class TestCase extends PHPUnitTestCase
      */
     public function getEntityManager() : EntityManager
     {
-        if ($this->entityManager) {
+        if (isset($this->entityManager)) {
             return $this->entityManager;
         }
 
