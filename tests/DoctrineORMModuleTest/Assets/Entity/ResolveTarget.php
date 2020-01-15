@@ -18,8 +18,6 @@ class ResolveTarget
      */
     protected int $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity="TargetEntity")
-     */
+    /** @ORM\OneToOne(targetEntity="TargetEntity") */
     protected TargetEntity $target;
 }

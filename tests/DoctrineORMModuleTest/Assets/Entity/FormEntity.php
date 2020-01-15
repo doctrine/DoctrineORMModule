@@ -50,7 +50,7 @@ class FormEntity
     protected Time $time;
 
     /** @ORM\Column(type="text") */
-    protected $text;
+    protected string $text;
 
     /** @ORM\Column(type="string", nullable=false, length=20) */
     protected string $string;

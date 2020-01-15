@@ -388,7 +388,7 @@ class MetadataGrapherTest extends TestCase
      * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      * @dataProvider injectMultipleRelationsWithBothBiAndMonoDirectional
      */
-    public function testDrawMultipleClassRelatedBothBiAndMonoDirectional(string $class1, string $class2, string $class3, $expected) : void
+    public function testDrawMultipleClassRelatedBothBiAndMonoDirectional(object $class1, object $class2, object $class3, $expected) : void
     {
         $this->assertSame(
             $expected,
