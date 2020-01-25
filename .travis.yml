@@ -20,8 +20,9 @@ matrix:
         - DEPS=lowest
     - php: 7.2
       env:
-        - TEST_COVERAGE=true
+        - DEPS=locked
         - CS_CHECK=true
+        - TEST_COVERAGE=true
     - php: 7.2
       env:
         - DEPS=latest
@@ -31,6 +32,9 @@ matrix:
     - php: 7.3
       env:
         - DEPS=lowest
+    - php: 7.3
+      env:
+        - DEPS=locked
     - php: 7.3
       env:
         - DEPS=latest
@@ -71,3 +75,4 @@ after_script:
   - rm -Rf config/application.config.php
   - if [[ $TEST_COVERAGE == 'true' ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover.xml; fi
+

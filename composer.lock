@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d29dc85445e77cfa99767cf4f1dfd063",
+    "content-hash": "3e3dec64702c743dd2ffcb9456b24ca3",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -434,104 +434,50 @@
             "time": "2020-01-04T12:56:21+00:00"
         },
         {
-            "name": "doctrine/doctrine-laminas-hydrator",
-            "version": "2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/doctrine-laminas-hydrator.git",
-                "reference": "0a2ee4c8c3b4fde35232e6e0bec71a1ce833eb26"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine-laminas-hydrator/zipball/0a2ee4c8c3b4fde35232e6e0bec71a1ce833eb26",
-                "reference": "0a2ee4c8c3b4fde35232e6e0bec71a1ce833eb26",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/common": "^2.10",
-                "ext-ctype": "*",
-                "laminas/laminas-dependency-plugin": "^1.0",
-                "laminas/laminas-hydrator": "^3.0.2",
-                "laminas/laminas-stdlib": "^3.2.1",
-                "php": "^7.2"
-            },
-            "require-dev": {
-                "laminas/laminas-coding-standard": "~1.0.0",
-                "laminas/laminas-filter": "^2.9.1",
-                "laminas/laminas-servicemanager": "^3.4",
-                "phpunit/phpunit": "^8.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-develop": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Laminas\\Hydrator\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Doctrine hydrators for Laminas applications",
-            "keywords": [
-                "doctrine",
-                "hydrator",
-                "laminas",
-                "zf"
-            ],
-            "time": "2020-01-23T21:42:12+00:00"
-        },
-        {
             "name": "doctrine/doctrine-module",
-            "version": "3.0.1",
+            "version": "2.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineModule.git",
-                "reference": "f2b8b42908568ea0ae385184210f26e7734a296e"
+                "reference": "2b961e58eb911bfe1e99a6e9a69087e05a24201c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/f2b8b42908568ea0ae385184210f26e7734a296e",
-                "reference": "f2b8b42908568ea0ae385184210f26e7734a296e",
+                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/2b961e58eb911bfe1e99a6e9a69087e05a24201c",
+                "reference": "2b961e58eb911bfe1e99a6e9a69087e05a24201c",
                 "shasum": ""
             },
             "require": {
                 "doctrine/cache": "^1.7",
                 "doctrine/common": "^2.8",
-                "doctrine/doctrine-laminas-hydrator": "^2.0",
-                "laminas/laminas-authentication": "^2.5.3",
-                "laminas/laminas-cache": "^2.7.1",
-                "laminas/laminas-dependency-plugin": "^1.0",
-                "laminas/laminas-form": "^2.11",
-                "laminas/laminas-hydrator": "^3.0",
-                "laminas/laminas-mvc": "^3.1",
-                "laminas/laminas-paginator": "^2.8",
-                "laminas/laminas-servicemanager": "^3.3",
-                "laminas/laminas-stdlib": "^3.1",
-                "laminas/laminas-validator": "^2.10",
-                "php": "^7.2",
-                "symfony/console": "^3.3 || ^4.0 || ^5.0"
+                "php": "^7.1",
+                "symfony/console": "^3.3 || ^4.0 || ^5.0",
+                "zendframework/zend-authentication": "^2.5.3",
+                "zendframework/zend-cache": "^2.7.1",
+                "zendframework/zend-form": "^2.11",
+                "zendframework/zend-hydrator": "^2.3",
+                "zendframework/zend-mvc": "^3.1",
+                "zendframework/zend-paginator": "^2.8",
+                "zendframework/zend-servicemanager": "^3.3",
+                "zendframework/zend-stdlib": "^3.1",
+                "zendframework/zend-validator": "^2.10"
             },
             "require-dev": {
-                "laminas/laminas-i18n": "^2.7",
-                "laminas/laminas-log": "^2.9",
-                "laminas/laminas-modulemanager": "^2.8",
-                "laminas/laminas-mvc-console": "^1.1.11",
-                "laminas/laminas-serializer": "^2.8",
-                "laminas/laminas-session": "^2.8",
-                "laminas/laminas-test": "^3.1.1",
                 "phpunit/phpunit": "^7.5.2",
                 "predis/predis": "^1.1",
-                "squizlabs/php_codesniffer": "^2.7"
+                "squizlabs/php_codesniffer": "^2.7",
+                "zendframework/zend-i18n": "^2.7",
+                "zendframework/zend-log": "^2.9",
+                "zendframework/zend-modulemanager": "^2.8",
+                "zendframework/zend-mvc-console": "^1.1.11",
+                "zendframework/zend-serializer": "^2.8",
+                "zendframework/zend-session": "^2.8",
+                "zendframework/zend-test": "^3.1.1",
+                "zendframework/zend-version": "^2.5.1"
             },
             "suggest": {
                 "doctrine/data-fixtures": "Data Fixtures if you want to generate test data or bootstrap data for your deployments",
-                "laminas/laminas-mvc-console": "^1.1.11 if you want to use the Laminas console libraries"
+                "zendframework/zend-mvc-console": "^1.1.11 if you want to use the ZF3 console libraries"
             },
             "bin": [
                 "bin/doctrine-module"
@@ -577,21 +523,16 @@
                     "name": "Michaël Gallego",
                     "email": "mic.gallego@gmail.com",
                     "homepage": "http://www.michaelgallego.fr"
-                },
-                {
-                    "name": "Tom H Anderson",
-                    "email": "tom.h.anderson@gmail.com",
-                    "homepage": "https://tomhanderson.com"
                 }
             ],
-            "description": "Laminas Module that provides Doctrine basic functionality required for ORM and ODM modules",
+            "description": "Zend Framework Module that provides Doctrine basic functionality required for ORM and ODM modules",
             "homepage": "http://www.doctrine-project.org/",
             "keywords": [
                 "doctrine",
-                "laminas",
-                "module"
+                "module",
+                "zf"
             ],
-            "time": "2020-01-23T21:43:50+00:00"
+            "time": "2019-11-23T21:33:35+00:00"
         },
         {
             "name": "doctrine/event-manager",
@@ -1252,67 +1193,6 @@
             "time": "2019-12-31T16:23:18+00:00"
         },
         {
-            "name": "laminas/laminas-code",
-            "version": "3.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-code.git",
-                "reference": "1cb8f203389ab1482bf89c0e70a04849bacd7766"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/1cb8f203389ab1482bf89c0e70a04849bacd7766",
-                "reference": "1cb8f203389ab1482bf89c0e70a04849bacd7766",
-                "shasum": ""
-            },
-            "require": {
-                "laminas/laminas-eventmanager": "^2.6 || ^3.0",
-                "laminas/laminas-zendframework-bridge": "^1.0",
-                "php": "^7.1"
-            },
-            "conflict": {
-                "phpspec/prophecy": "<1.9.0"
-            },
-            "replace": {
-                "zendframework/zend-code": "self.version"
-            },
-            "require-dev": {
-                "doctrine/annotations": "^1.7",
-                "ext-phar": "*",
-                "laminas/laminas-coding-standard": "^1.0",
-                "laminas/laminas-stdlib": "^2.7 || ^3.0",
-                "phpunit/phpunit": "^7.5.16 || ^8.4"
-            },
-            "suggest": {
-                "doctrine/annotations": "Doctrine\\Common\\Annotations >=1.0 for annotation features",
-                "laminas/laminas-stdlib": "Laminas\\Stdlib component"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.4.x-dev",
-                    "dev-develop": "3.5.x-dev",
-                    "dev-dev-4.0": "4.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laminas\\Code\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Extensions to the PHP Reflection API, static code scanning, and code generation",
-            "homepage": "https://laminas.dev",
-            "keywords": [
-                "code",
-                "laminas"
-            ],
-            "time": "2019-12-31T16:28:24+00:00"
-        },
-        {
             "name": "laminas/laminas-config",
             "version": "3.3.0",
             "source": {
@@ -1375,52 +1255,6 @@
                 "laminas"
             ],
             "time": "2019-12-31T16:30:11+00:00"
-        },
-        {
-            "name": "laminas/laminas-dependency-plugin",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-dependency-plugin.git",
-                "reference": "f269716dc584cd7b69e7f6e8ac1092d645ab56d5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-dependency-plugin/zipball/f269716dc584cd7b69e7f6e8ac1092d645ab56d5",
-                "reference": "f269716dc584cd7b69e7f6e8ac1092d645ab56d5",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1",
-                "php": "^5.6 || ^7.0"
-            },
-            "require-dev": {
-                "composer/composer": "^1.9",
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
-                "phpcompatibility/php-compatibility": "^9.3",
-                "phpunit/phpunit": "^8.4",
-                "roave/security-advisories": "dev-master",
-                "webimpress/coding-standard": "^1.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-develop": "1.1.x-dev"
-                },
-                "class": "Laminas\\DependencyPlugin\\DependencyRewriterPlugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laminas\\DependencyPlugin\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Replace zendframework and zfcampus packages with their Laminas Project equivalents.",
-            "time": "2020-01-14T19:36:52+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
@@ -1740,47 +1574,45 @@
         },
         {
             "name": "laminas/laminas-hydrator",
-            "version": "3.0.2",
+            "version": "2.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-hydrator.git",
-                "reference": "5c418d6e37ad363bef5ce1c8a72388243d6c7950"
+                "reference": "4a0e81cf05f32edcace817f1f48cb4055f689d85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-hydrator/zipball/5c418d6e37ad363bef5ce1c8a72388243d6c7950",
-                "reference": "5c418d6e37ad363bef5ce1c8a72388243d6c7950",
+                "url": "https://api.github.com/repos/laminas/laminas-hydrator/zipball/4a0e81cf05f32edcace817f1f48cb4055f689d85",
+                "reference": "4a0e81cf05f32edcace817f1f48cb4055f689d85",
                 "shasum": ""
             },
             "require": {
-                "laminas/laminas-stdlib": "^3.2.1",
+                "laminas/laminas-stdlib": "^3.0",
                 "laminas/laminas-zendframework-bridge": "^1.0",
-                "php": "^7.2"
+                "php": "^5.6 || ^7.0"
             },
             "replace": {
                 "zendframework/zend-hydrator": "self.version"
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~1.0.0",
-                "laminas/laminas-eventmanager": "^3.2.1",
-                "laminas/laminas-modulemanager": "^2.8",
-                "laminas/laminas-serializer": "^2.9",
-                "laminas/laminas-servicemanager": "^3.3.2",
-                "phpspec/prophecy": "^1.7.5",
-                "phpstan/phpstan": "^0.10.5",
-                "phpunit/phpunit": "^7.5"
+                "laminas/laminas-eventmanager": "^2.6.2 || ^3.0",
+                "laminas/laminas-filter": "^2.6",
+                "laminas/laminas-inputfilter": "^2.6",
+                "laminas/laminas-serializer": "^2.6.1",
+                "laminas/laminas-servicemanager": "^2.7.5 || ^3.0.3",
+                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2"
             },
             "suggest": {
-                "laminas/laminas-eventmanager": "^3.2, to support aggregate hydrator usage",
-                "laminas/laminas-serializer": "^2.9, to use the SerializableStrategy",
-                "laminas/laminas-servicemanager": "^3.3, to support hydrator plugin manager usage"
+                "laminas/laminas-eventmanager": "^2.6.2 || ^3.0, to support aggregate hydrator usage",
+                "laminas/laminas-filter": "^2.6, to support naming strategy hydrator usage",
+                "laminas/laminas-serializer": "^2.6.1, to use the SerializableStrategy",
+                "laminas/laminas-servicemanager": "^2.7.5 || ^3.0.3, to support hydrator plugin manager usage"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-release-2.4": "2.4.x-dev",
-                    "dev-master": "3.0.x-dev",
-                    "dev-develop": "3.1.x-dev"
+                    "dev-release-2.4": "2.4.x-dev"
                 },
                 "laminas": {
                     "component": "Laminas\\Hydrator",
@@ -1802,7 +1634,7 @@
                 "hydrator",
                 "laminas"
             ],
-            "time": "2019-12-31T17:06:44+00:00"
+            "time": "2019-12-31T17:06:38+00:00"
         },
         {
             "name": "laminas/laminas-inputfilter",
@@ -2637,133 +2469,6 @@
             "time": "2020-01-07T22:58:31+00:00"
         },
         {
-            "name": "ocramius/package-versions",
-            "version": "1.5.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Ocramius/PackageVersions.git",
-                "reference": "1d32342b8c1eb27353c8887c366147b4c2da673c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/1d32342b8c1eb27353c8887c366147b4c2da673c",
-                "reference": "1d32342b8c1eb27353c8887c366147b4c2da673c",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0.0",
-                "php": "^7.3.0"
-            },
-            "require-dev": {
-                "composer/composer": "^1.8.6",
-                "doctrine/coding-standard": "^6.0.0",
-                "ext-zip": "*",
-                "infection/infection": "^0.13.4",
-                "phpunit/phpunit": "^8.2.5",
-                "vimeo/psalm": "^3.4.9"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "PackageVersions\\Installer",
-                "branch-alias": {
-                    "dev-master": "1.6.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PackageVersions\\": "src/PackageVersions"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com"
-                }
-            ],
-            "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
-            "time": "2019-07-17T15:49:50+00:00"
-        },
-        {
-            "name": "ocramius/proxy-manager",
-            "version": "2.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Ocramius/ProxyManager.git",
-                "reference": "406ca12cabfb43e3b11c994bcbeea8e358c65af9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/ProxyManager/zipball/406ca12cabfb43e3b11c994bcbeea8e358c65af9",
-                "reference": "406ca12cabfb43e3b11c994bcbeea8e358c65af9",
-                "shasum": ""
-            },
-            "require": {
-                "laminas/laminas-code": "^3.4.1",
-                "ocramius/package-versions": "^1.5.1",
-                "php": "7.4.*",
-                "webimpress/safe-writer": "^2.0"
-            },
-            "conflict": {
-                "doctrine/annotations": "<1.6.1",
-                "laminas/laminas-stdlib": "<3.2.1",
-                "zendframework/zend-stdlib": "<3.2.1"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "^6.0.0",
-                "ext-phar": "*",
-                "infection/infection": "^0.15.0",
-                "nikic/php-parser": "^4.3.0",
-                "phpbench/phpbench": "^0.16.10",
-                "phpunit/phpunit": "^8.5.1",
-                "slevomat/coding-standard": "^5.0.4",
-                "squizlabs/php_codesniffer": "^3.5.3",
-                "symfony/console": "^4.4.2",
-                "vimeo/psalm": "3.7.0"
-            },
-            "suggest": {
-                "laminas/laminas-json": "To have the JsonRpc adapter (Remote Object feature)",
-                "laminas/laminas-soap": "To have the Soap adapter (Remote Object feature)",
-                "laminas/laminas-xmlrpc": "To have the XmlRpc adapter (Remote Object feature)",
-                "ocramius/generated-hydrator": "To have very fast object to array to object conversion for ghost objects"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "ProxyManager\\": "src/ProxyManager"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com",
-                    "homepage": "http://ocramius.github.io/"
-                }
-            ],
-            "description": "A library providing utilities to generate, instantiate and generally operate with Object Proxies",
-            "homepage": "https://github.com/Ocramius/ProxyManager",
-            "keywords": [
-                "aop",
-                "lazy loading",
-                "proxy",
-                "proxy pattern",
-                "service proxies"
-            ],
-            "time": "2020-01-07T08:10:36+00:00"
-        },
-        {
             "name": "psr/cache",
             "version": "1.0.1",
             "source": {
@@ -3156,54 +2861,6 @@
                 "standards"
             ],
             "time": "2019-11-18T17:27:11+00:00"
-        },
-        {
-            "name": "webimpress/safe-writer",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webimpress/safe-writer.git",
-                "reference": "d03bea3b98abe1d4c8b24cbebf524361ffaafee4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webimpress/safe-writer/zipball/d03bea3b98abe1d4c8b24cbebf524361ffaafee4",
-                "reference": "d03bea3b98abe1d4c8b24cbebf524361ffaafee4",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.4.3",
-                "webimpress/coding-standard": "dev-develop"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev",
-                    "dev-develop": "2.1.x-dev",
-                    "dev-release-1.0": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Webimpress\\SafeWriter\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "description": "Tool to write files safely, to avoid race conditions",
-            "keywords": [
-                "concurrent write",
-                "file writer",
-                "race condition",
-                "safe writer",
-                "webimpress"
-            ],
-            "time": "2019-11-27T19:40:53+00:00"
         }
     ],
     "packages-dev": [
@@ -3352,6 +3009,67 @@
                 "php"
             ],
             "time": "2019-12-04T06:09:14+00:00"
+        },
+        {
+            "name": "laminas/laminas-code",
+            "version": "3.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-code.git",
+                "reference": "1cb8f203389ab1482bf89c0e70a04849bacd7766"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/1cb8f203389ab1482bf89c0e70a04849bacd7766",
+                "reference": "1cb8f203389ab1482bf89c0e70a04849bacd7766",
+                "shasum": ""
+            },
+            "require": {
+                "laminas/laminas-eventmanager": "^2.6 || ^3.0",
+                "laminas/laminas-zendframework-bridge": "^1.0",
+                "php": "^7.1"
+            },
+            "conflict": {
+                "phpspec/prophecy": "<1.9.0"
+            },
+            "replace": {
+                "zendframework/zend-code": "self.version"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^1.7",
+                "ext-phar": "*",
+                "laminas/laminas-coding-standard": "^1.0",
+                "laminas/laminas-stdlib": "^2.7 || ^3.0",
+                "phpunit/phpunit": "^7.5.16 || ^8.4"
+            },
+            "suggest": {
+                "doctrine/annotations": "Doctrine\\Common\\Annotations >=1.0 for annotation features",
+                "laminas/laminas-stdlib": "Laminas\\Stdlib component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.4.x-dev",
+                    "dev-develop": "3.5.x-dev",
+                    "dev-dev-4.0": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\Code\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Extensions to the PHP Reflection API, static code scanning, and code generation",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "code",
+                "laminas"
+            ],
+            "time": "2019-12-31T16:28:24+00:00"
         },
         {
             "name": "laminas/laminas-console",
@@ -3859,6 +3577,126 @@
                 "object graph"
             ],
             "time": "2020-01-17T21:11:47+00:00"
+        },
+        {
+            "name": "ocramius/package-versions",
+            "version": "1.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Ocramius/PackageVersions.git",
+                "reference": "44af6f3a2e2e04f2af46bcb302ad9600cba41c7d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/44af6f3a2e2e04f2af46bcb302ad9600cba41c7d",
+                "reference": "44af6f3a2e2e04f2af46bcb302ad9600cba41c7d",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0.0",
+                "php": "^7.1.0"
+            },
+            "require-dev": {
+                "composer/composer": "^1.6.3",
+                "doctrine/coding-standard": "^5.0.1",
+                "ext-zip": "*",
+                "infection/infection": "^0.7.1",
+                "phpunit/phpunit": "^7.5.17"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "PackageVersions\\Installer",
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PackageVersions\\": "src/PackageVersions"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com"
+                }
+            ],
+            "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
+            "time": "2019-11-15T16:17:10+00:00"
+        },
+        {
+            "name": "ocramius/proxy-manager",
+            "version": "2.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Ocramius/ProxyManager.git",
+                "reference": "4d154742e31c35137d5374c998e8f86b54db2e2f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Ocramius/ProxyManager/zipball/4d154742e31c35137d5374c998e8f86b54db2e2f",
+                "reference": "4d154742e31c35137d5374c998e8f86b54db2e2f",
+                "shasum": ""
+            },
+            "require": {
+                "ocramius/package-versions": "^1.1.3",
+                "php": "^7.2.0",
+                "zendframework/zend-code": "^3.3.0"
+            },
+            "require-dev": {
+                "couscous/couscous": "^1.6.1",
+                "ext-phar": "*",
+                "humbug/humbug": "1.0.0-RC.0@RC",
+                "nikic/php-parser": "^3.1.1",
+                "padraic/phpunit-accelerator": "dev-master@DEV",
+                "phpbench/phpbench": "^0.12.2",
+                "phpstan/phpstan": "dev-master#856eb10a81c1d27c701a83f167dc870fd8f4236a as 0.9.999",
+                "phpstan/phpstan-phpunit": "dev-master#5629c0a1f4a9c417cb1077cf6693ad9753895761",
+                "phpunit/phpunit": "^6.4.3",
+                "squizlabs/php_codesniffer": "^2.9.1"
+            },
+            "suggest": {
+                "ocramius/generated-hydrator": "To have very fast object to array to object conversion for ghost objects",
+                "zendframework/zend-json": "To have the JsonRpc adapter (Remote Object feature)",
+                "zendframework/zend-soap": "To have the Soap adapter (Remote Object feature)",
+                "zendframework/zend-xmlrpc": "To have the XmlRpc adapter (Remote Object feature)"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "ProxyManager\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "homepage": "http://ocramius.github.io/"
+                }
+            ],
+            "description": "A library providing utilities to generate, instantiate and generally operate with Object Proxies",
+            "homepage": "https://github.com/Ocramius/ProxyManager",
+            "keywords": [
+                "aop",
+                "lazy loading",
+                "proxy",
+                "proxy pattern",
+                "service proxies"
+            ],
+            "time": "2019-08-10T08:37:15+00:00"
         },
         {
             "name": "phar-io/manifest",
