@@ -3,7 +3,7 @@
 namespace DoctrineORMModule\Options;
 
 use InvalidArgumentException;
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 class EntityResolver extends AbstractOptions
 {

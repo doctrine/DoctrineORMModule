@@ -12,7 +12,7 @@ use DoctrineORMModule\Service\DBALConnectionFactory;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\EventManager;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 use DoctrineORMModule\Service\ConfigurationFactory;
 
 /**

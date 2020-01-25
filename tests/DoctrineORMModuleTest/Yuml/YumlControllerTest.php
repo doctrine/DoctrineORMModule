@@ -20,12 +20,12 @@ class YumlControllerTest extends TestCase
     protected $controller;
 
     /**
-     * @var \Zend\Http\Client|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Laminas\Http\Client|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $httpClient;
 
     /**
-     * @var \Zend\Mvc\Controller\PluginManager|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Laminas\Mvc\Controller\PluginManager|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $pluginManager;
 
@@ -36,9 +36,9 @@ class YumlControllerTest extends TestCase
      */
     public function setUp()
     {
-        $this->httpClient     = $this->createMock(\Zend\Http\Client::class);
+        $this->httpClient     = $this->createMock(\Laminas\Http\Client::class);
         $this->controller     = new YumlController($this->httpClient);
-        $this->pluginManager  = $this->getMockBuilder(\Zend\Mvc\Controller\PluginManager::class)
+        $this->pluginManager  = $this->getMockBuilder(\Laminas\Mvc\Controller\PluginManager::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->controller->setPluginManager($this->pluginManager);
@@ -49,9 +49,9 @@ class YumlControllerTest extends TestCase
      */
     public function testIndexActionWillRedirectToYuml()
     {
-        $response = $this->createMock(\Zend\Http\Response::class);
-        $controllerResponse = $this->createMock(\Zend\Http\Response::class);
-        $redirect = $this->createMock(\Zend\Mvc\Controller\Plugin\Redirect::class);
+        $response = $this->createMock(\Laminas\Http\Response::class);
+        $controllerResponse = $this->createMock(\Laminas\Http\Response::class);
+        $redirect = $this->createMock(\Laminas\Mvc\Controller\Plugin\Redirect::class);
         $this->httpClient->expects($this->any())->method('send')->will($this->returnValue($response));
         $response->expects($this->any())->method('isSuccess')->will($this->returnValue(true));
         $response->expects($this->any())->method('getBody')->will($this->returnValue('short-url'));
@@ -74,7 +74,7 @@ class YumlControllerTest extends TestCase
      */
     public function testIndexActionWillFailOnMalformedResponse()
     {
-        $response = $this->createMock(\Zend\Http\Response::class);
+        $response = $this->createMock(\Laminas\Http\Response::class);
         $this->httpClient->expects($this->any())->method('send')->will($this->returnValue($response));
         $response->expects($this->any())->method('isSuccess')->will($this->returnValue(false));
 

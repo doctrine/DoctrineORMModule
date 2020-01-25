@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Service\SQLLoggerCollectorFactory;
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\ORM\Configuration as ORMConfiguration;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 class SQLLoggerCollectorFactoryTest extends TestCase
 {

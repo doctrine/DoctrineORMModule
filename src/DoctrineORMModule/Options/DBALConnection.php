@@ -3,7 +3,7 @@
 namespace DoctrineORMModule\Options;
 
 use Doctrine\DBAL\Driver\PDOMySql\Driver;
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 /**
  * DBAL Connection options

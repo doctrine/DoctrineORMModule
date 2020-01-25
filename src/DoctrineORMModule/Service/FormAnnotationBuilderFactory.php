@@ -5,8 +5,8 @@ namespace DoctrineORMModule\Service;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use Interop\Container\ContainerInterface;
-use Zend\Form\Factory;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Form\Factory;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Service factory responsible for instantiating {@see \DoctrineORMModule\Form\Annotation\AnnotationBuilder}

@@ -4,7 +4,7 @@ namespace DoctrineORMModuleTest\Service;
 
 use DoctrineORMModule\Service\FormAnnotationBuilderFactory;
 use PHPUnit\Framework\TestCase;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Tests for {@see \DoctrineORMModule\Service\FormAnnotationBuilderFactory}
@@ -21,7 +21,7 @@ class FormAnnotationBuilderFactoryTest extends TestCase
         $entityManager      = $this->getMockBuilder(\Doctrine\ORM\EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $formElementManager = $this->getMockBuilder(\Zend\Form\FormElementManager::class)
+        $formElementManager = $this->getMockBuilder(\Laminas\Form\FormElementManager::class)
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -2,7 +2,7 @@
 
 namespace DoctrineORMModule\Options;
 
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 class EntityManager extends AbstractOptions
 {

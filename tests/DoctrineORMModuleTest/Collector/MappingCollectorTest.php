@@ -66,7 +66,7 @@ class MappingCollectorTest extends TestCase
             ->method('getAllMetadata')
             ->will($this->returnValue([$m1, $m2]));
 
-        $this->collector->collect($this->createMock(\Zend\Mvc\MvcEvent::class));
+        $this->collector->collect($this->createMock(\Laminas\Mvc\MvcEvent::class));
 
         $classes = $this->collector->getClasses();
 
@@ -86,7 +86,7 @@ class MappingCollectorTest extends TestCase
         $m1->expects($this->any())->method('getName')->will($this->returnValue('M1'));
         $this->metadataFactory->expects($this->any())->method('getAllMetadata')->will($this->returnValue([$m1]));
 
-        $this->collector->collect($this->createMock(\Zend\Mvc\MvcEvent::class));
+        $this->collector->collect($this->createMock(\Laminas\Mvc\MvcEvent::class));
 
         $this->assertFalse($this->collector->canHide());
     }
@@ -102,7 +102,7 @@ class MappingCollectorTest extends TestCase
         $m1->expects($this->any())->method('getName')->will($this->returnValue('M1'));
         $this->metadataFactory->expects($this->any())->method('getAllMetadata')->will($this->returnValue([$m1]));
 
-        $this->collector->collect($this->createMock(\Zend\Mvc\MvcEvent::class));
+        $this->collector->collect($this->createMock(\Laminas\Mvc\MvcEvent::class));
 
         /* @var $collector MappingCollector */
         $collector = unserialize(serialize($this->collector));
@@ -112,7 +112,7 @@ class MappingCollectorTest extends TestCase
         $this->assertEquals($m1, $classes['M1']);
         $this->assertSame('test-collector', $collector->getName());
 
-        $collector->collect($this->createMock(\Zend\Mvc\MvcEvent::class));
+        $collector->collect($this->createMock(\Laminas\Mvc\MvcEvent::class));
 
         $classes = $collector->getClasses();
         $this->assertCount(1, $classes);

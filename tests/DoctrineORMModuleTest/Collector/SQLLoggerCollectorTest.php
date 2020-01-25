@@ -5,7 +5,7 @@ namespace DoctrineORMModuleTest\Collector;
 use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Collector\SQLLoggerCollector;
 use Doctrine\DBAL\Logging\DebugStack;
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 
 class SQLLoggerCollectorTest extends TestCase
 {

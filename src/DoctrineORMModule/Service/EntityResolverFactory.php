@@ -8,8 +8,8 @@ use Doctrine\ORM\Tools\ResolveTargetEntityListener;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\EntityResolver;
 use Interop\Container\ContainerInterface;
-use Zend\EventManager\EventManager;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\EventManager\EventManager;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class EntityResolverFactory extends AbstractFactory
 {

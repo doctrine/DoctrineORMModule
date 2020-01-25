@@ -33,7 +33,7 @@ use PHPUnit\Framework\TestCase;
 class MigrationsCommandFactoryTest extends TestCase
 {
     /**
-     * @var \Zend\ServiceManager\ServiceManager
+     * @var \Laminas\ServiceManager\ServiceManager
      */
     private $serviceLocator;
 

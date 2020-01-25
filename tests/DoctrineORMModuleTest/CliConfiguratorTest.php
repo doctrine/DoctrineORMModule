@@ -18,7 +18,7 @@ use Symfony\Component\Console\Application;
 class CliConfiguratorTest extends TestCase
 {
     /**
-     * @var \Zend\ServiceManager\ServiceManager
+     * @var \Laminas\ServiceManager\ServiceManager
      */
     protected $serviceManager;
 
