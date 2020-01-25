@@ -61,7 +61,8 @@
         "zendframework/zend-mvc-console":     "^1.2",
         "zendframework/zend-serializer":      "^2.8",
         "zendframework/zend-code":            "^3.3.2",
-        "ocramius/proxy-manager":             "^2.0.2"
+        "ocramius/proxy-manager":             "^2.0.2",
+        "doctrine/annotations":               "^1.8"
     },
     "suggest":           {
         "zendframework/zend-form":            "if you want to use form elements backed by Doctrine",
