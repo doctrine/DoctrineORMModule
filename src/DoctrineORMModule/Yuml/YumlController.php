@@ -37,7 +37,7 @@ class YumlController extends AbstractActionController
      */
     public function indexAction()
     {
-        /* @var $request \Laminas\Http\Request */
+        /* @var $request Request */
         $request = $this->getRequest();
         $this->httpClient->setMethod(Request::METHOD_POST);
         $this->httpClient->setParameterPost(['dsl_text' => $request->getPost('dsl_text')]);
