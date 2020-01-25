@@ -11,7 +11,7 @@ Setup
 -----
 
 To setup `Laminas Developer
-Tools <https://github.com/zendframework/laminas-developer-tools>`__, run
+Tools <https://github.com/laminas/laminas-developer-tools>`__, run
 
 .. code:: sh
 
