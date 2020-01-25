@@ -118,13 +118,13 @@ return [
             'orm_default' => [],
         ],
 
-        // SQL logger collector, used when ZendDeveloperTools and its toolbar are active
+        // SQL logger collector, used when Laminas\DeveloperTools and its toolbar are active
         'sql_logger_collector' => [
             // configuration for the `doctrine.sql_logger_collector.orm_default` service
             'orm_default' => [],
         ],
 
-        // mappings collector, used when ZendDeveloperTools and its toolbar are active
+        // mappings collector, used when Laminas\DeveloperTools and its toolbar are active
         'mapping_collector' => [
             // configuration for the `doctrine.sql_logger_collector.orm_default` service
             'orm_default' => [],
@@ -220,7 +220,7 @@ return [
         'migrations_cmd'           => Service\MigrationsCommandFactory::class,
     ],
 
-    // Zend\Form\FormElementManager configuration
+    // Laminas\Form\FormElementManager configuration
     'form_elements' => [
         'aliases' => [
             'objectselect'        => Element\ObjectSelect::class,
@@ -241,9 +241,9 @@ return [
     ],
 
     ////////////////////////////////////////////////////////////////////
-    // `zendframework/zend-developer-tools` specific settings         //
+    // `laminas/laminas-developer-tools` specific settings            //
     // ignore these if you're not developing additional features for  //
-    // zend developer tools                                           //
+    // laminas developer tools                                        //
     ////////////////////////////////////////////////////////////////////
 
     'router' => [
@@ -263,14 +263,14 @@ return [
 
     'view_manager' => [
         'template_map' => [
-            'zend-developer-tools/toolbar/doctrine-orm-queries'
-                => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-queries.phtml',
-            'zend-developer-tools/toolbar/doctrine-orm-mappings'
-                => __DIR__ . '/../view/zend-developer-tools/toolbar/doctrine-orm-mappings.phtml',
+            'laminas-developer-tools/toolbar/doctrine-orm-queries'
+                => __DIR__ . '/../view/laminas-developer-tools/toolbar/doctrine-orm-queries.phtml',
+            'laminas-developer-tools/toolbar/doctrine-orm-mappings'
+                => __DIR__ . '/../view/laminas-developer-tools/toolbar/doctrine-orm-mappings.phtml',
         ],
     ],
 
-    'zenddevelopertools' => [
+    'laminas-developer-tools' => [
         'profiler' => [
             'collectors' => [
                 'doctrine.sql_logger_collector.orm_default' => 'doctrine.sql_logger_collector.orm_default',
@@ -279,8 +279,8 @@ return [
         ],
         'toolbar' => [
             'entries' => [
-                'doctrine.sql_logger_collector.orm_default' => 'zend-developer-tools/toolbar/doctrine-orm-queries',
-                'doctrine.mapping_collector.orm_default'    => 'zend-developer-tools/toolbar/doctrine-orm-mappings',
+                'doctrine.sql_logger_collector.orm_default' => 'laminas-developer-tools/toolbar/doctrine-orm-queries',
+                'doctrine.mapping_collector.orm_default'    => 'laminas-developer-tools/toolbar/doctrine-orm-mappings',
             ],
         ],
     ],

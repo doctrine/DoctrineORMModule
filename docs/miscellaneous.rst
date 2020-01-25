@@ -32,7 +32,7 @@ to use if you want to fine tune the results.
 Authentication Adapter
 ----------------------
 
-The authentication adapter is intended to provide an adapter for ``Zend\Authentication``. It works much
+The authentication adapter is intended to provide an adapter for ``Laminas\Authentication``. It works much
 like the ``DbTable`` adapter in the core framework. You must provide the
 entity manager instance, entity name, identity field, and credential
 field. You can optionally provide a callable method to perform hashing
