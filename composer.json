@@ -49,10 +49,10 @@
         "laminas/laminas-servicemanager": "^3.3"
     },
     "require-dev":       {
-        "phpunit/phpunit":                    "^7.5.17",
-        "squizlabs/php_codesniffer":          "^2.7",
-        "doctrine/data-fixtures":             "^1.2.1",
-        "doctrine/migrations":                "^1.5 || ^2.0",
+        "phpunit/phpunit":                 "^7.5.17",
+        "squizlabs/php_codesniffer":       "^2.7",
+        "doctrine/data-fixtures":          "^1.2.1",
+        "doctrine/migrations":             "^1.5 || ^2.0",
         "laminas/laminas-console":         "^2.6",
         "laminas/laminas-developer-tools": "^1.1",
         "laminas/laminas-i18n":            "^2.7.3",
@@ -61,8 +61,8 @@
         "laminas/laminas-mvc-console":     "^1.2",
         "laminas/laminas-serializer":      "^2.8",
         "laminas/laminas-code":            "^3.3.2",
-        "ocramius/proxy-manager":             "^2.0.2",
-        "doctrine/annotations":               "^1.8"
+        "ocramius/proxy-manager":          "^2.2",
+        "doctrine/annotations":            "^1.8"
     },
     "suggest":           {
         "laminas/laminas-form":            "if you want to use form elements backed by Doctrine",
