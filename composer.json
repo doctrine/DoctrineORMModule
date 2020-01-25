@@ -39,19 +39,20 @@
     "require": {
         "php": "^7.2",
         "doctrine/doctrine-module": "^3.0",
-        "doctrine/orm": "^2.6.3",
-        "doctrine/dbal": "^2.6.0",
+        "doctrine/orm": "^2.7",
+        "doctrine/dbal": "^2.10",
         "symfony/console": "^3.3 || ^4.0 || ^5.0",
         "laminas/laminas-stdlib": "^3.2.1",
         "laminas/laminas-mvc": "^3.1",
         "laminas/laminas-servicemanager": "^3.3",
-        "laminas/laminas-dependency-plugin": "^1.0"
+        "laminas/laminas-dependency-plugin": "^1.0",
+        "laminas/laminas-code": "3.4.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.0.3",
+        "phpunit/phpunit": "^7.5.20",
         "squizlabs/php_codesniffer": "^2.7",
-        "doctrine/data-fixtures": "^1.2.1",
-        "doctrine/migrations": "^1.5 || ^2.0",
+        "doctrine/data-fixtures": "^1.4.2",
+        "doctrine/migrations": "^1.5 || ^2.2.1",
         "laminas/laminas-console": "^2.6",
         "laminas/laminas-developer-tools": "^1.1",
         "laminas/laminas-i18n": "^2.7.3",
