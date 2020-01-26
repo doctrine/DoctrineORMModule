@@ -6,7 +6,7 @@ use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use DoctrineORMModuleTest\Assets\Entity\FormEntity;
 use DoctrineORMModuleTest\Assets\Entity\Issue237;
 use DoctrineORMModuleTest\Framework\TestCase;
-use Laminas\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
+use Laminas\Form\Annotation\AnnotationBuilder as LaminasAnnotationBuilder;
 
 class AnnotationBuilderTest extends TestCase
 {
@@ -73,8 +73,8 @@ class AnnotationBuilderTest extends TestCase
         $userDefinedTypeOverridesListenerType = true;
         $entity                               = new FormEntity();
 
-        $zendAnnotationBuilder = new ZendAnnotationBuilder();
-        $zendForm              = $zendAnnotationBuilder->createForm($entity);
+        $laminasAnnotationBuilder = new LaminasAnnotationBuilder();
+        $laminasForm                 = $laminasAnnotationBuilder->createForm($entity);
 
         $spec           = $this->builder->getFormSpecification($entity);
         $annotationForm = $this->builder->createForm($entity);
@@ -85,13 +85,13 @@ class AnnotationBuilderTest extends TestCase
             $elementName = $element['spec']['name'];
             if (in_array($elementName, $attributesToTest)) {
                 $annotationFormElement = $annotationForm->get($elementName);
-                $zendFormElement       = $zendForm->get($elementName);
+                $laminasFormElement       = $laminasForm->get($elementName);
 
                 $annotationElementAttribute = $annotationFormElement->getAttribute('type');
-                $zendElementAttribute       = $zendFormElement->getAttribute('type');
+                $laminasElementAttribute       = $laminasFormElement->getAttribute('type');
 
-                if ((get_class($zendFormElement) !== get_class($annotationFormElement)) ||
-                    ($annotationElementAttribute !== $zendElementAttribute)
+                if ((get_class($laminasFormElement) !== get_class($annotationFormElement)) ||
+                    ($annotationElementAttribute !== $laminasElementAttribute)
                 ) {
                     $userDefinedTypeOverridesListenerType = false;
                 }
