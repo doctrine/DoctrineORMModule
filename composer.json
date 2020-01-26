@@ -79,7 +79,7 @@
     },
     "autoload-dev":      {
         "psr-0": {
-            "DoctrineORMModuleTest\\": "tests/"
+            "DoctrineORMModuleTest\\": "test/"
         }
     },
     "scripts": {

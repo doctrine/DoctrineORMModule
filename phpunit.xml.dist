@@ -10,8 +10,8 @@
     processIsolation="false"
     backupGlobals="false"
 >
-    <testsuite name="DoctrineORMModule tests">
-        <directory>./tests</directory>
+    <testsuite name="DoctrineORMModule test">
+        <directory>./test</directory>
     </testsuite>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
