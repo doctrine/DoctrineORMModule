@@ -46,7 +46,7 @@ class Module implements
                 1
             );
 
-        // Initialize logger collector in Laminas\DeveloperTools
+        // Initialize logger collector in DeveloperTools
         if (class_exists(ProfilerEvent::class)) {
             $manager
                 ->getEventManager()
