@@ -2,13 +2,13 @@
 
 namespace DoctrineORMModule;
 
+use DoctrineORMModule\CliConfigurator;
 use Interop\Container\ContainerInterface;
 use Laminas\EventManager\EventInterface;
 use Laminas\ModuleManager\Feature\ControllerProviderInterface;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
 use Laminas\ModuleManager\Feature\DependencyIndicatorInterface;
 use Laminas\ModuleManager\ModuleManagerInterface;
-use DoctrineORMModule\CliConfigurator;
 use Laminas\DeveloperTools\ProfilerEvent;
 
 /**

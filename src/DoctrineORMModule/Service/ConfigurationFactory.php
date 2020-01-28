@@ -2,6 +2,7 @@
 
 namespace DoctrineORMModule\Service;
 
+use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Cache\CacheConfiguration;
 use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Cache\RegionsConfiguration;
@@ -11,7 +12,6 @@ use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationF
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
-use Doctrine\ORM\Configuration;
 
 class ConfigurationFactory extends DoctrineConfigurationFactory
 {
