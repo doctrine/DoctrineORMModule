@@ -8,9 +8,6 @@ use DoctrineModule\Form\Element;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Form\Annotation\AnnotationBuilder as LaminasAnnotationBuilder;
 
-/**
- * @author Kyle Spraggs <theman@spiffyjr.me>
- */
 class AnnotationBuilder extends LaminasAnnotationBuilder
 {
     const EVENT_CONFIGURE_FIELD       = 'configureField';

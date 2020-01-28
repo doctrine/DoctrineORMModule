@@ -10,11 +10,6 @@ use Laminas\Stdlib\Exception\InvalidArgumentException;
 
 /**
  * Configuration options for an ORM Configuration
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Kyle Spraggs <theman@spiffyjr.me>
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class Configuration extends DBALConfiguration
 {

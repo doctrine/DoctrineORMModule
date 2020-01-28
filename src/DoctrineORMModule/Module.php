@@ -13,11 +13,6 @@ use Laminas\DeveloperTools\ProfilerEvent;
 
 /**
  * Base module for Doctrine ORM.
- *
- * @license MIT
- * @link    www.doctrine-project.org
- * @author  Kyle Spraggs <theman@spiffyjr.me>
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class Module implements
     ControllerProviderInterface,

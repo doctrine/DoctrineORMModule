@@ -14,11 +14,6 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputOption;
 
-/**
- * @license MIT
- * @link    www.doctrine-project.org
- * @author  Nicolas Eeckeloo <neeckeloo@gmail.com>
- */
 class CliConfigurator
 {
     private $defaultObjectManagerName = 'doctrine.entitymanager.orm_default';

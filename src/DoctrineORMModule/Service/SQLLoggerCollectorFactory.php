@@ -13,10 +13,6 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * DBAL Configuration ServiceManager factory
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class SQLLoggerCollectorFactory implements FactoryInterface
 {

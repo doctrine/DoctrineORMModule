@@ -6,10 +6,6 @@ use Laminas\Stdlib\AbstractOptions;
 
 /**
  * Configuration options for an collector
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class SQLLoggerCollectorOptions extends AbstractOptions
 {

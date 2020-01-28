@@ -10,10 +10,6 @@ use Laminas\Mvc\MvcEvent;
 
 /**
  * Collector to be used in DeveloperTools to record and display mapping information
- *
- * @license MIT
- * @link    www.doctrine-project.org
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class MappingCollector implements CollectorInterface, AutoHideInterface, Serializable
 {

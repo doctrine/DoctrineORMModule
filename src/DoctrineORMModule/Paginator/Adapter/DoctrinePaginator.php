@@ -7,11 +7,6 @@ use Laminas\Paginator\Adapter\AdapterInterface;
 
 /**
  * Paginator adapter for the Laminas\Paginator component
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @since   0.1.0
- * @author  Tõnis Tobre <tobre@bitweb.ee>
  */
 class DoctrinePaginator implements AdapterInterface
 {

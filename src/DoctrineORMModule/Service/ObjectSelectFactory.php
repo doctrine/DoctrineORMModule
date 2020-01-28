@@ -10,10 +10,6 @@ use Laminas\ServiceManager\FactoryInterface;
 
 /**
  * Factory for {@see ObjectSelect}
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Daniel Gimenes <daniel@danielgimenes.com.br>
  */
 class ObjectSelectFactory implements FactoryInterface
 {

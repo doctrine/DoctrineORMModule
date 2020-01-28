@@ -11,9 +11,6 @@ use Laminas\EventManager\EventInterface;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Form\Element as LaminasFormElement;
 
-/**
- * @author Kyle Spraggs <theman@spiffyjr.me>
- */
 class ElementAnnotationsListener extends AbstractListenerAggregate
 {
     /**

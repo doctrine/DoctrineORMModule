@@ -8,10 +8,6 @@ use Laminas\Mvc\Controller\AbstractActionController;
 
 /**
  * Utility to generate Yuml compatible strings from metadata graphs
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class YumlController extends AbstractActionController
 {

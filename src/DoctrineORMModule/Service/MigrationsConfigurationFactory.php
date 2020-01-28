@@ -11,10 +11,6 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * DBAL Connection ServiceManager factory
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class MigrationsConfigurationFactory extends AbstractFactory
 {
