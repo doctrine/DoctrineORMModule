@@ -17,10 +17,10 @@ Tools <https://github.com/laminas/laminas-developer-tools>`__, run
 
     composer require laminas/laminas-developer-tools
 
-Then enable ``LaminasDeveloperTools`` in your modules and enable profiling
+Then enable ``Laminas\DeveloperTools`` in your modules and enable profiling
 and the toolbar (see docs of Laminas Developer Tools for that).
 
-Once ``LaminasDeveloperTools`` is enabled, having
+Once ``Laminas\DeveloperTools`` is enabled, having
 ``doctrine.entity_manager.orm_default`` as your default
 ``EntityManager``, you will notice that the queries performed by the ORM
 get logged and displayed in the toolbar.
@@ -59,7 +59,7 @@ something like following in your module:
                 'doctrine' => [
                     'sql_logger_collector' => [
                         'other_orm' => [
-                            // name of the sql logger collector (used by LaminasDeveloperTools)
+                            // name of the sql logger collector (used by Laminas\DeveloperTools)
                             'name' => 'other_orm',
 
                             // name of the configuration service at which to attach the logger
@@ -74,7 +74,7 @@ something like following in your module:
 
                 'laminas-developer-tools' => [
 
-                    // registering the profiler with LaminasDeveloperTools
+                    // registering the profiler with Laminas\DeveloperTools
                     'profiler' => [
                         'collectors' => [
                             // reference to the service we have defined
@@ -82,7 +82,7 @@ something like following in your module:
                         ],
                     ],
 
-                    // registering a new toolbar item with LaminasDeveloperTools (name must be the same of the collector name)
+                    // registering a new toolbar item with Laminas\DeveloperTools (name must be the same of the collector name)
                     'toolbar' => [
                         'entries' => [
                             // this is actually a name of a view script to use - you can use your custom one
@@ -110,7 +110,7 @@ something like following in your module:
             if (isset($config['laminas-developer-tools']['profiler']['enabled'])
                 && $config['laminas-developer-tools']['profiler']['enabled']
             ) {
-                // when LaminasDeveloperTools is enabled, initialize the sql collector
+                // when Laminas\DeveloperTools is enabled, initialize the sql collector
                 $app->getServiceManager()->get('doctrine.sql_logger_collector.other_orm');
             }
         }
