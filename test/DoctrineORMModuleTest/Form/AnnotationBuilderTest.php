@@ -15,7 +15,7 @@ class AnnotationBuilderTest extends TestCase
      */
     protected $builder;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->builder = new AnnotationBuilder($this->getEntityManager());
     }

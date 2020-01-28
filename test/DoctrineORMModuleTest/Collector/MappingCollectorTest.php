@@ -26,7 +26,7 @@ class MappingCollectorTest extends TestCase
     /**
      * @covers \DoctrineORMModule\Collector\MappingCollector::__construct
      */
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 
@@ -47,7 +47,7 @@ class MappingCollectorTest extends TestCase
      */
     public function testGetPriority()
     {
-        $this->assertInternalType('int', $this->collector->getPriority());
+        $this->assertIsInt($this->collector->getPriority());
     }
 
     /**

@@ -24,7 +24,7 @@ class SQLLoggerCollectorTest extends TestCase
      */
     protected $collector;
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         $this->logger = new DebugStack();
@@ -38,7 +38,7 @@ class SQLLoggerCollectorTest extends TestCase
 
     public function testGetPriority()
     {
-        $this->assertInternalType('int', $this->collector->getPriority());
+        $this->assertIsInt($this->collector->getPriority());
     }
 
     public function testCollect()

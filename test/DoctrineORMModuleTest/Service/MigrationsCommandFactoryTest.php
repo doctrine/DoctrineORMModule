@@ -40,7 +40,7 @@ class MigrationsCommandFactoryTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp()
+    public function setUp() : void
     {
         $this->serviceLocator = ServiceManagerFactory::getServiceManager();
     }

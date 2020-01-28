@@ -21,7 +21,7 @@ class ConfigurationFactoryTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp()
+    public function setUp() : void
     {
         $this->serviceManager = new ServiceManager();
         $this->factory = new ConfigurationFactory('test_default');

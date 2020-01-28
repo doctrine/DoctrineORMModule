@@ -34,7 +34,7 @@ class YumlControllerTest extends TestCase
      *
      * @covers \DoctrineORMModule\Yuml\YumlController::__construct
      */
-    public function setUp()
+    public function setUp() : void
     {
         $this->httpClient     = $this->createMock(\Laminas\Http\Client::class);
         $this->controller     = new YumlController($this->httpClient);

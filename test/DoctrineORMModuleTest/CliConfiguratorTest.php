@@ -30,7 +30,7 @@ class CliConfiguratorTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp()
+    public function setUp() : void
     {
         $this->serviceManager = ServiceManagerFactory::getServiceManager();
         $this->objectManager  = $this->serviceManager->get('doctrine.entitymanager.orm_default');

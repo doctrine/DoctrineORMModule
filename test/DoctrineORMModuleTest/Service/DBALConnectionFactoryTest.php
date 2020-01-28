@@ -32,7 +32,7 @@ class DBALConnectionFactoryTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp()
+    public function setUp() : void
     {
         $this->serviceManager = new ServiceManager();
         $this->factory = new DBALConnectionFactory('orm_default');
