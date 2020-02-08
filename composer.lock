@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ade7758595029b452e5316959e0479e5",
+    "content-hash": "18bdb14a5f9cbf59ed071e8d2050bc86",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -435,22 +435,21 @@
         },
         {
             "name": "doctrine/doctrine-laminas-hydrator",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine-laminas-hydrator.git",
-                "reference": "0a2ee4c8c3b4fde35232e6e0bec71a1ce833eb26"
+                "reference": "d1cc845e4755f691880133736742b42a3fa564d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine-laminas-hydrator/zipball/0a2ee4c8c3b4fde35232e6e0bec71a1ce833eb26",
-                "reference": "0a2ee4c8c3b4fde35232e6e0bec71a1ce833eb26",
+                "url": "https://api.github.com/repos/doctrine/doctrine-laminas-hydrator/zipball/d1cc845e4755f691880133736742b42a3fa564d0",
+                "reference": "d1cc845e4755f691880133736742b42a3fa564d0",
                 "shasum": ""
             },
             "require": {
                 "doctrine/common": "^2.10",
                 "ext-ctype": "*",
-                "laminas/laminas-dependency-plugin": "^1.0",
                 "laminas/laminas-hydrator": "^3.0.2",
                 "laminas/laminas-stdlib": "^3.2.1",
                 "php": "^7.2"
@@ -484,35 +483,34 @@
                 "laminas",
                 "zf"
             ],
-            "time": "2020-01-23T21:42:12+00:00"
+            "time": "2020-02-05T17:19:53+00:00"
         },
         {
             "name": "doctrine/doctrine-module",
-            "version": "3.0.1",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineModule.git",
-                "reference": "f2b8b42908568ea0ae385184210f26e7734a296e"
+                "reference": "70adf6924b098acab163ac6c8b08091e66ff4309"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/f2b8b42908568ea0ae385184210f26e7734a296e",
-                "reference": "f2b8b42908568ea0ae385184210f26e7734a296e",
+                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/70adf6924b098acab163ac6c8b08091e66ff4309",
+                "reference": "70adf6924b098acab163ac6c8b08091e66ff4309",
                 "shasum": ""
             },
             "require": {
                 "doctrine/cache": "^1.7",
                 "doctrine/common": "^2.8",
-                "doctrine/doctrine-laminas-hydrator": "^2.0",
+                "doctrine/doctrine-laminas-hydrator": "^2.0.2",
                 "laminas/laminas-authentication": "^2.5.3",
                 "laminas/laminas-cache": "^2.7.1",
-                "laminas/laminas-dependency-plugin": "^1.0",
                 "laminas/laminas-form": "^2.11",
                 "laminas/laminas-hydrator": "^3.0",
                 "laminas/laminas-mvc": "^3.1",
                 "laminas/laminas-paginator": "^2.8",
                 "laminas/laminas-servicemanager": "^3.3",
-                "laminas/laminas-stdlib": "^3.1",
+                "laminas/laminas-stdlib": "^3.2.1",
                 "laminas/laminas-validator": "^2.10",
                 "php": "^7.2",
                 "symfony/console": "^3.3 || ^4.0 || ^5.0"
@@ -591,7 +589,7 @@
                 "laminas",
                 "module"
             ],
-            "time": "2020-01-23T21:43:50+00:00"
+            "time": "2020-02-08T22:13:25+00:00"
         },
         {
             "name": "doctrine/event-manager",
@@ -1314,52 +1312,6 @@
                 "laminas"
             ],
             "time": "2019-12-31T16:30:11+00:00"
-        },
-        {
-            "name": "laminas/laminas-dependency-plugin",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-dependency-plugin.git",
-                "reference": "f269716dc584cd7b69e7f6e8ac1092d645ab56d5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-dependency-plugin/zipball/f269716dc584cd7b69e7f6e8ac1092d645ab56d5",
-                "reference": "f269716dc584cd7b69e7f6e8ac1092d645ab56d5",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1",
-                "php": "^5.6 || ^7.0"
-            },
-            "require-dev": {
-                "composer/composer": "^1.9",
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
-                "phpcompatibility/php-compatibility": "^9.3",
-                "phpunit/phpunit": "^8.4",
-                "roave/security-advisories": "dev-master",
-                "webimpress/coding-standard": "^1.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-develop": "1.1.x-dev"
-                },
-                "class": "Laminas\\DependencyPlugin\\DependencyRewriterPlugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laminas\\DependencyPlugin\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Replace zendframework and zfcampus packages with their Laminas Project equivalents.",
-            "time": "2020-01-14T19:36:52+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
@@ -3307,26 +3259,22 @@
         },
         {
             "name": "laminas/laminas-i18n",
-            "version": "2.10.1",
+            "version": "2.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-i18n.git",
-                "reference": "815be447f1c77f70a86bf24d00087fcb975b39ff"
+                "reference": "48883436c6fa1f9ef001af295e3a40003c5cfbf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-i18n/zipball/815be447f1c77f70a86bf24d00087fcb975b39ff",
-                "reference": "815be447f1c77f70a86bf24d00087fcb975b39ff",
+                "url": "https://api.github.com/repos/laminas/laminas-i18n/zipball/48883436c6fa1f9ef001af295e3a40003c5cfbf2",
+                "reference": "48883436c6fa1f9ef001af295e3a40003c5cfbf2",
                 "shasum": ""
             },
             "require": {
-                "ext-intl": "*",
                 "laminas/laminas-stdlib": "^2.7 || ^3.0",
                 "laminas/laminas-zendframework-bridge": "^1.0",
                 "php": "^5.6 || ^7.0"
-            },
-            "conflict": {
-                "phpspec/prophecy": "<1.9.0"
             },
             "replace": {
                 "zendframework/zend-i18n": "self.version"
@@ -3343,6 +3291,7 @@
                 "phpunit/phpunit": "^5.7.27 || ^6.5.14 || ^7.5.16"
             },
             "suggest": {
+                "ext-intl": "Required for most features of Laminas\\I18n; included in default builds of PHP",
                 "laminas/laminas-cache": "Laminas\\Cache component",
                 "laminas/laminas-config": "Laminas\\Config component",
                 "laminas/laminas-eventmanager": "You should install this package to use the events in the translator",
@@ -3355,8 +3304,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.10.x-dev",
-                    "dev-develop": "2.11.x-dev"
+                    "dev-master": "2.9.x-dev",
+                    "dev-develop": "2.10.x-dev"
                 },
                 "laminas": {
                     "component": "Laminas\\I18n",
@@ -3378,7 +3327,7 @@
                 "i18n",
                 "laminas"
             ],
-            "time": "2019-12-31T17:07:17+00:00"
+            "time": "2019-12-31T17:09:58+00:00"
         },
         {
             "name": "laminas/laminas-log",
@@ -3687,34 +3636,35 @@
         },
         {
             "name": "ocramius/package-versions",
-            "version": "1.4.2",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/PackageVersions.git",
-                "reference": "44af6f3a2e2e04f2af46bcb302ad9600cba41c7d"
+                "reference": "1d32342b8c1eb27353c8887c366147b4c2da673c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/44af6f3a2e2e04f2af46bcb302ad9600cba41c7d",
-                "reference": "44af6f3a2e2e04f2af46bcb302ad9600cba41c7d",
+                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/1d32342b8c1eb27353c8887c366147b4c2da673c",
+                "reference": "1d32342b8c1eb27353c8887c366147b4c2da673c",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0.0",
-                "php": "^7.1.0"
+                "php": "^7.3.0"
             },
             "require-dev": {
-                "composer/composer": "^1.6.3",
-                "doctrine/coding-standard": "^5.0.1",
+                "composer/composer": "^1.8.6",
+                "doctrine/coding-standard": "^6.0.0",
                 "ext-zip": "*",
-                "infection/infection": "^0.7.1",
-                "phpunit/phpunit": "^7.5.17"
+                "infection/infection": "^0.13.4",
+                "phpunit/phpunit": "^8.2.5",
+                "vimeo/psalm": "^3.4.9"
             },
             "type": "composer-plugin",
             "extra": {
                 "class": "PackageVersions\\Installer",
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "1.6.x-dev"
                 }
             },
             "autoload": {
@@ -3733,7 +3683,7 @@
                 }
             ],
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
-            "time": "2019-11-15T16:17:10+00:00"
+            "time": "2019-07-17T15:49:50+00:00"
         },
         {
             "name": "ocramius/proxy-manager",
@@ -5443,7 +5393,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "doctrine/doctrine-module": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
