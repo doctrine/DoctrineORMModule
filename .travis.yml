@@ -26,9 +26,6 @@ matrix:
     - php: 7.2
       env:
         - DEPS=latest
-    - php: 7.2
-      env:
-        - DEPS=dev
     - php: 7.3
       env:
         - DEPS=lowest
@@ -38,9 +35,6 @@ matrix:
     - php: 7.3
       env:
         - DEPS=latest
-    - php: 7.3
-      env:
-        - DEPS=dev
     - php: 7.4
       env:
         - DEPS=lowest
@@ -55,7 +49,6 @@ before_install:
   - mysql -e 'CREATE DATABASE `database`;'
 
 install:
-  - if [[ $DEPS == 'dev' ]]; then travis_retry composer config minimum-stability dev ; fi
   - travis_retry composer install $COMPOSER_ARGS
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
