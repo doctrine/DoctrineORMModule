@@ -5,15 +5,11 @@ namespace DoctrineORMModule\Service;
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Form\Element\ObjectMultiCheckbox;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
 
 /**
  * Factory for {@see ObjectMultiCheckbox}
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Daniel Gimenes <daniel@danielgimenes.com.br>
  */
 class ObjectMultiCheckboxFactory implements FactoryInterface
 {

@@ -2,22 +2,17 @@
 
 namespace DoctrineORMModule;
 
-use Interop\Container\ContainerInterface;
-use Zend\EventManager\EventInterface;
-use Zend\ModuleManager\Feature\ControllerProviderInterface;
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
-use Zend\ModuleManager\ModuleManagerInterface;
 use DoctrineORMModule\CliConfigurator;
-use ZendDeveloperTools\ProfilerEvent;
+use Interop\Container\ContainerInterface;
+use Laminas\EventManager\EventInterface;
+use Laminas\ModuleManager\Feature\ControllerProviderInterface;
+use Laminas\ModuleManager\Feature\ConfigProviderInterface;
+use Laminas\ModuleManager\Feature\DependencyIndicatorInterface;
+use Laminas\ModuleManager\ModuleManagerInterface;
+use Laminas\DeveloperTools\ProfilerEvent;
 
 /**
  * Base module for Doctrine ORM.
- *
- * @license MIT
- * @link    www.doctrine-project.org
- * @author  Kyle Spraggs <theman@spiffyjr.me>
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class Module implements
     ControllerProviderInterface,
@@ -46,7 +41,7 @@ class Module implements
                 1
             );
 
-        // Initialize logger collector in ZendDeveloperTools
+        // Initialize logger collector in DeveloperTools
         if (class_exists(ProfilerEvent::class)) {
             $manager
                 ->getEventManager()

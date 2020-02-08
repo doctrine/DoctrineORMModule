@@ -8,14 +8,10 @@ use Doctrine\DBAL\Types\Type;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\DBALConnection;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * DBAL Connection ServiceManager factory
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Kyle Spraggs <theman@spiffyjr.me>
  */
 class DBALConnectionFactory extends AbstractFactory
 {

@@ -7,18 +7,13 @@ use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Interop\Container\ContainerInterface;
+use Laminas\Stdlib\ArrayUtils;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputOption;
-use Zend\Stdlib\ArrayUtils;
 
-/**
- * @license MIT
- * @link    www.doctrine-project.org
- * @author  Nicolas Eeckeloo <neeckeloo@gmail.com>
- */
 class CliConfigurator
 {
     private $defaultObjectManagerName = 'doctrine.entitymanager.orm_default';

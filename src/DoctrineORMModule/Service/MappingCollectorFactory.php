@@ -5,14 +5,10 @@ namespace DoctrineORMModule\Service;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Collector\MappingCollector;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Service factory responsible for instantiating {@see \DoctrineORMModule\Collector\MappingCollector}
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class MappingCollectorFactory extends AbstractFactory
 {

@@ -5,13 +5,10 @@ namespace DoctrineORMModule\Form\Annotation;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Form\Element;
-use Zend\EventManager\EventManagerInterface;
-use Zend\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\Form\Annotation\AnnotationBuilder as LaminasAnnotationBuilder;
 
-/**
- * @author Kyle Spraggs <theman@spiffyjr.me>
- */
-class AnnotationBuilder extends ZendAnnotationBuilder
+class AnnotationBuilder extends LaminasAnnotationBuilder
 {
     const EVENT_CONFIGURE_FIELD       = 'configureField';
     const EVENT_CONFIGURE_ASSOCIATION = 'configureAssociation';

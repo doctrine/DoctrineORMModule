@@ -2,20 +2,16 @@
 
 namespace DoctrineORMModule\Service;
 
-use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
-use Interop\Container\ContainerInterface;
 use RuntimeException;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Types\Type;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
+use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * DBAL Configuration ServiceManager factory
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Kyle Spraggs <theman@spiffyjr.me>
  */
 class DBALConfigurationFactory implements FactoryInterface
 {

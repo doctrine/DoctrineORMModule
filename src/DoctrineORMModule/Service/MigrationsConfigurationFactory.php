@@ -6,15 +6,11 @@ use Doctrine\Migrations\Configuration\Configuration;
 use Doctrine\Migrations\OutputWriter;
 use DoctrineModule\Service\AbstractFactory;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * DBAL Connection ServiceManager factory
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class MigrationsConfigurationFactory extends AbstractFactory
 {

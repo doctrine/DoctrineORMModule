@@ -3,15 +3,10 @@
 namespace DoctrineORMModule\Paginator\Adapter;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Zend\Paginator\Adapter\AdapterInterface;
+use Laminas\Paginator\Adapter\AdapterInterface;
 
 /**
- * Paginator adapter for the Zend\Paginator component
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @since   0.1.0
- * @author  Tõnis Tobre <tobre@bitweb.ee>
+ * Paginator adapter for the Laminas\Paginator component
  */
 class DoctrinePaginator implements AdapterInterface
 {

@@ -6,15 +6,11 @@ use DoctrineORMModule\Options\DBALConfiguration;
 use Doctrine\ORM\Mapping\EntityListenerResolver;
 use Doctrine\ORM\Mapping\NamingStrategy;
 use Doctrine\ORM\Repository\RepositoryFactory;
-use Zend\Stdlib\AbstractOptions;
-use Zend\Stdlib\Exception\InvalidArgumentException;
+use Laminas\Stdlib\AbstractOptions;
+use Laminas\Stdlib\Exception\InvalidArgumentException;
 
 /**
  * Configuration options for Second Level Cache
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Michaël Gallego <mic.gallego@gmail.com>
  */
 class SecondLevelCacheConfiguration extends AbstractOptions
 {

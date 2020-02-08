@@ -3,14 +3,10 @@
 namespace DoctrineORMModule\Options;
 
 use Doctrine\DBAL\Driver\PDOMySql\Driver;
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 /**
  * DBAL Connection options
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Kyle Spraggs <theman@spiffyjr.me>
  */
 class DBALConnection extends AbstractOptions
 {

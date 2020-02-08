@@ -4,10 +4,6 @@ namespace DoctrineORMModule;
 
 /**
  * Config provider for DoctrineORMModule config
- *
- * @license MIT
- * @link    www.doctrine-project.org
- * @author  James Titcumb <james@asgrim.com>
  */
 class ConfigProvider
 {

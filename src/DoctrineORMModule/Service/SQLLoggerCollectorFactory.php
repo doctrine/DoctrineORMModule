@@ -2,21 +2,17 @@
 
 namespace DoctrineORMModule\Service;
 
-use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
-use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
-use DoctrineORMModule\Collector\SQLLoggerCollector;
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\DBAL\Logging\LoggerChain;
+use DoctrineORMModule\Collector\SQLLoggerCollector;
+use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
+use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * DBAL Configuration ServiceManager factory
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class SQLLoggerCollectorFactory implements FactoryInterface
 {

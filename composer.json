@@ -1,13 +1,13 @@
 {
     "name":              "doctrine/doctrine-orm-module",
-    "description":       "Zend Framework Module that provides Doctrine ORM functionality",
+    "description":       "Laminas Module that provides Doctrine ORM functionality",
     "type":              "library",
     "license":           "MIT",
     "keywords":          [
         "doctrine",
         "orm",
         "module",
-        "zf"
+        "laminas"
     ],
     "homepage":          "http://www.doctrine-project.org/",
     "authors":           [
@@ -29,41 +29,44 @@
         {
             "name":  "Guilherme Blanco",
             "email": "guilhermeblanco@hotmail.com"
+        },
+        {
+            "name": "Tom H Anderson",
+            "email": "tom.h.anderson@gmail.com"
         }
     ],
     "extra": {
-        "zf": {
+        "laminas": {
             "config-provider": "DoctrineORMModule\\ConfigProvider",
             "module": "DoctrineORMModule"
         }
     },
     "require":           {
-        "php":                               "^7.1",
-        "doctrine/doctrine-module":          "^2.1.3",
-        "doctrine/orm":                      "^2.6.3",
+        "php":                               "^7.2",
+        "doctrine/doctrine-module":          "4.0 || dev-develop",
+        "doctrine/orm":                      "^2.6.4",
         "doctrine/dbal":                     "^2.6.0",
-        "symfony/console":                   "^3.3 || ^4.0 || ^5.0",
-        "zendframework/zend-stdlib":         "^3.2.1",
-        "zendframework/zend-hydrator":       "^2.3",
-        "zendframework/zend-mvc":            "^3.1",
-        "zendframework/zend-servicemanager": "^3.3"
+        "symfony/console":                   "^3.3 || ^4.0 || ^5.0"
     },
     "require-dev":       {
-        "phpunit/phpunit":                    "^7.0.3",
-        "squizlabs/php_codesniffer":          "^2.7",
-        "doctrine/data-fixtures":             "^1.2.1",
-        "doctrine/migrations":                "^1.5 || ^2.0",
-        "zendframework/zend-console":         "^2.6",
-        "zendframework/zend-developer-tools": "^1.1",
-        "zendframework/zend-i18n":            "^2.7.3",
-        "zendframework/zend-log":             "^2.9",
-        "zendframework/zend-modulemanager":   "^2.7.2",
-        "zendframework/zend-mvc-console":     "^1.2",
-        "zendframework/zend-serializer":      "^2.8"
+        "phpunit/phpunit":                 "^8.5",
+        "squizlabs/php_codesniffer":       "^3.5",
+        "doctrine/data-fixtures":          "^1.2.1",
+        "doctrine/migrations":             "^1.5 || ^2.0",
+        "laminas/laminas-console":         "^2.6",
+        "laminas/laminas-developer-tools": "^1.1",
+        "laminas/laminas-i18n":            "^2.7.3",
+        "laminas/laminas-log":             "^2.9",
+        "laminas/laminas-modulemanager":   "^2.7.2",
+        "laminas/laminas-mvc-console":     "^1.2",
+        "laminas/laminas-serializer":      "^2.8",
+        "laminas/laminas-code":            "^3.3.2",
+        "ocramius/proxy-manager":          "^2.2",
+        "doctrine/annotations":            "^1.8"
     },
     "suggest":           {
-        "zendframework/zend-form":            "if you want to use form elements backed by Doctrine",
-        "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development",
+        "laminas/laminas-form":            "if you want to use form elements backed by Doctrine",
+        "laminas/laminas-developer-tools": "laminas-developer-tools if you want to profile operations executed by the ORM during development",
         "doctrine/migrations":                "doctrine migrations if you want to keep your schema definitions versioned"
     },
     "autoload":          {
@@ -76,7 +79,7 @@
     },
     "autoload-dev":      {
         "psr-0": {
-            "DoctrineORMModuleTest\\": "tests/"
+            "DoctrineORMModuleTest\\": "test/"
         }
     },
     "scripts": {

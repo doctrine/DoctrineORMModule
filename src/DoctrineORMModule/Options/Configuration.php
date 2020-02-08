@@ -6,15 +6,10 @@ use Doctrine\ORM\Mapping\EntityListenerResolver;
 use Doctrine\ORM\Mapping\NamingStrategy;
 use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Repository\RepositoryFactory;
-use Zend\Stdlib\Exception\InvalidArgumentException;
+use Laminas\Stdlib\Exception\InvalidArgumentException;
 
 /**
  * Configuration options for an ORM Configuration
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Kyle Spraggs <theman@spiffyjr.me>
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class Configuration extends DBALConfiguration
 {
