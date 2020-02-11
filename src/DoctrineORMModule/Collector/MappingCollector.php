@@ -2,11 +2,11 @@
 
 namespace DoctrineORMModule\Collector;
 
-use Serializable;
 use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
 use Laminas\DeveloperTools\Collector\CollectorInterface;
 use Laminas\DeveloperTools\Collector\AutoHideInterface;
 use Laminas\Mvc\MvcEvent;
+use Serializable;
 
 /**
  * Collector to be used in DeveloperTools to record and display mapping information

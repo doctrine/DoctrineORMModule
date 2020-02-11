@@ -2,13 +2,13 @@
 
 namespace DoctrineORMModule\Service;
 
-use RuntimeException;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Types\Type;
 use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use RuntimeException;
 
 /**
  * DBAL Configuration ServiceManager factory
