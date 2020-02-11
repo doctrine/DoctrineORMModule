@@ -2,7 +2,6 @@
 
 namespace DoctrineORMModule\Service;
 
-use RuntimeException;
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\DBAL\Logging\LoggerChain;
 use DoctrineORMModule\Collector\SQLLoggerCollector;
@@ -10,6 +9,7 @@ use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use RuntimeException;
 
 /**
  * DBAL Configuration ServiceManager factory
