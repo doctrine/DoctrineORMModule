@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Service;
 
 use Doctrine\Laminas\Hydrator\DoctrineObject;
@@ -12,7 +14,7 @@ class DoctrineObjectHydratorFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         return new DoctrineObject($container->get('doctrine.entitymanager.orm_default'));
     }

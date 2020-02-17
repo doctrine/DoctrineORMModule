@@ -1,13 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Service;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\Migrations\Configuration\Configuration;
 use Doctrine\Migrations\OutputWriter;
 use DoctrineModule\Service\AbstractFactory;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use function assert;
+use function method_exists;
 
 /**
  * DBAL Connection ServiceManager factory
@@ -19,18 +24,18 @@ class MigrationsConfigurationFactory extends AbstractFactory
      *
      * @return Configuration
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        $name             = $this->getName();
-        /* @var $connection \Doctrine\DBAL\Connection */
-        $connection       = $container->get('doctrine.connection.' . $name);
+        $name       = $this->getName();
+        $connection = $container->get('doctrine.connection.' . $name);
+        assert($connection instanceof Connection);
         $appConfig        = $container->get('config');
         $migrationsConfig = $appConfig['doctrine']['migrations_configuration'][$name];
 
         $configuration = new Configuration($connection);
 
-        $output = new ConsoleOutput();
-        $writerCallback = static function ($message) use ($output) {
+        $output         = new ConsoleOutput();
+        $writerCallback = static function ($message) use ($output) : void {
             $output->writeln($message);
         };
 
@@ -69,10 +74,7 @@ class MigrationsConfigurationFactory extends AbstractFactory
         return $this($container, Configuration::class);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getOptionsClass()
+    public function getOptionsClass() : string
     {
     }
 }

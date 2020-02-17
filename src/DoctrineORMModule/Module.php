@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule;
 
-use DoctrineORMModule\CliConfigurator;
-use Interop\Container\ContainerInterface;
+use Laminas\DeveloperTools\ProfilerEvent;
 use Laminas\EventManager\EventInterface;
-use Laminas\ModuleManager\Feature\ControllerProviderInterface;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
+use Laminas\ModuleManager\Feature\ControllerProviderInterface;
 use Laminas\ModuleManager\Feature\DependencyIndicatorInterface;
 use Laminas\ModuleManager\ModuleManagerInterface;
-use Laminas\DeveloperTools\ProfilerEvent;
+use function class_exists;
 
 /**
  * Base module for Doctrine ORM.
@@ -31,28 +32,29 @@ class Module implements
             ->attach(
                 'doctrine',
                 'loadCli.post',
-                function (EventInterface $event) {
+                static function (EventInterface $event) : void {
                     $event
                         ->getParam('ServiceManager')
                         ->get(CliConfigurator::class)
-                        ->configure($event->getTarget())
-                        ;
+                        ->configure($event->getTarget());
                 },
                 1
             );
 
         // Initialize logger collector in DeveloperTools
-        if (class_exists(ProfilerEvent::class)) {
-            $manager
-                ->getEventManager()
-                ->attach(
-                    ProfilerEvent::EVENT_PROFILER_INIT,
-                    function ($event) {
-                        $container = $event->getTarget()->getParam('ServiceManager');
-                        $container->get('doctrine.sql_logger_collector.orm_default');
-                    }
-                );
+        if (! class_exists(ProfilerEvent::class)) {
+            return;
         }
+
+        $manager
+            ->getEventManager()
+            ->attach(
+                ProfilerEvent::EVENT_PROFILER_INIT,
+                static function ($event) : void {
+                    $container = $event->getTarget()->getParam('ServiceManager');
+                    $container->get('doctrine.sql_logger_collector.orm_default');
+                }
+            );
     }
 
     /**

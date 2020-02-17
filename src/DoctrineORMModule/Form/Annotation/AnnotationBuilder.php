@@ -1,29 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Form\Annotation;
 
+use ArrayObject;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Form\Element;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Form\Annotation\AnnotationBuilder as LaminasAnnotationBuilder;
+use function get_class;
+use function in_array;
+use function is_object;
 
 class AnnotationBuilder extends LaminasAnnotationBuilder
 {
-    const EVENT_CONFIGURE_FIELD       = 'configureField';
-    const EVENT_CONFIGURE_ASSOCIATION = 'configureAssociation';
-    const EVENT_EXCLUDE_FIELD         = 'excludeField';
-    const EVENT_EXCLUDE_ASSOCIATION   = 'excludeAssociation';
+    public const EVENT_CONFIGURE_FIELD       = 'configureField';
+    public const EVENT_CONFIGURE_ASSOCIATION = 'configureAssociation';
+    public const EVENT_EXCLUDE_FIELD         = 'excludeField';
+    public const EVENT_EXCLUDE_ASSOCIATION   = 'excludeAssociation';
 
-    /**
-     * @var \Doctrine\Common\Persistence\ObjectManager
-     */
+    /** @var ObjectManager */
     protected $objectManager;
 
     /**
      * Constructor. Ensures ObjectManager is present.
-     *
-     * @param \Doctrine\Common\Persistence\ObjectManager $objectManager
      */
     public function __construct(ObjectManager $objectManager)
     {
@@ -53,9 +55,9 @@ class AnnotationBuilder extends LaminasAnnotationBuilder
      */
     public function getFormSpecification($entity)
     {
-        $formSpec     = parent::getFormSpecification($entity);
-        $metadata     = $this->objectManager->getClassMetadata(is_object($entity) ? get_class($entity) : $entity);
-        $inputFilter  = $formSpec['input_filter'];
+        $formSpec    = parent::getFormSpecification($entity);
+        $metadata    = $this->objectManager->getClassMetadata(is_object($entity) ? get_class($entity) : $entity);
+        $inputFilter = $formSpec['input_filter'];
 
         $formElements = [
             Element\ObjectSelect::class,
@@ -73,7 +75,7 @@ class AnnotationBuilder extends LaminasAnnotationBuilder
             }
 
             if (! isset($inputFilter[$name])) {
-                $inputFilter[$name] = new \ArrayObject();
+                $inputFilter[$name] = new ArrayObject();
             }
 
             $params = [
@@ -97,9 +99,9 @@ class AnnotationBuilder extends LaminasAnnotationBuilder
             }
 
             if ($metadata->hasField($name) || (! $metadata->hasAssociation($name) && $isFormElement)) {
-                $this->getEventManager()->trigger(static::EVENT_CONFIGURE_FIELD, $this, $params);
+                $this->getEventManager()->trigger(self::EVENT_CONFIGURE_FIELD, $this, $params);
             } elseif ($metadata->hasAssociation($name)) {
-                $this->getEventManager()->trigger(static::EVENT_CONFIGURE_ASSOCIATION, $this, $params);
+                $this->getEventManager()->trigger(self::EVENT_CONFIGURE_ASSOCIATION, $this, $params);
             }
         }
 
@@ -108,24 +110,19 @@ class AnnotationBuilder extends LaminasAnnotationBuilder
         return $formSpec;
     }
 
-    /**
-     * @param ClassMetadata $metadata
-     * @param $name
-     * @return bool
-     */
-    protected function checkForExcludeElementFromMetadata(ClassMetadata $metadata, $name)
+    protected function checkForExcludeElementFromMetadata(ClassMetadata $metadata, string $name) : bool
     {
         $params = ['metadata' => $metadata, 'name' => $name];
         $result = false;
 
         if ($metadata->hasField($name)) {
-            $result = $this->getEventManager()->trigger(static::EVENT_EXCLUDE_FIELD, $this, $params);
+            $result = $this->getEventManager()->trigger(self::EVENT_EXCLUDE_FIELD, $this, $params);
         } elseif ($metadata->hasAssociation($name)) {
-            $result = $this->getEventManager()->trigger(static::EVENT_EXCLUDE_ASSOCIATION, $this, $params);
+            $result = $this->getEventManager()->trigger(self::EVENT_EXCLUDE_ASSOCIATION, $this, $params);
         }
 
         if ($result) {
-            $result = (bool)$result->last();
+            $result = (bool) $result->last();
         }
 
         return $result;

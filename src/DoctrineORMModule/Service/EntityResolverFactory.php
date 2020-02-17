@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Service;
 
 use Doctrine\Common\EventSubscriber;
@@ -10,16 +12,17 @@ use DoctrineORMModule\Options\EntityResolver;
 use Interop\Container\ContainerInterface;
 use Laminas\EventManager\EventManager;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use function assert;
 
 class EntityResolverFactory extends AbstractFactory
 {
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        /* @var $options EntityResolver */
-        $options      = $this->getOptions($container, 'entity_resolver');
+        $options = $this->getOptions($container, 'entity_resolver');
+        assert($options instanceof EntityResolver);
         $eventManager = $container->get($options->getEventManager());
         $resolvers    = $options->getResolvers();
 
@@ -49,10 +52,8 @@ class EntityResolverFactory extends AbstractFactory
 
     /**
      * Get the class name of the options associated with this factory.
-     *
-     * @return string
      */
-    public function getOptionsClass()
+    public function getOptionsClass() : string
     {
         return EntityResolver::class;
     }

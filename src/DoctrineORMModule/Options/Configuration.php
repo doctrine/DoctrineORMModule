@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Options;
 
 use Doctrine\ORM\Mapping\EntityListenerResolver;
@@ -7,6 +9,11 @@ use Doctrine\ORM\Mapping\NamingStrategy;
 use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Repository\RepositoryFactory;
 use Laminas\Stdlib\Exception\InvalidArgumentException;
+use function get_class;
+use function gettype;
+use function is_object;
+use function is_string;
+use function sprintf;
 
 /**
  * Configuration options for an ORM Configuration
@@ -82,7 +89,7 @@ class Configuration extends DBALConfiguration
     /**
      * Entity alias map.
      *
-     * @var array
+     * @var mixed[]
      */
     protected $entityNamespaces = [];
 
@@ -90,7 +97,7 @@ class Configuration extends DBALConfiguration
      * Keys must be function names and values the FQCN of the implementing class.
      * The function names will be case-insensitive in DQL.
      *
-     * @var array
+     * @var mixed[]
      */
     protected $datetimeFunctions = [];
 
@@ -98,7 +105,7 @@ class Configuration extends DBALConfiguration
      * Keys must be function names and values the FQCN of the implementing class.
      * The function names will be case-insensitive in DQL.
      *
-     * @var array
+     * @var mixed[]
      */
     protected $stringFunctions = [];
 
@@ -106,7 +113,7 @@ class Configuration extends DBALConfiguration
      * Keys must be function names and values the FQCN of the implementing class.
      * The function names will be case-insensitive in DQL.
      *
-     * @var array
+     * @var mixed[]
      */
     protected $numericFunctions = [];
 
@@ -114,14 +121,14 @@ class Configuration extends DBALConfiguration
      * Keys must be the name of the custom filter and the value must be
      * the class name for the custom filter.
      *
-     * @var array
+     * @var mixed[]
      */
     protected $filters = [];
 
     /**
      * Keys must be the name of the query and values the DQL query string.
      *
-     * @var array
+     * @var mixed[]
      */
     protected $namedQueries = [];
 
@@ -129,7 +136,7 @@ class Configuration extends DBALConfiguration
      * Keys must be the name of the query and the value is an array containing
      * the keys 'sql' for native SQL query string and 'rsm' for the Query\ResultSetMapping.
      *
-     * @var array
+     * @var mixed[]
      */
     protected $namedNativeQueries = [];
 
@@ -137,7 +144,7 @@ class Configuration extends DBALConfiguration
      * Keys must be the name of the custom hydration method and the value must be
      * the class name for the custom hydrator
      *
-     * @var array
+     * @var mixed[]
      */
     protected $customHydrationModes = [];
 
@@ -145,7 +152,7 @@ class Configuration extends DBALConfiguration
      * Naming strategy or name of the naming strategy service to be set in ORM
      * configuration (if any)
      *
-     * @var string|null|NamingStrategy
+     * @var string|NamingStrategy|null
      */
     protected $namingStrategy;
 
@@ -153,7 +160,7 @@ class Configuration extends DBALConfiguration
      * Quote strategy or name of the quote strategy service to be set in ORM
      * configuration (if any)
      *
-     * @var string|null|QuoteStrategy
+     * @var string|QuoteStrategy|null
      */
     protected $quoteStrategy;
 
@@ -168,7 +175,7 @@ class Configuration extends DBALConfiguration
      * Repository factory or name of the repository factory service to be set in ORM
      * configuration (if any)
      *
-     * @var string|null|RepositoryFactory
+     * @var string|RepositoryFactory|null
      */
     protected $repositoryFactory;
 
@@ -185,7 +192,8 @@ class Configuration extends DBALConfiguration
      * to be set in ORM configuration (if any)
      *
      * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
-     * @var  string|null|EntityListenerResolver
+     *
+     * @var string|EntityListenerResolver|null
      */
     protected $entityListenerResolver;
 
@@ -193,6 +201,7 @@ class Configuration extends DBALConfiguration
      * Configuration for second level cache
      *
      * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/second-level-cache.html
+     *
      * @var SecondLevelCacheConfiguration|null
      */
     protected $secondLevelCache;
@@ -205,10 +214,9 @@ class Configuration extends DBALConfiguration
     protected $filterSchemaAssetsExpression;
 
     /**
-     * @param  array $datetimeFunctions
-     * @return self
+     * @param mixed[] $datetimeFunctions
      */
-    public function setDatetimeFunctions($datetimeFunctions)
+    public function setDatetimeFunctions(array $datetimeFunctions) : self
     {
         $this->datetimeFunctions = $datetimeFunctions;
 
@@ -216,37 +224,29 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getDatetimeFunctions()
+    public function getDatetimeFunctions() : array
     {
         return $this->datetimeFunctions;
     }
 
-    /**
-     * @param  string $driver
-     * @return self
-     */
-    public function setDriver($driver)
+    public function setDriver(string $driver) : self
     {
         $this->driver = $driver;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDriver()
+    public function getDriver() : string
     {
-        return "doctrine.driver.{$this->driver}";
+        return 'doctrine.driver.' . $this->driver;
     }
 
     /**
-     * @param  array $entityNamespaces
-     * @return self
+     * @param mixed[] $entityNamespaces
      */
-    public function setEntityNamespaces($entityNamespaces)
+    public function setEntityNamespaces(array $entityNamespaces) : self
     {
         $this->entityNamespaces = $entityNamespaces;
 
@@ -254,94 +254,63 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getEntityNamespaces()
+    public function getEntityNamespaces() : array
     {
         return $this->entityNamespaces;
     }
 
-    /**
-     * @param  boolean $generateProxies
-     * @return self
-     */
-    public function setGenerateProxies($generateProxies)
+    public function setGenerateProxies(bool $generateProxies) : self
     {
         $this->generateProxies = $generateProxies;
 
         return $this;
     }
 
-    /**
-     * @return boolean
-     */
-    public function getGenerateProxies()
+    public function getGenerateProxies() : bool
     {
         return $this->generateProxies;
     }
 
-    /**
-     * @param  string $metadataCache
-     * @return self
-     */
-    public function setMetadataCache($metadataCache)
+    public function setMetadataCache(string $metadataCache) : self
     {
         $this->metadataCache = $metadataCache;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMetadataCache()
+    public function getMetadataCache() : string
     {
-        return "doctrine.cache.{$this->metadataCache}";
+        return 'doctrine.cache.' . $this->metadataCache;
     }
 
-    /**
-     * @param  string $resultCache
-     * @return self
-     */
-    public function setResultCache($resultCache)
+    public function setResultCache(string $resultCache) : void
     {
         $this->resultCache = $resultCache;
-
-        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getResultCache()
+    public function getResultCache() : string
     {
-        return "doctrine.cache.{$this->resultCache}";
+        return 'doctrine.cache.' . $this->resultCache;
     }
 
-    /**
-     * @param  string $hydrationCache
-     * @return self
-     */
-    public function setHydrationCache($hydrationCache)
+    public function setHydrationCache(string $hydrationCache) : self
     {
         $this->hydrationCache = $hydrationCache;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getHydrationCache()
+    public function getHydrationCache() : string
     {
-        return "doctrine.cache.{$this->hydrationCache}";
+        return 'doctrine.cache.' . $this->hydrationCache;
     }
 
     /**
-     * @param  array $namedNativeQueries
-     * @return self
+     * @param mixed[] $namedNativeQueries
      */
-    public function setNamedNativeQueries($namedNativeQueries)
+    public function setNamedNativeQueries(array $namedNativeQueries) : self
     {
         $this->namedNativeQueries = $namedNativeQueries;
 
@@ -349,18 +318,17 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getNamedNativeQueries()
+    public function getNamedNativeQueries() : array
     {
         return $this->namedNativeQueries;
     }
 
     /**
-     * @param  array $namedQueries
-     * @return self
+     * @param mixed[] $namedQueries
      */
-    public function setNamedQueries($namedQueries)
+    public function setNamedQueries(array $namedQueries) : self
     {
         $this->namedQueries = $namedQueries;
 
@@ -368,18 +336,17 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getNamedQueries()
+    public function getNamedQueries() : array
     {
         return $this->namedQueries;
     }
 
     /**
-     * @param  array $numericFunctions
-     * @return self
+     * @param  mixed[] $numericFunctions
      */
-    public function setNumericFunctions($numericFunctions)
+    public function setNumericFunctions(array $numericFunctions) : self
     {
         $this->numericFunctions = $numericFunctions;
 
@@ -387,19 +354,17 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getNumericFunctions()
+    public function getNumericFunctions() : array
     {
         return $this->numericFunctions;
     }
 
     /**
-     *
-     * @param  array $filters
-     * @return self
+     * @param mixed[] $filters
      */
-    public function setFilters($filters)
+    public function setFilters(array $filters) : self
     {
         $this->filters = $filters;
 
@@ -407,76 +372,53 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     *
-     * @return array
+     * @return mixed[]
      */
-    public function getFilters()
+    public function getFilters() : array
     {
         return $this->filters;
     }
 
-    /**
-     * @param  string $proxyDir
-     * @return self
-     */
-    public function setProxyDir($proxyDir)
+    public function setProxyDir(string $proxyDir) : self
     {
         $this->proxyDir = $proxyDir;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getProxyDir()
+    public function getProxyDir() : string
     {
         return $this->proxyDir;
     }
 
-    /**
-     * @param  string $proxyNamespace
-     * @return self
-     */
-    public function setProxyNamespace($proxyNamespace)
+    public function setProxyNamespace(string $proxyNamespace) : self
     {
         $this->proxyNamespace = $proxyNamespace;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getProxyNamespace()
+    public function getProxyNamespace() : string
     {
         return $this->proxyNamespace;
     }
 
-    /**
-     * @param  string $queryCache
-     * @return self
-     */
-    public function setQueryCache($queryCache)
+    public function setQueryCache(string $queryCache) : self
     {
         $this->queryCache = $queryCache;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getQueryCache()
+    public function getQueryCache() : string
     {
-        return "doctrine.cache.{$this->queryCache}";
+        return 'doctrine.cache.' . $this->queryCache;
     }
 
     /**
-     * @param  array $stringFunctions
-     * @return self
+     * @param  mixed[] $stringFunctions
      */
-    public function setStringFunctions($stringFunctions)
+    public function setStringFunctions(array $stringFunctions) : self
     {
         $this->stringFunctions = $stringFunctions;
 
@@ -484,18 +426,17 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getStringFunctions()
+    public function getStringFunctions() : array
     {
         return $this->stringFunctions;
     }
 
     /**
-     * @param  array $modes
-     * @return self
+     * @param mixed[] $modes
      */
-    public function setCustomHydrationModes($modes)
+    public function setCustomHydrationModes(array $modes) : self
     {
         $this->customHydrationModes = $modes;
 
@@ -503,21 +444,21 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getCustomHydrationModes()
+    public function getCustomHydrationModes() : array
     {
         return $this->customHydrationModes;
     }
 
     /**
-     * @param  string|null|NamingStrategy $namingStrategy
-     * @return self
-     * @throws InvalidArgumentException   when the provided naming strategy does not fit the expected type
+     * @param string|NamingStrategy|null $namingStrategy
+     *
+     * @throws InvalidArgumentException   when the provided naming strategy does not fit the expected type.
      */
-    public function setNamingStrategy($namingStrategy)
+    public function setNamingStrategy($namingStrategy) : self
     {
-        if (null === $namingStrategy
+        if ($namingStrategy === null
             || is_string($namingStrategy)
             || $namingStrategy instanceof NamingStrategy
         ) {
@@ -536,7 +477,7 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @return string|null|NamingStrategy
+     * @return string|NamingStrategy|null
      */
     public function getNamingStrategy()
     {
@@ -544,13 +485,13 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param  string|null|QuoteStrategy $quoteStrategy
-     * @return self
-     * @throws InvalidArgumentException   when the provided quote strategy does not fit the expected type
+     * @param string|QuoteStrategy|null $quoteStrategy
+     *
+     * @throws InvalidArgumentException   when the provided quote strategy does not fit the expected type.
      */
-    public function setQuoteStrategy($quoteStrategy)
+    public function setQuoteStrategy($quoteStrategy) : self
     {
-        if (null === $quoteStrategy
+        if ($quoteStrategy === null
             || is_string($quoteStrategy)
             || $quoteStrategy instanceof QuoteStrategy
         ) {
@@ -569,7 +510,7 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @return string|null|QuoteStrategy
+     * @return string|QuoteStrategy|null
      */
     public function getQuoteStrategy()
     {
@@ -577,13 +518,13 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param  string|null|RepositoryFactory $repositoryFactory
-     * @return self
-     * @throws InvalidArgumentException   when the provided repository factory does not fit the expected type
+     * @param string|RepositoryFactory|null $repositoryFactory
+     *
+     * @throws InvalidArgumentException   when the provided repository factory does not fit the expected type.
      */
-    public function setRepositoryFactory($repositoryFactory)
+    public function setRepositoryFactory($repositoryFactory) : self
     {
-        if (null === $repositoryFactory
+        if ($repositoryFactory === null
             || is_string($repositoryFactory)
             || $repositoryFactory instanceof RepositoryFactory
         ) {
@@ -602,7 +543,7 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @return string|null|RepositoryFactory
+     * @return string|RepositoryFactory|null
      */
     public function getRepositoryFactory()
     {
@@ -613,34 +554,28 @@ class Configuration extends DBALConfiguration
      * Set the metadata factory class name to use
      *
      * @see \Doctrine\ORM\Configuration::setClassMetadataFactoryName()
-     *
-     * @param string $factoryName
-     * @return self
      */
-    public function setClassMetadataFactoryName($factoryName)
+    public function setClassMetadataFactoryName(string $factoryName) : self
     {
         $this->classMetadataFactoryName = (string) $factoryName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getClassMetadataFactoryName()
+    public function getClassMetadataFactoryName() : ?string
     {
         return $this->classMetadataFactoryName;
     }
 
     /**
-     * @param  string|null|EntityListenerResolver $entityListenerResolver
-     * @return self
+     * @param string|EntityListenerResolver|null $entityListenerResolver
+     *
      * @throws InvalidArgumentException           When the provided entity listener resolver
-     *                                            does not fit the expected type
+     *                                            does not fit the expected type.
      */
-    public function setEntityListenerResolver($entityListenerResolver)
+    public function setEntityListenerResolver($entityListenerResolver) : self
     {
-        if (null === $entityListenerResolver
+        if ($entityListenerResolver === null
             || $entityListenerResolver instanceof EntityListenerResolver
             || is_string($entityListenerResolver)
         ) {
@@ -657,7 +592,7 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @return string|null|EntityListenerResolver
+     * @return string|EntityListenerResolver|null
      */
     public function getEntityListenerResolver()
     {
@@ -665,50 +600,36 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param  array $secondLevelCache
-     * @return self
+     * @param  mixed[] $secondLevelCache
      */
-    public function setSecondLevelCache(array $secondLevelCache)
+    public function setSecondLevelCache(array $secondLevelCache) : self
     {
         $this->secondLevelCache = new SecondLevelCacheConfiguration($secondLevelCache);
 
         return $this;
     }
 
-    /**
-     * @return SecondLevelCacheConfiguration
-     */
-    public function getSecondLevelCache()
+    public function getSecondLevelCache() : SecondLevelCacheConfiguration
     {
         return $this->secondLevelCache ?: new SecondLevelCacheConfiguration();
     }
 
-    /**
-     * @param  string $filterSchemaAssetsExpression
-     * @return self
-     */
-    public function setFilterSchemaAssetsExpression($filterSchemaAssetsExpression)
+    public function setFilterSchemaAssetsExpression(string $filterSchemaAssetsExpression) : self
     {
         $this->filterSchemaAssetsExpression = $filterSchemaAssetsExpression;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getFilterSchemaAssetsExpression()
+    public function getFilterSchemaAssetsExpression() : ?string
     {
         return $this->filterSchemaAssetsExpression;
     }
 
     /**
      * Sets default repository class.
-     *
-     * @param  string $className
-     * @return self
      */
-    public function setDefaultRepositoryClassName($className)
+    public function setDefaultRepositoryClassName(string $className) : self
     {
         $this->defaultRepositoryClassName = (string) $className;
 
@@ -717,10 +638,8 @@ class Configuration extends DBALConfiguration
 
     /**
      * Get default repository class name.
-     *
-     * @return string|null
      */
-    public function getDefaultRepositoryClassName()
+    public function getDefaultRepositoryClassName() : ?string
     {
         return $this->defaultRepositoryClassName;
     }
