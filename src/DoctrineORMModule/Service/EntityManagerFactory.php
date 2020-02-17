@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Service;
 
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\EntityManager as DoctrineORMModuleEntityManager;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class EntityManagerFactory extends AbstractFactory
 {
@@ -15,9 +16,8 @@ class EntityManagerFactory extends AbstractFactory
      *
      * @return EntityManager
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        /* @var $options DoctrineORMModuleEntityManager */
         $options    = $this->getOptions($container, 'entitymanager');
         $connection = $container->get($options->getConnection());
         $config     = $container->get($options->getConfiguration());
@@ -32,17 +32,15 @@ class EntityManagerFactory extends AbstractFactory
 
     /**
      * {@inheritDoc}
+     *
      * @return EntityManager
      */
-    public function createService(ServiceLocatorInterface $container)
+    public function createService(ContainerInterface $container)
     {
         return $this($container, EntityManager::class);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getOptionsClass()
+    public function getOptionsClass() : string
     {
         return DoctrineORMModuleEntityManager::class;
     }

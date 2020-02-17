@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Service;
 
 use DoctrineModule\Service\AbstractFactory;
@@ -15,12 +17,11 @@ class MappingCollectorFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      *
-     * @return \DoctrineORMModule\Collector\MappingCollector
+     * @return MappingCollector
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $name          = $this->getName();
-        /* @var $objectManager \Doctrine\Common\Persistence\ObjectManager */
         $objectManager = $container->get('doctrine.entitymanager.' . $name);
 
         return new MappingCollector($objectManager->getMetadataFactory(), 'doctrine.mapping_collector.' . $name);
@@ -29,11 +30,11 @@ class MappingCollectorFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      *
-     * @return \DoctrineORMModule\Collector\MappingCollector
+     * @return MappingCollector
      */
     public function createService(ServiceLocatorInterface $container)
     {
-        return $this($container, \DoctrineORMModule\Collector\MappingCollector::class);
+        return $this($container, MappingCollector::class);
     }
 
     /**

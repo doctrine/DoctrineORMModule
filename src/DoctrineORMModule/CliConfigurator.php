@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule;
 
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
@@ -13,11 +15,14 @@ use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputOption;
+use function class_exists;
 
 class CliConfigurator
 {
+    /** @var string */
     private $defaultObjectManagerName = 'doctrine.entitymanager.orm_default';
 
+    /** @var string[] */
     private $commands = [
         'doctrine.dbal_cmd.runsql',
         'doctrine.dbal_cmd.import',
@@ -38,6 +43,7 @@ class CliConfigurator
         'doctrine.orm_cmd.info',
     ];
 
+    /** @var string[] */
     private $migrationCommands = [
         'doctrine.migrations_cmd.execute',
         'doctrine.migrations_cmd.generate',
@@ -48,9 +54,7 @@ class CliConfigurator
         'doctrine.migrations_cmd.latest',
     ];
 
-    /**
-     * @var ContainerInterface
-     */
+    /** @var ContainerInterface */
     private $container;
 
     public function __construct(ContainerInterface $container)
@@ -58,18 +62,16 @@ class CliConfigurator
         $this->container = $container;
     }
 
-    public function configure(Application $cli)
+    public function configure(Application $cli) : void
     {
         $commands = $this->getAvailableCommands();
         foreach ($commands as $commandName) {
-            /* @var $command \Symfony\Component\Console\Command\Command */
             $command = $this->container->get($commandName);
             $command->getDefinition()->addOption($this->createObjectManagerInputOption());
 
             $cli->add($command);
         }
 
-        /* @var $objectManager \Doctrine\ORM\EntityManagerInterface */
         $objectManager = $this->container->get($this->getObjectManagerName());
 
         $helpers = $this->getHelpers($objectManager);
@@ -79,10 +81,9 @@ class CliConfigurator
     }
 
     /**
-     * @param EntityManagerInterface $objectManager
-     * @return array
+     * @return mixed[]
      */
-    private function getHelpers(EntityManagerInterface $objectManager)
+    private function getHelpers(EntityManagerInterface $objectManager) : array
     {
         $helpers = [];
 
@@ -98,10 +99,7 @@ class CliConfigurator
         return $helpers;
     }
 
-    /**
-     * @return InputOption
-     */
-    private function createObjectManagerInputOption()
+    private function createObjectManagerInputOption() : InputOption
     {
         return new InputOption(
             'object-manager',
@@ -112,10 +110,7 @@ class CliConfigurator
         );
     }
 
-    /**
-     * @return string
-     */
-    private function getObjectManagerName()
+    private function getObjectManagerName() : string
     {
         $arguments = new ArgvInput();
 
@@ -127,9 +122,9 @@ class CliConfigurator
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    private function getAvailableCommands()
+    private function getAvailableCommands() : array
     {
         if (class_exists(VersionCommand::class)) {
             return ArrayUtils::merge($this->commands, $this->migrationCommands);

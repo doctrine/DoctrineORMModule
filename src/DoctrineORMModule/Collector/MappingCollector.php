@@ -1,12 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Collector;
 
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
-use Laminas\DeveloperTools\Collector\CollectorInterface;
 use Laminas\DeveloperTools\Collector\AutoHideInterface;
+use Laminas\DeveloperTools\Collector\CollectorInterface;
 use Laminas\Mvc\MvcEvent;
 use Serializable;
+use function ksort;
+use function serialize;
+use function unserialize;
 
 /**
  * Collector to be used in DeveloperTools to record and display mapping information
@@ -16,28 +22,18 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
     /**
      * Collector priority
      */
-    const PRIORITY = 10;
+    public const PRIORITY = 10;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $name;
 
-    /**
-     * @var ClassMetadataFactory|null
-     */
+    /** @var ClassMetadataFactory|null */
     protected $classMetadataFactory = [];
 
-    /**
-     * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata[] indexed by class name
-     */
+    /** @var ClassMetadata[] indexed by class name */
     protected $classes = [];
 
-    /**
-     * @param ClassMetadataFactory $classMetadataFactory
-     * @param string               $name
-     */
-    public function __construct(ClassMetadataFactory $classMetadataFactory, $name)
+    public function __construct(ClassMetadataFactory $classMetadataFactory, string $name)
     {
         $this->classMetadataFactory = $classMetadataFactory;
         $this->name                 = (string) $name;
@@ -56,7 +52,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
      */
     public function getPriority()
     {
-        return static::PRIORITY;
+        return self::PRIORITY;
     }
 
     /**
@@ -68,13 +64,14 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
             return;
         }
 
-        /* @var $metadata \Doctrine\Common\Persistence\Mapping\ClassMetadata[] */
+        /** @var ClassMetadata[] $metadata */
         $metadata      = $this->classMetadataFactory->getAllMetadata();
         $this->classes = [];
 
         foreach ($metadata as $class) {
             $this->classes[$class->getName()] = $class;
         }
+
         ksort($this->classes);
     }
 
@@ -110,9 +107,9 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
     }
 
     /**
-     * @return \Doctrine\Common\Persistence\Mapping\ClassMetadata[]
+     * @return ClassMetadata[]
      */
-    public function getClasses()
+    public function getClasses() : array
     {
         return $this->classes;
     }

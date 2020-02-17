@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 // Provide compatibility with doctrine/migrations v1 and v2.
 // In the whole library we are using doctrine/migrations v2 class names
 // and here we are creating aliases in case v1 is used.
@@ -32,7 +34,9 @@ $classMap = [
 ];
 
 foreach ($classMap as $legacy => $newClass) {
-    if (! class_exists($newClass) && class_exists($legacy)) {
-        class_alias($legacy, $newClass);
+    if (class_exists($newClass) || ! class_exists($legacy)) {
+        continue;
     }
+
+    class_alias($legacy, $newClass);
 }
