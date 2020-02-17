@@ -46,7 +46,7 @@
         "doctrine/dbal":                     "^2.6.0",
         "doctrine/doctrine-module":          "^4.0",
         "doctrine/orm":                      "^2.6.4",
-        "symfony/console":                   "^5.0"
+        "symfony/console":                   "^5.0.4"
     },
     "require-dev":       {
         "doctrine/annotations":            "^1.8",
