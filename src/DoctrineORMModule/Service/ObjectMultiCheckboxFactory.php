@@ -1,19 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Service;
 
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Form\Element\ObjectMultiCheckbox;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Factory for {@see ObjectMultiCheckbox}
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Daniel Gimenes <daniel@danielgimenes.com.br>
  */
 class ObjectMultiCheckboxFactory implements FactoryInterface
 {
@@ -22,10 +20,10 @@ class ObjectMultiCheckboxFactory implements FactoryInterface
      *
      * @return ObjectMultiCheckbox
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $entityManager = $container->get(EntityManager::class);
-        $element       = new ObjectMultiCheckbox;
+        $element       = new ObjectMultiCheckbox();
 
         $element->getProxy()->setObjectManager($entityManager);
 

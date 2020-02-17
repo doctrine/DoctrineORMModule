@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Service;
 
 use Doctrine\Common\EventSubscriber;
@@ -8,17 +10,16 @@ use Doctrine\ORM\Tools\ResolveTargetEntityListener;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\EntityResolver;
 use Interop\Container\ContainerInterface;
-use Zend\EventManager\EventManager;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\EventManager\EventManager;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class EntityResolverFactory extends AbstractFactory
 {
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        /* @var $options EntityResolver */
         $options      = $this->getOptions($container, 'entity_resolver');
         $eventManager = $container->get($options->getEventManager());
         $resolvers    = $options->getResolvers();
@@ -49,10 +50,8 @@ class EntityResolverFactory extends AbstractFactory
 
     /**
      * Get the class name of the options associated with this factory.
-     *
-     * @return string
      */
-    public function getOptionsClass()
+    public function getOptionsClass() : string
     {
         return EntityResolver::class;
     }

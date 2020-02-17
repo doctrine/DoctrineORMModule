@@ -1,15 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Options;
 
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 /**
  * Configuration options for a DBAL Connection
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Kyle Spraggs <theman@spiffyjr.me>
  */
 class DBALConfiguration extends AbstractOptions
 {
@@ -33,52 +31,40 @@ class DBALConfiguration extends AbstractOptions
      * Keys must be the name of the type identifier and value is
      * the class name of the Type
      *
-     * @var array
+     * @var mixed[]
      */
     protected $types = [];
 
-    /**
-     * @param string $resultCache
-     */
-    public function setResultCache($resultCache)
+    public function setResultCache(string $resultCache) : void
     {
         $this->resultCache = $resultCache;
     }
 
-    /**
-     * @return string
-     */
-    public function getResultCache()
+    public function getResultCache() : string
     {
         return 'doctrine.cache.' . $this->resultCache;
     }
 
-    /**
-     * @param string $sqlLogger
-     */
-    public function setSqlLogger($sqlLogger)
+    public function setSqlLogger(string $sqlLogger) : void
     {
         $this->sqlLogger = $sqlLogger;
     }
 
-    /**
-     * @return string
-     */
-    public function getSqlLogger()
+    public function getSqlLogger() : ?string
     {
         return $this->sqlLogger;
     }
 
     /**
-     * @param array $types
+     * @param mixed[] $types
      */
-    public function setTypes(array $types)
+    public function setTypes(array $types) : void
     {
         $this->types = $types;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getTypes()
     {

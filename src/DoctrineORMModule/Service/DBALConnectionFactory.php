@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Service;
 
 use Doctrine\DBAL\Connection;
@@ -8,14 +10,13 @@ use Doctrine\DBAL\Types\Type;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\DBALConnection;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use function array_key_exists;
+use function array_merge;
+use function is_string;
 
 /**
  * DBAL Connection ServiceManager factory
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Kyle Spraggs <theman@spiffyjr.me>
  */
 class DBALConnectionFactory extends AbstractFactory
 {
@@ -24,9 +25,8 @@ class DBALConnectionFactory extends AbstractFactory
      *
      * @return Connection
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        /** @var $options DBALConnection */
         $options = $this->getOptions($container, 'connection');
         $pdo     = $options->getPdo();
 
@@ -69,6 +69,7 @@ class DBALConnectionFactory extends AbstractFactory
 
     /**
      * {@inheritDoc}
+     *
      * @return Connection
      */
     public function createService(ServiceLocatorInterface $container)
@@ -78,10 +79,8 @@ class DBALConnectionFactory extends AbstractFactory
 
     /**
      * Get the class name of the options associated with this factory.
-     *
-     * @return string
      */
-    public function getOptionsClass()
+    public function getOptionsClass() : string
     {
         return DBALConnection::class;
     }

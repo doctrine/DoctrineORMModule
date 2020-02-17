@@ -1,46 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Collector;
 
-use ZendDeveloperTools\Collector\CollectorInterface;
-use ZendDeveloperTools\Collector\AutoHideInterface;
-
-use Zend\Mvc\MvcEvent;
-
 use Doctrine\DBAL\Logging\DebugStack;
+use Laminas\DeveloperTools\Collector\AutoHideInterface;
+use Laminas\DeveloperTools\Collector\CollectorInterface;
+use Laminas\Mvc\MvcEvent;
+use function count;
 
 /**
- * Collector to be used in ZendDeveloperTools to record and display SQL queries
- *
- * @license MIT
- * @link    www.doctrine-project.org
- * @author  Marco Pivetta <ocramius@gmail.com>
+ * Collector to be used in DeveloperTools to record and display SQL queries
  */
 class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
 {
     /**
      * Collector priority
      */
-    const PRIORITY = 10;
+    public const PRIORITY = 10;
 
-    /**
-     * @var DebugStack
-     */
+    /** @var DebugStack */
     protected $sqlLogger;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $name;
 
-    /**
-     * @param DebugStack $sqlLogger
-     * @param string     $name
-     */
-    public function __construct(DebugStack $sqlLogger, $name)
+    public function __construct(DebugStack $sqlLogger, string $name)
     {
         $this->sqlLogger = $sqlLogger;
-        $this->name = (string) $name;
+        $this->name      = (string) $name;
     }
 
     /**
@@ -56,7 +45,7 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
      */
     public function getPriority()
     {
-        return static::PRIORITY;
+        return self::PRIORITY;
     }
 
     /**
@@ -74,26 +63,20 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
         return empty($this->sqlLogger->queries);
     }
 
-    /**
-     * @return int
-     */
-    public function getQueryCount()
+    public function getQueryCount() : int
     {
         return count($this->sqlLogger->queries);
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getQueries()
+    public function getQueries() : array
     {
         return $this->sqlLogger->queries;
     }
 
-    /**
-     * @return float
-     */
-    public function getQueryTime()
+    public function getQueryTime() : float
     {
         $time = 0.0;
 

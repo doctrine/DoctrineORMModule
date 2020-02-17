@@ -1,23 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule;
 
-use Interop\Container\ContainerInterface;
-use Zend\EventManager\EventInterface;
-use Zend\ModuleManager\Feature\ControllerProviderInterface;
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
-use Zend\ModuleManager\ModuleManagerInterface;
-use DoctrineORMModule\CliConfigurator;
-use ZendDeveloperTools\ProfilerEvent;
+use Laminas\DeveloperTools\ProfilerEvent;
+use Laminas\EventManager\EventInterface;
+use Laminas\ModuleManager\Feature\ConfigProviderInterface;
+use Laminas\ModuleManager\Feature\ControllerProviderInterface;
+use Laminas\ModuleManager\Feature\DependencyIndicatorInterface;
+use Laminas\ModuleManager\ModuleManagerInterface;
+use function class_exists;
 
 /**
  * Base module for Doctrine ORM.
- *
- * @license MIT
- * @link    www.doctrine-project.org
- * @author  Kyle Spraggs <theman@spiffyjr.me>
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class Module implements
     ControllerProviderInterface,
@@ -36,28 +32,29 @@ class Module implements
             ->attach(
                 'doctrine',
                 'loadCli.post',
-                function (EventInterface $event) {
+                static function (EventInterface $event) : void {
                     $event
                         ->getParam('ServiceManager')
                         ->get(CliConfigurator::class)
-                        ->configure($event->getTarget())
-                        ;
+                        ->configure($event->getTarget());
                 },
                 1
             );
 
-        // Initialize logger collector in ZendDeveloperTools
-        if (class_exists(ProfilerEvent::class)) {
-            $manager
-                ->getEventManager()
-                ->attach(
-                    ProfilerEvent::EVENT_PROFILER_INIT,
-                    function ($event) {
-                        $container = $event->getTarget()->getParam('ServiceManager');
-                        $container->get('doctrine.sql_logger_collector.orm_default');
-                    }
-                );
+        // Initialize logger collector in DeveloperTools
+        if (! class_exists(ProfilerEvent::class)) {
+            return;
         }
+
+        $manager
+            ->getEventManager()
+            ->attach(
+                ProfilerEvent::EVENT_PROFILER_INIT,
+                static function ($event) : void {
+                    $container = $event->getTarget()->getParam('ServiceManager');
+                    $container->get('doctrine.sql_logger_collector.orm_default');
+                }
+            );
     }
 
     /**

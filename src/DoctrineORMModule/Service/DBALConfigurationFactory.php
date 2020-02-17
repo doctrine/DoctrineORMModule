@@ -1,33 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Service;
 
-use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
-use Interop\Container\ContainerInterface;
-use RuntimeException;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Types\Type;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
+use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use RuntimeException;
+use function is_string;
+use function sprintf;
 
 /**
  * DBAL Configuration ServiceManager factory
- *
- * @license MIT
- * @link    http://www.doctrine-project.org/
- * @author  Kyle Spraggs <theman@spiffyjr.me>
  */
 class DBALConfigurationFactory implements FactoryInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $name;
 
-    /**
-     * @param string $name
-     */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -35,11 +30,11 @@ class DBALConfigurationFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
-     * @return \Doctrine\DBAL\Configuration
+     * @return Configuration
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        $config  = new Configuration();
+        $config = new Configuration();
         $this->setupDBALConfiguration($container, $config);
 
         return $config;
@@ -47,26 +42,24 @@ class DBALConfigurationFactory implements FactoryInterface
 
     /**
      * {@inheritDoc}
-     * @return \Doctrine\DBAL\Configuration
+     *
+     * @return Configuration
      */
     public function createService(ServiceLocatorInterface $container)
     {
-        return $this($container, \Doctrine\DBAL\Configuration::class);
+        return $this($container, Configuration::class);
     }
 
-    /**
-     * @param ContainerInterface $container
-     * @param Configuration      $config
-     */
-    public function setupDBALConfiguration(ContainerInterface $container, Configuration $config)
+    public function setupDBALConfiguration(ContainerInterface $container, Configuration $config) : void
     {
         $options = $this->getOptions($container);
         $config->setResultCacheImpl($container->get($options->resultCache));
 
         $sqlLogger = $options->sqlLogger;
-        if (is_string($sqlLogger) and $container->has($sqlLogger)) {
+        if (is_string($sqlLogger) && $container->has($sqlLogger)) {
             $sqlLogger = $container->get($sqlLogger);
         }
+
         $config->setSQLLogger($sqlLogger);
 
         foreach ($options->types as $name => $class) {
@@ -79,8 +72,8 @@ class DBALConfigurationFactory implements FactoryInterface
     }
 
     /**
-     * @param  ContainerInterface $serviceLocator
      * @return mixed
+     *
      * @throws RuntimeException
      */
     public function getOptions(ContainerInterface $serviceLocator)
@@ -89,7 +82,7 @@ class DBALConfigurationFactory implements FactoryInterface
         $options = $options['doctrine'];
         $options = $options['configuration'][$this->name] ?? null;
 
-        if (null === $options) {
+        if ($options === null) {
             throw new RuntimeException(
                 sprintf(
                     'Configuration with name "%s" could not be found in "doctrine.configuration".',
@@ -103,10 +96,7 @@ class DBALConfigurationFactory implements FactoryInterface
         return new $optionsClass($options);
     }
 
-    /**
-     * @return string
-     */
-    protected function getOptionsClass()
+    protected function getOptionsClass() : string
     {
         return DoctrineORMModuleConfiguration::class;
     }

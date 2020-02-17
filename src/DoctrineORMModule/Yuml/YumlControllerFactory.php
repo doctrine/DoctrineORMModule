@@ -1,25 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModule\Yuml;
 
 use Interop\Container\ContainerInterface;
-use Interop\Container\Exception\ContainerException;
-use Zend\Http\Client;
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\Client;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use function sprintf;
 
 class YumlControllerFactory implements FactoryInterface
 {
     /**
      * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return YumlController
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $serviceLocator) : YumlController
     {
         if ($serviceLocator instanceof AbstractPluginManager) {
             $serviceLocator = $serviceLocator->getServiceLocator() ?: $serviceLocator;
@@ -31,22 +29,17 @@ class YumlControllerFactory implements FactoryInterface
     /**
      * Create an object
      *
-     * @param  ContainerInterface $container
-     * @param  string             $requestedName
-     * @param  null|array         $options
-     *
-     * @return YumlController
-     *
-     * @throws \Interop\Container\Exception\NotFoundException
-     * @throws ServiceNotFoundException if unable to resolve the service
-     * @throws ContainerException if any other error occurs
+     * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
-    {
+    public function __invoke(
+        ContainerInterface $container,
+        $requestedName,
+        ?array $options = null
+    ) : YumlController {
         $config = $container->get('config');
 
-        if (! isset($config['zenddevelopertools']['toolbar']['enabled'])
-            || ! $config['zenddevelopertools']['toolbar']['enabled']
+        if (! isset($config['laminas-developer-tools']['toolbar']['enabled'])
+            || ! $config['laminas-developer-tools']['toolbar']['enabled']
         ) {
             throw new ServiceNotFoundException(
                 sprintf('Service %s could not be found', YumlController::class)
