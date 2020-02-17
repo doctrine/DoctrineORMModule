@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6092e318ca678c06a69f6812e8200021",
+    "content-hash": "4b2bff50cf9f3201031dba071e48a12e",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -487,16 +487,16 @@
         },
         {
             "name": "doctrine/doctrine-module",
-            "version": "dev-develop",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineModule.git",
-                "reference": "f3c8ea98dc6fe109a916e46fd52d7c3414599e0f"
+                "reference": "a213749304740736e77ff54fbd306fae8a3f29b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/f3c8ea98dc6fe109a916e46fd52d7c3414599e0f",
-                "reference": "f3c8ea98dc6fe109a916e46fd52d7c3414599e0f",
+                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/a213749304740736e77ff54fbd306fae8a3f29b3",
+                "reference": "a213749304740736e77ff54fbd306fae8a3f29b3",
                 "shasum": ""
             },
             "require": {
@@ -587,7 +587,7 @@
                 "laminas",
                 "module"
             ],
-            "time": "2020-02-17T17:23:45+00:00"
+            "time": "2020-02-17T19:36:57+00:00"
         },
         {
             "name": "doctrine/event-manager",
@@ -5612,9 +5612,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "doctrine/doctrine-module": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
