@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Service;
 
-use Doctrine\Migrations\Configuration\Configuration;
 use Doctrine\Migrations\Tools\Console\Command\AbstractCommand;
 use Interop\Container\ContainerInterface;
 use InvalidArgumentException;
@@ -43,7 +42,7 @@ class MigrationsCommandFactory implements FactoryInterface
         }
 
         $configuration = $container->get('doctrine.migrations_configuration.orm_default');
-        $command = new $className();
+        $command       = new $className();
 
         $command->setMigrationConfiguration($configuration);
 

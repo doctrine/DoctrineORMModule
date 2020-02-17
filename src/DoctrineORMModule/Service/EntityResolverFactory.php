@@ -20,7 +20,7 @@ class EntityResolverFactory extends AbstractFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        $options = $this->getOptions($container, 'entity_resolver');
+        $options      = $this->getOptions($container, 'entity_resolver');
         $eventManager = $container->get($options->getEventManager());
         $resolvers    = $options->getResolvers();
 

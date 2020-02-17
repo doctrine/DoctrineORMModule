@@ -6,7 +6,6 @@ namespace DoctrineORMModule\Service;
 
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\DBAL\Logging\LoggerChain;
-use Doctrine\ORM\Configuration;
 use DoctrineORMModule\Collector\SQLLoggerCollector;
 use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
 use Interop\Container\ContainerInterface;

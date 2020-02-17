@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Service;
 
-use Doctrine\ORM\EntityManager;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use Interop\Container\ContainerInterface;

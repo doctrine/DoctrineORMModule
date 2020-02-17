@@ -27,7 +27,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $options = $this->getOptions($container);
-        $config = new Configuration();
+        $config  = new Configuration();
 
         $config->setAutoGenerateProxyClasses($options->getGenerateProxies());
         $config->setProxyDir($options->getProxyDir());

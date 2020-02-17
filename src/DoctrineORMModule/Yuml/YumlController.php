@@ -8,7 +8,6 @@ use Laminas\Http\Client;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\Mvc\Controller\Plugin\Redirect;
 use UnexpectedValueException;
 
 /**

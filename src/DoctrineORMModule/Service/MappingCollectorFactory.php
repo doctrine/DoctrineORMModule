@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Service;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Collector\MappingCollector;
 use Interop\Container\ContainerInterface;

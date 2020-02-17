@@ -28,7 +28,7 @@ class DBALConnectionFactory extends AbstractFactory
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $options = $this->getOptions($container, 'connection');
-        $pdo = $options->getPdo();
+        $pdo     = $options->getPdo();
 
         if (is_string($pdo)) {
             $pdo = $container->get($pdo);

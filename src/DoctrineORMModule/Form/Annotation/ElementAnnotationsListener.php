@@ -7,7 +7,6 @@ namespace DoctrineORMModule\Form\Annotation;
 use ArrayObject;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use DoctrineORMModule\Form\Element\EntitySelect;
 use Laminas\EventManager\AbstractListenerAggregate;
 use Laminas\EventManager\EventInterface;
@@ -76,7 +75,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     public function handleToOne(EventInterface $event) : void
     {
         $metadata = $event->getParam('metadata');
-        $mapping = $this->getAssociationMapping($event);
+        $mapping  = $this->getAssociationMapping($event);
         if (! $mapping || ! $metadata->isSingleValuedAssociation($event->getParam('name'))) {
             return;
         }
@@ -91,14 +90,14 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     public function handleToMany(EventInterface $event) : void
     {
         $metadata = $event->getParam('metadata');
-        $mapping = $this->getAssociationMapping($event);
+        $mapping  = $this->getAssociationMapping($event);
         if (! $mapping || ! $metadata->isCollectionValuedAssociation($event->getParam('name'))) {
             return;
         }
 
         $this->prepareEvent($event);
 
-        $elementSpec = $event->getParam('elementSpec');
+        $elementSpec           = $event->getParam('elementSpec');
         $inputSpec             = $event->getParam('inputSpec');
         $inputSpec['required'] = false;
 
@@ -122,7 +121,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
      */
     public function handleExcludeField(EventInterface $event) : bool
     {
-        $metadata = $event->getParam('metadata');
+        $metadata    = $event->getParam('metadata');
         $identifiers = $metadata->getIdentifierFieldNames();
 
         return in_array($event->getParam('name'), $identifiers) &&
@@ -170,7 +169,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     public function handleRequiredAssociation(EventInterface $event) : void
     {
         $metadata = $event->getParam('metadata');
-        $mapping = $this->getAssociationMapping($event);
+        $mapping  = $this->getAssociationMapping($event);
         if (! $mapping) {
             return;
         }
@@ -209,7 +208,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     {
         $this->prepareEvent($event);
 
-        $metadata = $event->getParam('metadata');
+        $metadata  = $event->getParam('metadata');
         $inputSpec = $event->getParam('inputSpec');
 
         if (! $metadata || ! $metadata->hasField($event->getParam('name'))) {
@@ -225,7 +224,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     public function handleTypeField(EventInterface $event) : void
     {
         $metadata = $event->getParam('metadata');
-        $mapping = $this->getFieldMapping($event);
+        $mapping  = $this->getFieldMapping($event);
         if (! $mapping) {
             return;
         }

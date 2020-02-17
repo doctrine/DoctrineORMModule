@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Service;
 
-use Doctrine\DBAL\Connection;
 use Doctrine\Migrations\Configuration\Configuration;
 use Doctrine\Migrations\OutputWriter;
 use DoctrineModule\Service\AbstractFactory;
@@ -25,8 +24,8 @@ class MigrationsConfigurationFactory extends AbstractFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        $name       = $this->getName();
-        $connection = $container->get('doctrine.connection.' . $name);
+        $name             = $this->getName();
+        $connection       = $container->get('doctrine.connection.' . $name);
         $appConfig        = $container->get('config');
         $migrationsConfig = $appConfig['doctrine']['migrations_configuration'][$name];
 
