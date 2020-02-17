@@ -40,7 +40,7 @@ class MappingCollectorFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      */
-    public function getOptionsClass()
+    public function getOptionsClass() : string
     {
     }
 }
