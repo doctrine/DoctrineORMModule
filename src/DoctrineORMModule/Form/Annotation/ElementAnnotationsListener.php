@@ -15,7 +15,6 @@ use Laminas\EventManager\EventManagerInterface;
 use Laminas\Form\Element as LaminasFormElement;
 use function array_key_exists;
 use function array_merge;
-use function assert;
 use function in_array;
 
 class ElementAnnotationsListener extends AbstractListenerAggregate
@@ -77,7 +76,6 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     public function handleToOne(EventInterface $event) : void
     {
         $metadata = $event->getParam('metadata');
-        assert($metadata instanceof ClassMetadata);
         $mapping = $this->getAssociationMapping($event);
         if (! $mapping || ! $metadata->isSingleValuedAssociation($event->getParam('name'))) {
             return;
@@ -93,7 +91,6 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     public function handleToMany(EventInterface $event) : void
     {
         $metadata = $event->getParam('metadata');
-        assert($metadata instanceof ClassMetadata);
         $mapping = $this->getAssociationMapping($event);
         if (! $mapping || ! $metadata->isCollectionValuedAssociation($event->getParam('name'))) {
             return;
@@ -102,7 +99,6 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $this->prepareEvent($event);
 
         $elementSpec = $event->getParam('elementSpec');
-        assert($elementSpec instanceof ArrayObject);
         $inputSpec             = $event->getParam('inputSpec');
         $inputSpec['required'] = false;
 
@@ -117,7 +113,6 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     public function handleExcludeAssociation(EventInterface $event) : bool
     {
         $metadata = $event->getParam('metadata');
-        assert($metadata instanceof ClassMetadataInfo);
 
         return $metadata && $metadata->isAssociationInverseSide($event->getParam('name'));
     }
@@ -128,7 +123,6 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     public function handleExcludeField(EventInterface $event) : bool
     {
         $metadata = $event->getParam('metadata');
-        assert($metadata instanceof ClassMetadataInfo);
         $identifiers = $metadata->getIdentifierFieldNames();
 
         return in_array($event->getParam('name'), $identifiers) &&
@@ -141,7 +135,6 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     public function handleFilterField(EventInterface $event) : void
     {
         $metadata = $event->getParam('metadata');
-        assert($metadata instanceof ClassMetadata);
         if (! $metadata || ! $metadata->hasField($event->getParam('name'))) {
             return;
         }
@@ -177,7 +170,6 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     public function handleRequiredAssociation(EventInterface $event) : void
     {
         $metadata = $event->getParam('metadata');
-        assert($metadata instanceof ClassMetadata);
         $mapping = $this->getAssociationMapping($event);
         if (! $mapping) {
             return;
@@ -218,7 +210,6 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         $this->prepareEvent($event);
 
         $metadata = $event->getParam('metadata');
-        assert($metadata instanceof ClassMetadata);
         $inputSpec = $event->getParam('inputSpec');
 
         if (! $metadata || ! $metadata->hasField($event->getParam('name'))) {
@@ -234,7 +225,6 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     public function handleTypeField(EventInterface $event) : void
     {
         $metadata = $event->getParam('metadata');
-        assert($metadata instanceof ClassMetadata);
         $mapping = $this->getFieldMapping($event);
         if (! $mapping) {
             return;
@@ -296,7 +286,6 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         }
 
         $metadata = $event->getParam('metadata');
-        assert($metadata instanceof ClassMetadata);
 
         $this->prepareEvent($event);
 
@@ -343,7 +332,6 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     protected function getFieldMapping(EventInterface $event) : ?array
     {
         $metadata = $event->getParam('metadata');
-        assert($metadata instanceof ClassMetadataInfo);
         if ($metadata && $metadata->hasField($event->getParam('name'))) {
             return $metadata->getFieldMapping($event->getParam('name'));
         }
@@ -357,7 +345,6 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     protected function getAssociationMapping(EventInterface $event) : ?array
     {
         $metadata = $event->getParam('metadata');
-        assert($metadata instanceof ClassMetadataInfo);
         if ($metadata && $metadata->hasAssociation($event->getParam('name'))) {
             return $metadata->getAssociationMapping($event->getParam('name'));
         }

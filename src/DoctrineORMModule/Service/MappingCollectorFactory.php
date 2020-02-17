@@ -9,7 +9,6 @@ use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Collector\MappingCollector;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use function assert;
 
 /**
  * Service factory responsible for instantiating {@see \DoctrineORMModule\Collector\MappingCollector}
@@ -25,7 +24,6 @@ class MappingCollectorFactory extends AbstractFactory
     {
         $name          = $this->getName();
         $objectManager = $container->get('doctrine.entitymanager.' . $name);
-        assert($objectManager instanceof ObjectManager);
 
         return new MappingCollector($objectManager->getMetadataFactory(), 'doctrine.mapping_collector.' . $name);
     }

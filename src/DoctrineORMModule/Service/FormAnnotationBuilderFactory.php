@@ -10,7 +10,6 @@ use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use Interop\Container\ContainerInterface;
 use Laminas\Form\Factory;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use function assert;
 
 /**
  * Service factory responsible for instantiating {@see \DoctrineORMModule\Form\Annotation\AnnotationBuilder}
@@ -25,10 +24,8 @@ class FormAnnotationBuilderFactory extends AbstractFactory
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $entityManager = $container->get('doctrine.entitymanager.' . $this->getName());
-        assert($entityManager instanceof EntityManager);
 
         $annotationBuilder = new AnnotationBuilder($entityManager);
-
         $annotationBuilder->setFormFactory($this->getFormFactory($container));
 
         return $annotationBuilder;

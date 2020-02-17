@@ -10,7 +10,6 @@ use Interop\Container\ContainerInterface;
 use InvalidArgumentException;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use function assert;
 use function class_exists;
 use function strtolower;
 use function ucfirst;
@@ -44,9 +43,7 @@ class MigrationsCommandFactory implements FactoryInterface
         }
 
         $configuration = $container->get('doctrine.migrations_configuration.orm_default');
-        assert($configuration instanceof Configuration);
         $command = new $className();
-        assert($command instanceof AbstractCommand);
 
         $command->setMigrationConfiguration($configuration);
 

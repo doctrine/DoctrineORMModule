@@ -11,7 +11,6 @@ use DoctrineModule\Service\AbstractFactory;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use function assert;
 use function method_exists;
 
 /**
@@ -28,7 +27,6 @@ class MigrationsConfigurationFactory extends AbstractFactory
     {
         $name       = $this->getName();
         $connection = $container->get('doctrine.connection.' . $name);
-        assert($connection instanceof Connection);
         $appConfig        = $container->get('config');
         $migrationsConfig = $appConfig['doctrine']['migrations_configuration'][$name];
 

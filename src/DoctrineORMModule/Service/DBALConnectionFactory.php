@@ -13,7 +13,6 @@ use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use function array_key_exists;
 use function array_merge;
-use function assert;
 use function is_string;
 
 /**
@@ -29,7 +28,6 @@ class DBALConnectionFactory extends AbstractFactory
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $options = $this->getOptions($container, 'connection');
-        assert($options instanceof DBALConnection);
         $pdo = $options->getPdo();
 
         if (is_string($pdo)) {

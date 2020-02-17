@@ -14,7 +14,6 @@ use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationF
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use function assert;
 use function is_string;
 use function sprintf;
 
@@ -28,7 +27,6 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $options = $this->getOptions($container);
-        assert($options instanceof DoctrineORMModuleConfiguration);
         $config = new Configuration();
 
         $config->setAutoGenerateProxyClasses($options->getGenerateProxies());

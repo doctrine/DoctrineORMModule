@@ -10,7 +10,6 @@ use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\Controller\Plugin\Redirect;
 use UnexpectedValueException;
-use function assert;
 
 /**
  * Utility to generate Yuml compatible strings from metadata graphs
@@ -33,7 +32,6 @@ class YumlController extends AbstractActionController
     public function indexAction() : Response
     {
         $request = $this->getRequest();
-        assert($request instanceof Request);
         $this->httpClient->setMethod(Request::METHOD_POST);
         $this->httpClient->setParameterPost(['dsl_text' => $request->getPost('dsl_text')]);
         $response = $this->httpClient->send();
@@ -43,7 +41,6 @@ class YumlController extends AbstractActionController
         }
 
         $redirect = $this->plugin('redirect');
-        assert($redirect instanceof Redirect);
 
         return $redirect->toUrl('https://yuml.me/' . $response->getBody());
     }

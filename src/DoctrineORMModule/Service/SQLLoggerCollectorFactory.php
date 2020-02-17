@@ -13,7 +13,6 @@ use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
-use function assert;
 use function sprintf;
 
 /**
@@ -35,7 +34,6 @@ class SQLLoggerCollectorFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $options = $this->getOptions($container);
-        assert($options instanceof SQLLoggerCollectorOptions);
 
         // @todo always ask the serviceLocator instead? (add a factory?)
         if ($options->getSqlLogger()) {
@@ -45,7 +43,6 @@ class SQLLoggerCollectorFactory implements FactoryInterface
         }
 
         $configuration = $container->get($options->getConfiguration());
-        assert($configuration instanceof Configuration);
 
         if ($configuration->getSQLLogger() !== null) {
             $logger = new LoggerChain();

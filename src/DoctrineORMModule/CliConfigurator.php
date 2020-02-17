@@ -16,7 +16,6 @@ use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputOption;
-use function assert;
 use function class_exists;
 
 class CliConfigurator
@@ -69,14 +68,12 @@ class CliConfigurator
         $commands = $this->getAvailableCommands();
         foreach ($commands as $commandName) {
             $command = $this->container->get($commandName);
-            assert($command instanceof Command);
             $command->getDefinition()->addOption($this->createObjectManagerInputOption());
 
             $cli->add($command);
         }
 
         $objectManager = $this->container->get($this->getObjectManagerName());
-        assert($objectManager instanceof EntityManagerInterface);
 
         $helpers = $this->getHelpers($objectManager);
         foreach ($helpers as $name => $instance) {
