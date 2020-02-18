@@ -37,9 +37,6 @@ class MappingCollectorFactory extends AbstractFactory
         return $this($container, MappingCollector::class);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getOptionsClass() : string
     {
     }
