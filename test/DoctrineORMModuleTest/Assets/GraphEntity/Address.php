@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Part of the test assets used to produce a demo of graphs in the ZDT integration
+ * Part of the test assets used to produce a demo of graphs in the Laminas Developer Tools integration
  *
  * @license MIT
  * @link    http://www.doctrine-project.org/
