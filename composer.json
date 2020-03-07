@@ -62,8 +62,7 @@
         "laminas/laminas-mvc-console":     "^1.2",
         "laminas/laminas-serializer":      "^2.8",
         "ocramius/proxy-manager":          "^2.2",
-        "phpunit/phpunit":                 "^8.5",
-        "squizlabs/php_codesniffer":       "^3.5"
+        "phpunit/phpunit":                 "^8.5"
     },
     "suggest":           {
         "laminas/laminas-form":            "if you want to use form elements backed by Doctrine",

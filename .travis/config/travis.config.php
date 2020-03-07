@@ -6,10 +6,12 @@ return [
     'doctrine' => [
         'connection' => [
             'orm_default' => [
+                'driverClass' => 'Doctrine\\DBAL\\Driver\\PDOMySql\\Driver',
                 'params' => [
-                    'user'     => 'travis',
+                    'user'     => 'root',
                     'password' => '',
                     'dbname'   => 'database',
+                    'host'     => 'mysql',
                 ],
             ],
         ],

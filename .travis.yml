@@ -1,16 +1,10 @@
+sudo: false
 language: php
 
 cache:
   directories:
     - $HOME/.composer/cache
     - vendor
-
-services:
-  - mysql
-
-env:
-  global:
-    - COMPOSER_ARGS="--no-interaction"
 
 matrix:
   fast_finish: true
@@ -46,26 +40,35 @@ matrix:
         - DEPS=latest
 
 before_install:
-  - mysql -e 'CREATE DATABASE `database`;'
+  - shopt -s expand_aliases
+  - alias docker="travis_retry docker-compose run --rm php"
+  - alias composer="travis_retry docker-compose run --rm php composer"
+  - alias php="travis_retry docker-compose run -e TRAVIS -e TRAVIS_JOB_ID --rm php php"
+  - docker-compose build --build-arg PHP_VERSION=${TRAVIS_PHP_VERSION} --build-arg XDEBUG=${TEST_COVERAGE:+1} --no-cache php
+  - composer --version
+  - php -v
+  - php -m
 
 install:
-  - travis_retry composer install $COMPOSER_ARGS
-  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
-  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - php --info
+  - composer install --no-interaction --ignore-platform-reqs
+  - if [[ $DEPS == 'latest' ]]; then composer update --no-interaction ; fi
+  - if [[ $DEPS == 'lowest' ]]; then composer update --prefer-lowest --prefer-stable --no-interaction ; fi
+  - docker-compose run --rm php mysql -h mysql -e 'CREATE DATABASE `database`;'
+  - docker stty cols 120 && composer show
   - composer show
 
 before_script:
   - rm -Rf .travis/cache
-  - cp .travis/config/application.config.php config/application.config.php
 
 script:
+  - docker cp .travis/config/application.config.php config/application.config.php
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then php build/coverage-checker.php build/clover.xml 70 ; fi
   - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
-  - cat .travis/run-cli.sh | xargs -L 1 php
+  - .travis/run-cli.sh 
 
 after_script:
-  - rm -Rf config/application.config.php
-  - if [[ $TEST_COVERAGE == 'true' ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - docker rm -Rf config/application.config.php
+  - if [[ $TEST_COVERAGE == 'true' ]]; then docker wget https://scrutinizer-ci.com/ocular.phar; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover.xml; fi
-

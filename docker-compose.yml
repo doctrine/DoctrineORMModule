@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        - PHP_VERSION=${PHP_VERSION:-7.2}
+        - XDEBUG=${XDEBUG:-0}
+    volumes:
+      - ./:/docker
+      - ./docker/php.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - mysql
+    environment:
+        - TRAVIS
+        - TRAVIS_JOB_ID
+        - TRAVIS_BRANCH
+        - TRAVIS_PULL_REQUEST
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD="true"
