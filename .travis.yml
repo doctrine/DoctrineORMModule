@@ -45,6 +45,7 @@ matrix:
 
 before_install:
   - shopt -s expand_aliases
+  - alias docker="travis_retry docker-composer run --rm php"
   - alias composer="travis_retry docker-compose run --rm php composer"
   - alias php="travis_retry docker-compose run -e TRAVIS -e TRAVIS_JOB_ID --rm php php"
   - docker-compose build --build-arg PHP_VERSION=${TRAVIS_PHP_VERSION} --build-arg XDEBUG=${TEST_COVERAGE:+1} --no-cache php
@@ -58,20 +59,20 @@ install:
   - if [[ $DEPS == 'latest' ]]; then composer update $COMPOSER_ARGS ; fi
   - if [[ $DEPS == 'lowest' ]]; then composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
   - docker-compose run --rm php mysql -h mysql -e 'CREATE DATABASE `database`;'
-  - stty cols 120 && composer show
+  - docker stty cols 120 && composer show
   - composer show
 
 before_script:
   - rm -Rf .travis/cache
 
 script:
-  - cp .travis/config/application.config.php config/application.config.php
-  - if $TEST_COVERAGE; then composer test-coverage ; else composer test ; fi
-  - if $TEST_COVERAGE; then php build/coverage-checker.php build/clover.xml 70 ; fi
-  - if $CHECK_CS; then composer cs-check ; fi
-  - cat .travis/run-cli.sh | xargs -L 1 php
+  - docker cp .travis/config/application.config.php config/application.config.php
+  - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then php build/coverage-checker.php build/clover.xml 70 ; fi
+  - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
+  - docker cat .travis/run-cli.sh | xargs -L 1 php
 
 after_script:
-  - rm -Rf config/application.config.php
-  - if $TEST_COVERAGE; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if $TEST_COVERAGE; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover.xml; fi
+  - docker rm -Rf config/application.config.php
+  - if [[ $TEST_COVERAGE == 'true' ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover.xml; fi
