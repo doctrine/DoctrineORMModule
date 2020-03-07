@@ -16,4 +16,4 @@ docker-compose run --rm php ./vendor/bin/doctrine-module orm:schema-tool:drop --
 docker-compose run --rm php ./vendor/bin/doctrine-module migrations:generate
 docker-compose run --rm php ./vendor/bin/doctrine-module migrations:diff
 docker-compose run --rm php ./vendor/bin/doctrine-module migrations:execute 20120714005702 -n
-docker-compose run --rm php ./vendor/bin/doctrine-module migrations:migrate
+docker-compose run --rm php ./vendor/bin/doctrine-module migrations:migrate --no-interaction
