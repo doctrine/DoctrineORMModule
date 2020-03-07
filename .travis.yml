@@ -6,10 +6,6 @@ cache:
     - $HOME/.composer/cache
     - vendor
 
-env:
-  global:
-    - COMPOSER_ARGS="--no-interaction"
-
 matrix:
   fast_finish: true
   include:
@@ -55,9 +51,9 @@ before_install:
 
 install:
   - php --info
-  - composer install $COMPOSER_ARGS --ignore-platform-reqs
-  - if [[ $DEPS == 'latest' ]]; then composer update $COMPOSER_ARGS ; fi
-  - if [[ $DEPS == 'lowest' ]]; then composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - composer install --no-interaction --ignore-platform-reqs
+  - if [[ $DEPS == 'latest' ]]; then composer update --no-interaction ; fi
+  - if [[ $DEPS == 'lowest' ]]; then composer update --prefer-lowest --prefer-stable --no-interaction ; fi
   - docker-compose run --rm php mysql -h mysql -e 'CREATE DATABASE `database`;'
   - docker stty cols 120 && composer show
   - composer show
@@ -74,5 +70,5 @@ script:
 
 after_script:
   - docker rm -Rf config/application.config.php
-  - if [[ $TEST_COVERAGE == 'true' ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then docker wget https://scrutinizer-ci.com/ocular.phar; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover.xml; fi
