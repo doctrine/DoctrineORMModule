@@ -48,7 +48,6 @@ before_install:
   - alias composer="travis_retry docker-compose run --rm php composer"
   - alias php="travis_retry docker-compose run -e TRAVIS -e TRAVIS_JOB_ID --rm php php"
   - docker-compose build --build-arg PHP_VERSION=${TRAVIS_PHP_VERSION} --build-arg XDEBUG=${TEST_COVERAGE:+1} --no-cache php
-  - docker-compose run --rm php mysql -h mysql -e 'CREATE DATABASE `database`;'
   - composer --version
   - php -v
   - php -m
@@ -58,6 +57,7 @@ install:
   - composer install $COMPOSER_ARGS --ignore-platform-reqs
   - if [[ $DEPS == 'latest' ]]; then composer update $COMPOSER_ARGS ; fi
   - if [[ $DEPS == 'lowest' ]]; then composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - docker-compose run --rm php mysql -h mysql -e 'CREATE DATABASE `database`;'
   - stty cols 120 && composer show
   - composer show
 
