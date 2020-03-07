@@ -70,7 +70,7 @@ script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then php build/coverage-checker.php build/clover.xml 70 ; fi
   - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
-  - docker cat .travis/run-cli.sh | xargs -L 1 php
+  - .travis/run-cli.sh 
 
 after_script:
   - docker rm -Rf config/application.config.php
