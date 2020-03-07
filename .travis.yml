@@ -45,7 +45,7 @@ matrix:
 
 before_install:
   - shopt -s expand_aliases
-  - alias docker="travis_retry docker-composer run --rm php"
+  - alias docker="travis_retry docker-compose run --rm php"
   - alias composer="travis_retry docker-compose run --rm php composer"
   - alias php="travis_retry docker-compose run -e TRAVIS -e TRAVIS_JOB_ID --rm php php"
   - docker-compose build --build-arg PHP_VERSION=${TRAVIS_PHP_VERSION} --build-arg XDEBUG=${TEST_COVERAGE:+1} --no-cache php
