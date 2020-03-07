@@ -23,6 +23,7 @@ RUN apk add --no-cache \
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install intl
 RUN docker-php-ext-install mysqli
+RUN docker-php-ext-install pdo_mysql
 RUN set -o pipefail && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN if [ ${XDEBUG} == "1" ] ; then pecl install xdebug && docker-php-ext-enable xdebug ; fi
 RUN composer config --global "platform.ext-mongo" "1.6.16"
