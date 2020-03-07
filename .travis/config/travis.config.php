@@ -7,9 +7,10 @@ return [
         'connection' => [
             'orm_default' => [
                 'params' => [
-                    'user'     => 'travis',
+                    'user'     => 'root',
                     'password' => '',
                     'dbname'   => 'database',
+                    'host'     => 'mysql',
                 ],
             ],
         ],

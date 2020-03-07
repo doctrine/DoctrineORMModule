@@ -1,12 +1,10 @@
+sudo: false
 language: php
 
 cache:
   directories:
     - $HOME/.composer/cache
     - vendor
-
-services:
-  - mysql
 
 env:
   global:
@@ -46,26 +44,34 @@ matrix:
         - DEPS=latest
 
 before_install:
-  - mysql -e 'CREATE DATABASE `database`;'
+  - shopt -s expand_aliases
+  - alias composer="travis_retry docker-compose run --rm php composer"
+  - alias php="travis_retry docker-compose run -e TRAVIS -e TRAVIS_JOB_ID --rm php php"
+  - docker-compose build --build-arg PHP_VERSION=${TRAVIS_PHP_VERSION} --build-arg XDEBUG=${TEST_COVERAGE:+1} --no-cache php
+  - docker-compose run --rm php mysql -h mysql -e 'CREATE DATABASE `database`;'
+  - composer --version
+  - php -v
+  - php -m
 
 install:
-  - travis_retry composer install $COMPOSER_ARGS
-  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
-  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - php --info
+  - composer install $COMPOSER_ARGS --ignore-platform-reqs
+  - if [[ $DEPS == 'latest' ]]; then composer update $COMPOSER_ARGS ; fi
+  - if [[ $DEPS == 'lowest' ]]; then composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - stty cols 120 && composer show
   - composer show
 
 before_script:
   - rm -Rf .travis/cache
-  - cp .travis/config/application.config.php config/application.config.php
 
 script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
-  - if [[ $TEST_COVERAGE == 'true' ]]; then php build/coverage-checker.php build/clover.xml 70 ; fi
-  - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
+  - cp .travis/config/application.config.php config/application.config.php
+  - if $TEST_COVERAGE; then composer test-coverage ; else composer test ; fi
+  - if $TEST_COVERAGE; then php build/coverage-checker.php build/clover.xml 70 ; fi
+  - if $CHECK_CS; then composer cs-check ; fi
   - cat .travis/run-cli.sh | xargs -L 1 php
 
 after_script:
   - rm -Rf config/application.config.php
-  - if [[ $TEST_COVERAGE == 'true' ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [[ $TEST_COVERAGE == 'true' ]]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover.xml; fi
-
+  - if $TEST_COVERAGE; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if $TEST_COVERAGE; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover.xml; fi
