@@ -2,9 +2,9 @@
 
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\DBAL\Tools\Console;
+use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Doctrine\ORM\Tools\Console\Command;
 use DoctrineModule\Form\Element;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use DoctrineORMModule\CliConfigurator;
 use DoctrineORMModule\Service;
 use DoctrineORMModule\Yuml;
