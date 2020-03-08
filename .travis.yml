@@ -55,6 +55,7 @@ install:
   - if [[ $DEPS == 'latest' ]]; then composer update --no-interaction ; fi
   - if [[ $DEPS == 'lowest' ]]; then composer update --prefer-lowest --prefer-stable --no-interaction ; fi
   - docker-compose start;
+  - sleep 10; # wait for mysql container to initialize itself
   - docker-compose run --rm php mysql -h mysql -e 'CREATE DATABASE `database`;'
   - docker stty cols 120 && composer show
   - composer show
