@@ -66,6 +66,7 @@ script:
 
 after_script:
   - rm -Rf config/application.config.php
-  - if [[ $TEST_COVERAGE == 'true' ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [[ $TEST_COVERAGE == 'true' ]]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover.xml; fi
+
+after_success:
+  - if [[ $TEST_COVERAGE == 'true' ]]; then bash <(curl -s https://codecov.io/bash) -f ./build/clover.xml; fi
 
