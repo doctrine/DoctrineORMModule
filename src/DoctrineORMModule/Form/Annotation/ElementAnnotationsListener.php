@@ -184,17 +184,19 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         } elseif (isset($mapping['joinColumns'])) {
             $required = true;
             foreach ($mapping['joinColumns'] as $joinColumn) {
-                if (isset($joinColumn['nullable']) && $joinColumn['nullable']) {
-                    $required = false;
-                    if ((isset($elementSpec['spec']['options']) &&
-                         ! array_key_exists('empty_option', $elementSpec['spec']['options'])) ||
-                         ! isset($elementSpec['spec']['options'])
-                    ) {
-                        $elementSpec['spec']['options']['empty_option'] = 'NULL';
-                    }
-
-                    break;
+                if (! isset($joinColumn['nullable']) || ! $joinColumn['nullable']) {
+                    continue;
                 }
+
+                $required = false;
+                if ((isset($elementSpec['spec']['options']) &&
+                     ! array_key_exists('empty_option', $elementSpec['spec']['options'])) ||
+                     ! isset($elementSpec['spec']['options'])
+                ) {
+                    $elementSpec['spec']['options']['empty_option'] = 'NULL';
+                }
+
+                break;
             }
 
             $inputSpec['required'] = $required;
