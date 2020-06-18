@@ -65,6 +65,9 @@
         "phpunit/phpunit":                 "^8.5",
         "squizlabs/php_codesniffer":       "^3.5"
     },
+    "conflict":          {
+        "doctrine/migrations":            ">=3.0"
+    },
     "suggest":           {
         "laminas/laminas-form":            "if you want to use form elements backed by Doctrine",
         "laminas/laminas-developer-tools": "laminas-developer-tools if you want to profile operations executed by the ORM during development",
