@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DoctrineORMModule;
 
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
+use Doctrine\Migrations\Configuration\Configuration;
 use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
@@ -126,7 +127,7 @@ class CliConfigurator
      */
     private function getAvailableCommands() : array
     {
-        if (class_exists(VersionCommand::class)) {
+        if (class_exists(Configuration::class) && method_exists(Configuration::class, 'getOutputWriter')) {
             return ArrayUtils::merge($this->commands, $this->migrationCommands);
         }
 
