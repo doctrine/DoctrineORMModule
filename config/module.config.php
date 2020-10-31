@@ -236,7 +236,7 @@ return [
 
     'hydrators' => [
         'factories' => [
-            DoctrineObject::class => Service\DoctrineObjectHydratorFactory::class
+            DoctrineObject::class => Service\DoctrineObjectHydratorFactory::class,
         ],
     ],
 

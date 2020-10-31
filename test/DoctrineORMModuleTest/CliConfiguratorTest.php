@@ -3,48 +3,59 @@
 namespace DoctrineORMModuleTest\Listener;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
+use Doctrine\DBAL\Tools\Console\Command\RunSqlCommand;
+use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
+use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
+use Doctrine\Migrations\Tools\Console\Command\ExecuteCommand;
+use Doctrine\Migrations\Tools\Console\Command\GenerateCommand;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand;
+use Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand;
+use Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand;
+use Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand;
+use Doctrine\ORM\Tools\Console\Command\InfoCommand;
+use Doctrine\ORM\Tools\Console\Command\RunDqlCommand;
+use Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand;
+use Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand;
+use Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand;
+use Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use DoctrineORMModule\CliConfigurator;
 use DoctrineORMModuleTest\ServiceManagerFactory;
+use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\Command;
+
+use function assert;
 
 /**
- * @license MIT
  * @link    http://www.doctrine-project.org/
- * @author  Nicolas Eeckeloo <neeckeloo@gmail.com>
  */
 class CliConfiguratorTest extends TestCase
 {
-    /**
-     * @var \Laminas\ServiceManager\ServiceManager
-     */
+    /** @var ServiceManager */
     protected $serviceManager;
 
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
+    /** @var EntityManager */
     protected $objectManager;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->serviceManager = ServiceManagerFactory::getServiceManager();
         $this->objectManager  = $this->serviceManager->get('doctrine.entitymanager.orm_default');
     }
 
-    public function testOrmDefaultIsUsedAsTheEntityManagerIfNoneIsProvided()
+    public function testOrmDefaultIsUsedAsTheEntityManagerIfNoneIsProvided(): void
     {
         $application = new Application();
 
         $cliConfigurator = new CliConfigurator($this->serviceManager);
         $cliConfigurator->configure($application);
 
-        /* @var $entityManagerHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
         $entityManagerHelper = $application->getHelperSet()->get('entityManager');
+        assert($entityManagerHelper instanceof EntityManagerHelper);
 
         $this->assertInstanceOf(EntityManagerHelper::class, $entityManagerHelper);
         $this->assertSame($this->objectManager, $entityManagerHelper->getEntityManager());
@@ -53,7 +64,7 @@ class CliConfiguratorTest extends TestCase
     /**
      * @backupGlobals enabled
      */
-    public function testEntityManagerUsedCanBeSpecifiedInCommandLineArgument()
+    public function testEntityManagerUsedCanBeSpecifiedInCommandLineArgument(): void
     {
         $objectManagerName = 'doctrine.entitymanager.some_other_name';
 
@@ -79,14 +90,14 @@ class CliConfiguratorTest extends TestCase
         $cliConfigurator = new CliConfigurator($this->serviceManager);
         $cliConfigurator->configure($application);
 
-        /* @var $entityManagerHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
         $entityManagerHelper = $application->getHelperSet()->get('entityManager');
+        assert($entityManagerHelper instanceof EntityManagerHelper);
 
         $this->assertInstanceOf(EntityManagerHelper::class, $entityManagerHelper);
         $this->assertSame($entityManager, $entityManagerHelper->getEntityManager());
     }
 
-    public function testValidHelpers()
+    public function testValidHelpers(): void
     {
         $application = new Application();
 
@@ -95,32 +106,29 @@ class CliConfiguratorTest extends TestCase
 
         $helperSet = $application->getHelperSet();
 
-        /* @var $emHelper \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper */
         $emHelper = $helperSet->get('em');
-        $this->assertInstanceOf(\Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper::class, $emHelper);
+        assert($emHelper instanceof EntityManagerHelper);
+        $this->assertInstanceOf(EntityManagerHelper::class, $emHelper);
         $this->assertSame($this->objectManager, $emHelper->getEntityManager());
 
-        /* @var $dbHelper \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper */
         $dbHelper = $helperSet->get('db');
-        $this->assertInstanceOf(\Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper::class, $dbHelper);
+        assert($dbHelper instanceof ConnectionHelper);
+        $this->assertInstanceOf(ConnectionHelper::class, $dbHelper);
         $this->assertSame($this->objectManager->getConnection(), $dbHelper->getConnection());
     }
 
     /**
-     * @param string $commandName
-     * @param string $className
-     *
      * @dataProvider dataProviderForTestValidCommands
      */
-    public function testValidCommands($commandName, $className)
+    public function testValidCommands(string $commandName, string $className): void
     {
         $application = new Application();
 
         $cliConfigurator = new CliConfigurator($this->serviceManager);
         $cliConfigurator->configure($application);
 
-        /* @var $command \Symfony\Component\Console\Command\Command */
         $command = $application->get($commandName);
+        assert($command instanceof Command);
         $this->assertInstanceOf($className, $command);
 
         // check for the entity-manager option
@@ -139,68 +147,68 @@ class CliConfiguratorTest extends TestCase
     /**
      * @return array
      */
-    public function dataProviderForTestValidCommands()
+    public function dataProviderForTestValidCommands(): array
     {
         return [
             [
                 'dbal:import',
-                \Doctrine\DBAL\Tools\Console\Command\ImportCommand::class,
+                ImportCommand::class,
             ],
             [
                 'dbal:run-sql',
-                \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand::class,
+                RunSqlCommand::class,
             ],
             [
                 'orm:clear-cache:query',
-                \Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand::class,
+                QueryCommand::class,
             ],
             [
                 'orm:clear-cache:result',
-                \Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand::class,
+                ResultCommand::class,
             ],
             [
                 'orm:generate-proxies',
-                \Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand::class,
+                GenerateProxiesCommand::class,
             ],
             [
                 'orm:ensure-production-settings',
-                \Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand::class,
+                EnsureProductionSettingsCommand::class,
             ],
             [
                 'orm:info',
-                \Doctrine\ORM\Tools\Console\Command\InfoCommand::class,
+                InfoCommand::class,
             ],
             [
                 'orm:schema-tool:create',
-                \Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand::class,
+                CreateCommand::class,
             ],
             [
                 'orm:schema-tool:update',
-                \Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand::class,
+                UpdateCommand::class,
             ],
             [
                 'orm:schema-tool:drop',
-                \Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand::class,
+                DropCommand::class,
             ],
             [
                 'orm:validate-schema',
-                \Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand::class,
+                ValidateSchemaCommand::class,
             ],
             [
                 'orm:run-dql',
-                \Doctrine\ORM\Tools\Console\Command\RunDqlCommand::class,
+                RunDqlCommand::class,
             ],
             [
                 'migrations:generate',
-                \Doctrine\Migrations\Tools\Console\Command\GenerateCommand::class,
+                GenerateCommand::class,
             ],
             [
                 'migrations:diff',
-                \Doctrine\Migrations\Tools\Console\Command\DiffCommand::class,
+                DiffCommand::class,
             ],
             [
                 'migrations:execute',
-                \Doctrine\Migrations\Tools\Console\Command\ExecuteCommand::class,
+                ExecuteCommand::class,
             ],
         ];
     }

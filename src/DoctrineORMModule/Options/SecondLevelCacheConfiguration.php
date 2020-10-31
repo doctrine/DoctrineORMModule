@@ -50,42 +50,42 @@ class SecondLevelCacheConfiguration extends AbstractOptions
      */
     protected $regions = [];
 
-    public function setEnabled(bool $enabled) : void
+    public function setEnabled(bool $enabled): void
     {
         $this->enabled = (bool) $enabled;
     }
 
-    public function isEnabled() : bool
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    public function setDefaultLifetime(int $defaultLifetime) : void
+    public function setDefaultLifetime(int $defaultLifetime): void
     {
         $this->defaultLifetime = (int) $defaultLifetime;
     }
 
-    public function getDefaultLifetime() : int
+    public function getDefaultLifetime(): int
     {
         return $this->defaultLifetime;
     }
 
-    public function setDefaultLockLifetime(int $defaultLockLifetime) : void
+    public function setDefaultLockLifetime(int $defaultLockLifetime): void
     {
         $this->defaultLockLifetime = (int) $defaultLockLifetime;
     }
 
-    public function getDefaultLockLifetime() : int
+    public function getDefaultLockLifetime(): int
     {
         return $this->defaultLockLifetime;
     }
 
-    public function setFileLockRegionDirectory(string $fileLockRegionDirectory) : void
+    public function setFileLockRegionDirectory(string $fileLockRegionDirectory): void
     {
         $this->fileLockRegionDirectory = (string) $fileLockRegionDirectory;
     }
 
-    public function getFileLockRegionDirectory() : string
+    public function getFileLockRegionDirectory(): string
     {
         return $this->fileLockRegionDirectory;
     }
@@ -93,7 +93,7 @@ class SecondLevelCacheConfiguration extends AbstractOptions
     /**
      * @param mixed[] $regions
      */
-    public function setRegions(array $regions) : void
+    public function setRegions(array $regions): void
     {
         $this->regions = $regions;
     }
@@ -101,7 +101,7 @@ class SecondLevelCacheConfiguration extends AbstractOptions
     /**
      * @return mixed[]
      */
-    public function getRegions() : array
+    public function getRegions(): array
     {
         return $this->regions;
     }

@@ -10,6 +10,7 @@ use DoctrineModule\Service\AbstractFactory;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
+
 use function method_exists;
 
 /**
@@ -32,7 +33,7 @@ class MigrationsConfigurationFactory extends AbstractFactory
         $configuration = new Configuration($connection);
 
         $output         = new ConsoleOutput();
-        $writerCallback = static function ($message) use ($output) : void {
+        $writerCallback = static function ($message) use ($output): void {
             $output->writeln($message);
         };
 
@@ -71,7 +72,7 @@ class MigrationsConfigurationFactory extends AbstractFactory
         return $this($container, Configuration::class);
     }
 
-    public function getOptionsClass() : string
+    public function getOptionsClass(): string
     {
     }
 }

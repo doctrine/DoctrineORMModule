@@ -71,22 +71,22 @@ class DBALConnection extends AbstractOptions
     /** @var bool */
     protected $useSavepoints = false;
 
-    public function setConfiguration(string $configuration) : void
+    public function setConfiguration(string $configuration): void
     {
         $this->configuration = $configuration;
     }
 
-    public function getConfiguration() : string
+    public function getConfiguration(): string
     {
         return 'doctrine.configuration.' . $this->configuration;
     }
 
-    public function setEventmanager(string $eventmanager) : void
+    public function setEventmanager(string $eventmanager): void
     {
         $this->eventmanager = $eventmanager;
     }
 
-    public function getEventmanager() : string
+    public function getEventmanager(): string
     {
         return 'doctrine.eventmanager.' . $this->eventmanager;
     }
@@ -94,7 +94,7 @@ class DBALConnection extends AbstractOptions
     /**
      * @param mixed[] $params
      */
-    public function setParams(array $params) : void
+    public function setParams(array $params): void
     {
         $this->params = $params;
     }
@@ -102,7 +102,7 @@ class DBALConnection extends AbstractOptions
     /**
      * @return mixed[]
      */
-    public function getParams() : array
+    public function getParams(): array
     {
         return $this->params;
     }
@@ -110,7 +110,7 @@ class DBALConnection extends AbstractOptions
     /**
      * @param mixed[] $doctrineTypeMappings
      */
-    public function setDoctrineTypeMappings(array $doctrineTypeMappings) : DBALConnection
+    public function setDoctrineTypeMappings(array $doctrineTypeMappings): DBALConnection
     {
         $this->doctrineTypeMappings = (array) $doctrineTypeMappings;
 
@@ -120,7 +120,7 @@ class DBALConnection extends AbstractOptions
     /**
      * @return mixed[]
      */
-    public function getDoctrineTypeMappings() : array
+    public function getDoctrineTypeMappings(): array
     {
         return $this->doctrineTypeMappings;
     }
@@ -128,7 +128,7 @@ class DBALConnection extends AbstractOptions
     /**
      * @param mixed[] $doctrineCommentedTypes
      */
-    public function setDoctrineCommentedTypes(array $doctrineCommentedTypes) : void
+    public function setDoctrineCommentedTypes(array $doctrineCommentedTypes): void
     {
         $this->doctrineCommentedTypes = $doctrineCommentedTypes;
     }
@@ -136,17 +136,17 @@ class DBALConnection extends AbstractOptions
     /**
      * @return mixed[]
      */
-    public function getDoctrineCommentedTypes() : array
+    public function getDoctrineCommentedTypes(): array
     {
         return $this->doctrineCommentedTypes;
     }
 
-    public function setDriverClass(?string $driverClass) : void
+    public function setDriverClass(?string $driverClass): void
     {
         $this->driverClass = $driverClass;
     }
 
-    public function getDriverClass() : ?string
+    public function getDriverClass(): ?string
     {
         return $this->driverClass;
     }
@@ -154,7 +154,7 @@ class DBALConnection extends AbstractOptions
     /**
      * @param PDO|string|null $pdo
      */
-    public function setPdo($pdo) : void
+    public function setPdo($pdo): void
     {
         $this->pdo = $pdo;
     }
@@ -167,22 +167,22 @@ class DBALConnection extends AbstractOptions
         return $this->pdo;
     }
 
-    public function setWrapperClass(string $wrapperClass) : void
+    public function setWrapperClass(string $wrapperClass): void
     {
         $this->wrapperClass = $wrapperClass;
     }
 
-    public function getWrapperClass() : ?string
+    public function getWrapperClass(): ?string
     {
         return $this->wrapperClass;
     }
 
-    public function useSavepoints() : bool
+    public function useSavepoints(): bool
     {
         return $this->useSavepoints;
     }
 
-    public function setUseSavepoints(bool $useSavepoints) : void
+    public function setUseSavepoints(bool $useSavepoints): void
     {
         $this->useSavepoints = $useSavepoints;
     }

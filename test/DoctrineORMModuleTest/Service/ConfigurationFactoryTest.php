@@ -2,37 +2,40 @@
 
 namespace DoctrineORMModuleTest\Service;
 
-use PHPUnit\Framework\TestCase;
-use DoctrineORMModule\Service\ConfigurationFactory;
 use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
+use Doctrine\ORM\Cache\CacheConfiguration;
+use Doctrine\ORM\Cache\DefaultCacheFactory;
+use Doctrine\ORM\Mapping\ClassMetadataFactory;
+use Doctrine\ORM\Mapping\EntityListenerResolver;
+use Doctrine\ORM\Mapping\NamingStrategy;
+use Doctrine\ORM\Mapping\QuoteStrategy;
+use DoctrineORMModule\Service\ConfigurationFactory;
+use DoctrineORMModuleTest\Assets\RepositoryClass;
+use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Laminas\ServiceManager\ServiceManager;
+use PHPUnit\Framework\TestCase;
+use ReflectionProperty;
 
 class ConfigurationFactoryTest extends TestCase
 {
-    /**
-     * @var ServiceManager
-     */
+    /** @var ServiceManager */
     protected $serviceManager;
-    /**
-     * @var ConfigurationFactory
-     */
+    /** @var ConfigurationFactory */
     protected $factory;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->serviceManager = new ServiceManager();
-        $this->factory = new ConfigurationFactory('test_default');
+        $this->factory        = new ConfigurationFactory('test_default');
         $this->serviceManager->setService('doctrine.cache.array', new ArrayCache());
         $this->serviceManager->setService(
             'doctrine.driver.orm_default',
-            $this->createMock(\Doctrine\Common\Persistence\Mapping\Driver\MappingDriver::class)
+            $this->createMock(MappingDriver::class)
         );
     }
 
-    public function testWillInstantiateConfigWithoutNamingStrategySetting()
+    public function testWillInstantiateConfigWithoutNamingStrategySetting(): void
     {
         $config = [
             'doctrine' => [
@@ -43,37 +46,33 @@ class ConfigurationFactoryTest extends TestCase
         ];
         $this->serviceManager->setService('config', $config);
         $ormConfig = $this->factory->createService($this->serviceManager);
-        $this->assertInstanceOf(\Doctrine\ORM\Mapping\NamingStrategy::class, $ormConfig->getNamingStrategy());
+        $this->assertInstanceOf(NamingStrategy::class, $ormConfig->getNamingStrategy());
     }
 
-    public function testWillInstantiateConfigWithNamingStrategyObject()
+    public function testWillInstantiateConfigWithNamingStrategyObject(): void
     {
-        $namingStrategy = $this->createMock(\Doctrine\ORM\Mapping\NamingStrategy::class);
+        $namingStrategy = $this->createMock(NamingStrategy::class);
 
         $config = [
             'doctrine' => [
                 'configuration' => [
-                    'test_default' => [
-                        'naming_strategy' => $namingStrategy,
-                    ],
+                    'test_default' => ['naming_strategy' => $namingStrategy],
                 ],
             ],
         ];
         $this->serviceManager->setService('config', $config);
-        $factory = new ConfigurationFactory('test_default');
+        $factory   = new ConfigurationFactory('test_default');
         $ormConfig = $factory->createService($this->serviceManager);
         $this->assertSame($namingStrategy, $ormConfig->getNamingStrategy());
     }
 
-    public function testWillInstantiateConfigWithNamingStrategyReference()
+    public function testWillInstantiateConfigWithNamingStrategyReference(): void
     {
-        $namingStrategy = $this->createMock(\Doctrine\ORM\Mapping\NamingStrategy::class);
-        $config = [
+        $namingStrategy = $this->createMock(NamingStrategy::class);
+        $config         = [
             'doctrine' => [
                 'configuration' => [
-                    'test_default' => [
-                        'naming_strategy' => 'test_naming_strategy',
-                    ],
+                    'test_default' => ['naming_strategy' => 'test_naming_strategy'],
                 ],
             ],
         ];
@@ -83,50 +82,44 @@ class ConfigurationFactoryTest extends TestCase
         $this->assertSame($namingStrategy, $ormConfig->getNamingStrategy());
     }
 
-    public function testWillNotInstantiateConfigWithInvalidNamingStrategyReference()
+    public function testWillNotInstantiateConfigWithInvalidNamingStrategyReference(): void
     {
         $config = [
             'doctrine' => [
                 'configuration' => [
-                    'test_default' => [
-                        'naming_strategy' => 'test_naming_strategy',
-                    ],
+                    'test_default' => ['naming_strategy' => 'test_naming_strategy'],
                 ],
             ],
         ];
         $this->serviceManager->setService('config', $config);
-        $this->expectException(\Laminas\ServiceManager\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->factory->createService($this->serviceManager);
     }
 
-    public function testWillInstantiateConfigWithQuoteStrategyObject()
+    public function testWillInstantiateConfigWithQuoteStrategyObject(): void
     {
-        $quoteStrategy = $this->createMock(\Doctrine\ORM\Mapping\QuoteStrategy::class);
+        $quoteStrategy = $this->createMock(QuoteStrategy::class);
 
         $config = [
             'doctrine' => [
                 'configuration' => [
-                    'test_default' => [
-                        'quote_strategy' => $quoteStrategy,
-                    ],
+                    'test_default' => ['quote_strategy' => $quoteStrategy],
                 ],
             ],
         ];
         $this->serviceManager->setService('config', $config);
-        $factory = new ConfigurationFactory('test_default');
+        $factory   = new ConfigurationFactory('test_default');
         $ormConfig = $factory->createService($this->serviceManager);
         $this->assertSame($quoteStrategy, $ormConfig->getQuoteStrategy());
     }
 
-    public function testWillInstantiateConfigWithQuoteStrategyReference()
+    public function testWillInstantiateConfigWithQuoteStrategyReference(): void
     {
-        $quoteStrategy = $this->createMock(\Doctrine\ORM\Mapping\QuoteStrategy::class);
-        $config = [
+        $quoteStrategy = $this->createMock(QuoteStrategy::class);
+        $config        = [
             'doctrine' => [
                 'configuration' => [
-                    'test_default' => [
-                        'quote_strategy' => 'test_quote_strategy',
-                    ],
+                    'test_default' => ['quote_strategy' => 'test_quote_strategy'],
                 ],
             ],
         ];
@@ -136,40 +129,36 @@ class ConfigurationFactoryTest extends TestCase
         $this->assertSame($quoteStrategy, $ormConfig->getQuoteStrategy());
     }
 
-    public function testWillNotInstantiateConfigWithInvalidQuoteStrategyReference()
+    public function testWillNotInstantiateConfigWithInvalidQuoteStrategyReference(): void
     {
         $config = [
             'doctrine' => [
                 'configuration' => [
-                    'test_default' => [
-                        'quote_strategy' => 'test_quote_strategy',
-                    ],
+                    'test_default' => ['quote_strategy' => 'test_quote_strategy'],
                 ],
             ],
         ];
         $this->serviceManager->setService('config', $config);
-        $this->expectException(\Laminas\ServiceManager\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->factory->createService($this->serviceManager);
     }
 
-    public function testWillInstantiateConfigWithHydrationCacheSetting()
+    public function testWillInstantiateConfigWithHydrationCacheSetting(): void
     {
         $config = [
             'doctrine' => [
                 'configuration' => [
-                    'test_default' => [
-                        'hydration_cache' => 'array',
-                    ],
+                    'test_default' => ['hydration_cache' => 'array'],
                 ],
             ],
         ];
         $this->serviceManager->setService('config', $config);
-        $factory = new ConfigurationFactory('test_default');
+        $factory   = new ConfigurationFactory('test_default');
         $ormConfig = $factory->createService($this->serviceManager);
-        $this->assertInstanceOf(\Doctrine\Common\Cache\ArrayCache::class, $ormConfig->getHydrationCacheImpl());
+        $this->assertInstanceOf(ArrayCache::class, $ormConfig->getHydrationCacheImpl());
     }
 
-    public function testCanSetDefaultRepositoryClass()
+    public function testCanSetDefaultRepositoryClass(): void
     {
         $config = [
             'doctrine' => [
@@ -177,55 +166,52 @@ class ConfigurationFactoryTest extends TestCase
                     'test_default' => [
 
                         'hydration_cache' => 'array',
-                        'default_repository_class_name' => \DoctrineORMModuleTest\Assets\RepositoryClass::class,
+                        'default_repository_class_name' => RepositoryClass::class,
                     ],
                 ],
             ],
         ];
         $this->serviceManager->setService('config', $config);
 
-        $factory = new ConfigurationFactory('test_default');
+        $factory   = new ConfigurationFactory('test_default');
         $ormConfig = $factory->createService($this->serviceManager);
-        $this->assertInstanceOf(\Doctrine\Common\Cache\ArrayCache::class, $ormConfig->getHydrationCacheImpl());
+        $this->assertInstanceOf(ArrayCache::class, $ormConfig->getHydrationCacheImpl());
     }
 
-    public function testAcceptsMetadataFactory()
+    public function testAcceptsMetadataFactory(): void
     {
         $config = [
             'doctrine' => [
                 'configuration' => [
-                    'test_default' => [
-                        'classMetadataFactoryName' => 'Factory',
-                    ],
+                    'test_default' => ['classMetadataFactoryName' => 'Factory'],
                 ],
             ],
         ];
         $this->serviceManager->setService('config', $config);
-        $factory = new ConfigurationFactory('test_default');
+        $factory   = new ConfigurationFactory('test_default');
         $ormConfig = $factory->createService($this->serviceManager);
         $this->assertEquals('Factory', $ormConfig->getClassMetadataFactoryName());
     }
 
-    public function testDefaultMetadatFactory()
+    public function testDefaultMetadatFactory(): void
     {
         $config = [
             'doctrine' => [
                 'configuration' => [
-                    'test_default' => [
-                    ],
+                    'test_default' => [],
                 ],
             ],
         ];
         $this->serviceManager->setService('config', $config);
-        $factory = new ConfigurationFactory('test_default');
+        $factory   = new ConfigurationFactory('test_default');
         $ormConfig = $factory->createService($this->serviceManager);
         $this->assertEquals(
-            \Doctrine\ORM\Mapping\ClassMetadataFactory::class,
+            ClassMetadataFactory::class,
             $ormConfig->getClassMetadataFactoryName()
         );
     }
 
-    public function testWillInstantiateConfigWithoutEntityListenerResolverSetting()
+    public function testWillInstantiateConfigWithoutEntityListenerResolverSetting(): void
     {
         $config = [
             'doctrine' => [
@@ -240,21 +226,19 @@ class ConfigurationFactoryTest extends TestCase
         $ormConfig = $this->factory->createService($this->serviceManager);
 
         $this->assertInstanceOf(
-            \Doctrine\ORM\Mapping\EntityListenerResolver::class,
+            EntityListenerResolver::class,
             $ormConfig->getEntityListenerResolver()
         );
     }
 
-    public function testWillInstantiateConfigWithEntityListenerResolverObject()
+    public function testWillInstantiateConfigWithEntityListenerResolverObject(): void
     {
-        $entityListenerResolver = $this->createMock(\Doctrine\ORM\Mapping\EntityListenerResolver::class);
+        $entityListenerResolver = $this->createMock(EntityListenerResolver::class);
 
         $config = [
             'doctrine' => [
                 'configuration' => [
-                    'test_default' => [
-                        'entity_listener_resolver' => $entityListenerResolver,
-                    ],
+                    'test_default' => ['entity_listener_resolver' => $entityListenerResolver],
                 ],
             ],
         ];
@@ -266,16 +250,14 @@ class ConfigurationFactoryTest extends TestCase
         $this->assertSame($entityListenerResolver, $ormConfig->getEntityListenerResolver());
     }
 
-    public function testWillInstantiateConfigWithEntityListenerResolverReference()
+    public function testWillInstantiateConfigWithEntityListenerResolverReference(): void
     {
-        $entityListenerResolver = $this->createMock(\Doctrine\ORM\Mapping\EntityListenerResolver::class);
+        $entityListenerResolver = $this->createMock(EntityListenerResolver::class);
 
         $config = [
             'doctrine' => [
                 'configuration' => [
-                    'test_default' => [
-                        'entity_listener_resolver' => 'test_entity_listener_resolver',
-                    ],
+                    'test_default' => ['entity_listener_resolver' => 'test_entity_listener_resolver'],
                 ],
             ],
         ];
@@ -288,7 +270,7 @@ class ConfigurationFactoryTest extends TestCase
         $this->assertSame($entityListenerResolver, $ormConfig->getEntityListenerResolver());
     }
 
-    public function testDoNotCreateSecondLevelCacheByDefault()
+    public function testDoNotCreateSecondLevelCacheByDefault(): void
     {
         $config = [
             'doctrine' => [
@@ -305,7 +287,7 @@ class ConfigurationFactoryTest extends TestCase
         $this->assertNull($ormConfig->getSecondLevelCacheConfiguration());
     }
 
-    public function testCanInstantiateWithSecondLevelCacheConfig()
+    public function testCanInstantiateWithSecondLevelCacheConfig(): void
     {
         $config = [
             'doctrine' => [
@@ -341,10 +323,10 @@ class ConfigurationFactoryTest extends TestCase
         $ormConfig        = $this->factory->createService($this->serviceManager);
         $secondLevelCache = $ormConfig->getSecondLevelCacheConfiguration();
 
-        $this->assertInstanceOf(\Doctrine\ORM\Cache\CacheConfiguration::class, $secondLevelCache);
+        $this->assertInstanceOf(CacheConfiguration::class, $secondLevelCache);
 
         $cacheFactory = $secondLevelCache->getCacheFactory();
-        $this->assertInstanceOf(\Doctrine\ORM\Cache\DefaultCacheFactory::class, $cacheFactory);
+        $this->assertInstanceOf(DefaultCacheFactory::class, $cacheFactory);
         $this->assertEquals('my_dir', $cacheFactory->getFileLockRegionDirectory());
 
         $regionsConfiguration = $secondLevelCache->getRegionsConfiguration();
@@ -359,8 +341,8 @@ class ConfigurationFactoryTest extends TestCase
 
         // Doctrine does not allow to retrieve the cache adapter from cache factory, so we are forced to use
         // reflection here
-        $reflProperty = new \ReflectionProperty($cacheFactory, 'cache');
+        $reflProperty = new ReflectionProperty($cacheFactory, 'cache');
         $reflProperty->setAccessible(true);
-        $this->assertInstanceOf(\Doctrine\Common\Cache\ArrayCache::class, $reflProperty->getValue($cacheFactory));
+        $this->assertInstanceOf(ArrayCache::class, $reflProperty->getValue($cacheFactory));
     }
 }

@@ -9,6 +9,7 @@ use Interop\Container\ContainerInterface;
 use InvalidArgumentException;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+
 use function class_exists;
 use function strtolower;
 use function ucfirst;
@@ -52,7 +53,7 @@ class MigrationsCommandFactory implements FactoryInterface
     /**
      * @throws InvalidArgumentException
      */
-    public function createService(ServiceLocatorInterface $container) : AbstractCommand
+    public function createService(ServiceLocatorInterface $container): AbstractCommand
     {
         return $this($container, 'Doctrine\Migrations\Tools\Console\Command\\' . $this->name . 'Command');
     }

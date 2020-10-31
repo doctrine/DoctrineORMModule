@@ -35,22 +35,22 @@ class DBALConfiguration extends AbstractOptions
      */
     protected $types = [];
 
-    public function setResultCache(string $resultCache) : void
+    public function setResultCache(string $resultCache): void
     {
         $this->resultCache = $resultCache;
     }
 
-    public function getResultCache() : string
+    public function getResultCache(): string
     {
         return 'doctrine.cache.' . $this->resultCache;
     }
 
-    public function setSqlLogger(string $sqlLogger) : void
+    public function setSqlLogger(string $sqlLogger): void
     {
         $this->sqlLogger = $sqlLogger;
     }
 
-    public function getSqlLogger() : ?string
+    public function getSqlLogger(): ?string
     {
         return $this->sqlLogger;
     }
@@ -58,7 +58,7 @@ class DBALConfiguration extends AbstractOptions
     /**
      * @param mixed[] $types
      */
-    public function setTypes(array $types) : void
+    public function setTypes(array $types): void
     {
         $this->types = $types;
     }

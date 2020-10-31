@@ -2,25 +2,25 @@
 
 namespace DoctrineORMModuleTest;
 
+use Laminas\ModuleManager\ModuleManager;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
+
+use function assert;
 
 /**
  * Utility used to retrieve a freshly bootstrapped application's service manager
  *
- * @license MIT
  * @link    http://www.doctrine-project.org/
- * @author  Marco Pivetta <ocramius@gmail.com>
  */
 class ServiceManagerFactory
 {
     /**
      * Builds a new ServiceManager instance
      *
-     * @param  array|null     $configuration
-     * @return ServiceManager
+     * @param  array|null $configuration
      */
-    public static function getServiceManager(array $configuration = null)
+    public static function getServiceManager(?array $configuration = null): ServiceManager
     {
         $configuration        = $configuration ?: include __DIR__ . '/../config.php';
         $serviceManager       = new ServiceManager();
@@ -30,8 +30,8 @@ class ServiceManagerFactory
         $serviceManagerConfig->configureServiceManager($serviceManager);
         $serviceManager->setService('ApplicationConfig', $configuration);
 
-        /** @var $moduleManager \Laminas\ModuleManager\ModuleManager */
         $moduleManager = $serviceManager->get('ModuleManager');
+        assert($moduleManager instanceof ModuleManager);
         $moduleManager->loadModules();
 
         return $serviceManager;

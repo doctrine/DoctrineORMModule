@@ -10,6 +10,7 @@ use Laminas\ModuleManager\Feature\ConfigProviderInterface;
 use Laminas\ModuleManager\Feature\ControllerProviderInterface;
 use Laminas\ModuleManager\Feature\DependencyIndicatorInterface;
 use Laminas\ModuleManager\ModuleManagerInterface;
+
 use function class_exists;
 
 /**
@@ -32,7 +33,7 @@ class Module implements
             ->attach(
                 'doctrine',
                 'loadCli.post',
-                static function (EventInterface $event) : void {
+                static function (EventInterface $event): void {
                     $event
                         ->getParam('ServiceManager')
                         ->get(CliConfigurator::class)
@@ -50,7 +51,7 @@ class Module implements
             ->getEventManager()
             ->attach(
                 ProfilerEvent::EVENT_PROFILER_INIT,
-                static function ($event) : void {
+                static function ($event): void {
                     $container = $event->getTarget()->getParam('ServiceManager');
                     $container->get('doctrine.sql_logger_collector.orm_default');
                 }

@@ -17,20 +17,13 @@ class Product
      */
     protected $id;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    /** @ORM\Column(type="string", nullable=true) */
     protected $name;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Category")
-     */
+    /** @ORM\ManyToMany(targetEntity="Category") */
     protected $categories;
 
-    /**
-     * @return int|null
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

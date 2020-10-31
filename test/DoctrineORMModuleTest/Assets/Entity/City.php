@@ -17,20 +17,13 @@ class City
      */
     protected $id;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    /** @ORM\Column(type="string", nullable=true) */
     protected $name;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Country")
-     */
+    /** @ORM\OneToOne(targetEntity="Country") */
     protected $country;
 
-    /**
-     * @return int|null
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

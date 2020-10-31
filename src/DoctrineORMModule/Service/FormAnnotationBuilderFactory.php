@@ -40,14 +40,14 @@ class FormAnnotationBuilderFactory extends AbstractFactory
         return $this($container, AnnotationBuilder::class);
     }
 
-    public function getOptionsClass() : string
+    public function getOptionsClass(): string
     {
     }
 
     /**
      * Retrieve the form factory
      */
-    private function getFormFactory(ContainerInterface $services) : Factory
+    private function getFormFactory(ContainerInterface $services): Factory
     {
         $elements = null;
 

@@ -40,7 +40,7 @@ class EntityManagerFactory extends AbstractFactory
         return $this($container, EntityManager::class);
     }
 
-    public function getOptionsClass() : string
+    public function getOptionsClass(): string
     {
         return DoctrineORMModuleEntityManager::class;
     }

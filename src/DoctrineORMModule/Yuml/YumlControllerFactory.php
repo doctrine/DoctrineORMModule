@@ -10,6 +10,7 @@ use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+
 use function sprintf;
 
 class YumlControllerFactory implements FactoryInterface
@@ -17,7 +18,7 @@ class YumlControllerFactory implements FactoryInterface
     /**
      * Create service
      */
-    public function createService(ServiceLocatorInterface $serviceLocator) : YumlController
+    public function createService(ServiceLocatorInterface $serviceLocator): YumlController
     {
         if ($serviceLocator instanceof AbstractPluginManager) {
             $serviceLocator = $serviceLocator->getServiceLocator() ?: $serviceLocator;
@@ -35,10 +36,11 @@ class YumlControllerFactory implements FactoryInterface
         ContainerInterface $container,
         $requestedName,
         ?array $options = null
-    ) : YumlController {
+    ): YumlController {
         $config = $container->get('config');
 
-        if (! isset($config['laminas-developer-tools']['toolbar']['enabled'])
+        if (
+            ! isset($config['laminas-developer-tools']['toolbar']['enabled'])
             || ! $config['laminas-developer-tools']['toolbar']['enabled']
         ) {
             throw new ServiceNotFoundException(

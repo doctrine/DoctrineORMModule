@@ -28,7 +28,7 @@ class YumlController extends AbstractActionController
      *
      * @throws UnexpectedValueException if the YUML service answered incorrectly.
      */
-    public function indexAction() : Response
+    public function indexAction(): Response
     {
         $request = $this->getRequest();
         $this->httpClient->setMethod(Request::METHOD_POST);

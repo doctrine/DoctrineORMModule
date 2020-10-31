@@ -23,12 +23,12 @@ class DoctrinePaginator implements AdapterInterface
         $this->paginator = $paginator;
     }
 
-    public function setPaginator(Paginator $paginator) : self
+    public function setPaginator(Paginator $paginator): self
     {
         $this->paginator = $paginator;
     }
 
-    public function getPaginator() : Paginator
+    public function getPaginator(): Paginator
     {
         return $this->paginator;
     }

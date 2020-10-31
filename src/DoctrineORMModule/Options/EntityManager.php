@@ -36,19 +36,19 @@ class EntityManager extends AbstractOptions
      */
     protected $entityResolver = 'orm_default';
 
-    public function setConfiguration(string $configuration) : self
+    public function setConfiguration(string $configuration): self
     {
         $this->configuration = $configuration;
 
         return $this;
     }
 
-    public function getConfiguration() : string
+    public function getConfiguration(): string
     {
         return 'doctrine.configuration.' . $this->configuration;
     }
 
-    public function setConnection(string $connection) : self
+    public function setConnection(string $connection): self
     {
         $this->connection = $connection;
 
@@ -58,12 +58,12 @@ class EntityManager extends AbstractOptions
     /**
      * @return self
      */
-    public function getConnection() : string
+    public function getConnection(): string
     {
         return 'doctrine.connection.' . $this->connection;
     }
 
-    public function setEntityResolver(string $entityResolver) : self
+    public function setEntityResolver(string $entityResolver): self
     {
         $this->entityResolver = (string) $entityResolver;
 
@@ -73,7 +73,7 @@ class EntityManager extends AbstractOptions
     /**
      * @return self
      */
-    public function getEntityResolver() : string
+    public function getEntityResolver(): string
     {
         return 'doctrine.entity_resolver.' . $this->entityResolver;
     }

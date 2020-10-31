@@ -4,17 +4,26 @@ namespace DoctrineORMModuleTest\Form;
 
 use ArrayObject;
 use DoctrineORMModule\Form\Annotation\ElementAnnotationsListener;
+use DoctrineORMModule\Form\Element\EntitySelect;
+use DoctrineORMModuleTest\Assets\Entity\FormEntity;
+use DoctrineORMModuleTest\Assets\Entity\FormEntityTarget;
+use DoctrineORMModuleTest\Assets\Entity\TargetEntity;
 use DoctrineORMModuleTest\Framework\TestCase;
 use Laminas\EventManager\Event;
+use Laminas\Form\Element;
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\Date;
+use Laminas\Form\Element\DateTime;
+use Laminas\Form\Element\Number;
+use Laminas\Form\Element\Textarea;
+use Laminas\Form\Element\Time;
 
 class ElementAnnotationsListenerTest extends TestCase
 {
-    /**
-     * @var ElementAnnotationsListener
-     */
+    /** @var ElementAnnotationsListener */
     protected $listener;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->listener = new ElementAnnotationsListener($this->getEntityManager());
     }
@@ -22,7 +31,7 @@ class ElementAnnotationsListenerTest extends TestCase
     /**
      * @dataProvider eventNameProvider
      */
-    public function testEventsWithNoMetadata($method)
+    public function testEventsWithNoMetadata($method): void
     {
         $event = $this->getMetadataEvent();
         $this->listener->{$method}($event);
@@ -30,7 +39,7 @@ class ElementAnnotationsListenerTest extends TestCase
         $this->addToAssertionCount(1);
     }
 
-    public function testToOne()
+    public function testToOne(): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -41,17 +50,17 @@ class ElementAnnotationsListenerTest extends TestCase
         $elementSpec = $event->getParam('elementSpec');
         $this->assertEquals($this->getEntityManager(), $elementSpec['spec']['options']['object_manager']);
         $this->assertEquals(
-            \DoctrineORMModuleTest\Assets\Entity\TargetEntity::class,
+            TargetEntity::class,
             $elementSpec['spec']['options']['target_class']
         );
-        $this->assertEquals(\DoctrineORMModule\Form\Element\EntitySelect::class, $elementSpec['spec']['type']);
+        $this->assertEquals(EntitySelect::class, $elementSpec['spec']['type']);
     }
 
-    public function testToOneMergesOptions()
+    public function testToOneMergesOptions(): void
     {
-        $listener    = $this->listener;
-        $event       = $this->getMetadataEvent();
-        $elementSpec = new ArrayObject();
+        $listener                              = $this->listener;
+        $event                                 = $this->getMetadataEvent();
+        $elementSpec                           = new ArrayObject();
         $elementSpec['spec']['options']['foo'] = 'bar';
 
         $event->setParam('name', 'targetOne');
@@ -62,7 +71,7 @@ class ElementAnnotationsListenerTest extends TestCase
         $this->assertCount(3, $elementSpec['spec']['options']);
     }
 
-    public function testToOneHasNoEffectOnToMany()
+    public function testToOneHasNoEffectOnToMany(): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -74,7 +83,7 @@ class ElementAnnotationsListenerTest extends TestCase
         $this->assertNull($event->getParam('inputSpec'));
     }
 
-    public function testToManyHasNoEffectOnToOne()
+    public function testToManyHasNoEffectOnToOne(): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -86,7 +95,7 @@ class ElementAnnotationsListenerTest extends TestCase
         $this->assertNull($event->getParam('inputSpec'));
     }
 
-    public function testToMany()
+    public function testToMany(): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -100,18 +109,18 @@ class ElementAnnotationsListenerTest extends TestCase
         $this->assertTrue($elementSpec['spec']['attributes']['multiple']);
         $this->assertEquals($this->getEntityManager(), $elementSpec['spec']['options']['object_manager']);
         $this->assertEquals(
-            \DoctrineORMModuleTest\Assets\Entity\FormEntityTarget::class,
+            FormEntityTarget::class,
             $elementSpec['spec']['options']['target_class']
         );
-        $this->assertEquals(\DoctrineORMModule\Form\Element\EntitySelect::class, $elementSpec['spec']['type']);
+        $this->assertEquals(EntitySelect::class, $elementSpec['spec']['type']);
         $this->assertFalse($inputSpec['required']);
     }
 
-    public function testToManyMergesOptions()
+    public function testToManyMergesOptions(): void
     {
-        $listener    = $this->listener;
-        $event       = $this->getMetadataEvent();
-        $elementSpec = new ArrayObject();
+        $listener                              = $this->listener;
+        $event                                 = $this->getMetadataEvent();
+        $elementSpec                           = new ArrayObject();
         $elementSpec['spec']['options']['foo'] = 'bar';
 
         $event->setParam('name', 'targetMany');
@@ -122,7 +131,7 @@ class ElementAnnotationsListenerTest extends TestCase
         $this->assertCount(3, $elementSpec['spec']['options']);
     }
 
-    public function testHandleExcludeAssociation()
+    public function testHandleExcludeAssociation(): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -137,7 +146,7 @@ class ElementAnnotationsListenerTest extends TestCase
     /**
      * @dataProvider eventFilterProvider
      */
-    public function testHandleFilterField($name, $type)
+    public function testHandleFilterField($name, $type): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -152,7 +161,7 @@ class ElementAnnotationsListenerTest extends TestCase
         $this->assertEquals($type, $inputSpec['filters'][0]['name']);
     }
 
-    public function testHandlRequiredAssociation()
+    public function testHandlRequiredAssociation(): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -167,7 +176,7 @@ class ElementAnnotationsListenerTest extends TestCase
         $this->assertFalse($inputSpec['required']);
     }
 
-    public function testHandlRequiredAssociationSetsNullOption()
+    public function testHandlRequiredAssociationSetsNullOption(): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -184,7 +193,7 @@ class ElementAnnotationsListenerTest extends TestCase
         $this->assertEquals('foo', $elementSpec['spec']['options']['empty_option']);
     }
 
-    public function testHandleRequiredField()
+    public function testHandleRequiredField(): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -203,7 +212,7 @@ class ElementAnnotationsListenerTest extends TestCase
         $this->assertFalse($inputSpec['required']);
     }
 
-    public function testHandleRequiredFieldNonFieldProperty()
+    public function testHandleRequiredFieldNonFieldProperty(): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -215,7 +224,7 @@ class ElementAnnotationsListenerTest extends TestCase
     /**
      * @dataProvider eventTypeProvider
      */
-    public function testHandleTypeField($name, $type)
+    public function testHandleTypeField($name, $type): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -233,7 +242,7 @@ class ElementAnnotationsListenerTest extends TestCase
     /**
      * @dataProvider eventValidatorProvider
      */
-    public function testHandlevalidatorField($name, $type)
+    public function testHandlevalidatorField($name, $type): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -245,7 +254,7 @@ class ElementAnnotationsListenerTest extends TestCase
         $listener->handleValidatorField($event);
 
         $inputSpec = $event->getParam('inputSpec');
-        if (null === $type) {
+        if ($type === null) {
             $this->assertEmpty($inputSpec['validators']);
         } else {
             $this->assertEquals($type, $inputSpec['validators'][0]['name']);
@@ -291,17 +300,17 @@ class ElementAnnotationsListenerTest extends TestCase
     public function eventTypeProvider()
     {
         return [
-            ['bool', \Laminas\Form\Element\Checkbox::class],
-            ['boolean', \Laminas\Form\Element\Checkbox::class],
-            ['bigint', \Laminas\Form\Element\Number::class],
-            ['integer', \Laminas\Form\Element\Number::class],
-            ['smallint', \Laminas\Form\Element\Number::class],
-            ['datetime', \Laminas\Form\Element\DateTime::class],
-            ['datetimetz', \Laminas\Form\Element\DateTime::class],
-            ['date', \Laminas\Form\Element\Date::class],
-            ['time', \Laminas\Form\Element\Time::class],
-            ['string', \Laminas\Form\Element::class],
-            ['text', \Laminas\Form\Element\Textarea::class],
+            ['bool', Checkbox::class],
+            ['boolean', Checkbox::class],
+            ['bigint', Number::class],
+            ['integer', Number::class],
+            ['smallint', Number::class],
+            ['datetime', DateTime::class],
+            ['datetimetz', DateTime::class],
+            ['date', Date::class],
+            ['time', Time::class],
+            ['string', Element::class],
+            ['text', Textarea::class],
         ];
     }
 
@@ -325,7 +334,7 @@ class ElementAnnotationsListenerTest extends TestCase
     protected function getMetadataEvent()
     {
         $event    = new Event();
-        $metadata = $this->getEntityManager()->getClassMetadata(\DoctrineORMModuleTest\Assets\Entity\FormEntity::class);
+        $metadata = $this->getEntityManager()->getClassMetadata(FormEntity::class);
         $event->setParam('metadata', $metadata);
 
         return $event;

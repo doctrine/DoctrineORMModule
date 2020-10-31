@@ -15,6 +15,7 @@ use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputOption;
+
 use function class_exists;
 
 class CliConfigurator
@@ -62,7 +63,7 @@ class CliConfigurator
         $this->container = $container;
     }
 
-    public function configure(Application $cli) : void
+    public function configure(Application $cli): void
     {
         $commands = $this->getAvailableCommands();
         foreach ($commands as $commandName) {
@@ -83,7 +84,7 @@ class CliConfigurator
     /**
      * @return mixed[]
      */
-    private function getHelpers(EntityManagerInterface $objectManager) : array
+    private function getHelpers(EntityManagerInterface $objectManager): array
     {
         $helpers = [];
 
@@ -99,7 +100,7 @@ class CliConfigurator
         return $helpers;
     }
 
-    private function createObjectManagerInputOption() : InputOption
+    private function createObjectManagerInputOption(): InputOption
     {
         return new InputOption(
             'object-manager',
@@ -110,7 +111,7 @@ class CliConfigurator
         );
     }
 
-    private function getObjectManagerName() : string
+    private function getObjectManagerName(): string
     {
         $arguments = new ArgvInput();
 
@@ -124,7 +125,7 @@ class CliConfigurator
     /**
      * @return mixed[]
      */
-    private function getAvailableCommands() : array
+    private function getAvailableCommands(): array
     {
         if (class_exists(VersionCommand::class)) {
             return ArrayUtils::merge($this->commands, $this->migrationCommands);

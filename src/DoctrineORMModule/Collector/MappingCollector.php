@@ -10,6 +10,7 @@ use Laminas\DeveloperTools\Collector\AutoHideInterface;
 use Laminas\DeveloperTools\Collector\CollectorInterface;
 use Laminas\Mvc\MvcEvent;
 use Serializable;
+
 use function ksort;
 use function serialize;
 use function unserialize;
@@ -109,7 +110,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
     /**
      * @return ClassMetadata[]
      */
-    public function getClasses() : array
+    public function getClasses(): array
     {
         return $this->classes;
     }
