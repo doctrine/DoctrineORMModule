@@ -17,7 +17,7 @@ use function count;
 class AdapterTestIgnore extends TestCase
 {
     /** @var QueryBuilder */
-    protected $qb;
+    protected $queryBuilder;
 
     /** @var PaginatorAdapter */
     protected $paginatorAdapter;
@@ -36,14 +36,14 @@ class AdapterTestIgnore extends TestCase
         $executor = new ORMExecutor($this->getEntityManager(), $purger);
         $executor->execute($loader->getFixtures());
 
-        $this->qb = $this
+        $this->queryBuilder = $this
             ->getEntityManager()
             ->createQueryBuilder()
             ->select('t')
             ->from(Test::class, 't')
             ->orderBy('t.id', 'ASC');
 
-        $this->paginator        = new DoctrinePaginator($this->qb);
+        $this->paginator        = new DoctrinePaginator($this->queryBuilder);
         $this->paginatorAdapter = new PaginatorAdapter($this->paginator);
     }
 
@@ -57,7 +57,7 @@ class AdapterTestIgnore extends TestCase
 
     public function testContainedItemsCount(): void
     {
-        $itemsCount = $this->qb->select('COUNT(t)')->getQuery()->getSingleScalarResult();
+        $itemsCount = $this->queryBuilder->select('COUNT(t)')->getQuery()->getSingleScalarResult();
 
         $this->assertEquals($itemsCount, $this->paginatorAdapter->count());
         $this->assertEquals($itemsCount, count($this->paginatorAdapter->getItems(0, $itemsCount + 100)));
@@ -65,7 +65,7 @@ class AdapterTestIgnore extends TestCase
 
     public function testGetsItemsAtOffsetZero(): void
     {
-        $expected = $this->qb->setMaxResults(10)->getQuery()->getResult();
+        $expected = $this->queryBuilder->setMaxResults(10)->getQuery()->getResult();
         $actual   = $this->paginatorAdapter->getItems(0, 10);
 
         foreach ($expected as $key => $expectedItem) {
@@ -75,7 +75,7 @@ class AdapterTestIgnore extends TestCase
 
     public function testGetsItemsAtOffsetTen(): void
     {
-        $expected = $this->qb->setFirstResult(10)->setMaxResults(10)->getQuery()->getResult();
+        $expected = $this->queryBuilder->setFirstResult(10)->setMaxResults(10)->getQuery()->getResult();
         $actual   = $this->paginatorAdapter->getItems(10, 10);
 
         foreach ($expected as $key => $expectedItem) {
