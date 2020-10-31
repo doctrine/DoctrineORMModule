@@ -1,9 +1,9 @@
 <?php
 
-use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\DBAL\Tools\Console;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Doctrine\ORM\Tools\Console\Command;
+use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use DoctrineModule\Form\Element;
 use DoctrineORMModule\CliConfigurator;
 use DoctrineORMModule\Service;
