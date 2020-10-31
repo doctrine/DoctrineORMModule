@@ -35,6 +35,12 @@
             "email": "tom.h.anderson@gmail.com"
         }
     ],
+    "config": {
+        "platform": {
+            "php": "7.2.15"
+        },
+        "sort-packages": true
+    },
     "extra": {
         "laminas": {
             "config-provider": "DoctrineORMModule\\ConfigProvider",
@@ -42,17 +48,18 @@
         }
     },
     "require":           {
-        "php":                               "^7.2",
-        "doctrine/dbal":                     "^2.10",
-        "doctrine/doctrine-module":          "^4.0",
-        "doctrine/orm":                      "^2.6.4",
-        "symfony/console":                   "^5.0"
+        "php":                                  "^7.2",
+        "composer/package-versions-deprecated": "^1.11",
+        "doctrine/dbal":                        "^2.10",
+        "doctrine/doctrine-module":             "^4.0",
+        "doctrine/orm":                         "^2.6.4",
+        "symfony/console":                      "^5.0"
     },
     "require-dev":       {
         "doctrine/annotations":            "^1.8",
-        "doctrine/coding-standard":        "^7.0.2",
+        "doctrine/coding-standard":        "^8.0",
         "doctrine/data-fixtures":          "^1.2.1",
-        "doctrine/migrations":             "^1.5 || ^2.0",
+        "doctrine/migrations":             "^1.5 || ^2.0, < 2.3.0",
         "laminas/laminas-code":            "^3.3.2",
         "laminas/laminas-console":         "^2.6",
         "laminas/laminas-developer-tools": "^1.1",
@@ -91,7 +98,7 @@
             "@cs-check",
             "@test"
         ],
-        "cs-check": "phpcs --standard=Doctrine src",
+        "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --coverage-clover build/clover.xml"

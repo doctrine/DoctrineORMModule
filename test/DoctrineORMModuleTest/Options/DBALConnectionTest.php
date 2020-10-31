@@ -2,23 +2,22 @@
 
 namespace DoctrineORMModuleTest\Options;
 
-use PHPUnit\Framework\TestCase;
 use DoctrineORMModule\Options\DBALConnection;
-use Doctrine\ORM\Repository\DefaultRepositoryFactory;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \DoctrineORMModule\Options\DBALConnection
  */
 class DBALConnectionTest extends TestCase
 {
-    public function testSetNullCommentedTypes()
+    public function testSetNullCommentedTypes(): void
     {
         $options = new DBALConnection();
         $options->setDoctrineCommentedTypes([]);
         $this->assertSame([], $options->getDoctrineCommentedTypes());
     }
 
-    public function testSetGetCommentedTypes()
+    public function testSetGetCommentedTypes(): void
     {
         $options = new DBALConnection();
         $options->setDoctrineCommentedTypes(['mytype']);

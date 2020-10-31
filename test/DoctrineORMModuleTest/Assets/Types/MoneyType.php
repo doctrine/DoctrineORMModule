@@ -1,32 +1,44 @@
 <?php
+
 namespace DoctrineORMModuleTest\Assets\Types;
 
-use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\Type;
 
 /**
  * My custom datatype.
  */
 class MoneyType extends Type
 {
-    const MONEY = 'money';
+    public const MONEY = 'money';
 
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    /**
+     * @param mixed[] $fieldDeclaration
+     */
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return 'MyMoney';
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    /**
+     * @param mixed $value
+     */
+    public function convertToPHPValue($value, AbstractPlatform $platform): Money
     {
         return new Money($value);
     }
 
+    /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         return $value->toDecimal();
     }
 
-    public function getName()
+    public function getName(): string
     {
         return self::MONEY;
     }

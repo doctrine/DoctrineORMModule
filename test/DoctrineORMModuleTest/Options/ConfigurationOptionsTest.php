@@ -2,13 +2,18 @@
 
 namespace DoctrineORMModuleTest\Options;
 
-use PHPUnit\Framework\TestCase;
-use DoctrineORMModule\Options\Configuration;
+use Doctrine\ORM\Mapping\EntityListenerResolver;
+use Doctrine\ORM\Mapping\NamingStrategy;
+use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Repository\DefaultRepositoryFactory;
+use DoctrineORMModule\Options\Configuration;
+use Laminas\Stdlib\Exception\InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class ConfigurationOptionsTest extends TestCase
 {
-    public function testSetGetNamingStrategy()
+    public function testSetGetNamingStrategy(): void
     {
         $options = new Configuration();
         $options->setNamingStrategy(null);
@@ -17,15 +22,15 @@ class ConfigurationOptionsTest extends TestCase
         $options->setNamingStrategy('test');
         $this->assertSame('test', $options->getNamingStrategy());
 
-        $namingStrategy = $this->createMock(\Doctrine\ORM\Mapping\NamingStrategy::class);
+        $namingStrategy = $this->createMock(NamingStrategy::class);
         $options->setNamingStrategy($namingStrategy);
         $this->assertSame($namingStrategy, $options->getNamingStrategy());
 
-        $this->expectException(\Laminas\Stdlib\Exception\InvalidArgumentException::class);
-        $options->setNamingStrategy(new \stdClass());
+        $this->expectException(InvalidArgumentException::class);
+        $options->setNamingStrategy(new stdClass());
     }
 
-    public function testSetGetQuoteStrategy()
+    public function testSetGetQuoteStrategy(): void
     {
         $options = new Configuration();
         $options->setQuoteStrategy(null);
@@ -34,15 +39,15 @@ class ConfigurationOptionsTest extends TestCase
         $options->setQuoteStrategy('test');
         $this->assertSame('test', $options->getQuoteStrategy());
 
-        $quoteStrategy = $this->createMock(\Doctrine\ORM\Mapping\QuoteStrategy::class);
+        $quoteStrategy = $this->createMock(QuoteStrategy::class);
         $options->setQuoteStrategy($quoteStrategy);
         $this->assertSame($quoteStrategy, $options->getQuoteStrategy());
 
-        $this->expectException(\Laminas\Stdlib\Exception\InvalidArgumentException::class);
-        $options->setQuoteStrategy(new \stdClass());
+        $this->expectException(InvalidArgumentException::class);
+        $options->setQuoteStrategy(new stdClass());
     }
 
-    public function testSetRepositoryFactory()
+    public function testSetRepositoryFactory(): void
     {
         $options = new Configuration();
         $options->setRepositoryFactory(null);
@@ -55,11 +60,11 @@ class ConfigurationOptionsTest extends TestCase
         $options->setRepositoryFactory($repositoryFactory);
         $this->assertSame($repositoryFactory, $options->getRepositoryFactory());
 
-        $this->expectException(\Laminas\Stdlib\Exception\InvalidArgumentException::class);
-        $options->setRepositoryFactory(new \stdClass());
+        $this->expectException(InvalidArgumentException::class);
+        $options->setRepositoryFactory(new stdClass());
     }
 
-    public function testSetGetEntityListenerResolver()
+    public function testSetGetEntityListenerResolver(): void
     {
         $options = new Configuration();
 
@@ -69,12 +74,12 @@ class ConfigurationOptionsTest extends TestCase
         $options->setEntityListenerResolver('test');
         $this->assertSame('test', $options->getEntityListenerResolver());
 
-        $entityListenerResolver = $this->createMock(\Doctrine\ORM\Mapping\EntityListenerResolver::class);
+        $entityListenerResolver = $this->createMock(EntityListenerResolver::class);
 
         $options->setEntityListenerResolver($entityListenerResolver);
         $this->assertSame($entityListenerResolver, $options->getEntityListenerResolver());
 
-        $this->expectException(\Laminas\Stdlib\Exception\InvalidArgumentException::class);
-        $options->setEntityListenerResolver(new \stdClass());
+        $this->expectException(InvalidArgumentException::class);
+        $options->setEntityListenerResolver(new stdClass());
     }
 }

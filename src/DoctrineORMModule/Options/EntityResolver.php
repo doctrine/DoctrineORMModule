@@ -6,6 +6,7 @@ namespace DoctrineORMModule\Options;
 
 use InvalidArgumentException;
 use Laminas\Stdlib\AbstractOptions;
+
 use function class_exists;
 use function sprintf;
 
@@ -28,14 +29,14 @@ class EntityResolver extends AbstractOptions
      */
     protected $resolvers = [];
 
-    public function setEventManager(string $eventManager) : self
+    public function setEventManager(string $eventManager): self
     {
         $this->eventManager = $eventManager;
 
         return $this;
     }
 
-    public function getEventManager() : string
+    public function getEventManager(): string
     {
         return 'doctrine.eventmanager.' . $this->eventManager;
     }
@@ -45,7 +46,7 @@ class EntityResolver extends AbstractOptions
      *
      * @throws InvalidArgumentException
      */
-    public function setResolvers(array $resolvers) : void
+    public function setResolvers(array $resolvers): void
     {
         foreach ($resolvers as $old => $new) {
             if (! class_exists($new)) {
@@ -65,7 +66,7 @@ class EntityResolver extends AbstractOptions
     /**
      * @return mixed[]
      */
-    public function getResolvers() : array
+    public function getResolvers(): array
     {
         return $this->resolvers;
     }

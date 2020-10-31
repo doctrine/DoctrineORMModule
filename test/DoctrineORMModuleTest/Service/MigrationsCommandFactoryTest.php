@@ -18,58 +18,54 @@
 
 namespace DoctrineORMModuleTest\Service;
 
+use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
+use Doctrine\Migrations\Tools\Console\Command\ExecuteCommand;
 use DoctrineORMModule\Service\MigrationsCommandFactory;
 use DoctrineORMModuleTest\ServiceManagerFactory;
+use InvalidArgumentException;
+use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for {@see \DoctrineORMModule\Service\MigrationsCommandFactory}
  *
- * @license MIT
- * @author Aleksandr Sandrovskiy <a.sandrovsky@gmail.com>
- *
  * @covers \DoctrineORMModule\Service\MigrationsCommandFactory
  */
 class MigrationsCommandFactoryTest extends TestCase
 {
-    /**
-     * @var \Laminas\ServiceManager\ServiceManager
-     */
+    /** @var ServiceManager */
     private $serviceLocator;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->serviceLocator = ServiceManagerFactory::getServiceManager();
     }
 
-    public function testExecuteFactory()
+    public function testExecuteFactory(): void
     {
         $factory = new MigrationsCommandFactory('execute');
 
         $this->assertInstanceOf(
-            \Doctrine\Migrations\Tools\Console\Command\ExecuteCommand::class,
+            ExecuteCommand::class,
             $factory->createService($this->serviceLocator)
         );
     }
 
-    public function testDiffFactory()
+    public function testDiffFactory(): void
     {
         $factory = new MigrationsCommandFactory('diff');
 
         $this->assertInstanceOf(
-            \Doctrine\Migrations\Tools\Console\Command\DiffCommand::class,
+            DiffCommand::class,
             $factory->createService($this->serviceLocator)
         );
     }
 
-    public function testThrowException()
+    public function testThrowException(): void
     {
         $factory = new MigrationsCommandFactory('unknowncommand');
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $factory->createService($this->serviceLocator);
     }
 }

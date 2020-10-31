@@ -14,6 +14,7 @@ use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationF
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+
 use function is_string;
 use function sprintf;
 
@@ -168,7 +169,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         return $this($container, Configuration::class);
     }
 
-    protected function getOptionsClass() : string
+    protected function getOptionsClass(): string
     {
         return DoctrineORMModuleConfiguration::class;
     }

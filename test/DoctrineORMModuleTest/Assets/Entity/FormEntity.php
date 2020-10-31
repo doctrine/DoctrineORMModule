@@ -8,131 +8,178 @@ use Laminas\Form\Annotation as Form;
 /**
  * @ORM\Entity
  * @ORM\Table(name="doctrine_orm_module_form_entity")
- *
- * @author Kyle Spraggs <theman@spiffyjr.me>
  */
 class FormEntity
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * @ORM\Column(type="bool")
+     *
+     * @var bool
      */
     protected $bool;
 
     /**
      * @ORM\Column(type="boolean")
+     *
+     * @var bool
      */
     protected $boolean;
 
     /**
      * @ORM\Column(type="float")
+     *
+     * @var float
      */
     protected $float;
 
     /**
      * @ORM\Column(type="bigint")
+     *
+     * @var int
      */
     protected $bigint;
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     protected $integer;
 
     /**
      * @ORM\Column(type="smallint")
+     *
+     * @var int
      */
     protected $smallint;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @var DateTime
      */
     protected $datetime;
 
     /**
      * @ORM\Column(type="datetimetz")
+     *
+     * @var DateTime
      */
     protected $datetimetz;
 
     /**
      * @ORM\Column(type="date")
+     *
+     * @var DateTime
      */
     protected $date;
 
     /**
      * @ORM\Column(type="time")
+     *
+     * @var DateTime
      */
     protected $time;
 
     /**
      * @ORM\Column(type="text")
+     *
+     * @var string
      */
     protected $text;
 
     /**
      * @ORM\Column(type="string", nullable=false, length=20)
+     *
+     * @var string
      */
     protected $string;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $stringNullable;
 
     /**
      * @ORM\OneToOne(targetEntity="TargetInterface")
+     *
+     * @var TargetInterface
      */
     protected $targetOne;
 
     /**
      * @ORM\OneToOne(targetEntity="TargetInterface")
      * @ORM\JoinColumn(nullable=true)
+     *
+     * @var TargetInterface|null
      */
     protected $targetOneNullable;
 
    /**
-    * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")
     * @ORM\OneToOne(targetEntity="TargetInterface")
     * @ORM\JoinColumn(nullable=true)
+    *
+    * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")
     * @Form\Options({"empty_option":null})
+    *
+    * @var TargetInterface|null
     */
     protected $noDisplayEmptyOption;
 
     /**
      * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntity")
+     *
+     * @var TargetInterface[]
      */
     protected $targetMany;
 
     /**
      * @ORM\Column(type="integer")
+     *
      * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
      * @Form\Type("Radio")
+     *
+     * @var int
      */
     protected $specificType;
 
     /**
      * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntityMulti")
+     *
      * @Form\Type("DoctrineORMModule\Form\Element\EntityMultiCheckbox")
+     *
+     * @var FormEntityTarget[]
      */
     protected $specificMultiType;
 
     /**
      * @ORM\Column(type="integer")
+     *
      * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
      * @Form\Attributes({"type":"textarea"})
+     *
+     * @var int
      */
     protected $specificAttributeType;
 
     /**
      * @ORM\Column(type="string", length=256)
-     * @Form\Type("File")
      * @ORM\JoinColumn(nullable=true)
+     *
+     * @Form\Type("File")
      * @Form\Options({"label":"Image"})
+     *
+     * @var string
      */
     protected $image;
 }

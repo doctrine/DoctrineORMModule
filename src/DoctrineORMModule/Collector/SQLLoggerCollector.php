@@ -8,6 +8,7 @@ use Doctrine\DBAL\Logging\DebugStack;
 use Laminas\DeveloperTools\Collector\AutoHideInterface;
 use Laminas\DeveloperTools\Collector\CollectorInterface;
 use Laminas\Mvc\MvcEvent;
+
 use function count;
 
 /**
@@ -63,7 +64,7 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
         return empty($this->sqlLogger->queries);
     }
 
-    public function getQueryCount() : int
+    public function getQueryCount(): int
     {
         return count($this->sqlLogger->queries);
     }
@@ -71,12 +72,12 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
     /**
      * @return mixed[]
      */
-    public function getQueries() : array
+    public function getQueries(): array
     {
         return $this->sqlLogger->queries;
     }
 
-    public function getQueryTime() : float
+    public function getQueryTime(): float
     {
         $time = 0.0;
 

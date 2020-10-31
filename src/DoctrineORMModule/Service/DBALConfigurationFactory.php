@@ -11,6 +11,7 @@ use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
+
 use function is_string;
 use function sprintf;
 
@@ -50,7 +51,7 @@ class DBALConfigurationFactory implements FactoryInterface
         return $this($container, Configuration::class);
     }
 
-    public function setupDBALConfiguration(ContainerInterface $container, Configuration $config) : void
+    public function setupDBALConfiguration(ContainerInterface $container, Configuration $config): void
     {
         $options = $this->getOptions($container);
         $config->setResultCacheImpl($container->get($options->resultCache));
@@ -96,7 +97,7 @@ class DBALConfigurationFactory implements FactoryInterface
         return new $optionsClass($options);
     }
 
-    protected function getOptionsClass() : string
+    protected function getOptionsClass(): string
     {
         return DoctrineORMModuleConfiguration::class;
     }

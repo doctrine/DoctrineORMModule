@@ -10,6 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Form\Element;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Form\Annotation\AnnotationBuilder as LaminasAnnotationBuilder;
+
 use function get_class;
 use function in_array;
 use function is_object;
@@ -110,7 +111,7 @@ class AnnotationBuilder extends LaminasAnnotationBuilder
         return $formSpec;
     }
 
-    protected function checkForExcludeElementFromMetadata(ClassMetadata $metadata, string $name) : bool
+    protected function checkForExcludeElementFromMetadata(ClassMetadata $metadata, string $name): bool
     {
         $params = ['metadata' => $metadata, 'name' => $name];
         $result = false;

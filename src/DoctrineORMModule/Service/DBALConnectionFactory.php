@@ -11,6 +11,7 @@ use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\DBALConnection;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+
 use function array_key_exists;
 use function array_merge;
 use function is_string;
@@ -41,7 +42,8 @@ class DBALConnectionFactory extends AbstractFactory
         ];
         $params = array_merge($params, $options->getParams());
 
-        if (array_key_exists('platform', $params)
+        if (
+            array_key_exists('platform', $params)
             && is_string($params['platform'])
             && $container->has($params['platform'])
         ) {
@@ -80,7 +82,7 @@ class DBALConnectionFactory extends AbstractFactory
     /**
      * Get the class name of the options associated with this factory.
      */
-    public function getOptionsClass() : string
+    public function getOptionsClass(): string
     {
         return DBALConnection::class;
     }

@@ -8,13 +8,11 @@ use PHPUnit\Framework\TestCase;
 /**
  * Tests used to ensure ConfigProvider operates as expected
  *
- * @license MIT
  * @link    http://www.doctrine-project.org/
- * @author  James Titcumb <james@asgrim.com>
  */
 class ConfigProviderTest extends TestCase
 {
-    public function testInvokeHasDependencyKeyAndNotServiceManager()
+    public function testInvokeHasDependencyKeyAndNotServiceManager(): void
     {
         $config = (new ConfigProvider())->__invoke();
 

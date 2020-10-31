@@ -2,55 +2,46 @@
 
 namespace DoctrineORMModuleTest\Service;
 
+use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\Common\EventManager;
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\DBAL\Driver\PDOSqlite\Driver as PDOSqliteDriver;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\ORM\Configuration;
-use DoctrineORMModuleTest\Assets\Types\MoneyType;
-use PHPUnit\Framework\TestCase;
-use DoctrineORMModule\Service\DBALConnectionFactory;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\Common\EventManager;
-use Laminas\ServiceManager\ServiceManager;
+use Doctrine\ORM\Configuration;
 use DoctrineORMModule\Service\ConfigurationFactory;
+use DoctrineORMModule\Service\DBALConnectionFactory;
+use DoctrineORMModuleTest\Assets\Types\MoneyType;
+use Laminas\ServiceManager\ServiceManager;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \DoctrineORMModule\Service\DBALConnectionFactory
  */
 class DBALConnectionFactoryTest extends TestCase
 {
-    /**
-     * @var ServiceManager
-     */
+    /** @var ServiceManager */
     protected $serviceManager;
-    /**
-     * @var DBALConnectionFactory
-     */
+    /** @var DBALConnectionFactory */
     protected $factory;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->serviceManager = new ServiceManager();
-        $this->factory = new DBALConnectionFactory('orm_default');
+        $this->factory        = new DBALConnectionFactory('orm_default');
         $this->serviceManager->setService('doctrine.cache.array', new ArrayCache());
         $this->serviceManager->setService('doctrine.eventmanager.orm_default', new EventManager());
     }
 
-    public function testNoConnectWithoutCustomMappingsAndCommentedTypes()
+    public function testNoConnectWithoutCustomMappingsAndCommentedTypes(): void
     {
-        $config = [
+        $config            = [
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
                         'driverClass'   => PDOSqliteDriver::class,
-                        'params' => [
-                            'memory' => true,
-                        ],
-                    ]
+                        'params' => ['memory' => true],
+                    ],
                 ],
             ],
         ];
@@ -66,19 +57,15 @@ class DBALConnectionFactoryTest extends TestCase
         $this->assertFalse($dbal->isConnected());
     }
 
-    public function testDoctrineMappingTypeReturnCorrectParent()
+    public function testDoctrineMappingTypeReturnCorrectParent(): void
     {
-        $config = [
+        $config            = [
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
                         'driverClass'   => PDOSqliteDriver::class,
-                        'params' => [
-                            'memory' => true,
-                        ],
-                        'doctrineTypeMappings' => [
-                            'money' => 'string',
-                        ],
+                        'params' => ['memory' => true],
+                        'doctrineTypeMappings' => ['money' => 'string'],
                     ],
                 ],
             ],
@@ -91,27 +78,21 @@ class DBALConnectionFactoryTest extends TestCase
         $this->serviceManager->setService('config', $config);
         $this->serviceManager->setService('Configuration', $config);
 
-        $dbal = $this->factory->createService($this->serviceManager);
+        $dbal     = $this->factory->createService($this->serviceManager);
         $platform = $dbal->getDatabasePlatform();
-        $this->assertSame('string', $platform->getDoctrineTypeMapping("money"));
+        $this->assertSame('string', $platform->getDoctrineTypeMapping('money'));
     }
 
-    public function testDoctrineAddCustomCommentedType()
+    public function testDoctrineAddCustomCommentedType(): void
     {
         $config = [
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
                         'driverClass'   => PDOSqliteDriver::class,
-                        'params' => [
-                            'memory' => true,
-                        ],
-                        'doctrineTypeMappings' => [
-                            'money' => 'money',
-                        ],
-                        'doctrineCommentedTypes' => [
-                            'money',
-                        ],
+                        'params' => ['memory' => true],
+                        'doctrineTypeMappings' => ['money' => 'money'],
+                        'doctrineCommentedTypes' => ['money'],
                     ],
                 ],
                 'configuration' => [
@@ -134,25 +115,23 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine.configuration.orm_default',
             $configurationFactory->createService($this->serviceManager)
         );
-        $dbal = $this->factory->createService($this->serviceManager);
+        $dbal     = $this->factory->createService($this->serviceManager);
         $platform = $dbal->getDatabasePlatform();
-        $type = Type::getType($platform->getDoctrineTypeMapping("money"));
+        $type     = Type::getType($platform->getDoctrineTypeMapping('money'));
 
         $this->assertInstanceOf(MoneyType::class, $type);
         $this->assertTrue($platform->isCommentedDoctrineType($type));
     }
 
-    public function testGettingPlatformFromContainer()
+    public function testGettingPlatformFromContainer(): void
     {
-        $config = [
+        $config            = [
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
                         'driverClass'   => PDOSqliteDriver::class,
-                        'params' => [
-                            'platform' => 'platform_service',
-                        ],
-                    ]
+                        'params' => ['platform' => 'platform_service'],
+                    ],
                 ],
             ],
         ];
@@ -169,22 +148,20 @@ class DBALConnectionFactoryTest extends TestCase
         $this->serviceManager->setService('Configuration', $config);
         $this->serviceManager->setService('platform_service', $platformMock);
 
-        $dbal = $this->factory->createService($this->serviceManager);
+        $dbal     = $this->factory->createService($this->serviceManager);
         $platform = $dbal->getDatabasePlatform();
         $this->assertSame($platformMock, $platform);
     }
 
-    public function testWithoutUseSavepoints()
+    public function testWithoutUseSavepoints(): void
     {
-        $config = [
+        $config            = [
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
                         'driverClass'   => PDOSqliteDriver::class,
-                        'params' => [
-                            'memory' => true,
-                        ],
-                    ]
+                        'params' => ['memory' => true],
+                    ],
                 ],
             ],
         ];
@@ -200,18 +177,16 @@ class DBALConnectionFactoryTest extends TestCase
         $this->assertFalse($dbal->getNestTransactionsWithSavepoints());
     }
 
-    public function testWithUseSavepoints()
+    public function testWithUseSavepoints(): void
     {
-        $config = [
+        $config            = [
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
                         'driverClass'   => PDOSqliteDriver::class,
                         'use_savepoints' => true,
-                        'params' => [
-                            'memory' => true,
-                        ],
-                    ]
+                        'params' => ['memory' => true],
+                    ],
                 ],
             ],
         ];

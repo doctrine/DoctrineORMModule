@@ -12,6 +12,7 @@ use Laminas\EventManager\AbstractListenerAggregate;
 use Laminas\EventManager\EventInterface;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Form\Element as LaminasFormElement;
+
 use function array_key_exists;
 use function array_merge;
 use function in_array;
@@ -72,7 +73,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     /**
      * @internal
      */
-    public function handleToOne(EventInterface $event) : void
+    public function handleToOne(EventInterface $event): void
     {
         $metadata = $event->getParam('metadata');
         $mapping  = $this->getAssociationMapping($event);
@@ -87,7 +88,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     /**
      * @internal
      */
-    public function handleToMany(EventInterface $event) : void
+    public function handleToMany(EventInterface $event): void
     {
         $metadata = $event->getParam('metadata');
         $mapping  = $this->getAssociationMapping($event);
@@ -109,7 +110,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     /**
      * @internal
      */
-    public function handleExcludeAssociation(EventInterface $event) : bool
+    public function handleExcludeAssociation(EventInterface $event): bool
     {
         $metadata = $event->getParam('metadata');
 
@@ -119,7 +120,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     /**
      * @internal
      */
-    public function handleExcludeField(EventInterface $event) : bool
+    public function handleExcludeField(EventInterface $event): bool
     {
         $metadata    = $event->getParam('metadata');
         $identifiers = $metadata->getIdentifierFieldNames();
@@ -131,7 +132,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     /**
      * @internal
      */
-    public function handleFilterField(EventInterface $event) : void
+    public function handleFilterField(EventInterface $event): void
     {
         $metadata = $event->getParam('metadata');
         if (! $metadata || ! $metadata->hasField($event->getParam('name'))) {
@@ -166,7 +167,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     /**
      * @internal
      */
-    public function handleRequiredAssociation(EventInterface $event) : void
+    public function handleRequiredAssociation(EventInterface $event): void
     {
         $metadata = $event->getParam('metadata');
         $mapping  = $this->getAssociationMapping($event);
@@ -189,7 +190,8 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                 }
 
                 $required = false;
-                if ((isset($elementSpec['spec']['options']) &&
+                if (
+                    (isset($elementSpec['spec']['options']) &&
                      ! array_key_exists('empty_option', $elementSpec['spec']['options'])) ||
                      ! isset($elementSpec['spec']['options'])
                 ) {
@@ -206,7 +208,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     /**
      * @internal
      */
-    public function handleRequiredField(EventInterface $event) : void
+    public function handleRequiredField(EventInterface $event): void
     {
         $this->prepareEvent($event);
 
@@ -223,7 +225,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     /**
      * @internal
      */
-    public function handleTypeField(EventInterface $event) : void
+    public function handleTypeField(EventInterface $event): void
     {
         $metadata = $event->getParam('metadata');
         $mapping  = $this->getFieldMapping($event);
@@ -279,7 +281,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     /**
      * @internal
      */
-    public function handleValidatorField(EventInterface $event) : void
+    public function handleValidatorField(EventInterface $event): void
     {
         $mapping = $this->getFieldMapping($event);
         if (! $mapping) {
@@ -310,7 +312,8 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
                 break;
             case 'string':
                 $elementSpec = $event->getParam('elementSpec');
-                if (isset($elementSpec['spec']['type']) &&
+                if (
+                    isset($elementSpec['spec']['type']) &&
                     in_array($elementSpec['spec']['type'], ['File', 'Laminas\Form\Element\File'])
                 ) {
                     return;
@@ -330,7 +333,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     /**
      * @return mixed[]|null
      */
-    protected function getFieldMapping(EventInterface $event) : ?array
+    protected function getFieldMapping(EventInterface $event): ?array
     {
         $metadata = $event->getParam('metadata');
         if ($metadata && $metadata->hasField($event->getParam('name'))) {
@@ -343,7 +346,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     /**
      * @return mixed[]|null
      */
-    protected function getAssociationMapping(EventInterface $event) : ?array
+    protected function getAssociationMapping(EventInterface $event): ?array
     {
         $metadata = $event->getParam('metadata');
         if ($metadata && $metadata->hasAssociation($event->getParam('name'))) {
@@ -353,7 +356,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
         return null;
     }
 
-    protected function mergeAssociationOptions(ArrayObject $elementSpec, string $targetEntity) : void
+    protected function mergeAssociationOptions(ArrayObject $elementSpec, string $targetEntity): void
     {
         $options = $elementSpec['spec']['options'] ?? [];
         $options = array_merge(
@@ -375,7 +378,7 @@ class ElementAnnotationsListener extends AbstractListenerAggregate
     /**
      * Normalizes event setting all expected parameters.
      */
-    protected function prepareEvent(EventInterface $event) : void
+    protected function prepareEvent(EventInterface $event): void
     {
         foreach (['elementSpec', 'inputSpec'] as $type) {
             if ($event->getParam($type)) {

@@ -2,30 +2,26 @@
 
 namespace DoctrineORMModuleTest\Framework;
 
-use DoctrineORMModuleTest\ServiceManagerFactory;
-use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
+use DoctrineORMModuleTest\ServiceManagerFactory;
+use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 /**
  * Base test case for tests using the entity manager
  */
 class TestCase extends PHPUnitTestCase
 {
-    /**
-     * @var boolean
-     */
+    /** @var bool */
     protected $hasDb = false;
 
-    /**
-     * @var EntityManager
-     */
+    /** @var EntityManager */
     private $entityManager;
 
     /**
      * Creates a database if not done already.
      */
-    public function createDb()
+    public function createDb(): void
     {
         if ($this->hasDb) {
             return;
@@ -40,7 +36,7 @@ class TestCase extends PHPUnitTestCase
     /**
      * Drops existing database
      */
-    public function dropDb()
+    public function dropDb(): void
     {
         $em   = $this->getEntityManager();
         $tool = new SchemaTool($em);
@@ -52,10 +48,8 @@ class TestCase extends PHPUnitTestCase
 
     /**
      * Get EntityManager.
-     *
-     * @return EntityManager
      */
-    public function getEntityManager()
+    public function getEntityManager(): EntityManager
     {
         if ($this->entityManager) {
             return $this->entityManager;
