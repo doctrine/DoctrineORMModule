@@ -59,7 +59,7 @@
         "doctrine/annotations":            "^1.8",
         "doctrine/coding-standard":        "^8.0",
         "doctrine/data-fixtures":          "^1.2.1",
-        "doctrine/migrations":             "^1.5 || ^2.0",
+        "doctrine/migrations":             "^1.5 || ^2.0, < 2.3.0",
         "laminas/laminas-code":            "^3.3.2",
         "laminas/laminas-console":         "^2.6",
         "laminas/laminas-developer-tools": "^1.1",
