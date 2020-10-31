@@ -1,6 +1,6 @@
 <?php
 
-use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
+use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\DBAL\Tools\Console;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Doctrine\ORM\Tools\Console\Command;
