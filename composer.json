@@ -98,7 +98,7 @@
             "@cs-check",
             "@test"
         ],
-        "cs-check": "phpcs --standard=Doctrine src",
+        "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --coverage-clover build/clover.xml"
