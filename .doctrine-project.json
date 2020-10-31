@@ -1,0 +1,48 @@
+{
+  "active":true,
+  "name":"Doctrine 2 ORM Module for Laminas",
+  "shortName":"Doctrine ORM Module",
+  "slug":"DoctrineORMModule",
+  "docsSlug":"doctrine-orm-module",
+  "versions":[
+    {
+      "name":"3.x",
+      "branchName":"3.x",
+      "slug":"3.x",
+      "current":true,
+      "maintained":true,
+      "aliases":[
+        "current",
+        "stable",
+        "3.x"
+      ]
+    },
+    {
+      "name":"feature/drop_php5.6",
+      "branchName":"feature/drop_php5.6",
+      "slug":"feature/drop_php5.6",
+      "maintained":false,
+      "aliases":[
+        "feature/drop_php5.6"
+      ]
+    },
+    {
+      "name":"feature/stable-doctrine-module",
+      "branchName":"feature/stable-doctrine-module",
+      "slug":"feature/stable-doctrine-module",
+      "maintained":false,
+      "aliases":[
+        "feature/stable-doctrine-module"
+      ]
+    },
+    {
+      "name":"release/1.x",
+      "branchName":"release/1.x",
+      "slug":"release/1.x",
+      "maintained":false,
+      "aliases":[
+        "release/1.x"
+      ]
+    }
+  ]
+}
