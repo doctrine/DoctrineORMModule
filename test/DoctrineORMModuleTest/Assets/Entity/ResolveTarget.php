@@ -13,9 +13,15 @@ class ResolveTarget
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var int
      */
     protected $id;
 
-    /** @ORM\OneToOne(targetEntity="TargetInterface") */
+    /**
+     * @ORM\OneToOne(targetEntity="TargetInterface")
+     *
+     * @var TargetInterface
+     */
     protected $target;
 }

@@ -145,7 +145,7 @@ class CliConfiguratorTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return list<array{string, class-string}>
      */
     public function dataProviderForTestValidCommands(): array
     {

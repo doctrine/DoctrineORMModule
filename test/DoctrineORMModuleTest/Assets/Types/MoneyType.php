@@ -12,22 +12,33 @@ class MoneyType extends Type
 {
     public const MONEY = 'money';
 
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    /**
+     * @param mixed[] $fieldDeclaration
+     */
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return 'MyMoney';
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    /**
+     * @param mixed $value
+     */
+    public function convertToPHPValue($value, AbstractPlatform $platform): Money
     {
         return new Money($value);
     }
 
+    /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         return $value->toDecimal();
     }
 
-    public function getName()
+    public function getName(): string
     {
         return self::MONEY;
     }

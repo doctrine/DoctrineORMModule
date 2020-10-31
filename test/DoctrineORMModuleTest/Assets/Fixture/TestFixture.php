@@ -18,10 +18,7 @@ class TestFixture extends AbstractFixture
      */
     public const INSTANCES_COUNT = 100;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         for ($i = 0; $i < self::INSTANCES_COUNT; $i += 1) {
             $instance = new TestEntity();

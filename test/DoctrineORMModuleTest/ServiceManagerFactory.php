@@ -18,7 +18,7 @@ class ServiceManagerFactory
     /**
      * Builds a new ServiceManager instance
      *
-     * @param  array|null $configuration
+     * @param  mixed[]|null $configuration
      */
     public static function getServiceManager(?array $configuration = null): ServiceManager
     {

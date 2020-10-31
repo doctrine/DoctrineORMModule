@@ -14,6 +14,8 @@ class Issue237
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     *
+     * @var int
      */
     protected $id;
 }

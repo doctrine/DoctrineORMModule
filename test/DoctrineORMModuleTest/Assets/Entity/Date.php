@@ -15,10 +15,16 @@ class Date
      * @ORM\Id
      * @ORM\Column(type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var int
      */
     protected $id;
 
-    /** @ORM\Column(type="date", nullable=true) */
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     *
+     * @var DateTime
+     */
     protected $date;
 
     public function getId(): ?int

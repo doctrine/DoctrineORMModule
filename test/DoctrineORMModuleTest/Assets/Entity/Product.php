@@ -14,13 +14,23 @@ class Product
      * @ORM\Id
      * @ORM\Column(type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var int
      */
     protected $id;
 
-    /** @ORM\Column(type="string", nullable=true) */
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
+     */
     protected $name;
 
-    /** @ORM\ManyToMany(targetEntity="Category") */
+    /**
+     * @ORM\ManyToMany(targetEntity="Category")
+     *
+     * @var Category[]
+     */
     protected $categories;
 
     public function getId(): ?int
@@ -28,26 +38,32 @@ class Product
         return $this->id;
     }
 
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setCategories($categories)
+    /**
+     * @param Category[] $categories
+     */
+    public function setCategories(array $categories): self
     {
         $this->categories = $categories;
 
         return $this;
     }
 
-    public function getCategories()
+    /**
+     * @return Category[]
+     */
+    public function getCategories(): array
     {
         return $this->categories;
     }

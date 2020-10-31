@@ -386,8 +386,12 @@ class MetadataGrapherTest extends TestCase
      * @covers \DoctrineORMModule\Yuml\MetadataGrapher
      * @dataProvider injectMultipleRelationsWithBothBiAndMonoDirectional
      */
-    public function testDrawMultipleClassRelatedBothBiAndMonoDirectional($class1, $class2, $class3, $expected): void
-    {
+    public function testDrawMultipleClassRelatedBothBiAndMonoDirectional(
+        ClassMetadata $class1,
+        ClassMetadata $class2,
+        ClassMetadata $class3,
+        string $expected
+    ): void {
         $this->assertSame(
             $expected,
             $this->grapher->generateFromMetadata([$class1, $class2, $class3])
@@ -398,7 +402,7 @@ class MetadataGrapherTest extends TestCase
      * dataProvider to inject classes in every order possible into the test
      *     testDrawMultipleClassRelatedBothBiAndMonoDirectional
      *
-     * @return array
+     * @return list<array{ClassMetadata, ClassMetadata, ClassMetadata, string}>
      */
     public function injectMultipleRelationsWithBothBiAndMonoDirectional(): array
     {

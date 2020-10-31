@@ -31,7 +31,7 @@ class ElementAnnotationsListenerTest extends TestCase
     /**
      * @dataProvider eventNameProvider
      */
-    public function testEventsWithNoMetadata($method): void
+    public function testEventsWithNoMetadata(string $method): void
     {
         $event = $this->getMetadataEvent();
         $this->listener->{$method}($event);
@@ -146,7 +146,7 @@ class ElementAnnotationsListenerTest extends TestCase
     /**
      * @dataProvider eventFilterProvider
      */
-    public function testHandleFilterField($name, $type): void
+    public function testHandleFilterField(string $name, string $type): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -224,7 +224,7 @@ class ElementAnnotationsListenerTest extends TestCase
     /**
      * @dataProvider eventTypeProvider
      */
-    public function testHandleTypeField($name, $type): void
+    public function testHandleTypeField(string $name, string $type): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -242,7 +242,7 @@ class ElementAnnotationsListenerTest extends TestCase
     /**
      * @dataProvider eventValidatorProvider
      */
-    public function testHandlevalidatorField($name, $type): void
+    public function testHandlevalidatorField(string $name, ?string $type): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -261,6 +261,9 @@ class ElementAnnotationsListenerTest extends TestCase
         }
     }
 
+    /**
+     * @return list<array{string, string|null}>
+     */
     public function eventValidatorProvider()
     {
         return [
@@ -280,6 +283,9 @@ class ElementAnnotationsListenerTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<array{string, string}>
+     */
     public function eventFilterProvider()
     {
         return [
@@ -297,6 +303,9 @@ class ElementAnnotationsListenerTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<array{string, class-string}>
+     */
     public function eventTypeProvider()
     {
         return [
@@ -314,7 +323,10 @@ class ElementAnnotationsListenerTest extends TestCase
         ];
     }
 
-    public function eventNameProvider()
+    /**
+     * @return list<array{string}>
+     */
+    public function eventNameProvider(): array
     {
         return [
             [
@@ -331,7 +343,7 @@ class ElementAnnotationsListenerTest extends TestCase
         ];
     }
 
-    protected function getMetadataEvent()
+    protected function getMetadataEvent(): Event
     {
         $event    = new Event();
         $metadata = $this->getEntityManager()->getClassMetadata(FormEntity::class);
