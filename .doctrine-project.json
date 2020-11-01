@@ -17,9 +17,9 @@
       ]
     },
     {
-      "name":"release/1.x",
+      "name":"1.x",
       "branchName":"release/1.x",
-      "slug":"release/1.x",
+      "slug":"1.x",
       "maintained":false
     }
   ]
