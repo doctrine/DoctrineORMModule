@@ -157,24 +157,37 @@ return [
         // migrations configuration
         'migrations_configuration' => [
             'orm_default' => [
-                'directory'       => 'data/DoctrineORMModule/Migrations',
-                'name'            => 'Doctrine Database Migrations',
-                'namespace'       => 'DoctrineORMModule\Migrations',
-                'table'           => 'migrations',
-                'column'          => 'version',
+                'table_storage' => [
+                    'table_name' => 'DoctrineMigrationVersions',
+                    'version_column_name' => 'version',
+                    'version_column_length' => 1024,
+                    'executed_at_column_name' => 'executedAt',
+                    'execution_time_column_name' => 'executionTime',
+                ],
+                'migrations_paths' => [],
+                'migrations' => [],
+                'all_or_nothing' => false,
+                'check_database_platform' => true,
+                'organize_migrations' => 'year', // year or year_and_month
                 'custom_template' => null,
             ],
         ],
 
         // migrations commands base config
         'migrations_cmd' => [
+            'current' => [],
+            'dumpschema' => [],
+            'diff'     => [],
             'generate' => [],
             'execute'  => [],
-            'migrate'  => [],
-            'status'   => [],
-            'version'  => [],
-            'diff'     => [],
             'latest'   => [],
+            'list' => [],
+            'migrate'  => [],
+            'rollup' => [],
+            'status'   => [],
+            'syncmetadatastorage' => [],
+            'uptodate' => [],
+            'version'  => [],
         ],
     ],
 

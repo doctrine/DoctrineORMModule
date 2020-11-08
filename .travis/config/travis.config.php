@@ -23,8 +23,21 @@ return [
         ],
         'migrations_configuration' => [
             'orm_default' => [
-                'directory' => '.travis',
-                'namespace' => 'TravisDoctrineMigrations',
+                'table_storage' => [
+                    'table_name' => 'DoctrineMigrationVersions',
+                    'version_column_name' => 'version',
+                    'version_column_length' => 1024,
+                    'executed_at_column_name' => 'executedAt',
+                    'execution_time_column_name' => 'executionTime',
+                ],
+                'migrations_paths' => [
+                    'TravisDoctrineMigrations' => '.travis',
+                ],
+                'migrations' => [],
+                'all_or_nothing' => false,
+                'check_database_platform' => true,
+                'organize_migrations' => 'year', // year or year_and_month
+                'custom_template' => null,
             ],
         ],
         'cache' => [

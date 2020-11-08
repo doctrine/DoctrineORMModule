@@ -32,7 +32,7 @@ class Version20120714005702 extends AbstractMigration
      */
     public function up(Schema $schema) : void
     {
-        $this->addSql("SELECT 'Migration succeeded!'");
+        $this->addSql("CREATE TABLE test (id int)");
     }
 
     /**
@@ -40,5 +40,6 @@ class Version20120714005702 extends AbstractMigration
      */
     public function down(Schema $schema) : void
     {
+        $this->addSql("DROP TABLE test");
     }
 }
