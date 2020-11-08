@@ -67,13 +67,35 @@ return [
             'orm_other' => [],
         ],
         'migrations_configuration' => [
-            'orm_default' => ['directory' => 'build/'],
+            'orm_default' => [
+                'table_storage' => [
+                    'table_name' => 'DoctrineMigrationVersions',
+                    'version_column_name' => 'version',
+                    'version_column_length' => 1024,
+                    'executed_at_column_name' => 'executedAt',
+                    'execution_time_column_name' => 'executionTime',
+                ],
+                'migrations_paths' => ['DoctrineORMModule\Migrations' => 'data/DoctrineORMModule/Migrations'],
+                'migrations' => [],
+                'all_or_nothing' => false,
+                'check_database_platform' => true,
+                'organize_migrations' => 'year', // year or year_and_month
+                'custom_template' => null,
+            ],
             'orm_other' => [
-                'directory' => 'build/orm_other',
-                'name'      => 'Doctrine Database Migrations 2',
-                'namespace' => 'Application\MigrationsOther',
-                'table'     => 'MigrationsOther',
-                'column'    => 'versionOther',
+                'table_storage' => [
+                    'table_name' => 'DoctrineMigrationVersionsOther',
+                    'version_column_name' => 'versionOther',
+                    'version_column_length' => 1024,
+                    'executed_at_column_name' => 'executedAtOther',
+                    'execution_time_column_name' => 'executionTimeOther',
+                ],
+                'migrations_paths' => ['DoctrineORMModule\Migrations' => 'data/DoctrineORMModule/Migrations/Other'],
+                'migrations' => [],
+                'all_or_nothing' => false,
+                'check_database_platform' => true,
+                'organize_migrations' => 'year_and_month', // year or year_and_month
+                'custom_template' => null,
             ],
         ],
     ],

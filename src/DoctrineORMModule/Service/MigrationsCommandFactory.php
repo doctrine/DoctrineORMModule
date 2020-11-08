@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Service;
 
-use Doctrine\Migrations\Tools\Console\Command\AbstractCommand;
+use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
+use Doctrine\Migrations\Configuration\Migration\ConfigurationArray;
+use Doctrine\Migrations\DependencyFactory;
+use Doctrine\Migrations\Tools\Console\Command\DoctrineCommand;
 use Interop\Container\ContainerInterface;
 use InvalidArgumentException;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use RuntimeException;
+use Symfony\Component\Console\Input\ArgvInput;
 
 use function class_exists;
-use function strtolower;
+use function preg_match;
 use function ucfirst;
 
 /**
@@ -20,11 +25,31 @@ use function ucfirst;
 class MigrationsCommandFactory implements FactoryInterface
 {
     /** @var string */
-    private $name;
+    private $commandClassName;
+
+    /** @var string */
+    private $defaultObjectManagerName = 'doctrine.entitymanager.orm_default';
 
     public function __construct(string $name)
     {
-        $this->name = ucfirst(strtolower($name));
+        // The configuration of migrations looses the case of the command name so mixed
+        // case names must be resolved here.
+        switch ($name) {
+            case 'dumpschema':
+                $name = 'DumpSchema';
+                break;
+            case 'syncmetadatastorage':
+                $name = 'SyncMetadata';
+                break;
+            case 'uptodate':
+                $name = 'UpToDate';
+                break;
+            default:
+                $name = ucfirst($name);
+                break;
+        }
+
+        $this->commandClassName = 'Doctrine\Migrations\Tools\Console\Command\\' . $name . 'Command';
     }
 
     /**
@@ -36,20 +61,52 @@ class MigrationsCommandFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        $className = 'Doctrine\Migrations\Tools\Console\Command\\' . $this->name . 'Command';
+        $commandClassName = $this->commandClassName;
 
-        if (! class_exists($className)) {
-            throw new InvalidArgumentException();
+        if (! class_exists($commandClassName)) {
+            throw new InvalidArgumentException('The class ' . $commandClassName . ' does not exist');
         }
 
-        return new $className();
+        $config            = $container->get('config');
+        $objectManagerName = $this->getObjectManagerName();
+
+        // Copied from DoctrineModule/ServiceFactory/AbstractDoctrineServiceFactory
+        if (
+            ! preg_match(
+                '/^doctrine\.((?<mappingType>orm|odm)\.|)(?<serviceType>[a-z0-9_]+)\.(?<serviceName>[a-z0-9_]+)$/',
+                $objectManagerName,
+                $matches
+            )
+        ) {
+            throw new RuntimeException('The object manager name is invalid: ' . $objectManagerName);
+        }
+
+        // An object manager may not have a migrations configuration and that's OK.
+        // Use default values in that case.
+        return new $commandClassName(
+            DependencyFactory::fromEntityManager(
+                new ConfigurationArray($config['doctrine']['migrations_configuration'][$matches['serviceName']] ?? []),
+                new ExistingEntityManager($container->get($objectManagerName))
+            )
+        );
     }
 
     /**
      * @throws InvalidArgumentException
      */
-    public function createService(ServiceLocatorInterface $container): AbstractCommand
+    public function createService(ServiceLocatorInterface $container): DoctrineCommand
     {
-        return $this($container, 'Doctrine\Migrations\Tools\Console\Command\\' . $this->name . 'Command');
+        return $this($container, $this->commandClassName);
+    }
+
+    private function getObjectManagerName(): string
+    {
+        $arguments = new ArgvInput();
+
+        if (! $arguments->hasParameterOption('--object-manager')) {
+            return $this->defaultObjectManagerName;
+        }
+
+        return $arguments->getParameterOption('--object-manager');
     }
 }

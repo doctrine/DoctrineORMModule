@@ -46,13 +46,19 @@ class CliConfigurator
 
     /** @var string[] */
     private $migrationCommands = [
+        'doctrine.migrations_cmd.current',
+        'doctrine.migrations_cmd.diff',
+        'doctrine.migrations_cmd.dumpschema',
         'doctrine.migrations_cmd.execute',
         'doctrine.migrations_cmd.generate',
-        'doctrine.migrations_cmd.migrate',
-        'doctrine.migrations_cmd.status',
-        'doctrine.migrations_cmd.version',
-        'doctrine.migrations_cmd.diff',
         'doctrine.migrations_cmd.latest',
+        'doctrine.migrations_cmd.list',
+        'doctrine.migrations_cmd.migrate',
+        'doctrine.migrations_cmd.rollup',
+        'doctrine.migrations_cmd.status',
+        'doctrine.migrations_cmd.syncmetadatastorage',
+        'doctrine.migrations_cmd.version',
+        'doctrine.migrations_cmd.uptodate',
     ];
 
     /** @var ContainerInterface */

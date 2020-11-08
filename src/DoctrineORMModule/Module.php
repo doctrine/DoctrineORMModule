@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule;
 
-use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
-use DoctrineORMModule\Console\Helper\MigrationsConfigurationHelper;
 use Laminas\DeveloperTools\ProfilerEvent;
 use Laminas\EventManager\EventInterface;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
@@ -40,14 +38,6 @@ class Module implements
                         ->getParam('ServiceManager')
                         ->get(CliConfigurator::class)
                         ->configure($event->getTarget());
-
-                    if (! class_exists(VersionCommand::class)) {
-                        return;
-                    }
-
-                    $event->getTarget()->getHelperSet()->set(
-                        new MigrationsConfigurationHelper($event->getParam('ServiceManager'))
-                    );
                 },
                 1
             );

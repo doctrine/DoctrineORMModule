@@ -4,5 +4,6 @@ phpunit.xml
 .project/
 nbproject/
 composer.phar
-.php_cs.cache
 .phpunit.result.cache
+.php_cs.cache
+.phpcs-cache
