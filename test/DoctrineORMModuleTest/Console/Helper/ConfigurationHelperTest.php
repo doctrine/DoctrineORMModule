@@ -18,17 +18,11 @@
 
 namespace DoctrineORMModuleTest\Console\Helper;
 
-use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
-use Doctrine\Migrations\Tools\Console\Command\ExecuteCommand;
-use DoctrineORMModule\Service\MigrationsCommandFactory;
-
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\InputInterface;
 use DoctrineORMModule\Console\Helper\ConfigurationHelper;
 use DoctrineORMModuleTest\ServiceManagerFactory;
-use InvalidArgumentException;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Console\Input\ArrayInput;
 
 /**
  * Tests for {@see \DoctrineORMModule\Service\MigrationsCommandFactory}
@@ -58,7 +52,7 @@ class ConfigurationHelperTest extends TestCase
     public function testGetMigrationConfig(): void
     {
         $configurationHelper = new ConfigurationHelper($this->serviceLocator);
-        $configuration = $configurationHelper->getMigrationConfig(new ArrayInput([]));
+        $configuration       = $configurationHelper->getMigrationConfig(new ArrayInput([]));
 
         $this->assertEquals(
             $this->serviceLocator->get('doctrine.migrations_configuration.orm_default'),

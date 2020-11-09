@@ -42,9 +42,7 @@ class MigrationsCommandFactory implements FactoryInterface
             throw new InvalidArgumentException();
         }
 
-        $command = new $className();
-
-        return $command;
+        return new $className();
     }
 
     /**
