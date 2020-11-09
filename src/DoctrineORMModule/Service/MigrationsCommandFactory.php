@@ -42,10 +42,7 @@ class MigrationsCommandFactory implements FactoryInterface
             throw new InvalidArgumentException();
         }
 
-        $configuration = $container->get('doctrine.migrations_configuration.orm_default');
-        $command       = new $className();
-
-        $command->setMigrationConfiguration($configuration);
+        $command = new $className();
 
         return $command;
     }
