@@ -11,11 +11,17 @@ use Symfony\Component\Console\Helper\HelperInterface;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\InputInterface;
 
+use function strrpos;
+use function substr;
+
 class ConfigurationHelper implements
     HelperInterface,
     ConfigurationHelperInterface
 {
+    /** @var HelperSet */
     protected $helperSet;
+
+    /** @var ContainerInterface */
     protected $container;
 
     public function __construct(ContainerInterface $container)
@@ -23,19 +29,19 @@ class ConfigurationHelper implements
         $this->container = $container;
     }
 
-    public function setHelperSet(HelperSet $helperSet = null): ConfigurationHelper
+    public function setHelperSet(?HelperSet $helperSet = null): ConfigurationHelper
     {
         $this->helperSet = $helperSet;
 
         return $this;
     }
 
-    public function getHelperSet()
+    public function getHelperSet(): ?HelperSet
     {
         return $this->helperSet;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'configuration';
     }
@@ -43,7 +49,7 @@ class ConfigurationHelper implements
     public function getMigrationConfig(InputInterface $input): Configuration
     {
         $objectManagerAlias = $input->getOptions()['object-manager'] ?? 'doctrine.entitymanager.orm_default';
-        $objectManagerName = substr($objectManagerAlias, strrpos($objectManagerAlias, '.') + 1);
+        $objectManagerName  = substr($objectManagerAlias, strrpos($objectManagerAlias, '.') + 1);
 
         return $this->container->get('doctrine.migrations_configuration.' . $objectManagerName);
     }
