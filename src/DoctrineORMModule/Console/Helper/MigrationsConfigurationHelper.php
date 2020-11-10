@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use function strrpos;
 use function substr;
 
-class ConfigurationHelper implements
+class MigrationsConfigurationHelper implements
     HelperInterface,
     ConfigurationHelperInterface
 {
