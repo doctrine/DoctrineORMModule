@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule;
 
-use DoctrineORMModule\Console\Helper\ConfigurationHelper;
+use DoctrineORMModule\Console\Helper\MigrationsConfigurationHelper;
 use Laminas\DeveloperTools\ProfilerEvent;
 use Laminas\EventManager\EventInterface;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
@@ -41,7 +41,7 @@ class Module implements
                         ->configure($event->getTarget());
 
                     $event->getTarget()->getHelperSet()->set(
-                        new ConfigurationHelper($event->getParam('ServiceManager'))
+                        new MigrationsConfigurationHelper($event->getParam('ServiceManager'))
                     );
                 },
                 1
