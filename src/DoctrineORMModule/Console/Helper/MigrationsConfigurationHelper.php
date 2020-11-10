@@ -10,10 +10,8 @@ use Interop\Container\ContainerInterface;
 use Symfony\Component\Console\Helper\HelperInterface;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\InputInterface;
-use Throwable;
 
-use function strrpos;
-use function substr;
+use function preg_match;
 
 class MigrationsConfigurationHelper implements
     HelperInterface,
