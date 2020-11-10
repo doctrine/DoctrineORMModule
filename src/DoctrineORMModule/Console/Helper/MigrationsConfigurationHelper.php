@@ -10,6 +10,7 @@ use Interop\Container\ContainerInterface;
 use Symfony\Component\Console\Helper\HelperInterface;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\InputInterface;
+use Throwable;
 
 use function strrpos;
 use function substr;
@@ -48,8 +49,13 @@ class MigrationsConfigurationHelper implements
 
     public function getMigrationConfig(InputInterface $input): Configuration
     {
-        $objectManagerAlias = $input->getOptions()['object-manager'] ?? 'doctrine.entitymanager.orm_default';
-        $objectManagerName  = substr($objectManagerAlias, strrpos($objectManagerAlias, '.') + 1);
+        try {
+            $objectManagerAlias = $input->getOption('object-manager');
+        } catch (Throwable $e) {
+            $objectManagerAlias = 'doctrine.entitymanager.orm_default';
+        }
+
+        $objectManagerName = substr($objectManagerAlias, strrpos($objectManagerAlias, '.') + 1);
 
         return $this->container->get('doctrine.migrations_configuration.' . $objectManagerName);
     }

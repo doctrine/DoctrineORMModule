@@ -18,11 +18,15 @@
 
 namespace DoctrineORMModuleTest\Console\Helper;
 
+use DoctrineModule\Component\Console\Input\RequestInput;
 use DoctrineORMModule\Console\Helper\MigrationsConfigurationHelper;
 use DoctrineORMModuleTest\ServiceManagerFactory;
+use Laminas\Console\Request;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Tests for {@see \DoctrineORMModule\Service\MigrationsCommandFactory}
@@ -49,14 +53,36 @@ class MigrationsConfigurationHelperTest extends TestCase
         );
     }
 
-    public function testGetMigrationConfig(): void
+    public function testGetDefaultMigrationConfig(): void
     {
+        $request       = new Request();
+        $requestInput  = new RequestInput($request);
         $helper        = new MigrationsConfigurationHelper($this->serviceLocator);
-        $configuration = $helper->getMigrationConfig(new ArrayInput([]));
+        $configuration = $helper->getMigrationConfig($requestInput);
 
         $this->assertEquals(
             $this->serviceLocator->get('doctrine.migrations_configuration.orm_default'),
             $configuration
         );
+    }
+
+    public function testGetNonDefaultMigrationConfig(): void
+    {
+        $inputOption     = new InputOption('object-manager', [], InputOption::VALUE_REQUIRED);
+        $inputDefinition = new InputDefinition([$inputOption]);
+        $request         = new Request([
+            'index.php',
+            '--object-manager=doctrine.entitymanager.orm_some_other_name',
+        ]);
+        $requestInput    = new RequestInput($request, $inputDefinition);
+        $helper          = new MigrationsConfigurationHelper($this->serviceLocator);
+
+        try {
+            $configuration = $helper->getMigrationConfig($requestInput);
+        } catch (ServiceNotFoundException $e) {
+            $this->assertEquals('Unable to resolve service '
+                . '"doctrine.migrations_configuration.orm_some_other_name" to '
+                . 'a factory; are you certain you provided it during configuration?', $e->getMessage());
+        }
     }
 }
