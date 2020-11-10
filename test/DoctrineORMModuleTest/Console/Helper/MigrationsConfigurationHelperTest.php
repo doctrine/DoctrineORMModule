@@ -66,8 +66,19 @@ class MigrationsConfigurationHelperTest extends TestCase
         );
     }
 
+    /**
+     * This test queries for a non-orm_default object manager
+     * and throws an exception when the configuration is not found
+     */
     public function testGetNonDefaultMigrationConfig(): void
     {
+        $this->expectException(ServiceNotFoundException::class);
+        $this->expectExceptionMessage(
+            'Unable to resolve service '
+                . '"doctrine.migrations_configuration.orm_some_other_name" to '
+                . 'a factory; are you certain you provided it during configuration?'
+        );
+
         $inputOption     = new InputOption('object-manager', [], InputOption::VALUE_REQUIRED);
         $inputDefinition = new InputDefinition([$inputOption]);
         $request         = new Request([
@@ -77,12 +88,6 @@ class MigrationsConfigurationHelperTest extends TestCase
         $requestInput    = new RequestInput($request, $inputDefinition);
         $helper          = new MigrationsConfigurationHelper($this->serviceLocator);
 
-        try {
-            $configuration = $helper->getMigrationConfig($requestInput);
-        } catch (ServiceNotFoundException $e) {
-            $this->assertEquals('Unable to resolve service '
-                . '"doctrine.migrations_configuration.orm_some_other_name" to '
-                . 'a factory; are you certain you provided it during configuration?', $e->getMessage());
-        }
+        $configuration = $helper->getMigrationConfig($requestInput);
     }
 }
