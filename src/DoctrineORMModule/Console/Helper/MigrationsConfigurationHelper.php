@@ -50,8 +50,14 @@ class MigrationsConfigurationHelper implements
     public function getMigrationConfig(InputInterface $input): Configuration
     {
         $objectManagerAlias = $input->getOption('object-manager') ?: 'doctrine.entitymanager.orm_default';
-        $objectManagerName  = substr($objectManagerAlias, strrpos($objectManagerAlias, '.'));
 
-        return $this->container->get('doctrine.migrations_configuration' . $objectManagerName);
+        // Copied from DoctrineModule/ServiceFactory/AbstractDoctrineServiceFactory
+        preg_match(
+            '/^doctrine\.((?<mappingType>orm|odm)\.|)(?<serviceType>[a-z0-9_]+)\.(?<serviceName>[a-z0-9_]+)$/',
+            $objectManagerAlias,
+            $matches
+        );
+
+        return $this->container->get('doctrine.migrations_configuration.' . $matches['serviceName']);
     }
 }
