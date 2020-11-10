@@ -55,10 +55,13 @@ class MigrationsConfigurationHelperTest extends TestCase
 
     public function testGetDefaultMigrationConfig(): void
     {
-        $request       = new Request();
-        $requestInput  = new RequestInput($request);
-        $helper        = new MigrationsConfigurationHelper($this->serviceLocator);
-        $configuration = $helper->getMigrationConfig($requestInput);
+        $inputOption     = new InputOption('object-manager', [], InputOption::VALUE_REQUIRED);
+        $inputDefinition = new InputDefinition([$inputOption]);
+        $request         = new Request([]);
+        $requestInput    = new RequestInput($request, $inputDefinition);
+        $helper          = new MigrationsConfigurationHelper($this->serviceLocator);
+
+        $configuration   = $helper->getMigrationConfig($requestInput);
 
         $this->assertEquals(
             $this->serviceLocator->get('doctrine.migrations_configuration.orm_default'),
