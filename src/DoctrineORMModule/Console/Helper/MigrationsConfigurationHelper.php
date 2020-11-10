@@ -29,7 +29,7 @@ class MigrationsConfigurationHelper implements
         $this->container = $container;
     }
 
-    public function setHelperSet(?HelperSet $helperSet = null): ConfigurationHelper
+    public function setHelperSet(?HelperSet $helperSet = null): MigrationsConfigurationHelper
     {
         $this->helperSet = $helperSet;
 
