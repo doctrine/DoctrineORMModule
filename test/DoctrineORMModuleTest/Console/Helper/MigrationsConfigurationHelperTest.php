@@ -25,6 +25,7 @@ use Laminas\Console\Request;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -90,5 +91,46 @@ class MigrationsConfigurationHelperTest extends TestCase
                 . 'a factory; are you certain you provided it during configuration?'
         );
         (new MigrationsConfigurationHelper($this->serviceLocator))->getMigrationConfig($requestInput);
+    }
+
+    /**
+     * This test ensures the object manager is valid using the regex.  However this is only an
+     * issue in theory.  In practice an invalid object manager will be caught in the CliConfigurator
+     * before it ever gets to the helper.
+     */
+    public function testInvalidObjectManagerAlias(): void
+    {
+        $inputOption     = new InputOption('object-manager', [], InputOption::VALUE_REQUIRED);
+        $inputDefinition = new InputDefinition([$inputOption]);
+        $request         = new Request([
+            'index.php',
+            '--object-manager=doctrine.entitymanagerorm_some_other_name',
+        ]);
+        $requestInput    = new RequestInput($request, $inputDefinition);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(
+            'The object manager alias is invalid: doctrine.entitymanagerorm_some_other_name'
+        );
+        (new MigrationsConfigurationHelper($this->serviceLocator))->getMigrationConfig($requestInput);
+    }
+
+    public function testValidObjectManagerAlias(): void
+    {
+        $inputOption     = new InputOption('object-manager', [], InputOption::VALUE_REQUIRED);
+        $inputDefinition = new InputDefinition([$inputOption]);
+        $request         = new Request([
+            'index.php',
+            '--object-manager=doctrine.entitymanager.orm_default',
+        ]);
+        $requestInput    = new RequestInput($request, $inputDefinition);
+
+        $configuration = (new MigrationsConfigurationHelper($this->serviceLocator))
+            ->getMigrationConfig($requestInput);
+
+        $this->assertSame(
+            $this->serviceLocator->get('doctrine.migrations_configuration.orm_default'),
+            $configuration
+        );
     }
 }
