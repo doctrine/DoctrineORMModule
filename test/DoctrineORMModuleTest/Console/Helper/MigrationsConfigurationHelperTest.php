@@ -75,13 +75,6 @@ class MigrationsConfigurationHelperTest extends TestCase
      */
     public function testGetNonDefaultMigrationConfig(): void
     {
-        $this->expectException(ServiceNotFoundException::class);
-        $this->expectExceptionMessage(
-            'Unable to resolve service '
-                . '"doctrine.migrations_configuration.orm_some_other_name" to '
-                . 'a factory; are you certain you provided it during configuration?'
-        );
-
         $inputOption     = new InputOption('object-manager', [], InputOption::VALUE_REQUIRED);
         $inputDefinition = new InputDefinition([$inputOption]);
         $request         = new Request([
@@ -89,8 +82,13 @@ class MigrationsConfigurationHelperTest extends TestCase
             '--object-manager=doctrine.entitymanager.orm_some_other_name',
         ]);
         $requestInput    = new RequestInput($request, $inputDefinition);
-        $helper          = new MigrationsConfigurationHelper($this->serviceLocator);
 
-        $configuration = $helper->getMigrationConfig($requestInput);
+        $this->expectException(ServiceNotFoundException::class);
+        $this->expectExceptionMessage(
+            'Unable to resolve service '
+                . '"doctrine.migrations_configuration.orm_some_other_name" to '
+                . 'a factory; are you certain you provided it during configuration?'
+        );
+        (new MigrationsConfigurationHelper($this->serviceLocator))->getMigrationConfig($requestInput);
     }
 }
