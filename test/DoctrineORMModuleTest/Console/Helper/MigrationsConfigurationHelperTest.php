@@ -63,7 +63,7 @@ class MigrationsConfigurationHelperTest extends TestCase
 
         $configuration = $helper->getMigrationConfig($requestInput);
 
-        $this->assertEquals(
+        $this->assertSame(
             $this->serviceLocator->get('doctrine.migrations_configuration.orm_default'),
             $configuration
         );
