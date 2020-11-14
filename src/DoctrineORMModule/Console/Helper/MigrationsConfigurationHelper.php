@@ -51,11 +51,13 @@ class MigrationsConfigurationHelper implements
         $objectManagerAlias = $input->getOption('object-manager') ?: 'doctrine.entitymanager.orm_default';
 
         // Copied from DoctrineModule/ServiceFactory/AbstractDoctrineServiceFactory
-        if (! preg_match(
-            '/^doctrine\.((?<mappingType>orm|odm)\.|)(?<serviceType>[a-z0-9_]+)\.(?<serviceName>[a-z0-9_]+)$/',
-            $objectManagerAlias,
-            $matches
-        )) {
+        if (
+            ! preg_match(
+                '/^doctrine\.((?<mappingType>orm|odm)\.|)(?<serviceType>[a-z0-9_]+)\.(?<serviceName>[a-z0-9_]+)$/',
+                $objectManagerAlias,
+                $matches
+            )
+        ) {
             throw new RuntimeException('The object manager alias is invalid: ' . $objectManagerAlias);
         }
 
