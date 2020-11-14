@@ -81,9 +81,9 @@ return [
     'service_manager' => [
         'factories' => [
             'doctrine.entitymanager.orm_other' => new EntityManagerFactory('orm_other'),
-            'doctrine.connection.orm_other' => new DBALConnectionFactory('orm_other'),
+            'doctrine.connection.orm_other'    => new DBALConnectionFactory('orm_other'),
             'doctrine.configuration.orm_other' => new ConfigurationFactory('orm_other'),
-            'doctrine.eventmanager.orm_other' => new EventManagerFactory('orm_other'),
+            'doctrine.eventmanager.orm_other'  => new EventManagerFactory('orm_other'),
         ],
     ],
 ];
