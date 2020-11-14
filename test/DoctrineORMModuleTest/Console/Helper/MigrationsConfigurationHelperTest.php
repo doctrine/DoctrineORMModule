@@ -121,7 +121,7 @@ class MigrationsConfigurationHelperTest extends TestCase
         $inputDefinition = new InputDefinition([$inputOption]);
         $request         = new Request([
             'index.php',
-            '--object-manager=doctrine.entitymanager.orm_default',
+            '--object-manager=doctrine.entitymanager.orm_other',
         ]);
         $requestInput    = new RequestInput($request, $inputDefinition);
 
@@ -129,7 +129,7 @@ class MigrationsConfigurationHelperTest extends TestCase
             ->getMigrationConfig($requestInput);
 
         $this->assertSame(
-            $this->serviceLocator->get('doctrine.migrations_configuration.orm_default'),
+            $this->serviceLocator->get('doctrine.migrations_configuration.orm_other'),
             $configuration
         );
     }
