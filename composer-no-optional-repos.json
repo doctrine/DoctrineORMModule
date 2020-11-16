@@ -1,6 +1,6 @@
 {
     "name":              "doctrine/doctrine-orm-module",
-    "description":       "Laminas Module that provides Doctrine ORM functionality",
+    "description":       "A composer file with no optional dependencies",
     "type":              "library",
     "license":           "MIT",
     "keywords":          [
@@ -11,25 +11,6 @@
     ],
     "homepage":          "http://www.doctrine-project.org/",
     "authors":           [
-        {
-            "name":     "Kyle Spraggs",
-            "email":    "theman@spiffyjr.me",
-            "homepage": "http://www.spiffyjr.me/"
-        },
-        {
-            "name":     "Marco Pivetta",
-            "email":    "ocramius@gmail.com",
-            "homepage": "http://marco-pivetta.com/"
-        },
-        {
-            "name":     "Evan Coury",
-            "email":    "me@evancoury.com",
-            "homepage": "http://blog.evan.pro/"
-        },
-        {
-            "name":  "Guilherme Blanco",
-            "email": "guilhermeblanco@hotmail.com"
-        },
         {
             "name": "Tom H Anderson",
             "email": "tom.h.anderson@gmail.com"
