@@ -30,6 +30,7 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 
 use function assert;
+use function class_exists;
 
 /**
  * @link    http://www.doctrine-project.org/

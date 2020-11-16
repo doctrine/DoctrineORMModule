@@ -27,6 +27,8 @@ use InvalidArgumentException;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 
+use function class_exists;
+
 /**
  * Tests for {@see \DoctrineORMModule\Service\MigrationsCommandFactory}
  *
