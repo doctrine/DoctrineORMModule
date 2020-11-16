@@ -20,6 +20,7 @@ namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
 use Doctrine\Migrations\Tools\Console\Command\ExecuteCommand;
+use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
 use DoctrineORMModule\Service\MigrationsCommandFactory;
 use DoctrineORMModuleTest\ServiceManagerFactory;
 use InvalidArgumentException;
@@ -43,6 +44,12 @@ class MigrationsCommandFactoryTest extends TestCase
 
     public function testExecuteFactory(): void
     {
+        if (! class_exists(VersionCommand::class)) {
+            $this->markTestIncomplete(
+                'Migrations must be installed to run this test.'
+            );
+        }
+
         $factory = new MigrationsCommandFactory('execute');
 
         $this->assertInstanceOf(
@@ -53,6 +60,12 @@ class MigrationsCommandFactoryTest extends TestCase
 
     public function testDiffFactory(): void
     {
+        if (! class_exists(VersionCommand::class)) {
+            $this->markTestIncomplete(
+                'Migrations must be installed to run this test.'
+            );
+        }
+
         $factory = new MigrationsCommandFactory('diff');
 
         $this->assertInstanceOf(
