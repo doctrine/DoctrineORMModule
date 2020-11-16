@@ -9,6 +9,7 @@ use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
 use Doctrine\Migrations\Tools\Console\Command\ExecuteCommand;
 use Doctrine\Migrations\Tools\Console\Command\GenerateCommand;
+use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand;
 use Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand;
@@ -122,6 +123,12 @@ class CliConfiguratorTest extends TestCase
      */
     public function testValidCommands(string $commandName, string $className): void
     {
+        if (! class_exists(VersionCommand::class)) {
+            $this->markTestIncomplete(
+                'Migrations must be installed to run this test.'
+            );
+        }
+
         $application = new Application();
 
         $cliConfigurator = new CliConfigurator($this->serviceManager);
