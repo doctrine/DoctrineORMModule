@@ -30,6 +30,8 @@ use RuntimeException;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 
+use function class_exists;
+
 /**
  * Tests for {@see \DoctrineORMModule\Service\MigrationsCommandFactory}
  *

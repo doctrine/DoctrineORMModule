@@ -13,7 +13,3 @@
 ./vendor/bin/doctrine-module orm:run-dql "SELECT COUNT(a) FROM DoctrineORMModule\Travis\Entity\Entity a"
 ./vendor/bin/doctrine-module orm:schema-tool:drop --dump-sql
 ./vendor/bin/doctrine-module orm:schema-tool:drop --force
-./vendor/bin/doctrine-module migrations:generate
-./vendor/bin/doctrine-module migrations:diff
-./vendor/bin/doctrine-module migrations:execute 20120714005702 -n
-./vendor/bin/doctrine-module migrations:migrate --no-interaction
