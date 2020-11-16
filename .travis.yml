@@ -17,39 +17,86 @@ matrix:
   include:
     - php: 7.2
       env:
+        - COMPOSER=composer.json
         - DEPS=lowest
     - php: 7.2
       env:
-        - DEPS=locked
+        - COMPOSER=composer-no-optional-repos.json
+        - DEPS=lowest
+    - php: 7.2
+      env:
+        - COMPOSER=composer.json
         - CS_CHECK=true
+        - DEPS=locked
         - TEST_COVERAGE=true
     - php: 7.2
       env:
+        - COMPOSER=composer-no-optional-repos.json
+        - CS_CHECK=true
+        - DEPS=locked
+        - TEST_COVERAGE=true
+    - php: 7.2
+      env:
+        - COMPOSER=composer.json
+        - DEPS=latest
+    - php: 7.2
+      env:
+        - COMPOSER=composer-no-optional-repos.json
         - DEPS=latest
     - php: 7.3
       env:
+        - COMPOSER=composer.json
         - DEPS=lowest
     - php: 7.3
       env:
+        - COMPOSER=composer-no-optional-repos.json
+        - DEPS=lowest
+    - php: 7.3
+      env:
+        - COMPOSER=composer.json
         - DEPS=locked
     - php: 7.3
       env:
+        - COMPOSER=composer-no-optional-repos.json
+        - DEPS=locked
+    - php: 7.3
+      env:
+        - COMPOSER=composer.json
+        - DEPS=latest
+    - php: 7.3
+      env:
+        - COMPOSER=composer-no-optional-repos.json
         - DEPS=latest
     - php: 7.4
       env:
+        - COMPOSER=composer.json
         - DEPS=lowest
     - php: 7.4
       env:
+        - COMPOSER=composer-no-optional-repos.json
+        - DEPS=lowest
+    - php: 7.4
+      env:
+        - COMPOSER=composer.json
         - DEPS=locked
     - php: 7.4
       env:
+        - COMPOSER=composer-no-optional-repos.json
+        - DEPS=locked
+    - php: 7.4
+      env:
+        - COMPOSER=composer.json
+        - DEPS=latest
+    - php: 7.4
+      env:
+        - COMPOSER=composer-no-optional-repos.json
         - DEPS=latest
 
 before_install:
   - mysql -e 'CREATE DATABASE `database`;'
 
 install:
-  - travis_retry composer install $COMPOSER_ARGS
+  - travis_retry COMPOSER=$COMPOSER composer install $COMPOSER_ARGS
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
   - composer show
