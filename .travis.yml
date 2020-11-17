@@ -11,8 +11,8 @@ services:
 env:
   global:
     - COMPOSER_ARGS="--no-interaction"
-    - OPTIONAL_DEPENDENCIES="doctrine/data-fixtures doctrine/migrations"
     - INCLUDE_OPTIONAL_DEPENDENCIES=true
+    - OPTIONAL_DEPENDENCIES="doctrine/data-fixtures doctrine/migrations"
 
 matrix:
   fast_finish: true
