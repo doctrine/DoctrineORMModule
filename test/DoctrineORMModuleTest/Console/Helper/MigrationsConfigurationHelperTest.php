@@ -44,17 +44,19 @@ class MigrationsConfigurationHelperTest extends TestCase
 
     public function setUp(): void
     {
+        if (! class_exists(VersionCommand::class)) {
+            $this->markTestIncomplete(
+                'Migrations must be installed to run this test.'
+            );
+
+            return;
+        }
+
         $this->serviceLocator = ServiceManagerFactory::getServiceManager();
     }
 
     public function testCreate(): void
     {
-        if (! class_exists(VersionCommand::class)) {
-            $this->markTestIncomplete(
-                'Migrations must be installed to run this test.'
-            );
-        }
-
         $helper = new MigrationsConfigurationHelper($this->serviceLocator);
 
         $this->assertInstanceOf(
@@ -65,12 +67,6 @@ class MigrationsConfigurationHelperTest extends TestCase
 
     public function testGetDefaultMigrationConfig(): void
     {
-        if (! class_exists(VersionCommand::class)) {
-            $this->markTestIncomplete(
-                'Migrations must be installed to run this test.'
-            );
-        }
-
         $inputOption     = new InputOption('object-manager', [], InputOption::VALUE_REQUIRED);
         $inputDefinition = new InputDefinition([$inputOption]);
         $request         = new Request([]);
@@ -91,12 +87,6 @@ class MigrationsConfigurationHelperTest extends TestCase
      */
     public function testGetNonDefaultMigrationConfig(): void
     {
-        if (! class_exists(VersionCommand::class)) {
-            $this->markTestIncomplete(
-                'Migrations must be installed to run this test.'
-            );
-        }
-
         $inputOption     = new InputOption('object-manager', [], InputOption::VALUE_REQUIRED);
         $inputDefinition = new InputDefinition([$inputOption]);
         $request         = new Request([
@@ -121,12 +111,6 @@ class MigrationsConfigurationHelperTest extends TestCase
      */
     public function testInvalidObjectManagerAlias(): void
     {
-        if (! class_exists(VersionCommand::class)) {
-            $this->markTestIncomplete(
-                'Migrations must be installed to run this test.'
-            );
-        }
-
         $inputOption     = new InputOption('object-manager', [], InputOption::VALUE_REQUIRED);
         $inputDefinition = new InputDefinition([$inputOption]);
         $request         = new Request([
@@ -144,12 +128,6 @@ class MigrationsConfigurationHelperTest extends TestCase
 
     public function testValidObjectManagerAlias(): void
     {
-        if (! class_exists(VersionCommand::class)) {
-            $this->markTestIncomplete(
-                'Migrations must be installed to run this test.'
-            );
-        }
-
         $inputOption     = new InputOption('object-manager', [], InputOption::VALUE_REQUIRED);
         $inputDefinition = new InputDefinition([$inputOption]);
         $request         = new Request([
