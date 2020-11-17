@@ -10,8 +10,9 @@ services:
 
 env:
   global:
-    - COMPOSER=composer.json
     - COMPOSER_ARGS="--no-interaction"
+    - OPTIONAL_DEPENDENCIES="doctrine/data-fixtures doctrine/migrations"
+    - INCLUDE_OPTIONAL_DEPENDENCIES=true
 
 matrix:
   fast_finish: true
@@ -21,8 +22,8 @@ matrix:
         - DEPS=lowest
     - php: 7.2
       env:
-        - COMPOSER=composer-no-optional-repos.json
         - DEPS=lowest
+        - INCLUDE_OPTIONAL_DEPENDENCIES=false
     - php: 7.2
       env:
         - CS_CHECK=true
@@ -30,59 +31,59 @@ matrix:
         - TEST_COVERAGE=true
     - php: 7.2
       env:
-        - COMPOSER=composer-no-optional-repos.json
         - CS_CHECK=true
         - DEPS=locked
+        - INCLUDE_OPTIONAL_DEPENDENCIES=false
         - TEST_COVERAGE=true
     - php: 7.2
       env:
         - DEPS=latest
     - php: 7.2
       env:
-        - COMPOSER=composer-no-optional-repos.json
         - DEPS=latest
+        - INCLUDE_OPTIONAL_DEPENDENCIES=false
     - php: 7.3
       env:
         - DEPS=lowest
     - php: 7.3
       env:
-        - COMPOSER=composer-no-optional-repos.json
         - DEPS=lowest
+        - INCLUDE_OPTIONAL_DEPENDENCIES=false
     - php: 7.3
       env:
         - DEPS=locked
     - php: 7.3
       env:
-        - COMPOSER=composer-no-optional-repos.json
         - DEPS=locked
+        - INCLUDE_OPTIONAL_DEPENDENCIES=false
     - php: 7.3
       env:
         - DEPS=latest
     - php: 7.3
       env:
-        - COMPOSER=composer-no-optional-repos.json
         - DEPS=latest
+        - INCLUDE_OPTIONAL_DEPENDENCIES=false
     - php: 7.4
       env:
-        - DEPS=lowest
-    - php: 7.4
-      env:
-        - COMPOSER=composer-no-optional-repos.json
         - DEPS=lowest
     - php: 7.4
       env:
+        - DEPS=lowest
+        - INCLUDE_OPTIONAL_DEPENDENCIES=false
+    - php: 7.4
+      env:
         - DEPS=locked
     - php: 7.4
       env:
-        - COMPOSER=composer-no-optional-repos.json
         - DEPS=locked
+        - INCLUDE_OPTIONAL_DEPENDENCIES=false
     - php: 7.4
       env:
         - DEPS=latest
     - php: 7.4
       env:
-        - COMPOSER=composer-no-optional-repos.json
         - DEPS=latest
+        - INCLUDE_OPTIONAL_DEPENDENCIES=false
 
 before_install:
   - mysql -e 'CREATE DATABASE `database`;'
@@ -91,6 +92,7 @@ install:
   - travis_retry composer install $COMPOSER_ARGS
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - if [[ $INCLUDE_OPTIONAL_DEPENDENCIES == 'false' ]]; then travis_retry composer remove $COMPOSER_ARGS --dev $OPTIONAL_DEPENDENCIES; fi
   - composer show
 
 before_script:
@@ -102,7 +104,7 @@ script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then php build/coverage-checker.php build/clover.xml 70 ; fi
   - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
   - cat .travis/run-cli.sh | xargs -L 1 php
-  - if [[ $COMPOSER == 'composer.json' ]]; then cat .travis/run-cli-migrations.sh | xargs -L 1 php ; fi
+  - if [[ $INCLUDE_OPTIONAL_DEPENDENCIES == 'true' ]]; then cat .travis/run-cli-migrations.sh | xargs -L 1 php ; fi
 
 after_script:
   - rm -Rf config/application.config.php
