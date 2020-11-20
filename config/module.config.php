@@ -168,7 +168,7 @@ return [
                 'migrations' => [],
                 'all_or_nothing' => false,
                 'check_database_platform' => true,
-                'organize_migrations' => 'year', // year or year_and_month
+                // 'organize_migrations' => 'year', // year or year_and_month or leave unchanged for default
                 'custom_template' => null,
             ],
         ],
