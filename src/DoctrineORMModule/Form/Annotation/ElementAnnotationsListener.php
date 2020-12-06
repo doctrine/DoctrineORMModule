@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DoctrineORMModule\Form\Annotation;
 
 use ArrayObject;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use DoctrineORMModule\Form\Element\EntitySelect;
 use Laminas\EventManager\AbstractListenerAggregate;
