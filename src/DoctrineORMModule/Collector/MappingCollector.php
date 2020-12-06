@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Collector;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 use Laminas\DeveloperTools\Collector\AutoHideInterface;
 use Laminas\DeveloperTools\Collector\CollectorInterface;
 use Laminas\Mvc\MvcEvent;

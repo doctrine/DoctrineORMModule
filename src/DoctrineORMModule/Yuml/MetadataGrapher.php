@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Yuml;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\ClassMetadata;
 use Exception;
 
 use function class_exists;

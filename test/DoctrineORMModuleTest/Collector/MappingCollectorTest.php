@@ -2,8 +2,8 @@
 
 namespace DoctrineORMModuleTest\Collector;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 use DoctrineORMModule\Collector\MappingCollector;
 use Laminas\Mvc\MvcEvent;
 use PHPUnit\Framework\TestCase;
