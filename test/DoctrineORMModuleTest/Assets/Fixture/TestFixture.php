@@ -3,7 +3,7 @@
 namespace DoctrineORMModuleTest\Assets\Fixture;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use DoctrineORMModuleTest\Assets\Entity\Category;
 use DoctrineORMModuleTest\Assets\Entity\Country;
 use DoctrineORMModuleTest\Assets\Entity\Test as TestEntity;

@@ -4,7 +4,7 @@ namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\EventManager;
-use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
+use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\DBAL\Driver\PDOSqlite\Driver as PDOSqliteDriver;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;

@@ -3,7 +3,7 @@
 namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
+use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\ORM\Cache\CacheConfiguration;
 use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
