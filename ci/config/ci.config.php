@@ -7,7 +7,8 @@ return [
         'connection' => [
             'orm_default' => [
                 'params' => [
-                    'user'     => 'travis',
+                    'host'     => '127.0.0.1',
+                    'user'     => 'root',
                     'password' => '',
                     'dbname'   => 'database',
                 ],
@@ -18,7 +19,7 @@ return [
                 'metadata_cache'   => 'filesystem',
                 'query_cache'      => 'filesystem',
                 'generate_proxies' => Doctrine\ORM\Proxy\ProxyFactory::AUTOGENERATE_NEVER,
-                'proxy_dir'        => '.travis/cache/DoctrineORMModule/Proxy',
+                'proxy_dir'        => 'ci/cache/DoctrineORMModule/Proxy',
             ],
         ],
         'migrations_configuration' => [
@@ -31,7 +32,7 @@ return [
                     'execution_time_column_name' => 'executionTime',
                 ],
                 'migrations_paths' => [
-                    'TravisDoctrineMigrations' => '.travis',
+                    'CiDoctrineMigrations' => 'ci',
                 ],
                 'migrations' => [],
                 'all_or_nothing' => false,
@@ -42,18 +43,18 @@ return [
         ],
         'cache' => [
             'filesystem' => [
-                'directory' => '.travis/cache/DoctrineModule',
+                'directory' => 'ci/cache/DoctrineModule',
             ],
         ],
         'driver' => [
-            'travis_driver' => [
+            'ci_driver' => [
                 'class' => Doctrine\ORM\Mapping\Driver\AnnotationDriver::class,
                 'cache' => 'array',
-                'paths' => ['.travis/Entity/'],
+                'paths' => ['ci/Entity/'],
             ],
             'orm_default' => [
                 'drivers' => [
-                    'DoctrineORMModule\Travis\Entity' => 'travis_driver',
+                    'DoctrineORMModule\Ci\Entity' => 'ci_driver',
                 ],
             ],
         ],

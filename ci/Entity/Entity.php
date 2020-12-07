@@ -1,6 +1,6 @@
 <?php
 
-namespace DoctrineORMModule\Travis\Entity;
+namespace DoctrineORMModule\Ci\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
