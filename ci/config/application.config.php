@@ -16,7 +16,7 @@ return [
         'module_paths' => [],
         'config_glob_paths' => [
             __DIR__ . '/module.config.php',
-            __DIR__ . '/../.travis/config/travis.config.php',
+            __DIR__ . '/../ci/config/ci.config.php',
         ],
     ],
 ];

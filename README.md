@@ -1,6 +1,7 @@
 # Doctrine 2 ORM Module for Laminas
 
-[![Master branch build status](https://secure.travis-ci.org/doctrine/DoctrineORMModule.png?branch=master)](http://travis-ci.org/doctrine/DoctrineORMModule) [![Code Coverage](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/master/graph/badge.svg)](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/master) [![Latest Stable Version](https://poser.pugx.org/doctrine/doctrine-orm-module/v/stable.png)](https://packagist.org/packages/doctrine/doctrine-orm-module) [![Total Downloads](https://poser.pugx.org/doctrine/doctrine-orm-module/downloads.png)](https://packagist.org/packages/doctrine/doctrine-orm-module)
+[![Build Status](https://github.com/doctrine/DoctrineORMModule/workflows/Continuous%20Integration/badge.svg)](https://github.com/doctrine/DoctrineORMModule/actions)
+[![Code Coverage](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/3.1.x/graph/badge.svg)](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/3.1.x)
 
 DoctrineORMModule integrates Doctrine 2 ORM with Laminas quickly and easily.
 
