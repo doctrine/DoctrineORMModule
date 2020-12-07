@@ -17,7 +17,7 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace TravisDoctrineMigrations;
+namespace CiDoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema,
     Doctrine\Migrations\AbstractMigration;
