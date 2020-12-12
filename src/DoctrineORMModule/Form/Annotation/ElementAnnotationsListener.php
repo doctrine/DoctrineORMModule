@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace DoctrineORMModule\Form\Annotation;
 
 use ArrayObject;
-use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\Persistence\ObjectManager;
 use DoctrineORMModule\Form\Element\EntitySelect;
 use Laminas\EventManager\AbstractListenerAggregate;
 use Laminas\EventManager\EventInterface;
