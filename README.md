@@ -1,7 +1,7 @@
 # Doctrine 2 ORM Module for Laminas
 
 [![Build Status](https://github.com/doctrine/DoctrineORMModule/workflows/Continuous%20Integration/badge.svg)](https://github.com/doctrine/DoctrineORMModule/actions)
-[![Code Coverage](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/3.1.x/graph/badge.svg)](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/3.1.x)
+[![Code Coverage](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/3.0.x/graph/badge.svg)](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/3.0.x)
 
 DoctrineORMModule integrates Doctrine 2 ORM with Laminas quickly and easily.
 
