@@ -41,7 +41,7 @@ return [
             ],
             'orm_default' => [
                 'drivers' => [
-                    'DoctrineORMModule\Travis\Entity' => 'ci_driver',
+                    'DoctrineORMModule\Ci\Entity' => 'ci_driver',
                 ],
             ],
         ],
