@@ -11,6 +11,7 @@ use DoctrineModule\Form\Element;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Form\Annotation\AnnotationBuilder as LaminasAnnotationBuilder;
 
+use function class_exists;
 use function get_class;
 use function in_array;
 use function is_object;
