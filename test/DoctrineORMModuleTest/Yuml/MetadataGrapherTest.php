@@ -2,7 +2,7 @@
 
 namespace DoctrineORMModuleTest\Yuml;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\ClassMetadata;
 use DoctrineORMModule\Yuml\MetadataGrapher;
 use PHPUnit\Framework\TestCase;
 

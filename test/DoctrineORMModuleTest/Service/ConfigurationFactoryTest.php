@@ -3,13 +3,13 @@
 namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\ORM\Cache\CacheConfiguration;
 use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
 use Doctrine\ORM\Mapping\EntityListenerResolver;
 use Doctrine\ORM\Mapping\NamingStrategy;
 use Doctrine\ORM\Mapping\QuoteStrategy;
+use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use DoctrineORMModule\Service\ConfigurationFactory;
 use DoctrineORMModuleTest\Assets\RepositoryClass;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;

@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace DoctrineORMModule\Form\Annotation;
 
 use ArrayObject;
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\ObjectManager;
 use DoctrineModule\Form\Element;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Form\Annotation\AnnotationBuilder as LaminasAnnotationBuilder;
 
+use function class_exists;
 use function get_class;
 use function in_array;
 use function is_object;
@@ -129,3 +130,5 @@ class AnnotationBuilder extends LaminasAnnotationBuilder
         return $result;
     }
 }
+
+class_exists(ClassMetadata::class);
