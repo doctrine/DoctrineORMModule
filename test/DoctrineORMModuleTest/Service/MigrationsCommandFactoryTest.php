@@ -21,6 +21,7 @@ namespace DoctrineORMModuleTest\Service;
 use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
 use Doctrine\Migrations\Tools\Console\Command\ExecuteCommand;
 use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
+use Doctrine\ORM\EntityManagerInterface;
 use DoctrineORMModule\Service\MigrationsCommandFactory;
 use DoctrineORMModuleTest\ServiceManagerFactory;
 use InvalidArgumentException;
@@ -82,5 +83,64 @@ class MigrationsCommandFactoryTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $factory->createService($this->serviceLocator);
+    }
+
+    public function testDefineDependencyFactoryServicesFromConfig(): void
+    {
+        if (! class_exists(VersionCommand::class)) {
+            $this->markTestIncomplete(
+                'Migrations must be installed to run this test.'
+            );
+        }
+
+        $factory        = new MigrationsCommandFactory('diff');
+        $config         = [
+            'doctrine' => [
+                'migrations_configuration' => [
+                    'orm_default' => [
+                        'dependency_factory_services' => ['myId' => 'myService'],
+                    ],
+                ],
+            ],
+        ];
+        $entityManager  = self::createMock(EntityManagerInterface::class);
+        $serviceLocator = self::createMock(ServiceManager::class);
+        $serviceLocator->expects(self::exactly(3))
+            ->method('get')
+            ->willReturnMap([
+                ['config', $config],
+                ['doctrine.entitymanager.orm_default', $entityManager],
+                ['myService', 'test'],
+            ]);
+
+        $factory->createService($serviceLocator);
+    }
+
+    public function testNoDefineDependencyFactoryServicesFromConfig(): void
+    {
+        if (! class_exists(VersionCommand::class)) {
+            $this->markTestIncomplete(
+                'Migrations must be installed to run this test.'
+            );
+        }
+
+        $factory        = new MigrationsCommandFactory('diff');
+        $config         = [
+            'doctrine' => [
+                'migrations_configuration' => [
+                    'orm_default' => [],
+                ],
+            ],
+        ];
+        $entityManager  = self::createMock(EntityManagerInterface::class);
+        $serviceLocator = self::createMock(ServiceManager::class);
+        $serviceLocator->expects(self::exactly(2))
+            ->method('get')
+            ->willReturnMap([
+                ['config', $config],
+                ['doctrine.entitymanager.orm_default', $entityManager],
+            ]);
+
+        $factory->createService($serviceLocator);
     }
 }
