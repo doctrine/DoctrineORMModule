@@ -15,6 +15,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
 use Symfony\Component\Console\Input\ArgvInput;
 
+use function array_key_exists;
 use function class_exists;
 use function preg_match;
 use function ucfirst;
@@ -81,14 +82,26 @@ class MigrationsCommandFactory implements FactoryInterface
             throw new RuntimeException('The object manager name is invalid: ' . $objectManagerName);
         }
 
+        $migrationConfig           = $config['doctrine']['migrations_configuration'][$matches['serviceName']] ?? [];
+        $dependencyFactoryServices = [];
+
+        if (array_key_exists('dependency_factory_services', $migrationConfig)) {
+            $dependencyFactoryServices = $migrationConfig['dependency_factory_services'];
+            unset($migrationConfig['dependency_factory_services']);
+        }
+
+        $dependencyFactory = DependencyFactory::fromEntityManager(
+            new ConfigurationArray($migrationConfig),
+            new ExistingEntityManager($container->get($objectManagerName))
+        );
+
+        foreach ($dependencyFactoryServices as $id => $service) {
+            $dependencyFactory->setService($id, $container->get($service));
+        }
+
         // An object manager may not have a migrations configuration and that's OK.
         // Use default values in that case.
-        return new $commandClassName(
-            DependencyFactory::fromEntityManager(
-                new ConfigurationArray($config['doctrine']['migrations_configuration'][$matches['serviceName']] ?? []),
-                new ExistingEntityManager($container->get($objectManagerName))
-            )
-        );
+        return new $commandClassName($dependencyFactory);
     }
 
     /**

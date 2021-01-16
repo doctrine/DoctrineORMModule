@@ -35,3 +35,54 @@ Configure
             ],
         ],
     ];
+
+Set a Custom configuration into DependencyFactory
+-------------------------------
+
+.. code:: php
+
+    return [
+        'doctrine' => [
+            'migrations_configuration' => [
+                'orm_default' => [
+                    'dependency_factory_services' => [
+                        'service_to_overwrite' => 'custom_service_id'
+                    ],
+                ],
+            ],
+        ],
+    ];
+
+Note : 'custom_service_id' has to be defined in your DIC
+
+
+This configuration allows you, for example, to define a custom version comparator
+
+.. code:: php
+
+    return [
+        'doctrine' => [
+            'migrations_configuration' => [
+                'orm_default' => [
+                    'dependency_factory_services' => [
+                        \Doctrine\Migrations\Version\Comparator::class => MyComparator::class
+                    ],
+                ],
+            ],
+        ],
+    ];
+
+List of services that can be overwritten
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Doctrine\\Migrations\\Finder\\MigrationFinder
+- Doctrine\\Migrations\\Metadata\\Storage\\MetadataStorage
+- Doctrine\\Migrations\\MigrationsRepository
+- Doctrine\\Migrations\\Provider\\SchemaProvider
+- Doctrine\\Migrations\\Tools\\Console\\MigratorConfigurationFactory
+- Doctrine\\Migrations\\Version\\Comparator
+- Doctrine\\Migrations\\Version\\MigrationFactory
+- Doctrine\\Migrations\\Version\\MigrationPlanCalculator
+- Doctrine\\Migrations\\Version\\MigrationStatusCalculator
+- Psr\\Log\\LoggerInterface
+- Symfony\\Component\\Stopwatch\\Stopwatch
