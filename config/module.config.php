@@ -195,10 +195,11 @@ return [
         'factories' => [
             CliConfigurator::class => Service\CliConfiguratorFactory::class,
             'Doctrine\ORM\EntityManager' => Service\EntityManagerAliasCompatFactory::class,
+            // DBAL commands
+            'doctrine.dbal_cmd.runsql' => Service\RunSqlCommandFactory::class,
         ],
         'invokables' => [
             // DBAL commands
-            'doctrine.dbal_cmd.runsql' => Console\Command\RunSqlCommand::class,
             'doctrine.dbal_cmd.import' => Console\Command\ImportCommand::class,
             // ORM Commands
             'doctrine.orm_cmd.clear_cache_metadata' => Command\ClearCache\MetadataCommand::class,
