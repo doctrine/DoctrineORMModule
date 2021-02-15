@@ -230,7 +230,6 @@ return [
         'sql_logger_collector'     => Service\SQLLoggerCollectorFactory::class,
         'mapping_collector'        => Service\MappingCollectorFactory::class,
         'formannotationbuilder'    => Service\FormAnnotationBuilderFactory::class,
-        'migrations_configuration' => Service\MigrationsConfigurationFactory::class,
         'migrations_cmd'           => Service\MigrationsCommandFactory::class,
     ],
 
