@@ -10,6 +10,16 @@ DoctrineORMModule integrates Doctrine ORM with Laminas quickly and easily.
   - Multiple DBAL connections
   - Reuse existing PDO connections in DBAL connection
 
+## Branches
+
+There are two active branches and one bug-fix only branch.   
+
+* 3.0.x - Support for Migrations 1 & 2
+* 3.2.x - Support for Migrations 3
+
+Branch 3.1.x also supports Migrations 3 but new features required the 3.2.x branch to be created and now all enhancements happen on 3.2.x.
+3.1.x will continue to receive bug fixes only.
+
 ## Installation
 
 Installation of this module uses composer. For composer documentation, please refer to
