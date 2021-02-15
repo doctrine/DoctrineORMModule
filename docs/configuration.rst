@@ -274,8 +274,7 @@ Laminas Configuration
 How to Override RunSqlCommand Creation
 -------------------------
 
-The following Laminas configuration can be used to override the `creation
-<../src/DoctrineORMModule/Service/RunSqlCommandFactory.php>`_ of the
+The following Laminas configuration can be used to override the creation of the
 ``Doctrine\DBAL\Tools\Console\Command\RunSqlCommand`` instance used by this
 module.
 
