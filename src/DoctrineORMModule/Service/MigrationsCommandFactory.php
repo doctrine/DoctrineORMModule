@@ -56,7 +56,7 @@ class MigrationsCommandFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
-     * @return AbstractCommand
+     * @return DoctrineCommand
      *
      * @throws InvalidArgumentException
      */
