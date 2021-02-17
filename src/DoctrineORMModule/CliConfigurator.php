@@ -12,6 +12,7 @@ use Interop\Container\ContainerInterface;
 use Laminas\Stdlib\ArrayUtils;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Helper\DialogHelper;
+use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputOption;
@@ -88,22 +89,15 @@ class CliConfigurator
     }
 
     /**
-     * @return mixed[]
+     * @return Helper[]
      */
     private function getHelpers(EntityManagerInterface $objectManager): array
     {
-        $helpers = [];
-
-        if (class_exists('Symfony\Component\Console\Helper\QuestionHelper')) {
-            $helpers['dialog'] = new QuestionHelper();
-        } else {
-            $helpers['dialog'] = new DialogHelper();
-        }
-
-        $helpers['db'] = new ConnectionHelper($objectManager->getConnection());
-        $helpers['em'] = new EntityManagerHelper($objectManager);
-
-        return $helpers;
+        return [
+            'dialog' => new QuestionHelper(),
+            'db' => new ConnectionHelper($objectManager->getConnection()),
+            'em' => new EntityManagerHelper($objectManager),
+        ];
     }
 
     private function createObjectManagerInputOption(): InputOption
@@ -129,7 +123,7 @@ class CliConfigurator
     }
 
     /**
-     * @return mixed[]
+     * @return string[]
      */
     private function getAvailableCommands(): array
     {
