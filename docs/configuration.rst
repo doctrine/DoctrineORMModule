@@ -227,7 +227,7 @@ How to Use Naming Strategy
 `Official documentation 
 <https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/namingstrategy.html>`__
 
-Zend Configuration
+Laminas Configuration
 
 .. code:: php
 
@@ -252,7 +252,7 @@ How to Use Quote Strategy
 `Official
 documentation <https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/basic-mapping.html#quoting-reserved-words>`__
 
-Zend Configuration
+Laminas Configuration
 
 .. code:: php
 
@@ -267,6 +267,23 @@ Zend Configuration
                 'orm_default' => [
                     'quote_strategy' => 'Doctrine\ORM\Mapping\AnsiQuoteStrategy',
                 ],
+            ],
+        ],
+    ];
+
+How to Override RunSqlCommand Creation
+-------------------------
+
+The following Laminas configuration can be used to override the creation of the
+``Doctrine\DBAL\Tools\Console\Command\RunSqlCommand`` instance used by this
+module.
+
+.. code:: php
+
+    return [
+        'service_manager' => [
+            'factories' => [
+                'doctrine.dbal_cmd.runsql' => MyCustomRunSqlCommandFactory::class,
             ],
         ],
     ];

@@ -1,14 +1,24 @@
-# Doctrine 2 ORM Module for Laminas
+# Doctrine ORM Module for Laminas
 
 [![Build Status](https://github.com/doctrine/DoctrineORMModule/workflows/Continuous%20Integration/badge.svg)](https://github.com/doctrine/DoctrineORMModule/actions)
 [![Code Coverage](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/3.1.x/graph/badge.svg)](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/3.1.x)
 
-DoctrineORMModule integrates Doctrine 2 ORM with Laminas quickly and easily.
+DoctrineORMModule integrates Doctrine ORM with Laminas quickly and easily.
 
-  - Doctrine 2 ORM support
+  - Doctrine ORM support
   - Multiple ORM entity managers
   - Multiple DBAL connections
   - Reuse existing PDO connections in DBAL connection
+
+## Branches
+
+There are two active branches and one bug-fix only branch.   
+
+* 3.0.x - Support for Migrations 1 & 2
+* 3.2.x - Support for Migrations 3
+
+Branch 3.1.x also supports Migrations 3 but new features required the 3.2.x branch to be created and now all enhancements happen on 3.2.x.
+3.1.x will continue to receive bug fixes only.
 
 ## Installation
 

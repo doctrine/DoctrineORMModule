@@ -170,6 +170,7 @@ return [
                 'check_database_platform' => true,
                 // 'organize_migrations' => 'year', // year or year_and_month or leave unchanged for default
                 'custom_template' => null,
+                'dependency_factory_services' => [],
             ],
         ],
 
@@ -195,10 +196,11 @@ return [
         'factories' => [
             CliConfigurator::class => Service\CliConfiguratorFactory::class,
             'Doctrine\ORM\EntityManager' => Service\EntityManagerAliasCompatFactory::class,
+            // DBAL commands
+            'doctrine.dbal_cmd.runsql' => Service\RunSqlCommandFactory::class,
         ],
         'invokables' => [
             // DBAL commands
-            'doctrine.dbal_cmd.runsql' => Console\Command\RunSqlCommand::class,
             'doctrine.dbal_cmd.import' => Console\Command\ImportCommand::class,
             // ORM Commands
             'doctrine.orm_cmd.clear_cache_metadata' => Command\ClearCache\MetadataCommand::class,
@@ -229,7 +231,6 @@ return [
         'sql_logger_collector'     => Service\SQLLoggerCollectorFactory::class,
         'mapping_collector'        => Service\MappingCollectorFactory::class,
         'formannotationbuilder'    => Service\FormAnnotationBuilderFactory::class,
-        'migrations_configuration' => Service\MigrationsConfigurationFactory::class,
         'migrations_cmd'           => Service\MigrationsCommandFactory::class,
     ],
 
