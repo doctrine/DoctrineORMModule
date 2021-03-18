@@ -37,7 +37,7 @@
     ],
     "config": {
         "platform": {
-            "php": "7.2.15"
+            "php": "7.3"
         },
         "sort-packages": true
     },
@@ -48,7 +48,7 @@
         }
     },
     "require":           {
-        "php":                                  "^7.2 || ^8.0",
+        "php":                                  "^7.3 || ^8.0",
         "composer/package-versions-deprecated": "^1.11",
         "doctrine/dbal":                        "^2.10",
         "doctrine/doctrine-module":             "^4.0",
@@ -70,7 +70,7 @@
         "laminas/laminas-mvc-console": "^1.2",
         "laminas/laminas-serializer": "^2.8",
         "ocramius/proxy-manager": "^2.2",
-        "phpunit/phpunit": "^8.5",
+        "phpunit/phpunit": "^9.5",
         "squizlabs/php_codesniffer": "^3.5",
         "vimeo/psalm": "^4.3"
     },
