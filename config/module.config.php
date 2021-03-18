@@ -130,12 +130,6 @@ return [
             'orm_default' => [],
         ],
 
-        // form annotation builder configuration
-        'formannotationbuilder' => [
-            // Configuration for service `doctrine.formannotationbuilder.orm_default` service
-            'orm_default' => [],
-        ],
-
         // entity resolver configuration, allows mapping associations to interfaces
         'entity_resolver' => [
             // configuration for the `doctrine.entity_resolver.orm_default` service
@@ -230,7 +224,6 @@ return [
         'entity_resolver'          => Service\EntityResolverFactory::class,
         'sql_logger_collector'     => Service\SQLLoggerCollectorFactory::class,
         'mapping_collector'        => Service\MappingCollectorFactory::class,
-        'formannotationbuilder'    => Service\FormAnnotationBuilderFactory::class,
         'migrations_cmd'           => Service\MigrationsCommandFactory::class,
     ],
 
