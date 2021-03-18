@@ -42,10 +42,6 @@
         <exclude-pattern>config/module.config.php</exclude-pattern>
     </rule>
 
-    <rule ref="PSR1.Files.SideEffects">
-        <exclude-pattern>src/DoctrineORMModule/Form/Annotation/AnnotationBuilder.php</exclude-pattern>
-    </rule>
-
     <!-- Paths to check -->
     <file>config</file>
     <file>src</file>
