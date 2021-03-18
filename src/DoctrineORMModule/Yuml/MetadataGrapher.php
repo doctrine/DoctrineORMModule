@@ -194,8 +194,11 @@ class MetadataGrapher
     private function getParent(ClassMetadata $class): ?ClassMetadata
     {
         $className = $class->getName();
-        $parent    = get_parent_class($className);
+        if (! class_exists($className)) {
+            return null;
+        }
 
+        $parent = get_parent_class($className);
         if (! class_exists($className) || ! $parent) {
             return null;
         }
