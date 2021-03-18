@@ -48,7 +48,7 @@
         }
     },
     "require":           {
-        "php":                                  "^7.2",
+        "php":                                  "^7.2 || ^8.0",
         "composer/package-versions-deprecated": "^1.11",
         "doctrine/dbal":                        "^2.10",
         "doctrine/doctrine-module":             "^4.0",
