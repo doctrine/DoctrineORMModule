@@ -2,13 +2,13 @@ Miscellaneous
 =============
 
 The items listed below are optional and intended to enhance 
-integration between Zend Framework and Doctrine 2.
+integration between Laminas and Doctrine ORM.
 
 ObjectExists Validator and  NoObjectExists Validator
 ----------------------------------------------------
 
 ObjectExists and NoObjectExists are validators similar to
-`Zend Validators <https://framework.zend.com/manual/2.4/en/modules/zend.validator.html>`_. 
+`Laminas Validators <https://docs.laminas.dev/laminas-validator/>`_.
 You can pass a variety of options to determine validity.
 The most basic use case requires an entity manager, an entity, and
 a field. You also have the option of specifying a query\_builder Closure
