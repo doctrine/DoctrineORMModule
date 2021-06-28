@@ -1,7 +1,8 @@
-Doctrine ORM Module for Zend Framework
-======================================
+Doctrine ORM Module for Laminas
+===============================
 
-This module works with Zend Framework 2 and 3.
+This module integrates `Doctrine ORM <https://www.doctrine-project.org/projects/orm.html>`_
+with `Laminas <https://getlaminas.org/>`_ (formerly Zend Framework).
 
 .. toctree::
     :caption: Table of Contents
