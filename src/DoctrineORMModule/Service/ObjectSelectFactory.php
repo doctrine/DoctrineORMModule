@@ -20,9 +20,9 @@ class ObjectSelectFactory implements FactoryInterface
      *
      * @return ObjectSelect
      */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
-        $entityManager = $container->get(EntityManager::class);
+        $entityManager = $serviceLocator->get(EntityManager::class);
         $element       = new ObjectSelect();
 
         $element->getProxy()->setObjectManager($entityManager);
@@ -33,8 +33,8 @@ class ObjectSelectFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function createService(ServiceLocatorInterface $container)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($container->getServiceLocator(), ObjectSelect::class);
+        return $this($serviceLocator->getServiceLocator(), ObjectSelect::class);
     }
 }

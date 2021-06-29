@@ -14,16 +14,16 @@ class CliConfiguratorFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
-        return new CliConfigurator($container);
+        return new CliConfigurator($serviceLocator);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function createService(ServiceLocatorInterface $container)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($container, CliConfigurator::class);
+        return $this($serviceLocator, CliConfigurator::class);
     }
 }

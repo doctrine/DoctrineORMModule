@@ -60,7 +60,7 @@ class MigrationsCommandFactory implements FactoryInterface
      *
      * @throws InvalidArgumentException
      */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
         $commandClassName = $this->commandClassName;
 
@@ -68,7 +68,7 @@ class MigrationsCommandFactory implements FactoryInterface
             throw new InvalidArgumentException('The class ' . $commandClassName . ' does not exist');
         }
 
-        $config            = $container->get('config');
+        $config            = $serviceLocator->get('config');
         $objectManagerName = $this->getObjectManagerName();
 
         // Copied from DoctrineModule/ServiceFactory/AbstractDoctrineServiceFactory
@@ -92,11 +92,11 @@ class MigrationsCommandFactory implements FactoryInterface
 
         $dependencyFactory = DependencyFactory::fromEntityManager(
             new ConfigurationArray($migrationConfig),
-            new ExistingEntityManager($container->get($objectManagerName))
+            new ExistingEntityManager($serviceLocator->get($objectManagerName))
         );
 
         foreach ($dependencyFactoryServices as $id => $service) {
-            $dependencyFactory->setService($id, $container->get($service));
+            $dependencyFactory->setService($id, $serviceLocator->get($service));
         }
 
         // An object manager may not have a migrations configuration and that's OK.
@@ -107,9 +107,9 @@ class MigrationsCommandFactory implements FactoryInterface
     /**
      * @throws InvalidArgumentException
      */
-    public function createService(ServiceLocatorInterface $container): DoctrineCommand
+    public function createService(ServiceLocatorInterface $serviceLocator): DoctrineCommand
     {
-        return $this($container, $this->commandClassName);
+        return $this($serviceLocator, $this->commandClassName);
     }
 
     private function getObjectManagerName(): string

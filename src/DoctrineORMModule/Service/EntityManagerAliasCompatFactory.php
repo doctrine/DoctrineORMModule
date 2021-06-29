@@ -22,9 +22,9 @@ class EntityManagerAliasCompatFactory implements FactoryInterface
      *
      * @return EntityManager
      */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
-        return $container->get('doctrine.entitymanager.orm_default');
+        return $serviceLocator->get('doctrine.entitymanager.orm_default');
     }
 
     /**
@@ -35,8 +35,8 @@ class EntityManagerAliasCompatFactory implements FactoryInterface
      *
      * @return EntityManager
      */
-    public function createService(ServiceLocatorInterface $container)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($container, EntityManager::class);
+        return $this($serviceLocator, EntityManager::class);
     }
 }

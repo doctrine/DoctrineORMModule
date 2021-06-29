@@ -25,9 +25,9 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
      *
      * @return Configuration
      */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
-        $options = $this->getOptions($container);
+        $options = $this->getOptions($serviceLocator);
         $config  = new Configuration();
 
         $config->setAutoGenerateProxyClasses($options->getGenerateProxies());
@@ -58,20 +58,20 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             $config->addFilter($name, $class);
         }
 
-        $config->setMetadataCacheImpl($container->get($options->getMetadataCache()));
-        $config->setQueryCacheImpl($container->get($options->getQueryCache()));
-        $config->setResultCacheImpl($container->get($options->getResultCache()));
-        $config->setHydrationCacheImpl($container->get($options->getHydrationCache()));
-        $config->setMetadataDriverImpl($container->get($options->getDriver()));
+        $config->setMetadataCacheImpl($serviceLocator->get($options->getMetadataCache()));
+        $config->setQueryCacheImpl($serviceLocator->get($options->getQueryCache()));
+        $config->setResultCacheImpl($serviceLocator->get($options->getResultCache()));
+        $config->setHydrationCacheImpl($serviceLocator->get($options->getHydrationCache()));
+        $config->setMetadataDriverImpl($serviceLocator->get($options->getDriver()));
 
         $namingStrategy = $options->getNamingStrategy();
         if ($namingStrategy) {
             if (is_string($namingStrategy)) {
-                if (! $container->has($namingStrategy)) {
+                if (! $serviceLocator->has($namingStrategy)) {
                     throw new InvalidArgumentException(sprintf('Naming strategy "%s" not found', $namingStrategy));
                 }
 
-                $config->setNamingStrategy($container->get($namingStrategy));
+                $config->setNamingStrategy($serviceLocator->get($namingStrategy));
             } else {
                 $config->setNamingStrategy($namingStrategy);
             }
@@ -80,11 +80,11 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         $quoteStrategy = $options->getQuoteStrategy();
         if ($quoteStrategy) {
             if (is_string($quoteStrategy)) {
-                if (! $container->has($quoteStrategy)) {
+                if (! $serviceLocator->has($quoteStrategy)) {
                     throw new InvalidArgumentException(sprintf('Quote strategy "%s" not found', $quoteStrategy));
                 }
 
-                $config->setQuoteStrategy($container->get($quoteStrategy));
+                $config->setQuoteStrategy($serviceLocator->get($quoteStrategy));
             } else {
                 $config->setQuoteStrategy($quoteStrategy);
             }
@@ -93,13 +93,13 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         $repositoryFactory = $options->getRepositoryFactory();
         if ($repositoryFactory) {
             if (is_string($repositoryFactory)) {
-                if (! $container->has($repositoryFactory)) {
+                if (! $serviceLocator->has($repositoryFactory)) {
                     throw new InvalidArgumentException(
                         sprintf('Repository factory "%s" not found', $repositoryFactory)
                     );
                 }
 
-                $config->setRepositoryFactory($container->get($repositoryFactory));
+                $config->setRepositoryFactory($serviceLocator->get($repositoryFactory));
             } else {
                 $config->setRepositoryFactory($repositoryFactory);
             }
@@ -110,7 +110,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             if ($entityListenerResolver instanceof EntityListenerResolver) {
                 $config->setEntityListenerResolver($entityListenerResolver);
             } else {
-                $config->setEntityListenerResolver($container->get($entityListenerResolver));
+                $config->setEntityListenerResolver($serviceLocator->get($entityListenerResolver));
             }
         }
 
@@ -156,7 +156,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             $config->setDefaultRepositoryClassName($className);
         }
 
-        $this->setupDBALConfiguration($container, $config);
+        $this->setupDBALConfiguration($serviceLocator, $config);
 
         return $config;
     }
@@ -164,9 +164,9 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
     /**
      * @return mixed
      */
-    public function createService(ServiceLocatorInterface $container)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($container, Configuration::class);
+        return $this($serviceLocator, Configuration::class);
     }
 
     protected function getOptionsClass(): string

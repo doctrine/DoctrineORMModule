@@ -31,18 +31,18 @@ class SQLLoggerCollectorFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
-        $options = $this->getOptions($container);
+        $options = $this->getOptions($serviceLocator);
 
         // @todo always ask the serviceLocator instead? (add a factory?)
         if ($options->getSqlLogger()) {
-            $debugStackLogger = $container->get($options->getSqlLogger());
+            $debugStackLogger = $serviceLocator->get($options->getSqlLogger());
         } else {
             $debugStackLogger = new DebugStack();
         }
 
-        $configuration = $container->get($options->getConfiguration());
+        $configuration = $serviceLocator->get($options->getConfiguration());
 
         if ($configuration->getSQLLogger() !== null) {
             $logger = new LoggerChain();
@@ -59,9 +59,9 @@ class SQLLoggerCollectorFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function createService(ServiceLocatorInterface $container)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($container, SQLLoggerCollector::class);
+        return $this($serviceLocator, SQLLoggerCollector::class);
     }
 
     /**
