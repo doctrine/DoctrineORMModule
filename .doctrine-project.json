@@ -22,7 +22,7 @@
       "branchName": "3.2.x",
       "slug": "3.2.x",
       "current": false,
-      "maintained": true
+      "maintained": false
     },
     {
       "name": "3.1.x",
