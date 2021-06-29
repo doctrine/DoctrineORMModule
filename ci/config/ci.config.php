@@ -18,7 +18,7 @@ return [
             'orm_default' => [
                 'metadata_cache'   => 'filesystem',
                 'query_cache'      => 'filesystem',
-                'generate_proxies' => Doctrine\ORM\Proxy\ProxyFactory::AUTOGENERATE_NEVER,
+                'generate_proxies' => false,
                 'proxy_dir'        => 'ci/cache/DoctrineORMModule/Proxy',
             ],
         ],
