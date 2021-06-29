@@ -26,13 +26,13 @@ class DBALConnectionFactory extends AbstractFactory
      *
      * @return Connection
      */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
-        $options = $this->getOptions($container, 'connection');
+        $options = $this->getOptions($serviceLocator, 'connection');
         $pdo     = $options->getPdo();
 
         if (is_string($pdo)) {
-            $pdo = $container->get($pdo);
+            $pdo = $serviceLocator->get($pdo);
         }
 
         $params = [
@@ -45,13 +45,13 @@ class DBALConnectionFactory extends AbstractFactory
         if (
             array_key_exists('platform', $params)
             && is_string($params['platform'])
-            && $container->has($params['platform'])
+            && $serviceLocator->has($params['platform'])
         ) {
-            $params['platform'] = $container->get($params['platform']);
+            $params['platform'] = $serviceLocator->get($params['platform']);
         }
 
-        $configuration = $container->get($options->getConfiguration());
-        $eventManager  = $container->get($options->getEventManager());
+        $configuration = $serviceLocator->get($options->getConfiguration());
+        $eventManager  = $serviceLocator->get($options->getEventManager());
 
         $connection = DriverManager::getConnection($params, $configuration, $eventManager);
         foreach ($options->getDoctrineTypeMappings() as $dbType => $doctrineType) {
@@ -74,9 +74,9 @@ class DBALConnectionFactory extends AbstractFactory
      *
      * @return Connection
      */
-    public function createService(ServiceLocatorInterface $container)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($container, Connection::class);
+        return $this($serviceLocator, Connection::class);
     }
 
     /**

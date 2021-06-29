@@ -33,10 +33,10 @@ class DBALConfigurationFactory implements FactoryInterface
      *
      * @return Configuration
      */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
         $config = new Configuration();
-        $this->setupDBALConfiguration($container, $config);
+        $this->setupDBALConfiguration($serviceLocator, $config);
 
         return $config;
     }
@@ -46,19 +46,19 @@ class DBALConfigurationFactory implements FactoryInterface
      *
      * @return Configuration
      */
-    public function createService(ServiceLocatorInterface $container)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($container, Configuration::class);
+        return $this($serviceLocator, Configuration::class);
     }
 
-    public function setupDBALConfiguration(ContainerInterface $container, Configuration $config): void
+    public function setupDBALConfiguration(ContainerInterface $serviceLocator, Configuration $config): void
     {
-        $options = $this->getOptions($container);
-        $config->setResultCacheImpl($container->get($options->resultCache));
+        $options = $this->getOptions($serviceLocator);
+        $config->setResultCacheImpl($serviceLocator->get($options->resultCache));
 
         $sqlLogger = $options->sqlLogger;
-        if (is_string($sqlLogger) && $container->has($sqlLogger)) {
-            $sqlLogger = $container->get($sqlLogger);
+        if (is_string($sqlLogger) && $serviceLocator->has($sqlLogger)) {
+            $sqlLogger = $serviceLocator->get($sqlLogger);
         }
 
         $config->setSQLLogger($sqlLogger);

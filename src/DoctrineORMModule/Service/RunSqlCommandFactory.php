@@ -17,11 +17,11 @@ class RunSqlCommandFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
         if (class_exists(SingleConnectionProvider::class)) {
             return new RunSqlCommand(
-                new SingleConnectionProvider($container->get('doctrine.connection.orm_default'))
+                new SingleConnectionProvider($serviceLocator->get('doctrine.connection.orm_default'))
             );
         }
 
@@ -31,8 +31,8 @@ class RunSqlCommandFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function createService(ServiceLocatorInterface $container)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($container, RunSqlCommand::class);
+        return $this($serviceLocator, RunSqlCommand::class);
     }
 }
