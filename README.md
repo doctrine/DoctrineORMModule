@@ -1,7 +1,8 @@
-# Doctrine ORM Module for Laminas
+Doctrine ORM Module for Laminas
+===============================
 
 [![Build Status](https://github.com/doctrine/DoctrineORMModule/workflows/Continuous%20Integration/badge.svg)](https://github.com/doctrine/DoctrineORMModule/actions)
-[![Code Coverage](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/3.1.x/graph/badge.svg)](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/3.1.x)
+[![Code Coverage](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/4.0.x/graph/badge.svg)](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/4.0.x)
 
 DoctrineORMModule integrates Doctrine ORM with Laminas quickly and easily.
 
@@ -12,13 +13,14 @@ DoctrineORMModule integrates Doctrine ORM with Laminas quickly and easily.
 
 ## Branches
 
-There are two active branches and one bug-fix only branch.   
+There is one active branch:
+
+* 4.0.x - Support for PHP 8.0
+
+There are two inactive branches: 
 
 * 3.0.x - Support for Migrations 1 & 2
 * 3.2.x - Support for Migrations 3
-
-Branch 3.1.x also supports Migrations 3 but new features required the 3.2.x branch to be created and now all enhancements happen on 3.2.x.
-3.1.x will continue to receive bug fixes only.
 
 ## Installation
 
