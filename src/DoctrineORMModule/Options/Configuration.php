@@ -69,9 +69,9 @@ class Configuration extends DBALConfiguration
     /**
      * Automatic generation of proxies (disable for production!)
      *
-     * @var bool
+     * @var int
      */
-    protected $generateProxies = true;
+    protected $generateProxies = 1;
 
     /**
      * Proxy directory.
@@ -262,14 +262,14 @@ class Configuration extends DBALConfiguration
         return $this->entityNamespaces;
     }
 
-    public function setGenerateProxies(bool $generateProxies): self
+    public function setGenerateProxies(int $generateProxies): self
     {
         $this->generateProxies = $generateProxies;
 
         return $this;
     }
 
-    public function getGenerateProxies(): bool
+    public function getGenerateProxies(): int
     {
         return $this->generateProxies;
     }
