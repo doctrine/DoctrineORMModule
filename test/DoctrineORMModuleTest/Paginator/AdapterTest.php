@@ -89,4 +89,14 @@ class AdapterTest extends TestCase
             $this->assertEquals($expectedItem, $actual[$key]);
         }
     }
+
+    public function testJsonSerialize(): void
+    {
+        $result = $this->paginatorAdapter->jsonSerialize();
+
+        $this->assertArrayHasKey('select', $result);
+        $this->assertArrayHasKey('count_select', $result);
+        $this->assertSame($result['count_select'], $this->paginator->count());
+        $this->assertSame($result['select'], $this->paginator->getQuery()->getSQL());
+    }
 }
