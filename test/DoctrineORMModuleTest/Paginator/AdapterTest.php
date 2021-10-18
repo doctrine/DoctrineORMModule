@@ -12,9 +12,10 @@ use DoctrineORMModuleTest\Assets\Entity\Test;
 use DoctrineORMModuleTest\Assets\Fixture\TestFixture;
 use DoctrineORMModuleTest\Framework\TestCase;
 
+use function class_exists;
 use function count;
 
-class AdapterTestIgnore extends TestCase
+class AdapterTest extends TestCase
 {
     /** @var QueryBuilder */
     protected $queryBuilder;
@@ -28,6 +29,12 @@ class AdapterTestIgnore extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        if (! class_exists(FixtureLoader::class)) {
+            $this->markTestIncomplete(
+                'DataFixtures must be installed to run this test.'
+            );
+        }
 
         $this->createDb();
         $loader = new FixtureLoader();

@@ -20,7 +20,7 @@ class FormEntity
     protected $id;
 
     /**
-     * @ORM\Column(type="bool")
+     * @ORM\Column(type="boolean")
      *
      * @var bool
      */
