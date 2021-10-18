@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace DoctrineORMModule\Paginator\Adapter;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use JsonSerializable;
 use Laminas\Paginator\Adapter\AdapterInterface;
 
 /**
  * Paginator adapter for the Laminas\Paginator component
  */
-class DoctrinePaginator implements AdapterInterface
+class DoctrinePaginator implements AdapterInterface, JsonSerializable
 {
     /** @var Paginator */
     protected $paginator;
@@ -54,5 +55,16 @@ class DoctrinePaginator implements AdapterInterface
     public function count()
     {
         return $this->paginator->count();
+    }
+
+    /**
+     * @return array{select: string, count_select: int}
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'select' => $this->paginator->getQuery()->getSQL(),
+            'count_select' => $this->paginator->count(),
+        ];
     }
 }
