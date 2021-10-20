@@ -7,6 +7,7 @@ with `Laminas <https://getlaminas.org/>`_.
 .. toctree::
     :caption: Table of Contents
 
+    user-guide
     developer-tools
     configuration
     cache
