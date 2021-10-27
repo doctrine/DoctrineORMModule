@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule;
 
+use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,7 +27,6 @@ class CliConfigurator
     /** @var string[] */
     private $commands = [
         'doctrine.dbal_cmd.runsql',
-        'doctrine.dbal_cmd.import',
         'doctrine.orm_cmd.clear_cache_metadata',
         'doctrine.orm_cmd.clear_cache_result',
         'doctrine.orm_cmd.clear_cache_query',
@@ -67,6 +67,12 @@ class CliConfigurator
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+
+        if (! class_exists(ImportCommand::class)) {
+            return;
+        }
+
+        $this->commands[] = 'doctrine.dbal_cmd.import';
     }
 
     public function configure(Application $cli): void
@@ -92,11 +98,16 @@ class CliConfigurator
      */
     private function getHelpers(EntityManagerInterface $objectManager): array
     {
-        return [
+        $helpers = [
             'dialog' => new QuestionHelper(),
-            'db' => new ConnectionHelper($objectManager->getConnection()),
             'em' => new EntityManagerHelper($objectManager),
         ];
+
+        if (class_exists(ConnectionHelper::class)) {
+            $helpers['db'] = new ConnectionHelper($objectManager->getConnection());
+        }
+
+        return $helpers;
     }
 
     private function createObjectManagerInputOption(): InputOption

@@ -1,6 +1,7 @@
 <?php
 
-use Doctrine\DBAL\Driver\PDOSqlite\Driver;
+use Doctrine\DBAL\Driver\PDO\SQLite\Driver;
+use Doctrine\DBAL\Driver\PDOSqlite\Driver as DriverV2;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use DoctrineModule\Service\EventManagerFactory;
 use DoctrineORMModule\Service\ConfigurationFactory;
@@ -10,7 +11,7 @@ use DoctrineORMModuleTest\Assets\Entity\TargetEntity;
 use DoctrineORMModuleTest\Assets\Entity\TargetInterface;
 use DoctrineORMModuleTest\Assets\RepositoryClass;
 
-return [
+$data = [
     'doctrine' => [
         'configuration' => [
             'orm_default' => [
@@ -109,3 +110,10 @@ return [
         ],
     ],
 ];
+
+if (class_exists(DriverV2::class)) {
+    $data['doctrine']['connection']['orm_default']['driverClass'] = DriverV2::class;
+    $data['doctrine']['connection']['orm_other']['driverClass']   = DriverV2::class;
+}
+
+return $data;

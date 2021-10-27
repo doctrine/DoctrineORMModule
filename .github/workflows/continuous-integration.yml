@@ -22,14 +22,15 @@ jobs:
           - "7.3"
           - "7.4"
           - "8.0"
+        dbal-version:
+          - "^2.12"
+          - "^3.0"
         dependencies:
           - "highest"
+          - "lowest"
         optional_dependencies:
           - true
           - false
-        include:
-          - php-version: "7.3"
-            dependencies: "lowest"
 
     services:
       mysql:
@@ -56,6 +57,9 @@ jobs:
           coverage: "pcov"
           ini-values: "zend.assertions=1"
           extensions: "pdo_mysql"
+
+      - name: "Install desired DBAL version"
+        run: "composer require doctrine/dbal ${{ matrix.dbal-version }}"
 
       - name: "Install dependencies with Composer"
         uses: "ramsey/composer-install@v1"
@@ -93,7 +97,7 @@ jobs:
 
       - name: "Run migration CLI commands"
         if: "${{ matrix.optional_dependencies }}"
-        run: "cat ci/run-cli-migrations.sh | xargs -L 1 php"
+        run: "./ci/run-cli-migrations.sh"
 
       - name: "Upload coverage file"
         uses: "actions/upload-artifact@v2"

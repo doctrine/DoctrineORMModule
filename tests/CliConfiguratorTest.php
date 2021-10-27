@@ -79,7 +79,6 @@ class CliConfiguratorTest extends TestCase
             ->getMock();
 
         $entityManager
-            ->expects($this->atLeastOnce())
             ->method('getConnection')
             ->willReturn($connection);
 
@@ -112,6 +111,10 @@ class CliConfiguratorTest extends TestCase
         assert($emHelper instanceof EntityManagerHelper);
         $this->assertInstanceOf(EntityManagerHelper::class, $emHelper);
         $this->assertSame($this->objectManager, $emHelper->getEntityManager());
+
+        if (! class_exists(ConnectionHelper::class)) {
+            return;
+        }
 
         $dbHelper = $helperSet->get('db');
         assert($dbHelper instanceof ConnectionHelper);
@@ -157,11 +160,7 @@ class CliConfiguratorTest extends TestCase
      */
     public function dataProviderForTestValidCommands(): array
     {
-        return [
-            [
-                'dbal:import',
-                ImportCommand::class,
-            ],
+        $data = [
             [
                 'dbal:run-sql',
                 RunSqlCommand::class,
@@ -219,5 +218,14 @@ class CliConfiguratorTest extends TestCase
                 ExecuteCommand::class,
             ],
         ];
+
+        if (class_exists(ImportCommand::class)) {
+            $data[] = [
+                'dbal:import',
+                ImportCommand::class,
+            ];
+        }
+
+        return $data;
     }
 }

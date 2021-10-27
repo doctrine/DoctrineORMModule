@@ -25,6 +25,7 @@ class RunSqlCommandFactory implements FactoryInterface
             );
         }
 
+        /** @psalm-suppress TooFewArguments */
         return new RunSqlCommand();
     }
 

@@ -1,3 +1,5 @@
+#!/bin/bash -eux
+
 ./vendor/bin/doctrine-module migrations:generate
 ./vendor/bin/doctrine-module migrations:diff -n
 ./vendor/bin/doctrine-module migrations:execute --up 'CiDoctrineMigrations\Version20120714005702' -n

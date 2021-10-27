@@ -36,6 +36,7 @@ return [
                 ],
                 'migrations' => [],
                 'all_or_nothing' => false,
+                'transactional' => false,
                 'check_database_platform' => true,
                 'organize_migrations' => 'year', // year or year_and_month
                 'custom_template' => null,

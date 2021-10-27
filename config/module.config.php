@@ -1,6 +1,6 @@
 <?php
 
-use Doctrine\DBAL\Tools\Console;
+use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Doctrine\ORM\Tools\Console\Command;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
@@ -9,7 +9,7 @@ use DoctrineORMModule\CliConfigurator;
 use DoctrineORMModule\Service;
 use DoctrineORMModule\Yuml;
 
-return [
+$result = [
     'doctrine' => [
         'connection' => [
             // Configuration for service `doctrine.connection.orm_default` service
@@ -185,7 +185,6 @@ return [
             'version'  => [],
         ],
     ],
-
     'service_manager' => [
         'factories' => [
             CliConfigurator::class => Service\CliConfiguratorFactory::class,
@@ -194,8 +193,6 @@ return [
             'doctrine.dbal_cmd.runsql' => Service\RunSqlCommandFactory::class,
         ],
         'invokables' => [
-            // DBAL commands
-            'doctrine.dbal_cmd.import' => Console\Command\ImportCommand::class,
             // ORM Commands
             'doctrine.orm_cmd.clear_cache_metadata' => Command\ClearCache\MetadataCommand::class,
             'doctrine.orm_cmd.clear_cache_result' => Command\ClearCache\ResultCommand::class,
@@ -292,3 +289,9 @@ return [
         ],
     ],
 ];
+
+if (class_exists(ImportCommand::class)) {
+    $result['service_manager']['invokables']['doctrine.dbal_cmd.import'] = ImportCommand::class;
+}
+
+return $result;

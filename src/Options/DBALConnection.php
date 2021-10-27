@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Options;
 
-use Doctrine\DBAL\Driver\PDOMySql\Driver;
+use Doctrine\DBAL\Driver\PDO\MySQL\Driver as DriverV3;
+use Doctrine\DBAL\Driver\PDOMySql\Driver as DriverV2;
 use Laminas\Stdlib\AbstractOptions;
 use PDO;
+
+use function class_exists;
 
 /**
  * DBAL Connection options
@@ -45,7 +48,7 @@ class DBALConnection extends AbstractOptions
      *
      * @var string
      */
-    protected $driverClass = Driver::class;
+    protected $driverClass;
 
     /**
      * Set the wrapper class for the driver. In general, this should not
@@ -70,6 +73,18 @@ class DBALConnection extends AbstractOptions
 
     /** @var bool */
     protected $useSavepoints = false;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __construct($options = null)
+    {
+        $this->driverClass = class_exists(DriverV2::class)
+            ? DriverV2::class
+            : DriverV3::class;
+
+        parent::__construct($options);
+    }
 
     public function setConfiguration(string $configuration): void
     {
