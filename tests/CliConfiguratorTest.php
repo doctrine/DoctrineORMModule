@@ -4,6 +4,7 @@ namespace DoctrineORMModuleTest\Listener;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
+use Doctrine\DBAL\Tools\Console\Command\ReservedWordsCommand;
 use Doctrine\DBAL\Tools\Console\Command\RunSqlCommand;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
@@ -164,6 +165,10 @@ class CliConfiguratorTest extends TestCase
             [
                 'dbal:run-sql',
                 RunSqlCommand::class,
+            ],
+            [
+                'dbal:reserved-words',
+                ReservedWordsCommand::class,
             ],
             [
                 'orm:clear-cache:query',

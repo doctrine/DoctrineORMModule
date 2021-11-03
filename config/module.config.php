@@ -191,6 +191,7 @@ $result = [
             'Doctrine\ORM\EntityManager' => Service\EntityManagerAliasCompatFactory::class,
             // DBAL commands
             'doctrine.dbal_cmd.runsql' => Service\RunSqlCommandFactory::class,
+            'doctrine.dbal_cmd.reserved_words'  => Service\ReservedWordsCommandFactory::class,
         ],
         'invokables' => [
             // ORM Commands

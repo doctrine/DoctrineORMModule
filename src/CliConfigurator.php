@@ -27,6 +27,7 @@ class CliConfigurator
     /** @var string[] */
     private $commands = [
         'doctrine.dbal_cmd.runsql',
+        'doctrine.dbal_cmd.reserved_words',
         'doctrine.orm_cmd.clear_cache_metadata',
         'doctrine.orm_cmd.clear_cache_result',
         'doctrine.orm_cmd.clear_cache_query',

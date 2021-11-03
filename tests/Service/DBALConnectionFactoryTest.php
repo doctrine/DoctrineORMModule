@@ -4,8 +4,7 @@ namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\EventManager;
-use Doctrine\DBAL\Driver\PDO\SQLite\Driver as PDOSqliteDriver;
-use Doctrine\DBAL\Driver\PDOSqlite\Driver as PDOSqliteDriverV2;
+use Doctrine\DBAL\Driver\PDO\SQLite\Driver;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Configuration;
@@ -16,8 +15,6 @@ use DoctrineORMModuleTest\Assets\Types\MoneyType;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 
-use function class_exists;
-
 /**
  * @covers \DoctrineORMModule\Service\DBALConnectionFactory
  */
@@ -27,8 +24,6 @@ class DBALConnectionFactoryTest extends TestCase
     protected $serviceManager;
     /** @var DBALConnectionFactory */
     protected $factory;
-    /** @var string */
-    protected $driver;
 
     public function setUp(): void
     {
@@ -36,7 +31,6 @@ class DBALConnectionFactoryTest extends TestCase
         $this->factory        = new DBALConnectionFactory('orm_default');
         $this->serviceManager->setService('doctrine.cache.array', new ArrayCache());
         $this->serviceManager->setService('doctrine.eventmanager.orm_default', new EventManager());
-        $this->driver = class_exists(PDOSqliteDriver::class) ? PDOSqliteDriver::class : PDOSqliteDriverV2::class;
     }
 
     public function testNoConnectWithoutCustomMappingsAndCommentedTypes(): void
@@ -45,7 +39,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => $this->driver,
+                        'driverClass'   => Driver::class,
                         'params' => ['memory' => true],
                     ],
                 ],
@@ -69,7 +63,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => $this->driver,
+                        'driverClass'   => Driver::class,
                         'params' => ['memory' => true],
                         'doctrineTypeMappings' => ['money' => 'string'],
                     ],
@@ -95,7 +89,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => $this->driver,
+                        'driverClass'   => Driver::class,
                         'params' => ['memory' => true],
                         'doctrineTypeMappings' => ['money' => 'money'],
                         'doctrineCommentedTypes' => ['money'],
@@ -135,7 +129,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => $this->driver,
+                        'driverClass'   => Driver::class,
                         'params' => ['platform' => 'platform_service'],
                     ],
                 ],
@@ -165,7 +159,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => $this->driver,
+                        'driverClass'   => Driver::class,
                         'params' => ['memory' => true],
                     ],
                 ],
@@ -189,7 +183,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => $this->driver,
+                        'driverClass'   => Driver::class,
                         'use_savepoints' => true,
                         'params' => ['memory' => true],
                     ],
