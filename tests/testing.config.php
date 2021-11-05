@@ -25,7 +25,7 @@ return [
                 'class' => AnnotationDriver::class,
                 'cache' => 'array',
                 'paths' => [
-                    __DIR__ . '/DoctrineORMModuleTest/Assets/Entity',
+                    __DIR__ . '/Assets/Entity',
                 ],
             ],
             'orm_default' => [

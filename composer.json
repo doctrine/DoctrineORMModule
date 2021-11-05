@@ -83,13 +83,13 @@
         "doctrine/migrations":                "doctrine migrations if you want to keep your schema definitions versioned"
     },
     "autoload":          {
-        "psr-0": {
+        "psr-4": {
             "DoctrineORMModule\\": "src/"
         }
     },
     "autoload-dev":      {
-        "psr-0": {
-            "DoctrineORMModuleTest\\": "test/"
+        "psr-4": {
+            "DoctrineORMModuleTest\\": "tests/"
         }
     },
     "scripts": {

@@ -35,7 +35,7 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty">
-        <exclude-pattern>test/*</exclude-pattern>
+        <exclude-pattern>tests/*</exclude-pattern>
     </rule>
 
     <rule ref="Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed">
@@ -45,5 +45,5 @@
     <!-- Paths to check -->
     <file>config</file>
     <file>src</file>
-    <file>test</file>
+    <file>tests</file>
 </ruleset>

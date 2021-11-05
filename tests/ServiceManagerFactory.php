@@ -22,7 +22,7 @@ class ServiceManagerFactory
      */
     public static function getServiceManager(?array $configuration = null): ServiceManager
     {
-        $configuration        = $configuration ?: include __DIR__ . '/../config.php';
+        $configuration        = $configuration ?: include __DIR__ . '/config.php';
         $serviceManager       = new ServiceManager();
         $serviceManagerConfig = new ServiceManagerConfig(
             $configuration['service_manager'] ?? []
