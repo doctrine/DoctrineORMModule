@@ -36,9 +36,6 @@
         }
     ],
     "config": {
-        "platform": {
-            "php": "7.3"
-        },
         "sort-packages": true
     },
     "extra": {
@@ -48,7 +45,7 @@
         }
     },
     "require":           {
-        "php":                                  "^7.3 || ^8.0",
+        "php":                                  "^7.3 || ~8.0.0",
         "composer/package-versions-deprecated": "^1.11",
         "doctrine/dbal":                        "^2.10",
         "doctrine/doctrine-module":             "^4.0",
