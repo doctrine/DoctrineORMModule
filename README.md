@@ -36,7 +36,7 @@ composer require doctrine/doctrine-orm-module
 are not compatible with PHP 8.0 or later. To prevent installation of these unused cache adapters, you will need 
 to add the following to your `composer.json` file:
 
-```
+```json
     "require": {
          "doctrine/doctrine-orm-module": "^4.1.0"
     },

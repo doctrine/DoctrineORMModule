@@ -29,7 +29,7 @@ currently comes with some storage adapters which are not compatible with PHP 8.0
 prevent installation of these unused cache adapters, you will need to add the following to your
 ``composer.json`` file:
 
-.. code::
+.. code:: json
 
     "require": {
          "doctrine/doctrine-orm-module": "^4.1.0"
