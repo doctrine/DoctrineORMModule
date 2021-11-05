@@ -1,4 +1,3 @@
-
 name: "Continuous Integration"
 
 on:
@@ -60,13 +59,25 @@ jobs:
 
       - name: "Install dependencies with Composer"
         uses: "ramsey/composer-install@v1"
+        if: "! startsWith(matrix.php-version, '8')"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "--prefer-dist --no-suggest"
 
+      - name: "Install dependencies with Composer (--ignore-platform-req=php)"
+        uses: "ramsey/composer-install@v1"
+        if: "startsWith(matrix.php-version, '8')"
+        with:
+          dependency-versions: "${{ matrix.dependencies }}"
+          composer-options: "--prefer-dist --no-suggest --ignore-platform-req=php"
+
       - name: "Remove optional dependencies"
-        if: "${{ !matrix.optional_dependencies }}"
+        if: "! startsWith(matrix.php-version, '8') && ! matrix.optional_dependencies"
         run: "composer remove --dev doctrine/data-fixtures doctrine/migrations"
+
+      - name: "Remove optional dependencies (--ignore-platform-req=php)"
+        if: "startsWith(matrix.php-version, '8') && ! matrix.optional_dependencies"
+        run: "composer remove --ignore-platform-req=php --dev doctrine/data-fixtures doctrine/migrations"
 
       - name: "Configure test application"
         run: "cp ci/config/application.config.php config/application.config.php"
