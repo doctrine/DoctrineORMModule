@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.11.2@6fba5eb554f9507b72932f9c75533d8af593688d">
+  <file src="vendor/laminas/laminas-servicemanager/src/Exception/CyclicAliasException.php">
+    <ParseError occurrences="7">
+      <code>)</code>
+      <code>,</code>
+      <code>,</code>
+      <code>:</code>
+      <code>=&gt;</code>
+      <code>fn</code>
+      <code>fn</code>
+    </ParseError>
+  </file>
+  <file src="vendor/laminas/laminas-servicemanager/src/ServiceManager.php">
+    <ParseError occurrences="2">
+      <code>=&gt;</code>
+      <code>fn</code>
+    </ParseError>
+  </file>
+</files>
