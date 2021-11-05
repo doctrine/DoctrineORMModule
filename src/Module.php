@@ -63,7 +63,7 @@ class Module implements
      */
     public function getConfig()
     {
-        return include __DIR__ . '/../../config/module.config.php';
+        return include __DIR__ . '/../config/module.config.php';
     }
 
     /**
@@ -71,7 +71,7 @@ class Module implements
      */
     public function getControllerConfig()
     {
-        return include __DIR__ . '/../../config/controllers.config.php';
+        return include __DIR__ . '/../config/controllers.config.php';
     }
 
     /**

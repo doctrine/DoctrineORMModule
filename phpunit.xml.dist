@@ -18,6 +18,6 @@
         </include>
     </coverage>
     <testsuite name="DoctrineORMModule test">
-        <directory>./test</directory>
+        <directory>./tests</directory>
     </testsuite>
 </phpunit>
