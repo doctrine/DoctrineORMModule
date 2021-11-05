@@ -1,5 +1,5 @@
-Doctrine ORM Module for Laminas
-===============================
+Introduction
+============
 
 The DoctrineORMModule leverages `DoctrineModule <https://www.doctrine-project.org/projects/doctrine-module/en/current/index.html>`__
 and integrates `Doctrine ORM <https://www.doctrine-project.org/projects/doctrine-orm/en/current/index.html>`__
