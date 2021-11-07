@@ -10,8 +10,6 @@ use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
-use function class_exists;
-
 class RunSqlCommandFactory implements FactoryInterface
 {
     /**
@@ -19,14 +17,9 @@ class RunSqlCommandFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
-        if (class_exists(SingleConnectionProvider::class)) {
-            return new RunSqlCommand(
-                new SingleConnectionProvider($serviceLocator->get('doctrine.connection.orm_default'))
-            );
-        }
-
-        /** @psalm-suppress TooFewArguments */
-        return new RunSqlCommand();
+        return new RunSqlCommand(
+            new SingleConnectionProvider($serviceLocator->get('doctrine.connection.orm_default'))
+        );
     }
 
     /**
