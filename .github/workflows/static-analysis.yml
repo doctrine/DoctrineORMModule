@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - "7.4"
+          - "8.0"
 
     steps:
       - name: "Checkout code"
@@ -32,6 +32,7 @@ jobs:
         uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "highest"
+          composer-options: "--prefer-dist --no-suggest --ignore-platform-req=php"
 
       - name: "Run a static analysis with vimeo/psalm"
-        run: "vendor/bin/psalm --show-info=false --stats --output-format=github --threads=$(nproc)"
+        run: "vendor/bin/psalm --show-info=false --stats --output-format=github --threads=$(nproc) --php-version=8.0"
