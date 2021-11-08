@@ -42,4 +42,9 @@ class Version20120714005702 extends AbstractMigration
     {
         $this->addSql("DROP TABLE test");
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }

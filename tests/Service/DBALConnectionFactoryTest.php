@@ -4,7 +4,7 @@ namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\EventManager;
-use Doctrine\DBAL\Driver\PDOSqlite\Driver as PDOSqliteDriver;
+use Doctrine\DBAL\Driver\PDO\SQLite\Driver;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Configuration;
@@ -39,7 +39,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => PDOSqliteDriver::class,
+                        'driverClass'   => Driver::class,
                         'params' => ['memory' => true],
                     ],
                 ],
@@ -63,7 +63,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => PDOSqliteDriver::class,
+                        'driverClass'   => Driver::class,
                         'params' => ['memory' => true],
                         'doctrineTypeMappings' => ['money' => 'string'],
                     ],
@@ -89,7 +89,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => PDOSqliteDriver::class,
+                        'driverClass'   => Driver::class,
                         'params' => ['memory' => true],
                         'doctrineTypeMappings' => ['money' => 'money'],
                         'doctrineCommentedTypes' => ['money'],
@@ -129,7 +129,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => PDOSqliteDriver::class,
+                        'driverClass'   => Driver::class,
                         'params' => ['platform' => 'platform_service'],
                     ],
                 ],
@@ -159,7 +159,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => PDOSqliteDriver::class,
+                        'driverClass'   => Driver::class,
                         'params' => ['memory' => true],
                     ],
                 ],
@@ -183,7 +183,7 @@ class DBALConnectionFactoryTest extends TestCase
             'doctrine' => [
                 'connection' => [
                     'orm_default' => [
-                        'driverClass'   => PDOSqliteDriver::class,
+                        'driverClass'   => Driver::class,
                         'use_savepoints' => true,
                         'params' => ['memory' => true],
                     ],

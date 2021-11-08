@@ -1,6 +1,6 @@
 <?php
 
-use Doctrine\DBAL\Driver\PDOSqlite\Driver;
+use Doctrine\DBAL\Driver\PDO\SQLite\Driver;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use DoctrineModule\Service\EventManagerFactory;
 use DoctrineORMModule\Service\ConfigurationFactory;

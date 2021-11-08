@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Options;
 
-use Doctrine\DBAL\Driver\PDOMySql\Driver;
+use Doctrine\DBAL\Driver\PDO\MySQL\Driver;
 use Laminas\Stdlib\AbstractOptions;
 use PDO;
 

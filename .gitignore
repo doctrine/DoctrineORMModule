@@ -8,3 +8,5 @@ composer.phar
 .phpunit.result.cache
 .php_cs.cache
 .phpcs-cache
+config/application.config.php
+ci/20*/

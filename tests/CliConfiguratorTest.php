@@ -4,6 +4,7 @@ namespace DoctrineORMModuleTest\Listener;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
+use Doctrine\DBAL\Tools\Console\Command\ReservedWordsCommand;
 use Doctrine\DBAL\Tools\Console\Command\RunSqlCommand;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
@@ -79,7 +80,6 @@ class CliConfiguratorTest extends TestCase
             ->getMock();
 
         $entityManager
-            ->expects($this->atLeastOnce())
             ->method('getConnection')
             ->willReturn($connection);
 
@@ -112,6 +112,10 @@ class CliConfiguratorTest extends TestCase
         assert($emHelper instanceof EntityManagerHelper);
         $this->assertInstanceOf(EntityManagerHelper::class, $emHelper);
         $this->assertSame($this->objectManager, $emHelper->getEntityManager());
+
+        if (! class_exists(ConnectionHelper::class)) {
+            return;
+        }
 
         $dbHelper = $helperSet->get('db');
         assert($dbHelper instanceof ConnectionHelper);
@@ -157,14 +161,14 @@ class CliConfiguratorTest extends TestCase
      */
     public function dataProviderForTestValidCommands(): array
     {
-        return [
-            [
-                'dbal:import',
-                ImportCommand::class,
-            ],
+        $data = [
             [
                 'dbal:run-sql',
                 RunSqlCommand::class,
+            ],
+            [
+                'dbal:reserved-words',
+                ReservedWordsCommand::class,
             ],
             [
                 'orm:clear-cache:query',
@@ -219,5 +223,14 @@ class CliConfiguratorTest extends TestCase
                 ExecuteCommand::class,
             ],
         ];
+
+        if (class_exists(ImportCommand::class)) {
+            $data[] = [
+                'dbal:import',
+                ImportCommand::class,
+            ];
+        }
+
+        return $data;
     }
 }

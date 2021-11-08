@@ -1,6 +1,6 @@
 #!/bin/bash -eux
 
-./vendor/bin/doctrine-module dbal:import ci/dummy-import.sql
+mysql -h 127.0.0.1 -u root --password='' database < ci/dummy-import.sql
 ./vendor/bin/doctrine-module dbal:run-sql "SELECT 1"
 ./vendor/bin/doctrine-module orm:clear-cache:metadata
 ./vendor/bin/doctrine-module orm:clear-cache:query

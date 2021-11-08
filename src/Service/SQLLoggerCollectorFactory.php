@@ -45,9 +45,10 @@ class SQLLoggerCollectorFactory implements FactoryInterface
         $configuration = $serviceLocator->get($options->getConfiguration());
 
         if ($configuration->getSQLLogger() !== null) {
-            $logger = new LoggerChain();
-            $logger->addLogger($debugStackLogger);
-            $logger->addLogger($configuration->getSQLLogger());
+            $logger = new LoggerChain([
+                $debugStackLogger,
+                $configuration->getSQLLogger(),
+            ]);
             $configuration->setSQLLogger($logger);
         } else {
             $configuration->setSQLLogger($debugStackLogger);
