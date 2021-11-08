@@ -15,12 +15,6 @@ and easily. The following features are intended to work out of the box:
   - Multiple DBAL connections
   - Reuse existing PDO connections in DBAL connection
 
-## Documentation
-
-Please check the [documentation on the Doctrine website](https://www.doctrine-project.org/projects/DoctrineORMModule.html)
-for more detailed documentation on the features provided by this component.
-The sources files for the documentation can be found in the [`docs` dir](./docs/en).
-
 ## Installation
 
 Run the following to install this library using [Composer](https://getcomposer.org/):
