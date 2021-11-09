@@ -8,8 +8,8 @@ use DoctrineModule\Service\EventManagerFactory;
 use DoctrineORMModule\Service\ConfigurationFactory;
 use DoctrineORMModule\Service\DBALConnectionFactory;
 use DoctrineORMModule\Service\EntityManagerFactory;
+use DoctrineORMModuleTest\Assets\Entity\Target;
 use DoctrineORMModuleTest\Assets\Entity\TargetEntity;
-use DoctrineORMModuleTest\Assets\Entity\TargetInterface;
 use DoctrineORMModuleTest\Assets\RepositoryClass;
 
 return [
@@ -40,13 +40,13 @@ return [
         'entity_resolver' => [
             'orm_default' => [
                 'resolvers' => [
-                    TargetInterface::class
+                    Target::class
                         => TargetEntity::class,
                 ],
             ],
             'orm_other' => [
                 'resolvers' => [
-                    TargetInterface::class
+                    Target::class
                         => TargetEntity::class,
                 ],
             ],

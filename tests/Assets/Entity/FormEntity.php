@@ -113,35 +113,35 @@ class FormEntity
     protected $stringNullable;
 
     /**
-     * @ORM\OneToOne(targetEntity="TargetInterface")
+     * @ORM\OneToOne(targetEntity="Target")
      *
-     * @var TargetInterface
+     * @var Target
      */
     protected $targetOne;
 
     /**
-     * @ORM\OneToOne(targetEntity="TargetInterface")
+     * @ORM\OneToOne(targetEntity="Target")
      * @ORM\JoinColumn(nullable=true)
      *
-     * @var TargetInterface|null
+     * @var Target|null
      */
     protected $targetOneNullable;
 
    /**
-    * @ORM\OneToOne(targetEntity="TargetInterface")
+    * @ORM\OneToOne(targetEntity="Target")
     * @ORM\JoinColumn(nullable=true)
     *
     * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")
     * @Form\Options({"empty_option":null})
     *
-    * @var TargetInterface|null
+    * @var Target|null
     */
     protected $noDisplayEmptyOption;
 
     /**
      * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntity")
      *
-     * @var TargetInterface[]
+     * @var Target[]
      */
     protected $targetMany;
 

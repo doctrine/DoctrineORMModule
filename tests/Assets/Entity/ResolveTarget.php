@@ -21,9 +21,9 @@ class ResolveTarget
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="TargetInterface")
+     * @ORM\OneToOne(targetEntity="Target")
      *
-     * @var TargetInterface
+     * @var Target
      */
     protected $target;
 }

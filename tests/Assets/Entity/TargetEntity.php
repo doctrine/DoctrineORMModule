@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  */
-class TargetEntity implements TargetInterface
+class TargetEntity implements Target
 {
     /**
      * @ORM\Id
