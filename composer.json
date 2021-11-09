@@ -54,7 +54,7 @@
     },
     "require-dev": {
         "doctrine/annotations": "^1.13.2",
-        "doctrine/coding-standard": "^8.2.1",
+        "doctrine/coding-standard": "^9.0.0",
         "doctrine/data-fixtures": "^1.5.1",
         "doctrine/migrations": "^3.3.0",
         "laminas/laminas-developer-tools": "^2.2.0",

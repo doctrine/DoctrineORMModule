@@ -1,6 +1,10 @@
-ci export-ignore
-/tests export-ignore
-.gitattributes export-ignore
-.gitignore export-ignore
-.scrutinizer.yml export-ignore
-phpunit.xml.dist export-ignore
+/.gitattributes export-ignore
+/.github/ export-ignore
+/.gitignore export-ignore
+/composer.lock export-ignore
+/phpcs.xml.dist export-ignore
+/phpstan.neon export-ignore
+/phpunit.xml.dist export-ignore
+/psalm.xml.dist export-ignore
+/psalm-baseline.xml export-ignore
+/tests/ export-ignore
