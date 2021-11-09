@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Doctrine\DBAL\Driver\PDO\SQLite\Driver;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use DoctrineModule\Service\EventManagerFactory;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Collector;
 
 use DoctrineORMModuleTest\Assets\Entity\EntityWithoutRepository;

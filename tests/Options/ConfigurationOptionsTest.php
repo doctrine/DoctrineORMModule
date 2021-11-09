@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Options;
 
 use Doctrine\ORM\Mapping\EntityListenerResolver;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Paginator;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
