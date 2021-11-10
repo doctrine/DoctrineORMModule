@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 use Doctrine\DBAL\Driver\PDO\SQLite\Driver;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use DoctrineModule\Service\EventManagerFactory;
 use DoctrineORMModule\Service\ConfigurationFactory;
 use DoctrineORMModule\Service\DBALConnectionFactory;
 use DoctrineORMModule\Service\EntityManagerFactory;
+use DoctrineORMModuleTest\Assets\Entity\Target;
 use DoctrineORMModuleTest\Assets\Entity\TargetEntity;
-use DoctrineORMModuleTest\Assets\Entity\TargetInterface;
 use DoctrineORMModuleTest\Assets\RepositoryClass;
 
 return [
@@ -38,13 +40,13 @@ return [
         'entity_resolver' => [
             'orm_default' => [
                 'resolvers' => [
-                    TargetInterface::class
+                    Target::class
                         => TargetEntity::class,
                 ],
             ],
             'orm_other' => [
                 'resolvers' => [
-                    TargetInterface::class
+                    Target::class
                         => TargetEntity::class,
                 ],
             ],

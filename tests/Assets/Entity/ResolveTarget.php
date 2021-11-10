@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Assets\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -19,9 +21,9 @@ class ResolveTarget
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="TargetInterface")
+     * @ORM\OneToOne(targetEntity="Target")
      *
-     * @var TargetInterface
+     * @var Target
      */
     protected $target;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineORMModuleTest\Framework;
 
 use Doctrine\ORM\EntityManager;
