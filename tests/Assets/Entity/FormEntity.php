@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineORMModuleTest\Assets\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Laminas\Form\Annotation as Form;
 

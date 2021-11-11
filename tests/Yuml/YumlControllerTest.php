@@ -9,8 +9,8 @@ use Laminas\Http\Client;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\Plugin\Redirect;
 use Laminas\Mvc\Controller\PluginManager;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 use UnexpectedValueException;
 
 /**
@@ -23,10 +23,10 @@ class YumlControllerTest extends TestCase
     /** @var YumlController */
     protected $controller;
 
-    /** @var Client|PHPUnit_Framework_MockObject_MockObject */
+    /** @var Client&MockObject */
     protected $httpClient;
 
-    /** @var PluginManager|PHPUnit_Framework_MockObject_MockObject */
+    /** @var PluginManager&MockObject */
     protected $pluginManager;
 
     /**

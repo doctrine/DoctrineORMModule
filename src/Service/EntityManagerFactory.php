@@ -9,6 +9,8 @@ use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\EntityManager as DoctrineORMModuleEntityManager;
 use Interop\Container\ContainerInterface;
 
+use function assert;
+
 class EntityManagerFactory extends AbstractFactory
 {
     /**
@@ -18,7 +20,8 @@ class EntityManagerFactory extends AbstractFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        $options    = $this->getOptions($container, 'entitymanager');
+        $options = $this->getOptions($container, 'entitymanager');
+        assert($options instanceof DoctrineORMModuleEntityManager);
         $connection = $container->get($options->getConnection());
         $config     = $container->get($options->getConfiguration());
 

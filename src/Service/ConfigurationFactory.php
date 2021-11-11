@@ -16,6 +16,7 @@ use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 use function is_string;
+use function method_exists;
 use function sprintf;
 
 class ConfigurationFactory extends DoctrineConfigurationFactory
@@ -146,9 +147,12 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
             $config->setSecondLevelCacheConfiguration($cacheConfiguration);
         }
 
-        $filterSchemaAssetsExpression = $options->getFilterSchemaAssetsExpression();
-        if ($filterSchemaAssetsExpression) {
-            $config->setFilterSchemaAssetsExpression($filterSchemaAssetsExpression);
+        // only works for DBAL 2.x, not for 3.x
+        if (method_exists($config, 'setFilterSchemaAssetsExpression')) {
+            $filterSchemaAssetsExpression = $options->getFilterSchemaAssetsExpression();
+            if ($filterSchemaAssetsExpression) {
+                $config->setFilterSchemaAssetsExpression($filterSchemaAssetsExpression);
+            }
         }
 
         $className = $options->getDefaultRepositoryClassName();
@@ -161,10 +165,7 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         return $config;
     }
 
-    /**
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $serviceLocator): Configuration
     {
         return $this($serviceLocator, Configuration::class);
     }

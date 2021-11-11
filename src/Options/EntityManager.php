@@ -55,9 +55,6 @@ class EntityManager extends AbstractOptions
         return $this;
     }
 
-    /**
-     * @return self
-     */
     public function getConnection(): string
     {
         return 'doctrine.connection.' . $this->connection;
@@ -70,9 +67,6 @@ class EntityManager extends AbstractOptions
         return $this;
     }
 
-    /**
-     * @return self
-     */
     public function getEntityResolver(): string
     {
         return 'doctrine.entity_resolver.' . $this->entityResolver;

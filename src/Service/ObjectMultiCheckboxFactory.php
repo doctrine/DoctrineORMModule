@@ -35,6 +35,6 @@ class ObjectMultiCheckboxFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($serviceLocator->getServiceLocator(), ObjectMultiCheckbox::class);
+        return $this($serviceLocator, ObjectMultiCheckbox::class);
     }
 }

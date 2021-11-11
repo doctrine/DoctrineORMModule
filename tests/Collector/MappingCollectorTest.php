@@ -8,8 +8,8 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 use DoctrineORMModule\Collector\MappingCollector;
 use Laminas\Mvc\MvcEvent;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 
 use function assert;
 use function serialize;
@@ -20,7 +20,7 @@ use function unserialize;
  */
 class MappingCollectorTest extends TestCase
 {
-    /** @var ClassMetadataFactory|PHPUnit_Framework_MockObject_MockObject */
+    /** @var ClassMetadataFactory&MockObject */
     protected $metadataFactory;
 
     /** @var MappingCollector */

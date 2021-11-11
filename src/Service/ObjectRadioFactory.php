@@ -35,6 +35,6 @@ class ObjectRadioFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($serviceLocator->getServiceLocator(), ObjectRadio::class);
+        return $this($serviceLocator, ObjectRadio::class);
     }
 }
