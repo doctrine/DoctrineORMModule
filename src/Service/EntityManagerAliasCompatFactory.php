@@ -32,6 +32,7 @@ class EntityManagerAliasCompatFactory implements FactoryInterface
      *
      * @deprecated this method was introduced to allow aliasing of service `Doctrine\ORM\EntityManager`
      *             from `doctrine.entitymanager.orm_default`
+     * @deprecated 4.1.0 With laminas-servicemanager v3 this method is obsolete and will be removed in 5.0.0.
      *
      * @return EntityManager
      */
