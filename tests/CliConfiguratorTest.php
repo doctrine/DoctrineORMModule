@@ -226,6 +226,7 @@ class CliConfiguratorTest extends TestCase
             ],
         ];
 
+        // this is only available with DBAL 2.x
         if (class_exists(ImportCommand::class)) {
             $data[] = [
                 'dbal:import',

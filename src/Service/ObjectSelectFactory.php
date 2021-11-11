@@ -35,6 +35,6 @@ class ObjectSelectFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($serviceLocator->getServiceLocator(), ObjectSelect::class);
+        return $this($serviceLocator, ObjectSelect::class);
     }
 }

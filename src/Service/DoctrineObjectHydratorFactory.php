@@ -24,6 +24,6 @@ class DoctrineObjectHydratorFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($serviceLocator->getServiceLocator(), DoctrineObject::class);
+        return $this($serviceLocator, DoctrineObject::class);
     }
 }

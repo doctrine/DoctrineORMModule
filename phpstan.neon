@@ -1,0 +1,15 @@
+parameters:
+    level: 3
+    paths:
+        - src
+        - tests
+    ignoreErrors:
+        -
+            message: '#Return type .* of method DoctrineORMModule\\Yuml\\YumlController::indexAction\(\)#'
+            path: src/Yuml/YumlController.php
+        -
+            message: '#Method DoctrineORMModule\\CliConfigurator::getHelpers\(\) should return#'
+            path: src/CliConfigurator.php
+        -
+            message: '#Method DoctrineORMModuleTest\\Listener\\CliConfiguratorTest::dataProviderForTestValidCommands\(\) should return#'
+            path: tests/CliConfiguratorTest.php

@@ -13,6 +13,8 @@ use Interop\Container\ContainerInterface;
 use Laminas\EventManager\EventManager;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
+use function assert;
+
 class EntityResolverFactory extends AbstractFactory
 {
     /**
@@ -20,7 +22,8 @@ class EntityResolverFactory extends AbstractFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        $options      = $this->getOptions($container, 'entity_resolver');
+        $options = $this->getOptions($container, 'entity_resolver');
+        assert($options instanceof EntityResolver);
         $eventManager = $container->get($options->getEventManager());
         $resolvers    = $options->getResolvers();
 

@@ -95,7 +95,7 @@ class CliConfigurator
     }
 
     /**
-     * @return Helper[]
+     * @return array<string,Helper>
      */
     private function getHelpers(EntityManagerInterface $objectManager): array
     {
@@ -104,6 +104,7 @@ class CliConfigurator
             'em' => new EntityManagerHelper($objectManager),
         ];
 
+        // this is only available with DBAL 2.x
         if (class_exists(ConnectionHelper::class)) {
             $helpers['db'] = new ConnectionHelper($objectManager->getConnection());
         }

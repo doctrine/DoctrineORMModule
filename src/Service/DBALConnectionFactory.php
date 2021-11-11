@@ -14,6 +14,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 
 use function array_key_exists;
 use function array_merge;
+use function assert;
 use function is_string;
 
 /**
@@ -29,7 +30,8 @@ class DBALConnectionFactory extends AbstractFactory
     public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
         $options = $this->getOptions($serviceLocator, 'connection');
-        $pdo     = $options->getPdo();
+        assert($options instanceof DBALConnection);
+        $pdo = $options->getPdo();
 
         if (is_string($pdo)) {
             $pdo = $serviceLocator->get($pdo);

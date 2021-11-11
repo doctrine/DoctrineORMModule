@@ -19,6 +19,8 @@ use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
+use function assert;
+
 class ConfigurationFactoryTest extends TestCase
 {
     /** @var ServiceManager */
@@ -328,6 +330,7 @@ class ConfigurationFactoryTest extends TestCase
         $this->assertInstanceOf(CacheConfiguration::class, $secondLevelCache);
 
         $cacheFactory = $secondLevelCache->getCacheFactory();
+        assert($cacheFactory instanceof DefaultCacheFactory);
         $this->assertInstanceOf(DefaultCacheFactory::class, $cacheFactory);
         $this->assertEquals('my_dir', $cacheFactory->getFileLockRegionDirectory());
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Service;
 
+use BadMethodCallException;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Collector\MappingCollector;
 use Interop\Container\ContainerInterface;
@@ -39,5 +40,6 @@ class MappingCollectorFactory extends AbstractFactory
 
     public function getOptionsClass(): string
     {
+        throw new BadMethodCallException();
     }
 }
