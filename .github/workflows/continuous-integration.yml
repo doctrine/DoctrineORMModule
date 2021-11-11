@@ -104,9 +104,6 @@ jobs:
       - name: "Run PHPUnit"
         run: "vendor/bin/phpunit --coverage-clover=coverage.xml"
 
-      - name: "Test coverage"
-        run: "php build/coverage-checker.php coverage.xml 70"
-
       - name: "Run CLI commands"
         run: "./ci/run-cli.sh"
 
