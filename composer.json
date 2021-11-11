@@ -89,12 +89,15 @@
     "scripts": {
         "check": [
             "@cs-check",
+            "@phpstan",
+            "@psalm",
             "@test"
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
+        "phpstan": "phpstan analyse",
+        "psalm": "psalm --stats",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --coverage-clover build/clover.xml",
-        "static-analysis": "psalm --shepherd --stats"
+        "test-coverage": "phpunit --colors=always --coverage-clover=coverage.xml"
     }
 }
