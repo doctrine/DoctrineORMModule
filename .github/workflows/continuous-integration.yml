@@ -22,30 +22,30 @@ jobs:
           - "8.0"
           - "8.1"
         dbal-version:
-          - "^2.13"
-          - "^3.1"
+          - "2.13.0"
+          - "3.1.0"
         dependencies:
           - "highest"
-        optional_dependencies:
+        optional-dependencies:
           - true
           - false
         include:
           -   php-version: "7.3"
               dependencies: "lowest"
-              dbal-version: "^2.13"
-              optional_dependencies: false
+              dbal-version: "2.13.0"
+              optional-dependencies: false
           -   php-version: "7.3"
               dependencies: "lowest"
-              dbal-version: "^3.1"
-              optional_dependencies: false
+              dbal-version: "3.1.0"
+              optional-dependencies: false
           -   php-version: "7.3"
               dependencies: "lowest"
-              dbal-version: "^2.13"
-              optional_dependencies: true
+              dbal-version: "2.13.0"
+              optional-dependencies: true
           -   php-version: "7.3"
               dependencies: "lowest"
-              dbal-version: "^3.1"
-              optional_dependencies: true
+              dbal-version: "3.1.0"
+              optional-dependencies: true
 
     services:
       mysql:
@@ -74,7 +74,7 @@ jobs:
           extensions: "pdo_mysql"
 
       - name: "Require specific DBAL version"
-        run: "composer require doctrine/dbal ${{ matrix.dbal-version }} --no-update"
+        run: "composer require doctrine/dbal ^${{ matrix.dbal-version }} --no-update"
 
       - name: "Install dependencies with Composer"
         uses: "ramsey/composer-install@v1"
@@ -91,11 +91,11 @@ jobs:
           composer-options: "--prefer-dist --no-suggest --ignore-platform-req=php"
 
       - name: "Remove optional dependencies"
-        if: "! startsWith(matrix.php-version, '8') && ! matrix.optional_dependencies"
+        if: "! startsWith(matrix.php-version, '8') && ! matrix.optional-dependencies"
         run: "composer remove --dev doctrine/data-fixtures doctrine/migrations"
 
       - name: "Remove optional dependencies (--ignore-platform-req=php)"
-        if: "startsWith(matrix.php-version, '8') && ! matrix.optional_dependencies"
+        if: "startsWith(matrix.php-version, '8') && ! matrix.optional-dependencies"
         run: "composer remove --ignore-platform-req=php --dev doctrine/data-fixtures doctrine/migrations"
 
       - name: "Configure test application"
@@ -108,7 +108,7 @@ jobs:
         run: "./ci/run-cli.sh"
 
       - name: "Run migration CLI commands"
-        if: "${{ matrix.optional_dependencies }}"
+        if: "${{ matrix.optional-dependencies }}"
         run: "./ci/run-cli-migrations.sh"
 
       - name: "Upload coverage file"
