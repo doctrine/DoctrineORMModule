@@ -6,6 +6,7 @@ namespace DoctrineORMModuleTest\Assets\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
+use stdClass;
 
 /**
  * My custom datatype.
@@ -25,9 +26,9 @@ class MoneyType extends Type
     /**
      * @param mixed $value
      */
-    public function convertToPHPValue($value, AbstractPlatform $platform): Money
+    public function convertToPHPValue($value, AbstractPlatform $platform): object
     {
-        return new Money($value);
+        return new stdClass();
     }
 
     /**

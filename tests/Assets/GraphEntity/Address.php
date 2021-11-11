@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DoctrineORMModuleTest\Assets\GraphEntity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,9 +23,4 @@ class Address
      * @var int
      */
     protected $id;
-
-    public function __construct()
-    {
-        $this->groups = new ArrayCollection();
-    }
 }
