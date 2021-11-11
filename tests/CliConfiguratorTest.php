@@ -121,7 +121,7 @@ class CliConfiguratorTest extends TestCase
 
         $dbHelper = $helperSet->get('db');
         assert($dbHelper instanceof ConnectionHelper);
-        $this->assertInstanceOf(ConnectionHelper::class, $dbHelper); // @phpstan-ignore-line
+        $this->assertInstanceOf(ConnectionHelper::class, $dbHelper);
         $this->assertSame($this->objectManager->getConnection(), $dbHelper->getConnection());
     }
 

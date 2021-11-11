@@ -29,7 +29,7 @@ class ConfigurationOptionsTest extends TestCase
         $this->assertSame($namingStrategy, $options->getNamingStrategy());
 
         $this->expectException(InvalidArgumentException::class);
-        $options->setNamingStrategy(new stdClass()); // @phpstan-ignore-line
+        $options->setNamingStrategy(new stdClass());
     }
 
     public function testSetGetQuoteStrategy(): void
@@ -46,7 +46,7 @@ class ConfigurationOptionsTest extends TestCase
         $this->assertSame($quoteStrategy, $options->getQuoteStrategy());
 
         $this->expectException(InvalidArgumentException::class);
-        $options->setQuoteStrategy(new stdClass()); // @phpstan-ignore-line
+        $options->setQuoteStrategy(new stdClass());
     }
 
     public function testSetRepositoryFactory(): void
@@ -63,7 +63,7 @@ class ConfigurationOptionsTest extends TestCase
         $this->assertSame($repositoryFactory, $options->getRepositoryFactory());
 
         $this->expectException(InvalidArgumentException::class);
-        $options->setRepositoryFactory(new stdClass()); // @phpstan-ignore-line
+        $options->setRepositoryFactory(new stdClass());
     }
 
     public function testSetGetEntityListenerResolver(): void
@@ -82,6 +82,6 @@ class ConfigurationOptionsTest extends TestCase
         $this->assertSame($entityListenerResolver, $options->getEntityListenerResolver());
 
         $this->expectException(InvalidArgumentException::class);
-        $options->setEntityListenerResolver(new stdClass()); // @phpstan-ignore-line
+        $options->setEntityListenerResolver(new stdClass());
     }
 }
