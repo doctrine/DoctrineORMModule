@@ -29,7 +29,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
     protected $name;
 
     /** @var ClassMetadataFactory|null */
-    protected $classMetadataFactory = [];
+    protected $classMetadataFactory = null;
 
     /** @var ClassMetadata[] indexed by class name */
     protected $classes = [];
