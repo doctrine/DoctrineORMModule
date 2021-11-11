@@ -17,8 +17,8 @@ class TestCase extends PHPUnitTestCase
     /** @var bool */
     protected $hasDb = false;
 
-    /** @var EntityManager */
-    private $entityManager;
+    /** @var ?EntityManager */
+    private $entityManager = null;
 
     /**
      * Creates a database if not done already.

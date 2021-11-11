@@ -19,4 +19,14 @@ class TargetEntity implements Target
      * @var int
      */
     private $id;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
 }

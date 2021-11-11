@@ -23,7 +23,7 @@ class YumlControllerFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator): YumlController
     {
         if ($serviceLocator instanceof AbstractPluginManager) {
-            $serviceLocator = $serviceLocator->getServiceLocator() ?: $serviceLocator;
+            $serviceLocator = $serviceLocator->getServiceLocator();
         }
 
         return $this($serviceLocator, YumlController::class);

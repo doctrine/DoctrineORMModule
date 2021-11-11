@@ -88,7 +88,7 @@ class MetadataGrapher
         if ($class2 === null) {
             return $this->getClassString($class1)
                 . ($isInverse ? '<' : '<>') . '-' . $association . ' '
-                . ($class1Count > 1 ? '*' : ($class1Count ? '1' : ''))
+                . ($class1Count > 1 ? '*' : '1')
                 . ($isInverse ? '<>' : '>')
                 . '[' . str_replace('\\', '.', $targetClassName) . ']';
         }
@@ -116,7 +116,7 @@ class MetadataGrapher
             . ($class2Count > 1 ? '*' : ($class2Count ? '1' : '')) // class2 side single/multi valued
             . '-'
             . $class1SideName . ' '
-            . ($class1Count > 1 ? '*' : ($class1Count ? '1' : '')) // class1 side single/multi valued
+            . ($class1Count > 1 ? '*' : '1') // class1 side single/multi valued
             . ($bidirectional && $isInverse ? '<>' : '>') // class1 side arrow
             . $this->getClassString($class2);
     }
