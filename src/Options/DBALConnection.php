@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Options;
 
-use Doctrine\DBAL\Driver\PDO\MySQL\Driver;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver;
+use Doctrine\DBAL\Driver\PDO\MySQL\Driver as PDOMySQLDriver;
 use Laminas\Stdlib\AbstractOptions;
 use PDO;
 
@@ -45,7 +47,7 @@ class DBALConnection extends AbstractOptions
      *
      * @var string
      */
-    protected $driverClass = Driver::class;
+    protected $driverClass = PDOMySQLDriver::class;
 
     /**
      * Set the wrapper class for the driver. In general, this should not
@@ -146,6 +148,9 @@ class DBALConnection extends AbstractOptions
         $this->driverClass = $driverClass;
     }
 
+    /**
+     * @return class-string<Driver>|null
+     */
     public function getDriverClass(): ?string
     {
         return $this->driverClass;
@@ -172,6 +177,9 @@ class DBALConnection extends AbstractOptions
         $this->wrapperClass = $wrapperClass;
     }
 
+    /**
+     * @return class-string<Connection>|null
+     */
     public function getWrapperClass(): ?string
     {
         return $this->wrapperClass;
