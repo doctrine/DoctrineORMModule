@@ -36,6 +36,8 @@ class EntityManagerFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      *
+     * @deprecated 4.1.0 With laminas-servicemanager v3 this method is obsolete and will be removed in 5.0.0.
+     *
      * @return EntityManager
      */
     public function createService(ContainerInterface $container)

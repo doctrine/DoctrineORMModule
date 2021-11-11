@@ -32,6 +32,8 @@ class ObjectMultiCheckboxFactory implements FactoryInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @deprecated 4.1.0 With laminas-servicemanager v3 this method is obsolete and will be removed in 5.0.0.
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
