@@ -1,9 +1,13 @@
 parameters:
-    level: 3
+    level: 5
     paths:
         - src
         - tests
+    treatPhpDocTypesAsCertain: false
     ignoreErrors:
+        -
+            message: '#Offset class-string<object> on array\{\} in isset\(\) does not exist#'
+            path: src/Yuml/MetadataGrapher.php
         -
             message: '#Return type .* of method DoctrineORMModule\\Yuml\\YumlController::indexAction\(\)#'
             path: src/Yuml/YumlController.php
@@ -13,3 +17,9 @@ parameters:
         -
             message: '#Method DoctrineORMModuleTest\\Listener\\CliConfiguratorTest::dataProviderForTestValidCommands\(\) should return#'
             path: tests/CliConfiguratorTest.php
+        -
+            message: '#Parameter \#1 .* of method PHPUnit\\Framework\\Assert.* string given#'
+            path: tests/CliConfiguratorTest.php
+        -
+            message: '#Parameter \#1 .* of method DoctrineORMModule\\Options\\Configuration.* stdClass given#'
+            path: tests/Options/ConfigurationOptionsTest.php

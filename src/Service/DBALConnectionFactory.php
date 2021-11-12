@@ -11,6 +11,7 @@ use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\DBALConnection;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use PDO;
 
 use function array_key_exists;
 use function array_merge;
@@ -35,6 +36,7 @@ class DBALConnectionFactory extends AbstractFactory
 
         if (is_string($pdo)) {
             $pdo = $serviceLocator->get($pdo);
+            assert($pdo instanceof PDO);
         }
 
         $params = [
@@ -55,6 +57,7 @@ class DBALConnectionFactory extends AbstractFactory
         $configuration = $serviceLocator->get($options->getConfiguration());
         $eventManager  = $serviceLocator->get($options->getEventManager());
 
+        /** @psalm-suppress InvalidArgument */
         $connection = DriverManager::getConnection($params, $configuration, $eventManager);
         foreach ($options->getDoctrineTypeMappings() as $dbType => $doctrineType) {
             $connection->getDatabasePlatform()->registerDoctrineTypeMapping($dbType, $doctrineType);
