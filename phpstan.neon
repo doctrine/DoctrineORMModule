@@ -15,11 +15,5 @@ parameters:
             message: '#Method DoctrineORMModule\\CliConfigurator::getHelpers\(\) should return#'
             path: src/CliConfigurator.php
         -
-            message: '#Method DoctrineORMModuleTest\\Listener\\CliConfiguratorTest::dataProviderForTestValidCommands\(\) should return#'
-            path: tests/CliConfiguratorTest.php
-        -
-            message: '#Parameter \#1 .* of method PHPUnit\\Framework\\Assert.* string given#'
-            path: tests/CliConfiguratorTest.php
-        -
             message: '#Parameter \#1 .* of method DoctrineORMModule\\Options\\Configuration.* stdClass given#'
             path: tests/Options/ConfigurationOptionsTest.php
