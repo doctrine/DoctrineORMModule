@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DoctrineORMModuleTest\Assets\Entity;
 
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Laminas\Form\Annotation as Form;
 
@@ -72,11 +73,25 @@ class FormEntity
     protected $datetime;
 
     /**
-     * @ORM\Column(type="datetimetz")
+     * @ORM\Column(type="datetime_immutable")
      *
      * @var DateTime
      */
+    protected $datetimeImmutable;
+
+    /**
+     * @ORM\Column(type="datetimetz")
+     *
+     * @var DateTimeImmutable
+     */
     protected $datetimetz;
+
+    /**
+     * @ORM\Column(type="datetimetz_immutable")
+     *
+     * @var DateTimeImmutable
+     */
+    protected $datetimetzImmutable;
 
     /**
      * @ORM\Column(type="date")
