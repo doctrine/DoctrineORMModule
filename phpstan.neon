@@ -17,3 +17,6 @@ parameters:
         -
             message: '#Parameter \#1 .* of method DoctrineORMModule\\Options\\Configuration.* stdClass given#'
             path: tests/Options/ConfigurationOptionsTest.php
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+
