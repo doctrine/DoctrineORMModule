@@ -7,6 +7,7 @@ namespace DoctrineORMModule\Paginator\Adapter;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use JsonSerializable;
 use Laminas\Paginator\Adapter\AdapterInterface;
+use ReturnTypeWillChange;
 
 /**
  * Paginator adapter for the Laminas\Paginator component
@@ -52,6 +53,7 @@ class DoctrinePaginator implements AdapterInterface, JsonSerializable
     /**
      * {@inheritDoc}
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         return $this->paginator->count();
