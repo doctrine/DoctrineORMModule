@@ -70,7 +70,7 @@ jobs:
         with:
           php-version: "${{ matrix.php-version }}"
           coverage: "pcov"
-          ini-values: "zend.assertions=1"
+          ini-values: "error_reporting=E_ALL, zend.assertions=1"
           extensions: "pdo_mysql"
 
       - name: "Require specific DBAL version"
