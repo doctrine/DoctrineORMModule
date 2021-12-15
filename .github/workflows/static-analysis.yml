@@ -11,7 +11,7 @@ on:
 jobs:
   static-analysis:
     name: "Static Analysis"
-    uses: "doctrine/.github/.github/workflows/static-analysis.yml@1.3.0"
+    uses: "doctrine/.github/.github/workflows/static-analysis.yml@1.4.0"
     with:
-      php-version: '8.0'
+      php-version: '8.1'
       composer-options: '--prefer-dist --ignore-platform-req=php'
