@@ -85,26 +85,43 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
     }
 
     /**
-     * {@inheritDoc}
+     * @return array{name: string, classes: ClassMetadata[]}
      */
-    public function serialize()
+    public function __serialize(): array
     {
-        return serialize(
-            [
-                'name'    => $this->name,
-                'classes' => $this->classes,
-            ]
-        );
+        return [
+            'name'    => $this->name,
+            'classes' => $this->classes,
+        ];
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @deprecated 4.2.0 This function will be removed in 5.0.0. Use __serialize() instead.
+     */
+    public function serialize()
+    {
+        return serialize($this->__serialize());
+    }
+
+    /**
+     * @param array{name: string, classes: ClassMetadata[]} $data
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->name    = $data['name'];
+        $this->classes = $data['classes'];
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @deprecated 4.2.0 This function will be removed in 5.0.0. Use __unserialize() instead.
      */
     public function unserialize($serialized)
     {
-        $data          = unserialize($serialized);
-        $this->name    = $data['name'];
-        $this->classes = $data['classes'];
+        $this->__unserialize(unserialize($serialized));
     }
 
     /**
