@@ -45,7 +45,7 @@
         }
     },
     "require": {
-        "php": "^7.3 || ~8.0.0 || ~8.1.0",
+        "php": "^7.4 || ~8.0.0 || ~8.1.0",
         "ext-json": "*",
         "container-interop/container-interop": "^1.2.0",
         "doctrine/dbal": "^2.13.4 || ^3.1.3",
