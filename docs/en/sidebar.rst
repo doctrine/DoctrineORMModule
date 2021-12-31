@@ -7,4 +7,5 @@
     configuration
     cache
     migrations
+    forms
     miscellaneous

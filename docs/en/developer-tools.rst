@@ -1,5 +1,5 @@
 Laminas Developer Tools in DoctrineORMModule
-=========================================
+============================================
 
 If you ever tried `Laminas Developer
 Tools <https://github.com/laminas/laminas-developer-tools>`__ you will
