@@ -6,8 +6,8 @@
     <arg name="cache" value=".phpcs.cache"/>
     <arg name="colors"/>
 
-    <!-- set minimal required PHP version (7.3) -->
-    <config name="php_version" value="70300"/>
+    <!-- set minimal required PHP version (7.4) -->
+    <config name="php_version" value="70400"/>
 
     <!-- Ignore warnings, show progress of the run and show sniff names -->
     <arg value="nps"/>
