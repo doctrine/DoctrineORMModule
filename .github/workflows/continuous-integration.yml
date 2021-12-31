@@ -30,20 +30,20 @@ jobs:
           - false
         include:
           - php-version: "7.4"
-            dependencies: "lowest"
             dbal-version: "2.13.0"
+            dependencies: "lowest"
             optional-dependencies: false
           - php-version: "7.4"
-            dependencies: "lowest"
             dbal-version: "3.1.0"
+            dependencies: "lowest"
             optional-dependencies: false
           - php-version: "7.4"
-            dependencies: "lowest"
             dbal-version: "2.13.0"
+            dependencies: "lowest"
             optional-dependencies: true
           - php-version: "7.4"
-            dependencies: "lowest"
             dbal-version: "3.1.0"
+            dependencies: "lowest"
             optional-dependencies: true
 
     services:
@@ -77,25 +77,13 @@ jobs:
 
       - name: "Install dependencies with Composer"
         uses: "ramsey/composer-install@v1"
-        if: "! startsWith(matrix.php-version, '8')"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "--prefer-dist --no-suggest"
 
-      - name: "Install dependencies with Composer (--ignore-platform-req=php)"
-        uses: "ramsey/composer-install@v1"
-        if: "startsWith(matrix.php-version, '8')"
-        with:
-          dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "--prefer-dist --no-suggest --ignore-platform-req=php"
-
       - name: "Remove optional dependencies"
-        if: "! startsWith(matrix.php-version, '8') && ! matrix.optional-dependencies"
+        if: "! matrix.optional-dependencies"
         run: "composer remove --dev doctrine/data-fixtures doctrine/migrations"
-
-      - name: "Remove optional dependencies (--ignore-platform-req=php)"
-        if: "startsWith(matrix.php-version, '8') && ! matrix.optional-dependencies"
-        run: "composer remove --ignore-platform-req=php --dev doctrine/data-fixtures doctrine/migrations"
 
       - name: "Configure test application"
         run: "cp ci/config/application.config.php config/application.config.php"
