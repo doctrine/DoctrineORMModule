@@ -21,17 +21,15 @@ class UserGroup
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="groups")
      *
      * @var Collection|User[]
      */
-    protected $users;
+    protected Collection $users;
 
     public function __construct()
     {

@@ -16,17 +16,11 @@ class Category
      * @ORM\Id
      * @ORM\Column(type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @var string
-     */
-    protected $name;
+    /** @ORM\Column(type="string", nullable=true) */
+    protected string $name;
 
     public function getId(): ?int
     {

@@ -16,24 +16,14 @@ class City
      * @ORM\Id
      * @ORM\Column(type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @var string
-     */
-    protected $name;
+    /** @ORM\Column(type="string", nullable=true) */
+    protected string $name;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Country")
-     *
-     * @var Country
-     */
-    protected $country;
+    /** @ORM\OneToOne(targetEntity="Country") */
+    protected Country $country;
 
     public function getId(): ?int
     {

@@ -17,17 +17,11 @@ class Date
      * @ORM\Id
      * @ORM\Column(type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     *
-     * @var DateTime
-     */
-    protected $date;
+    /** @ORM\Column(type="date", nullable=true) */
+    protected DateTime $date;
 
     public function getId(): ?int
     {

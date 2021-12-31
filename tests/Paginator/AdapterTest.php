@@ -19,14 +19,11 @@ use function count;
 
 class AdapterTest extends TestCase
 {
-    /** @var QueryBuilder */
-    protected $queryBuilder;
+    protected QueryBuilder $queryBuilder;
 
-    /** @var PaginatorAdapter */
-    protected $paginatorAdapter;
+    protected PaginatorAdapter $paginatorAdapter;
 
-    /** @var DoctrinePaginator */
-    protected $paginator;
+    protected DoctrinePaginator $paginator;
 
     public function setUp(): void
     {

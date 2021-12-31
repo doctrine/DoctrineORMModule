@@ -22,10 +22,8 @@ use PHPUnit\Framework\TestCase;
  */
 class DBALConnectionFactoryTest extends TestCase
 {
-    /** @var ServiceManager */
-    protected $serviceManager;
-    /** @var DBALConnectionFactory */
-    protected $factory;
+    protected ServiceManager $serviceManager;
+    protected DBALConnectionFactory $factory;
 
     public function setUp(): void
     {

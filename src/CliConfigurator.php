@@ -21,11 +21,10 @@ use function class_exists;
 
 class CliConfigurator
 {
-    /** @var string */
-    private $defaultObjectManagerName = 'doctrine.entitymanager.orm_default';
+    private string $defaultObjectManagerName = 'doctrine.entitymanager.orm_default';
 
     /** @var string[] */
-    private $commands = [
+    private array $commands = [
         'doctrine.dbal_cmd.runsql',
         'doctrine.dbal_cmd.reserved_words',
         'doctrine.orm_cmd.clear_cache_metadata',
@@ -46,7 +45,7 @@ class CliConfigurator
     ];
 
     /** @var string[] */
-    private $migrationCommands = [
+    private array $migrationCommands = [
         'doctrine.migrations_cmd.current',
         'doctrine.migrations_cmd.diff',
         'doctrine.migrations_cmd.dumpschema',
@@ -62,8 +61,7 @@ class CliConfigurator
         'doctrine.migrations_cmd.uptodate',
     ];
 
-    /** @var ContainerInterface */
-    private $container;
+    private ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
     {

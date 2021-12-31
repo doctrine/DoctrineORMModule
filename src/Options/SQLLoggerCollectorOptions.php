@@ -12,13 +12,13 @@ use Laminas\Stdlib\AbstractOptions;
 class SQLLoggerCollectorOptions extends AbstractOptions
 {
     /** @var string name to be assigned to the collector */
-    protected $name = 'orm_default';
+    protected string $name = 'orm_default';
 
     /** @var string|null service name of the configuration where the logger has to be put */
-    protected $configuration;
+    protected ?string $configuration = null;
 
     /** @var string|null service name of the SQLLogger to be used */
-    protected $sqlLogger;
+    protected ?string $sqlLogger = null;
 
     public function setName(?string $name): void
     {

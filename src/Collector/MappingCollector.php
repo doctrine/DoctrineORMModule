@@ -25,14 +25,12 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
      */
     public const PRIORITY = 10;
 
-    /** @var string */
-    protected $name;
+    protected string $name;
 
-    /** @var ClassMetadataFactory|null */
-    protected $classMetadataFactory = null;
+    protected ?ClassMetadataFactory $classMetadataFactory = null;
 
     /** @var ClassMetadata[] indexed by class name */
-    protected $classes = [];
+    protected array $classes = [];
 
     public function __construct(ClassMetadataFactory $classMetadataFactory, string $name)
     {

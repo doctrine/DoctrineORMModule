@@ -40,8 +40,7 @@ use function class_exists;
  */
 class MigrationsCommandFactoryTest extends TestCase
 {
-    /** @var ServiceManager */
-    private $serviceLocator;
+    private ServiceManager $serviceLocator;
 
     public function setUp(): void
     {

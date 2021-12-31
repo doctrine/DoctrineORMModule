@@ -20,8 +20,7 @@ use function sprintf;
  */
 class SQLLoggerCollectorFactory implements FactoryInterface
 {
-    /** @var string */
-    protected $name;
+    protected string $name;
 
     public function __construct(string $name)
     {

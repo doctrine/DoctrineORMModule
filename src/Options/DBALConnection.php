@@ -19,19 +19,15 @@ class DBALConnection extends AbstractOptions
      * Set the configuration key for the Configuration. Configuration key
      * is assembled as "doctrine.configuration.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $configuration = 'orm_default';
+    protected string $configuration = 'orm_default';
 
     /**
      * Set the eventmanager key for the EventManager. EventManager key
      * is assembled as "doctrine.eventmanager.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $eventmanager = 'orm_default';
+    protected string $eventmanager = 'orm_default';
 
     /**
      * Set the PDO instance, if any, to use. If a string is set
@@ -44,34 +40,29 @@ class DBALConnection extends AbstractOptions
     /**
      * Setting the driver is deprecated. You should set the
      * driver class directly instead.
-     *
-     * @var string
      */
-    protected $driverClass = PDOMySQLDriver::class;
+    protected string $driverClass = PDOMySQLDriver::class;
 
     /**
      * Set the wrapper class for the driver. In general, this should not
      * need to be changed.
-     *
-     * @var string|null
      */
-    protected $wrapperClass = null;
+    protected ?string $wrapperClass = null;
 
     /**
      * Driver specific connection parameters.
      *
      * @var mixed[]
      */
-    protected $params = [];
+    protected array $params = [];
 
     /** @var mixed[] */
-    protected $doctrineTypeMappings = [];
+    protected array $doctrineTypeMappings = [];
 
     /** @var mixed[] */
-    protected $doctrineCommentedTypes = [];
+    protected array $doctrineCommentedTypes = [];
 
-    /** @var bool */
-    protected $useSavepoints = false;
+    protected bool $useSavepoints = false;
 
     public function setConfiguration(string $configuration): void
     {
