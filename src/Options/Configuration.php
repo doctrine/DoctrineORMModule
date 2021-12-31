@@ -139,7 +139,7 @@ class Configuration extends DBALConfiguration
      *
      * @var string|NamingStrategy|null
      */
-    protected $namingStrategy;
+    protected $namingStrategy = null;
 
     /**
      * Quote strategy or name of the quote strategy service to be set in ORM
@@ -147,7 +147,7 @@ class Configuration extends DBALConfiguration
      *
      * @var string|QuoteStrategy|null
      */
-    protected $quoteStrategy;
+    protected $quoteStrategy = null;
 
     /**
      * Default repository class
@@ -160,13 +160,13 @@ class Configuration extends DBALConfiguration
      *
      * @var string|RepositoryFactory|null
      */
-    protected $repositoryFactory;
+    protected $repositoryFactory = null;
 
     /**
      * Class name of MetaData factory to be set in ORM.
      * The entityManager will create a new instance on construction.
      */
-    protected string $classMetadataFactoryName;
+    protected ?string $classMetadataFactoryName = null;
 
     /**
      * Entity listener resolver or service name of the entity listener resolver
@@ -176,7 +176,7 @@ class Configuration extends DBALConfiguration
      *
      * @var string|EntityListenerResolver|null
      */
-    protected $entityListenerResolver;
+    protected $entityListenerResolver = null;
 
     /**
      * Configuration for second level cache

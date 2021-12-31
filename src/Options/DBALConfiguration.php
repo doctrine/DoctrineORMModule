@@ -21,7 +21,7 @@ class DBALConfiguration extends AbstractOptions
     /**
      * Set the class name of the SQL Logger, or null, to disable.
      */
-    protected string $sqlLogger = null;
+    protected ?string $sqlLogger = null;
 
     /**
      * Keys must be the name of the type identifier and value is
