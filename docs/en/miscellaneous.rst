@@ -4,31 +4,6 @@ Miscellaneous
 The items listed below are optional and intended to enhance 
 integration between Laminas and Doctrine ORM.
 
-ObjectExists Validator and  NoObjectExists Validator
-----------------------------------------------------
-
-ObjectExists and NoObjectExists are validators similar to
-`Laminas Validators <https://docs.laminas.dev/laminas-validator/>`_.
-You can pass a variety of options to determine validity.
-The most basic use case requires an entity manager, an entity, and
-a field. You also have the option of specifying a query\_builder Closure
-to use if you want to fine tune the results.
-
-.. code:: php
-
-    <?php
-    $validator = new \DoctrineModule\Validator\NoObjectExists([
-        // object repository to lookup
-        'object_repository' => $serviceLocator->get('doctrine.entitymanager.orm_default')   
-            ->getRepository('Db\Entity\User'),
-
-        // fields to match
-        'fields' => ['username'],
-    ]);
-
-    // following works also with simple values if the number of fields to be matched is 1
-    echo $validator->isValid(['username' => 'test']) ? 'Valid' : 'Invalid. A duplicate was found.';
-
 Authentication Adapter
 ----------------------
 
