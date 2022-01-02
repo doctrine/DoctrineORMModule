@@ -23,17 +23,17 @@ class MetadataGrapher
      *
      * @var mixed[]
      */
-    protected $visitedAssociations = [];
+    protected array $visitedAssociations = [];
 
     /** @var ClassMetadata[] */
-    private $metadata;
+    private array $metadata;
 
     /**
      * Temporary array where reverse association name are stored
      *
      * @var ClassMetadata[]
      */
-    private $classByNames = [];
+    private array $classByNames = [];
 
     /**
      * Generate a YUML compatible `dsl_text` to describe a given array

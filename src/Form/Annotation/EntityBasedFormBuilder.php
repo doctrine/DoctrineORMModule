@@ -33,11 +33,9 @@ final class EntityBasedFormBuilder
     public const EVENT_EXCLUDE_FIELD         = 'excludeField';
     public const EVENT_EXCLUDE_ASSOCIATION   = 'excludeAssociation';
 
-    /** @var AbstractBuilder */
-    protected $builder;
+    protected AbstractBuilder $builder;
 
-    /** @var ObjectManager */
-    protected $objectManager;
+    protected ObjectManager $objectManager;
 
     /**
      * Constructor. Ensures ObjectManager is present.

@@ -19,8 +19,7 @@ use function in_array;
 
 class DoctrineAnnotationListener extends AbstractListenerAggregate
 {
-    /** @var ObjectManager */
-    protected $objectManager;
+    protected ObjectManager $objectManager;
 
     public function __construct(ObjectManager $objectManager)
     {

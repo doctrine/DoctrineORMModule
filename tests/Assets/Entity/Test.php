@@ -16,24 +16,14 @@ class Test
      * @ORM\Id
      * @ORM\Column(type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @var string
-     */
-    protected $username;
+    /** @ORM\Column(type="string", nullable=true) */
+    protected string $username;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @var string
-     */
-    protected $password;
+    /** @ORM\Column(type="string", nullable=true) */
+    protected string $password;
 
     public function getId(): ?int
     {

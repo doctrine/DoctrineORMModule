@@ -25,74 +25,58 @@ class Configuration extends DBALConfiguration
      * Set the cache key for the metadata cache. Cache key
      * is assembled as "doctrine.cache.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $metadataCache = 'array';
+    protected string $metadataCache = 'array';
 
     /**
      * Set the cache key for the query cache. Cache key
      * is assembled as "doctrine.cache.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $queryCache = 'array';
+    protected string $queryCache = 'array';
 
     /**
      * Set the cache key for the result cache. Cache key
      * is assembled as "doctrine.cache.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $resultCache = 'array';
+    protected string $resultCache = 'array';
 
     /**
      * Set the cache key for the hydration cache. Cache key
      * is assembled as "doctrine.cache.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $hydrationCache = 'array';
+    protected string $hydrationCache = 'array';
 
     /**
      * Set the driver key for the metadata driver. Driver key
      * is assembled as "doctrine.driver.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $driver = 'orm_default';
+    protected string $driver = 'orm_default';
 
     /**
      * Automatic generation of proxies (disable for production!)
-     *
-     * @var bool
      */
-    protected $generateProxies = true;
+    protected bool $generateProxies = true;
 
     /**
      * Proxy directory.
-     *
-     * @var string
      */
-    protected $proxyDir = 'data';
+    protected string $proxyDir = 'data';
 
     /**
      * Proxy namespace.
-     *
-     * @var string
      */
-    protected $proxyNamespace = 'DoctrineORMModule\Proxy';
+    protected string $proxyNamespace = 'DoctrineORMModule\Proxy';
 
     /**
      * Entity alias map.
      *
      * @var mixed[]
      */
-    protected $entityNamespaces = [];
+    protected array $entityNamespaces = [];
 
     /**
      * Keys must be function names and values the FQCN of the implementing class.
@@ -100,7 +84,7 @@ class Configuration extends DBALConfiguration
      *
      * @var mixed[]
      */
-    protected $datetimeFunctions = [];
+    protected array $datetimeFunctions = [];
 
     /**
      * Keys must be function names and values the FQCN of the implementing class.
@@ -108,7 +92,7 @@ class Configuration extends DBALConfiguration
      *
      * @var mixed[]
      */
-    protected $stringFunctions = [];
+    protected array $stringFunctions = [];
 
     /**
      * Keys must be function names and values the FQCN of the implementing class.
@@ -116,7 +100,7 @@ class Configuration extends DBALConfiguration
      *
      * @var mixed[]
      */
-    protected $numericFunctions = [];
+    protected array $numericFunctions = [];
 
     /**
      * Keys must be the name of the custom filter and the value must be
@@ -124,14 +108,14 @@ class Configuration extends DBALConfiguration
      *
      * @var mixed[]
      */
-    protected $filters = [];
+    protected array $filters = [];
 
     /**
      * Keys must be the name of the query and values the DQL query string.
      *
      * @var mixed[]
      */
-    protected $namedQueries = [];
+    protected array $namedQueries = [];
 
     /**
      * Keys must be the name of the query and the value is an array containing
@@ -139,7 +123,7 @@ class Configuration extends DBALConfiguration
      *
      * @var mixed[]
      */
-    protected $namedNativeQueries = [];
+    protected array $namedNativeQueries = [];
 
     /**
      * Keys must be the name of the custom hydration method and the value must be
@@ -147,7 +131,7 @@ class Configuration extends DBALConfiguration
      *
      * @var mixed[]
      */
-    protected $customHydrationModes = [];
+    protected array $customHydrationModes = [];
 
     /**
      * Naming strategy or name of the naming strategy service to be set in ORM
@@ -155,7 +139,7 @@ class Configuration extends DBALConfiguration
      *
      * @var string|NamingStrategy|null
      */
-    protected $namingStrategy;
+    protected $namingStrategy = null;
 
     /**
      * Quote strategy or name of the quote strategy service to be set in ORM
@@ -163,14 +147,12 @@ class Configuration extends DBALConfiguration
      *
      * @var string|QuoteStrategy|null
      */
-    protected $quoteStrategy;
+    protected $quoteStrategy = null;
 
     /**
      * Default repository class
-     *
-     * @var string|null
      */
-    protected $defaultRepositoryClassName;
+    protected ?string $defaultRepositoryClassName = null;
 
     /**
      * Repository factory or name of the repository factory service to be set in ORM
@@ -178,15 +160,13 @@ class Configuration extends DBALConfiguration
      *
      * @var string|RepositoryFactory|null
      */
-    protected $repositoryFactory;
+    protected $repositoryFactory = null;
 
     /**
      * Class name of MetaData factory to be set in ORM.
      * The entityManager will create a new instance on construction.
-     *
-     * @var string
      */
-    protected $classMetadataFactoryName;
+    protected ?string $classMetadataFactoryName = null;
 
     /**
      * Entity listener resolver or service name of the entity listener resolver
@@ -196,23 +176,19 @@ class Configuration extends DBALConfiguration
      *
      * @var string|EntityListenerResolver|null
      */
-    protected $entityListenerResolver;
+    protected $entityListenerResolver = null;
 
     /**
      * Configuration for second level cache
      *
      * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/second-level-cache.html
-     *
-     * @var SecondLevelCacheConfiguration|null
      */
-    protected $secondLevelCache;
+    protected ?SecondLevelCacheConfiguration $secondLevelCache = null;
 
     /**
      * Configuration option for the filter schema assets expression
-     *
-     * @var string|null
      */
-    protected $filterSchemaAssetsExpression;
+    protected ?string $filterSchemaAssetsExpression = null;
 
     /**
      * @param mixed[] $datetimeFunctions

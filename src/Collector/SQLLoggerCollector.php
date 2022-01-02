@@ -21,11 +21,9 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
      */
     public const PRIORITY = 10;
 
-    /** @var DebugStack */
-    protected $sqlLogger;
+    protected DebugStack $sqlLogger;
 
-    /** @var string */
-    protected $name;
+    protected string $name;
 
     public function __construct(DebugStack $sqlLogger, string $name)
     {

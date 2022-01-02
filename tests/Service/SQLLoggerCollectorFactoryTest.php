@@ -16,11 +16,9 @@ use function assert;
 
 class SQLLoggerCollectorFactoryTest extends TestCase
 {
-    /** @var ServiceManager */
-    protected $services;
+    protected ServiceManager $services;
 
-    /** @var SQLLoggerCollectorFactory */
-    protected $factory;
+    protected SQLLoggerCollectorFactory $factory;
 
     public function setUp(): void
     {

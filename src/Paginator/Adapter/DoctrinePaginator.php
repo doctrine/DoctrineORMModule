@@ -14,8 +14,7 @@ use ReturnTypeWillChange;
  */
 class DoctrinePaginator implements AdapterInterface, JsonSerializable
 {
-    /** @var Paginator */
-    protected $paginator;
+    protected Paginator $paginator;
 
     /**
      * Constructor

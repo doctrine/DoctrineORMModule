@@ -15,10 +15,8 @@ class TargetEntity implements Target
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     * @var int
      */
-    private $id;
+    private int $id;
 
     public function getId(): int
     {

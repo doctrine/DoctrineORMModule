@@ -25,11 +25,9 @@ use function ucfirst;
  */
 class MigrationsCommandFactory implements FactoryInterface
 {
-    /** @var string */
-    private $commandClassName;
+    private string $commandClassName;
 
-    /** @var string */
-    private $defaultObjectManagerName = 'doctrine.entitymanager.orm_default';
+    private string $defaultObjectManagerName = 'doctrine.entitymanager.orm_default';
 
     public function __construct(string $name)
     {

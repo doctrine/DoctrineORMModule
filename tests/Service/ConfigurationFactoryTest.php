@@ -23,10 +23,8 @@ use function assert;
 
 class ConfigurationFactoryTest extends TestCase
 {
-    /** @var ServiceManager */
-    protected $serviceManager;
-    /** @var ConfigurationFactory */
-    protected $factory;
+    protected ServiceManager $serviceManager;
+    protected ConfigurationFactory $factory;
 
     public function setUp(): void
     {

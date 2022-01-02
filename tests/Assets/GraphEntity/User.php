@@ -21,31 +21,25 @@ class User
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToMany(targetEntity="UserGroup", mappedBy="users")
      *
      * @var Collection|UserGroup[]
      */
-    protected $groups;
+    protected Collection $groups;
 
     /**
      * @ORM\OneToMany(targetEntity="Session", mappedBy="user")
      *
      * @var Collection|Session[]
      */
-    protected $sessions;
+    protected Collection $sessions;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Address")
-     *
-     * @var Address
-     */
-    protected $address;
+    /** @ORM\OneToOne(targetEntity="Address") */
+    protected Address $address;
 
     public function __construct()
     {

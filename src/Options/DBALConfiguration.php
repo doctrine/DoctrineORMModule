@@ -15,17 +15,13 @@ class DBALConfiguration extends AbstractOptions
      * Set the cache key for the result cache. Cache key
      * is assembled as "doctrine.cache.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $resultCache = 'array';
+    protected string $resultCache = 'array';
 
     /**
      * Set the class name of the SQL Logger, or null, to disable.
-     *
-     * @var string
      */
-    protected $sqlLogger = null;
+    protected ?string $sqlLogger = null;
 
     /**
      * Keys must be the name of the type identifier and value is
@@ -33,7 +29,7 @@ class DBALConfiguration extends AbstractOptions
      *
      * @var mixed[]
      */
-    protected $types = [];
+    protected array $types = [];
 
     public function setResultCache(string $resultCache): void
     {

@@ -14,14 +14,11 @@ use function sleep;
 
 class SQLLoggerCollectorTest extends TestCase
 {
-    /** @var DebugStack */
-    protected $logger;
+    protected DebugStack $logger;
 
-    /** @var string */
-    protected $name = 'test-collector-name';
+    protected string $name = 'test-collector-name';
 
-    /** @var SQLLoggerCollector */
-    protected $collector;
+    protected SQLLoggerCollector $collector;
 
     public function setUp(): void
     {

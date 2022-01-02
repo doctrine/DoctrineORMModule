@@ -16,24 +16,18 @@ class Product
      * @ORM\Id
      * @ORM\Column(type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @var string
-     */
-    protected $name;
+    /** @ORM\Column(type="string", nullable=true) */
+    protected string $name;
 
     /**
      * @ORM\ManyToMany(targetEntity="Category")
      *
      * @var Category[]
      */
-    protected $categories;
+    protected array $categories;
 
     public function getId(): ?int
     {

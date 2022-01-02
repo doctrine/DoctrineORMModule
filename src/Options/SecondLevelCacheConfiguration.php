@@ -13,31 +13,23 @@ class SecondLevelCacheConfiguration extends AbstractOptions
 {
     /**
      * Enable the second level cache configuration
-     *
-     * @var bool
      */
-    protected $enabled = false;
+    protected bool $enabled = false;
 
     /**
      * Default lifetime
-     *
-     * @var int
      */
-    protected $defaultLifetime = 3600;
+    protected int $defaultLifetime = 3600;
 
     /**
      * Default lock lifetime
-     *
-     * @var int
      */
-    protected $defaultLockLifetime = 60;
+    protected int $defaultLockLifetime = 60;
 
     /**
      * The file lock region directory (needed for some cache usage)
-     *
-     * @var string
      */
-    protected $fileLockRegionDirectory = '';
+    protected string $fileLockRegionDirectory = '';
 
     /**
      * Configure the lifetime and lock lifetime per region. You must pass an associative array like this:
@@ -48,7 +40,7 @@ class SecondLevelCacheConfiguration extends AbstractOptions
      *
      * @var mixed[]
      */
-    protected $regions = [];
+    protected array $regions = [];
 
     public function setEnabled(bool $enabled): void
     {

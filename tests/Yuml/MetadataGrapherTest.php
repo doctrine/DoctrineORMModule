@@ -19,8 +19,7 @@ use function strtoupper;
  */
 class MetadataGrapherTest extends TestCase
 {
-    /** @var MetadataGrapher */
-    protected $grapher;
+    protected MetadataGrapher $grapher;
 
     public function setUp(): void
     {
