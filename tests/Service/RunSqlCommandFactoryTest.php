@@ -28,7 +28,7 @@ class RunSqlCommandFactoryTest extends TestCase
 
         $this->assertInstanceOf(
             RunSqlCommand::class,
-            $factory->createService($this->serviceLocator)
+            $factory($this->serviceLocator, RunSqlCommand::class)
         );
     }
 }

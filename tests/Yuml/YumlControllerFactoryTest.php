@@ -6,7 +6,6 @@ namespace DoctrineORMModuleTest\Yuml;
 
 use DoctrineORMModule\Yuml\YumlController;
 use DoctrineORMModule\Yuml\YumlControllerFactory;
-use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use PHPUnit\Framework\TestCase;
@@ -22,15 +21,10 @@ class YumlControllerFactoryTest extends TestCase
         ];
 
         $serviceLocator = $this->createMock(ServiceLocatorInterface::class);
-        $pluginManager  = $this->getMockBuilder(AbstractPluginManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $serviceLocator->expects($this->once())->method('get')->with('config')->willReturn($config);
-        $pluginManager->expects($this->once())->method('getServiceLocator')->willReturn($serviceLocator);
 
         $factory    = new YumlControllerFactory();
-        $controller = $factory->createService($pluginManager);
+        $controller = $factory($serviceLocator, YumlController::class);
 
         $this->assertInstanceOf(YumlController::class, $controller);
     }
@@ -44,17 +38,12 @@ class YumlControllerFactoryTest extends TestCase
         ];
 
         $serviceLocator = $this->createMock(ServiceLocatorInterface::class);
-        $pluginManager  = $this->getMockBuilder(AbstractPluginManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $serviceLocator->expects($this->once())->method('get')->with('config')->willReturn($config);
-        $pluginManager->expects($this->once())->method('getServiceLocator')->willReturn($serviceLocator);
 
         $factory = new YumlControllerFactory();
 
         $this->expectException(ServiceNotFoundException::class);
-        $factory->createService($pluginManager);
+        $factory($serviceLocator, YumlController::class);
     }
 
     public function testCreateServiceWithNoConfigKey(): void
@@ -64,16 +53,11 @@ class YumlControllerFactoryTest extends TestCase
         ];
 
         $serviceLocator = $this->createMock(ServiceLocatorInterface::class);
-        $pluginManager  = $this->getMockBuilder(AbstractPluginManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $serviceLocator->expects($this->once())->method('get')->with('config')->willReturn($config);
-        $pluginManager->expects($this->once())->method('getServiceLocator')->willReturn($serviceLocator);
 
         $factory = new YumlControllerFactory();
 
         $this->expectException(ServiceNotFoundException::class);
-        $factory->createService($pluginManager);
+        $factory($serviceLocator, YumlController::class);
     }
 }

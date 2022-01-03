@@ -9,8 +9,7 @@ use Doctrine\DBAL\Logging\LoggerChain;
 use DoctrineORMModule\Collector\SQLLoggerCollector;
 use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use RuntimeException;
 
 use function sprintf;
@@ -54,16 +53,6 @@ class SQLLoggerCollectorFactory implements FactoryInterface
         }
 
         return new SQLLoggerCollector($debugStackLogger, 'doctrine.sql_logger_collector.' . $options->getName());
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @deprecated 4.1.0 With laminas-servicemanager v3 this method is obsolete and will be removed in 5.0.0.
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, SQLLoggerCollector::class);
     }
 
     /**

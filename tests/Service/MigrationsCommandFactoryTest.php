@@ -30,6 +30,7 @@ use DoctrineORMModuleTest\ServiceManagerFactory;
 use InvalidArgumentException;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function class_exists;
 
@@ -59,7 +60,7 @@ class MigrationsCommandFactoryTest extends TestCase
 
         $this->assertInstanceOf(
             ExecuteCommand::class,
-            $factory->createService($this->serviceLocator)
+            $factory($this->serviceLocator, ExecuteCommand::class)
         );
     }
 
@@ -75,7 +76,7 @@ class MigrationsCommandFactoryTest extends TestCase
 
         $this->assertInstanceOf(
             DiffCommand::class,
-            $factory->createService($this->serviceLocator)
+            $factory($this->serviceLocator, DiffCommand::class)
         );
     }
 
@@ -84,7 +85,7 @@ class MigrationsCommandFactoryTest extends TestCase
         $factory = new MigrationsCommandFactory('unknowncommand');
 
         $this->expectException(InvalidArgumentException::class);
-        $factory->createService($this->serviceLocator);
+        $factory($this->serviceLocator, stdClass::class);
     }
 
     public function testDefineDependencyFactoryServicesFromConfig(): void
@@ -115,7 +116,7 @@ class MigrationsCommandFactoryTest extends TestCase
                 ['myService', 'test'],
             ]);
 
-        $factory->createService($serviceLocator);
+        $factory($serviceLocator, DiffCommand::class);
     }
 
     public function testNoDefineDependencyFactoryServicesFromConfig(): void
@@ -143,6 +144,6 @@ class MigrationsCommandFactoryTest extends TestCase
                 ['doctrine.entitymanager.orm_default', $entityManager],
             ]);
 
-        $factory->createService($serviceLocator);
+        $factory($serviceLocator, DiffCommand::class);
     }
 }

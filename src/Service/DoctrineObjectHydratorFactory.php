@@ -6,8 +6,7 @@ namespace DoctrineORMModule\Service;
 
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class DoctrineObjectHydratorFactory implements FactoryInterface
 {
@@ -17,15 +16,5 @@ class DoctrineObjectHydratorFactory implements FactoryInterface
     public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
         return new DoctrineObject($serviceLocator->get('doctrine.entitymanager.orm_default'));
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @deprecated 4.1.0 With laminas-servicemanager v3 this method is obsolete and will be removed in 5.0.0.
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, DoctrineObject::class);
     }
 }

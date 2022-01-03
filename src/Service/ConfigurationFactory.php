@@ -13,7 +13,6 @@ use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
 use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationFactory;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 use function is_string;
 use function method_exists;
@@ -163,14 +162,6 @@ class ConfigurationFactory extends DoctrineConfigurationFactory
         $this->setupDBALConfiguration($serviceLocator, $config);
 
         return $config;
-    }
-
-    /**
-     * @deprecated 4.1.0 With laminas-servicemanager v3 this method is obsolete and will be removed in 5.0.0.
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): Configuration
-    {
-        return $this($serviceLocator, Configuration::class);
     }
 
     protected function getOptionsClass(): string

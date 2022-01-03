@@ -16,7 +16,7 @@ class ConfigProviderTest extends TestCase
 {
     public function testInvokeHasDependencyKeyAndNotServiceManager(): void
     {
-        $config = (new ConfigProvider())->__invoke();
+        $config = (new ConfigProvider())();
 
         self::assertArrayHasKey('dependencies', $config, 'Expected config to have "dependencies" array key');
         self::assertArrayNotHasKey('service_manager', $config, 'Config should not have "service_manager" array key');
