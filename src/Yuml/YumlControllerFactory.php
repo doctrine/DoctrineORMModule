@@ -6,29 +6,13 @@ namespace DoctrineORMModule\Yuml;
 
 use Interop\Container\ContainerInterface;
 use Laminas\Http\Client;
-use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 use function sprintf;
 
 class YumlControllerFactory implements FactoryInterface
 {
-    /**
-     * Create service
-     *
-     * @deprecated 4.1.0 With laminas-servicemanager v3 this method is obsolete and will be removed in 5.0.0.
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): YumlController
-    {
-        if ($serviceLocator instanceof AbstractPluginManager) {
-            $serviceLocator = $serviceLocator->getServiceLocator();
-        }
-
-        return $this($serviceLocator, YumlController::class);
-    }
-
     /**
      * Create an object
      *

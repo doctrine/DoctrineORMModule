@@ -10,7 +10,6 @@ use Doctrine\DBAL\Types\Type;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\DBALConnection;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use PDO;
 
 use function array_key_exists;
@@ -72,18 +71,6 @@ class DBALConnectionFactory extends AbstractFactory
         }
 
         return $connection;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @deprecated 4.1.0 With laminas-servicemanager v3 this method is obsolete and will be removed in 5.0.0.
-     *
-     * @return Connection
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, Connection::class);
     }
 
     /**

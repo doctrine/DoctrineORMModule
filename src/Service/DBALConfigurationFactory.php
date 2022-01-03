@@ -8,8 +8,7 @@ use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Types\Type;
 use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use RuntimeException;
 
 use function is_string;
@@ -38,18 +37,6 @@ class DBALConfigurationFactory implements FactoryInterface
         $this->setupDBALConfiguration($serviceLocator, $config);
 
         return $config;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @deprecated 4.1.0 With laminas-servicemanager v3 this method is obsolete and will be removed in 5.0.0.
-     *
-     * @return Configuration
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, Configuration::class);
     }
 
     public function setupDBALConfiguration(ContainerInterface $serviceLocator, Configuration $config): void

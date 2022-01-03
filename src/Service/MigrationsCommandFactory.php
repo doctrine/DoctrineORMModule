@@ -10,8 +10,7 @@ use Doctrine\Migrations\DependencyFactory;
 use Doctrine\Migrations\Tools\Console\Command\DoctrineCommand;
 use Interop\Container\ContainerInterface;
 use InvalidArgumentException;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use RuntimeException;
 use Symfony\Component\Console\Input\ArgvInput;
 
@@ -100,16 +99,6 @@ class MigrationsCommandFactory implements FactoryInterface
         // An object manager may not have a migrations configuration and that's OK.
         // Use default values in that case.
         return new $commandClassName($dependencyFactory);
-    }
-
-    /**
-     * @deprecated 4.1.0 With laminas-servicemanager v3 this method is obsolete and will be removed in 5.0.0.
-     *
-     * @throws InvalidArgumentException
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): DoctrineCommand
-    {
-        return $this($serviceLocator, $this->commandClassName);
     }
 
     private function getObjectManagerName(): string
