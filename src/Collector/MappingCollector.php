@@ -9,16 +9,13 @@ use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 use Laminas\DeveloperTools\Collector\AutoHideInterface;
 use Laminas\DeveloperTools\Collector\CollectorInterface;
 use Laminas\Mvc\MvcEvent;
-use Serializable;
 
 use function ksort;
-use function serialize;
-use function unserialize;
 
 /**
  * Collector to be used in DeveloperTools to record and display mapping information
  */
-class MappingCollector implements CollectorInterface, AutoHideInterface, Serializable
+class MappingCollector implements CollectorInterface, AutoHideInterface
 {
     /**
      * Collector priority
@@ -94,32 +91,12 @@ class MappingCollector implements CollectorInterface, AutoHideInterface, Seriali
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @deprecated 4.2.0 This function will be removed in 5.0.0. Use __serialize() instead.
-     */
-    public function serialize()
-    {
-        return serialize($this->__serialize());
-    }
-
-    /**
      * @param array{name: string, classes: ClassMetadata[]} $data
      */
     public function __unserialize(array $data): void
     {
         $this->name    = $data['name'];
         $this->classes = $data['classes'];
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @deprecated 4.2.0 This function will be removed in 5.0.0. Use __unserialize() instead.
-     */
-    public function unserialize($serialized)
-    {
-        $this->__unserialize(unserialize($serialized));
     }
 
     /**
