@@ -105,7 +105,7 @@ class DBALConnection extends AbstractOptions
      */
     public function setDoctrineTypeMappings(array $doctrineTypeMappings): DBALConnection
     {
-        $this->doctrineTypeMappings = (array) $doctrineTypeMappings;
+        $this->doctrineTypeMappings = $doctrineTypeMappings;
 
         return $this;
     }

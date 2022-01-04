@@ -32,7 +32,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface
     public function __construct(ClassMetadataFactory $classMetadataFactory, string $name)
     {
         $this->classMetadataFactory = $classMetadataFactory;
-        $this->name                 = (string) $name;
+        $this->name                 = $name;
     }
 
     public function getName(): string

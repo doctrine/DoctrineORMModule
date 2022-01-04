@@ -56,7 +56,7 @@ class EntityManager extends AbstractOptions
 
     public function setEntityResolver(string $entityResolver): self
     {
-        $this->entityResolver = (string) $entityResolver;
+        $this->entityResolver = $entityResolver;
 
         return $this;
     }

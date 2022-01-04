@@ -28,7 +28,7 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
     public function __construct(DebugStack $sqlLogger, string $name)
     {
         $this->sqlLogger = $sqlLogger;
-        $this->name      = (string) $name;
+        $this->name      = $name;
     }
 
     public function getName(): string

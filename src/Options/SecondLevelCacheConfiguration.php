@@ -44,7 +44,7 @@ class SecondLevelCacheConfiguration extends AbstractOptions
 
     public function setEnabled(bool $enabled): void
     {
-        $this->enabled = (bool) $enabled;
+        $this->enabled = $enabled;
     }
 
     public function isEnabled(): bool
@@ -54,7 +54,7 @@ class SecondLevelCacheConfiguration extends AbstractOptions
 
     public function setDefaultLifetime(int $defaultLifetime): void
     {
-        $this->defaultLifetime = (int) $defaultLifetime;
+        $this->defaultLifetime = $defaultLifetime;
     }
 
     public function getDefaultLifetime(): int
@@ -64,7 +64,7 @@ class SecondLevelCacheConfiguration extends AbstractOptions
 
     public function setDefaultLockLifetime(int $defaultLockLifetime): void
     {
-        $this->defaultLockLifetime = (int) $defaultLockLifetime;
+        $this->defaultLockLifetime = $defaultLockLifetime;
     }
 
     public function getDefaultLockLifetime(): int
@@ -74,7 +74,7 @@ class SecondLevelCacheConfiguration extends AbstractOptions
 
     public function setFileLockRegionDirectory(string $fileLockRegionDirectory): void
     {
-        $this->fileLockRegionDirectory = (string) $fileLockRegionDirectory;
+        $this->fileLockRegionDirectory = $fileLockRegionDirectory;
     }
 
     public function getFileLockRegionDirectory(): string
