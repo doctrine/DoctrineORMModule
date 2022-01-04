@@ -136,7 +136,7 @@ final class EntityBasedFormBuilder
     /**
      * Create a form from an object.
      *
-     * @param  class-string|object $entity
+     * @param class-string|object $entity
      */
     public function createForm($entity): FormInterface
     {
