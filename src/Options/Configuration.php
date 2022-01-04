@@ -537,7 +537,7 @@ class Configuration extends DBALConfiguration
      */
     public function setClassMetadataFactoryName(string $factoryName): self
     {
-        $this->classMetadataFactoryName = (string) $factoryName;
+        $this->classMetadataFactoryName = $factoryName;
 
         return $this;
     }
@@ -612,7 +612,7 @@ class Configuration extends DBALConfiguration
      */
     public function setDefaultRepositoryClassName(string $className): self
     {
-        $this->defaultRepositoryClassName = (string) $className;
+        $this->defaultRepositoryClassName = $className;
 
         return $this;
     }

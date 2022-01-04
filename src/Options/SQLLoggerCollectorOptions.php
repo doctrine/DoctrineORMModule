@@ -35,7 +35,7 @@ class SQLLoggerCollectorOptions extends AbstractOptions
 
     public function setConfiguration(?string $configuration): void
     {
-        $this->configuration = $configuration ? (string) $configuration : null;
+        $this->configuration = $configuration ?: null;
     }
 
     /**
@@ -43,12 +43,12 @@ class SQLLoggerCollectorOptions extends AbstractOptions
      */
     public function getConfiguration(): string
     {
-        return $this->configuration ? $this->configuration : 'doctrine.configuration.orm_default';
+        return $this->configuration ?: 'doctrine.configuration.orm_default';
     }
 
     public function setSqlLogger(?string $sqlLogger): void
     {
-        $this->sqlLogger = $sqlLogger ? (string) $sqlLogger : null;
+        $this->sqlLogger = $sqlLogger ?: null;
     }
 
     /**

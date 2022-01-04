@@ -21,7 +21,7 @@ class MetadataGrapher
     /**
      * Temporary array where already visited collections are stored
      *
-     * @var mixed[]
+     * @var array<string,array<string,bool>>
      */
     protected array $visitedAssociations = [];
 
@@ -208,6 +208,8 @@ class MetadataGrapher
 
     /**
      * Visit a given association and mark it as visited
+     *
+     * @psalm-param class-string $className
      *
      * @return bool true if the association was visited before
      */

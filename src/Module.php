@@ -9,6 +9,7 @@ use Laminas\EventManager\EventInterface;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
 use Laminas\ModuleManager\Feature\ControllerProviderInterface;
 use Laminas\ModuleManager\Feature\DependencyIndicatorInterface;
+use Laminas\ModuleManager\Feature\InitProviderInterface;
 use Laminas\ModuleManager\ModuleManagerInterface;
 
 use function class_exists;
@@ -19,12 +20,10 @@ use function class_exists;
 class Module implements
     ControllerProviderInterface,
     ConfigProviderInterface,
-    DependencyIndicatorInterface
+    DependencyIndicatorInterface,
+    InitProviderInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function init(ModuleManagerInterface $manager)
+    public function init(ModuleManagerInterface $manager): void
     {
         // Initialize the console
         $manager
@@ -60,24 +59,30 @@ class Module implements
 
     /**
      * {@inheritDoc}
+     *
+     * @return array<array-key,mixed>
      */
-    public function getConfig()
+    public function getConfig(): array
     {
         return include __DIR__ . '/../config/module.config.php';
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @return array<array-key,mixed>
      */
-    public function getControllerConfig()
+    public function getControllerConfig(): array
     {
         return include __DIR__ . '/../config/controllers.config.php';
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @return array<string>
      */
-    public function getModuleDependencies()
+    public function getModuleDependencies(): array
     {
         return ['DoctrineModule'];
     }

@@ -32,29 +32,20 @@ class MappingCollector implements CollectorInterface, AutoHideInterface
     public function __construct(ClassMetadataFactory $classMetadataFactory, string $name)
     {
         $this->classMetadataFactory = $classMetadataFactory;
-        $this->name                 = (string) $name;
+        $this->name                 = $name;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getPriority()
+    public function getPriority(): int
     {
         return self::PRIORITY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function collect(MvcEvent $mvcEvent)
+    public function collect(MvcEvent $mvcEvent): void
     {
         if (! $this->classMetadataFactory) {
             return;
@@ -71,10 +62,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface
         ksort($this->classes);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function canHide()
+    public function canHide(): bool
     {
         return empty($this->classes);
     }

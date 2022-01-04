@@ -81,9 +81,9 @@ class SQLLoggerCollectorFactory implements FactoryInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @psalm-return class-string
      */
-    protected function getOptionsClass()
+    protected function getOptionsClass(): string
     {
         return SQLLoggerCollectorOptions::class;
     }
