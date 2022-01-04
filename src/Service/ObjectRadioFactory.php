@@ -12,7 +12,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 /**
  * Factory for {@see ObjectRadio}
  */
-class ObjectRadioFactory implements FactoryInterface
+final class ObjectRadioFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}

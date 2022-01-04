@@ -8,7 +8,7 @@ use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
-class DoctrineObjectHydratorFactory implements FactoryInterface
+final class DoctrineObjectHydratorFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}

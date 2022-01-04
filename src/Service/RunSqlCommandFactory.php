@@ -9,7 +9,7 @@ use Doctrine\DBAL\Tools\Console\ConnectionProvider\SingleConnectionProvider;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
-class RunSqlCommandFactory implements FactoryInterface
+final class RunSqlCommandFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}

@@ -11,7 +11,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 /**
  * Factory that provides the `Doctrine\ORM\EntityManager` alias for `doctrine.entitymanager.orm_default`
  */
-class EntityManagerAliasCompatFactory implements FactoryInterface
+final class EntityManagerAliasCompatFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}

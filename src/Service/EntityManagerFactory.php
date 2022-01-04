@@ -11,7 +11,7 @@ use Interop\Container\ContainerInterface;
 
 use function assert;
 
-class EntityManagerFactory extends AbstractFactory
+final class EntityManagerFactory extends AbstractFactory
 {
     /**
      * {@inheritDoc}

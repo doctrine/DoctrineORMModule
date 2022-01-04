@@ -9,7 +9,7 @@ use Laminas\Stdlib\AbstractOptions;
 /**
  * Configuration options for Second Level Cache
  */
-class SecondLevelCacheConfiguration extends AbstractOptions
+final class SecondLevelCacheConfiguration extends AbstractOptions
 {
     /**
      * Enable the second level cache configuration

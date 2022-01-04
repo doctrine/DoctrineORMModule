@@ -8,7 +8,7 @@ use DoctrineORMModule\CliConfigurator;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
-class CliConfiguratorFactory implements FactoryInterface
+final class CliConfiguratorFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}

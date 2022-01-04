@@ -12,7 +12,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 /**
  * Factory for {@see ObjectMultiCheckbox}
  */
-class ObjectMultiCheckboxFactory implements FactoryInterface
+final class ObjectMultiCheckboxFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}

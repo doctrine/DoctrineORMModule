@@ -19,7 +19,7 @@ use function sprintf;
 /**
  * Configuration options for an ORM Configuration
  */
-class Configuration extends DBALConfiguration
+final class Configuration extends DBALConfiguration
 {
     /**
      * Set the cache key for the metadata cache. Cache key
