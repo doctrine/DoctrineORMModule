@@ -12,7 +12,7 @@ use Interop\Container\ContainerInterface;
 /**
  * Service factory responsible for instantiating {@see \DoctrineORMModule\Collector\MappingCollector}
  */
-class MappingCollectorFactory extends AbstractFactory
+final class MappingCollectorFactory extends AbstractFactory
 {
     /**
      * {@inheritDoc}

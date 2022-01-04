@@ -9,7 +9,7 @@ use Doctrine\DBAL\Tools\Console\ConnectionProvider\SingleConnectionProvider;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
-class ReservedWordsCommandFactory implements FactoryInterface
+final class ReservedWordsCommandFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}

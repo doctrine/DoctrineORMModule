@@ -20,7 +20,7 @@ use function is_string;
 /**
  * DBAL Connection ServiceManager factory
  */
-class DBALConnectionFactory extends AbstractFactory
+final class DBALConnectionFactory extends AbstractFactory
 {
     /**
      * {@inheritDoc}

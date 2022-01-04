@@ -22,7 +22,7 @@ use function ucfirst;
 /**
  * Service factory for migrations command
  */
-class MigrationsCommandFactory implements FactoryInterface
+final class MigrationsCommandFactory implements FactoryInterface
 {
     private string $commandClassName;
 

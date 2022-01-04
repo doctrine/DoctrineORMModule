@@ -16,7 +16,7 @@ use function class_exists;
 /**
  * Base module for Doctrine ORM.
  */
-class Module implements
+final class Module implements
     ControllerProviderInterface,
     ConfigProviderInterface,
     DependencyIndicatorInterface

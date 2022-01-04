@@ -17,7 +17,7 @@ use function sprintf;
 /**
  * DBAL Configuration ServiceManager factory
  */
-class SQLLoggerCollectorFactory implements FactoryInterface
+final class SQLLoggerCollectorFactory implements FactoryInterface
 {
     protected string $name;
 

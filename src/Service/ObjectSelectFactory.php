@@ -12,7 +12,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 /**
  * Factory for {@see ObjectSelect}
  */
-class ObjectSelectFactory implements FactoryInterface
+final class ObjectSelectFactory implements FactoryInterface
 {
     /**
      * {@inheritDoc}

@@ -18,7 +18,7 @@ use function is_string;
 use function method_exists;
 use function sprintf;
 
-class ConfigurationFactory extends DoctrineConfigurationFactory
+final class ConfigurationFactory extends DoctrineConfigurationFactory
 {
     /**
      * {@inheritDoc}

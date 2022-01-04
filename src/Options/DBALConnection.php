@@ -13,7 +13,7 @@ use PDO;
 /**
  * DBAL Connection options
  */
-class DBALConnection extends AbstractOptions
+final class DBALConnection extends AbstractOptions
 {
     /**
      * Set the configuration key for the Configuration. Configuration key

@@ -9,7 +9,7 @@ use Laminas\Stdlib\AbstractOptions;
 /**
  * Configuration options for an collector
  */
-class SQLLoggerCollectorOptions extends AbstractOptions
+final class SQLLoggerCollectorOptions extends AbstractOptions
 {
     /** @var string name to be assigned to the collector */
     protected string $name = 'orm_default';

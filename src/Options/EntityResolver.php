@@ -10,7 +10,7 @@ use Laminas\Stdlib\AbstractOptions;
 use function class_exists;
 use function sprintf;
 
-class EntityResolver extends AbstractOptions
+final class EntityResolver extends AbstractOptions
 {
     /**
      * Set the configuration key for the EventManager. Event manager key

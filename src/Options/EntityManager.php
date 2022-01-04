@@ -6,7 +6,7 @@ namespace DoctrineORMModule\Options;
 
 use Laminas\Stdlib\AbstractOptions;
 
-class EntityManager extends AbstractOptions
+final class EntityManager extends AbstractOptions
 {
     /**
      * Set the configuration key for the Configuration. Configuration key

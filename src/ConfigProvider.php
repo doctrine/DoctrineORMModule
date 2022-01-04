@@ -7,7 +7,7 @@ namespace DoctrineORMModule;
 /**
  * Config provider for DoctrineORMModule config
  */
-class ConfigProvider
+final class ConfigProvider
 {
     /**
      * @return mixed[]
