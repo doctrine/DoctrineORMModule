@@ -16,16 +16,22 @@ use Laminas\Paginator\Adapter\AdapterInterface;
  */
 class DoctrinePaginator implements AdapterInterface, JsonSerializable
 {
+    /** @var Paginator<T> */
     protected Paginator $paginator;
 
     /**
      * Constructor
+     *
+     * @param Paginator<T> $paginator
      */
     public function __construct(Paginator $paginator)
     {
         $this->paginator = $paginator;
     }
 
+    /**
+     * @param Paginator<T> $paginator
+     */
     public function setPaginator(Paginator $paginator): self
     {
         $this->paginator = $paginator;
@@ -33,6 +39,9 @@ class DoctrinePaginator implements AdapterInterface, JsonSerializable
         return $this;
     }
 
+    /**
+     * @return Paginator<T>
+     */
     public function getPaginator(): Paginator
     {
         return $this->paginator;
