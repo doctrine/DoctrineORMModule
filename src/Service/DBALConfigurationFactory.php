@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace DoctrineORMModule\Service;
 
 use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\Driver\Middleware;
 use Doctrine\DBAL\Types\Type;
 use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
 use Interop\Container\ContainerInterface;
+use InvalidArgumentException;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use RuntimeException;
+use UnexpectedValueException;
 
 use function is_string;
 use function sprintf;
@@ -50,6 +53,26 @@ class DBALConfigurationFactory implements FactoryInterface
         }
 
         $config->setSQLLogger($sqlLogger);
+
+        $middlewares = [];
+        foreach ($options->middlewares as $middlewareName) {
+            if (! is_string($middlewareName) || ! $serviceLocator->has($middlewareName)) {
+                throw new InvalidArgumentException('Middleware not exists');
+            }
+
+            $middleware = $serviceLocator->get($middlewareName);
+            if (! $middleware instanceof Middleware) {
+                throw new UnexpectedValueException(sprintf(
+                    'Invalid middleware with %s name. %s expected.',
+                    $middlewareName,
+                    Middleware::class,
+                ));
+            }
+
+            $middlewares[] = $middleware;
+        }
+
+        $config->setMiddlewares($middlewares);
 
         foreach ($options->types as $name => $class) {
             if (Type::hasType($name)) {

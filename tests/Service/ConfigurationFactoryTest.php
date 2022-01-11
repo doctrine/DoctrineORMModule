@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\DBAL\Driver;
+use Doctrine\DBAL\Driver\Middleware;
 use Doctrine\Common\Cache\Psr6\CacheAdapter;
 use Doctrine\ORM\Cache\CacheConfiguration;
 use Doctrine\ORM\Cache\DefaultCacheFactory;
@@ -20,6 +22,8 @@ use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
+use stdClass;
+use UnexpectedValueException;
 
 use function assert;
 
@@ -372,5 +376,69 @@ class ConfigurationFactoryTest extends TestCase
         $cacheDecorator = $reflProperty->getValue($cacheFactory);
         $this->assertInstanceOf(CacheAdapter::class, $cacheDecorator);
         $this->assertInstanceOf(ArrayCache::class, $cacheDecorator->getCache());
+    }
+
+    public function testConfigureMiddlewares(): void
+    {
+        $config = [
+            'doctrine' => [
+                'configuration' => [
+                    'test_default' => [
+                        'middlewares' => ['middleware'],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->serviceManager->setService('config', $config);
+        $this->serviceManager->setService('middleware', new class implements Middleware {
+            public function wrap(Driver $driver): Driver
+            {
+                return $driver;
+            }
+        });
+
+        $ormConfig = ($this->factory)($this->serviceManager, Configuration::class);
+
+        $this->assertInstanceOf(Middleware::class, $ormConfig->getMiddlewares()[0] ?? null);
+    }
+
+    public function testConfigureMiddlewaresNotExisting(): void
+    {
+        $config = [
+            'doctrine' => [
+                'configuration' => [
+                    'test_default' => [
+                        'middlewares' => ['middleware'],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->serviceManager->setService('config', $config);
+
+        $this->expectException(\InvalidArgumentException::class);
+
+        ($this->factory)($this->serviceManager, Configuration::class);
+    }
+
+    public function testConfigureWrongMiddlewares(): void
+    {
+        $config = [
+            'doctrine' => [
+                'configuration' => [
+                    'test_default' => [
+                        'middlewares' => ['middleware'],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->serviceManager->setService('config', $config);
+        $this->serviceManager->setService('middleware', new stdClass());
+
+        $this->expectException(UnexpectedValueException::class);
+
+        ($this->factory)($this->serviceManager, Configuration::class);
     }
 }
