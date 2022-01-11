@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\Common\Cache\Psr6\CacheAdapter;
 use Doctrine\DBAL\Driver;
 use Doctrine\DBAL\Driver\Middleware;
-use Doctrine\Common\Cache\Psr6\CacheAdapter;
 use Doctrine\ORM\Cache\CacheConfiguration;
 use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
@@ -26,6 +26,7 @@ use stdClass;
 use UnexpectedValueException;
 
 use function assert;
+use function class_exists;
 
 class ConfigurationFactoryTest extends TestCase
 {
@@ -380,6 +381,10 @@ class ConfigurationFactoryTest extends TestCase
 
     public function testConfigureMiddlewares(): void
     {
+        if (! class_exists(Middleware::class)) {
+            $this->markTestSkipped('Middleware feature not exists in DBAL v2');
+        }
+
         $config = [
             'doctrine' => [
                 'configuration' => [
@@ -405,6 +410,10 @@ class ConfigurationFactoryTest extends TestCase
 
     public function testConfigureMiddlewaresNotExisting(): void
     {
+        if (! class_exists(Middleware::class)) {
+            $this->markTestSkipped('Middleware feature not exists in DBAL v2');
+        }
+
         $config = [
             'doctrine' => [
                 'configuration' => [
@@ -424,6 +433,10 @@ class ConfigurationFactoryTest extends TestCase
 
     public function testConfigureWrongMiddlewares(): void
     {
+        if (! class_exists(Middleware::class)) {
+            $this->markTestSkipped('Middleware feature not exists in DBAL v2');
+        }
+
         $config = [
             'doctrine' => [
                 'configuration' => [
