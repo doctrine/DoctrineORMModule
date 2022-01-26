@@ -299,9 +299,9 @@ The "schema_assets_filter" option can be used to exclude certain tables from bei
         'doctrine' => [
             'configuration' => [
                 'orm_default' => [
-                    'schema_assets_filter' => static function ($tableName) {
-                        return $tableName === 'foobar';
-                    }
+                    'schema_assets_filter' => fn (string $tableName): bool => (
+                        in_array($tableName, ['migrations', 'doNotRemoveThisTable']);
+                    ),
                 ],
             ],
         ],
