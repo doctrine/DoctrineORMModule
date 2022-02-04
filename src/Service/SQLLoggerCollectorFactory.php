@@ -9,8 +9,7 @@ use Doctrine\DBAL\Logging\LoggerChain;
 use DoctrineORMModule\Collector\SQLLoggerCollector;
 use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use RuntimeException;
 
 use function sprintf;
@@ -18,10 +17,9 @@ use function sprintf;
 /**
  * DBAL Configuration ServiceManager factory
  */
-class SQLLoggerCollectorFactory implements FactoryInterface
+final class SQLLoggerCollectorFactory implements FactoryInterface
 {
-    /** @var string */
-    protected $name;
+    protected string $name;
 
     public function __construct(string $name)
     {
@@ -58,16 +56,6 @@ class SQLLoggerCollectorFactory implements FactoryInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @deprecated 4.1.0 With laminas-servicemanager v3 this method is obsolete and will be removed in 5.0.0.
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, SQLLoggerCollector::class);
-    }
-
-    /**
      * @return mixed
      *
      * @throws RuntimeException
@@ -93,9 +81,9 @@ class SQLLoggerCollectorFactory implements FactoryInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @psalm-return class-string
      */
-    protected function getOptionsClass()
+    protected function getOptionsClass(): string
     {
         return SQLLoggerCollectorOptions::class;
     }

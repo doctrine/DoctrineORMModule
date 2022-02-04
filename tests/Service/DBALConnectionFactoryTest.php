@@ -6,6 +6,7 @@ namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\EventManager;
+use Doctrine\DBAL\Connection as DBALConnection;
 use Doctrine\DBAL\Driver\PDO\SQLite\Driver;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
@@ -22,10 +23,8 @@ use PHPUnit\Framework\TestCase;
  */
 class DBALConnectionFactoryTest extends TestCase
 {
-    /** @var ServiceManager */
-    protected $serviceManager;
-    /** @var DBALConnectionFactory */
-    protected $factory;
+    protected ServiceManager $serviceManager;
+    protected DBALConnectionFactory $factory;
 
     public function setUp(): void
     {
@@ -55,7 +54,7 @@ class DBALConnectionFactoryTest extends TestCase
         $this->serviceManager->setService('config', $config);
         $this->serviceManager->setService('Configuration', $config);
 
-        $dbal = $this->factory->createService($this->serviceManager);
+        $dbal = ($this->factory)($this->serviceManager, DBALConnection::class);
         $this->assertFalse($dbal->isConnected());
     }
 
@@ -80,7 +79,7 @@ class DBALConnectionFactoryTest extends TestCase
         $this->serviceManager->setService('config', $config);
         $this->serviceManager->setService('Configuration', $config);
 
-        $dbal     = $this->factory->createService($this->serviceManager);
+        $dbal     = ($this->factory)($this->serviceManager, DBALConnection::class);
         $platform = $dbal->getDatabasePlatform();
         $this->assertSame('string', $platform->getDoctrineTypeMapping('money'));
     }
@@ -115,9 +114,9 @@ class DBALConnectionFactoryTest extends TestCase
         $configurationFactory = new ConfigurationFactory('orm_default');
         $this->serviceManager->setService(
             'doctrine.configuration.orm_default',
-            $configurationFactory->createService($this->serviceManager)
+            $configurationFactory($this->serviceManager, Configuration::class)
         );
-        $dbal     = $this->factory->createService($this->serviceManager);
+        $dbal     = ($this->factory)($this->serviceManager, DBALConnection::class);
         $platform = $dbal->getDatabasePlatform();
         $type     = Type::getType($platform->getDoctrineTypeMapping('money'));
 
@@ -149,7 +148,7 @@ class DBALConnectionFactoryTest extends TestCase
         $this->serviceManager->setService('Configuration', $config);
         $this->serviceManager->setService('platform_service', $platformMock);
 
-        $dbal     = $this->factory->createService($this->serviceManager);
+        $dbal     = ($this->factory)($this->serviceManager, DBALConnection::class);
         $platform = $dbal->getDatabasePlatform();
         $this->assertSame($platformMock, $platform);
     }
@@ -174,7 +173,7 @@ class DBALConnectionFactoryTest extends TestCase
         $this->serviceManager->setService('config', $config);
         $this->serviceManager->setService('Configuration', $config);
 
-        $dbal = $this->factory->createService($this->serviceManager);
+        $dbal = ($this->factory)($this->serviceManager, DBALConnection::class);
         $this->assertFalse($dbal->getNestTransactionsWithSavepoints());
     }
 
@@ -199,7 +198,7 @@ class DBALConnectionFactoryTest extends TestCase
         $this->serviceManager->setService('config', $config);
         $this->serviceManager->setService('Configuration', $config);
 
-        $dbal = $this->factory->createService($this->serviceManager);
+        $dbal = ($this->factory)($this->serviceManager, DBALConnection::class);
         $this->assertTrue($dbal->getNestTransactionsWithSavepoints());
     }
 }

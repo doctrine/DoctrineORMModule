@@ -17,8 +17,7 @@ use function assert;
  */
 class YumlController extends AbstractActionController
 {
-    /** @var Client */
-    protected $httpClient;
+    protected Client $httpClient;
 
     public function __construct(Client $httpClient)
     {

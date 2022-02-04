@@ -9,16 +9,16 @@ use Laminas\Stdlib\AbstractOptions;
 /**
  * Configuration options for an collector
  */
-class SQLLoggerCollectorOptions extends AbstractOptions
+final class SQLLoggerCollectorOptions extends AbstractOptions
 {
     /** @var string name to be assigned to the collector */
-    protected $name = 'orm_default';
+    protected string $name = 'orm_default';
 
     /** @var string|null service name of the configuration where the logger has to be put */
-    protected $configuration;
+    protected ?string $configuration = null;
 
     /** @var string|null service name of the SQLLogger to be used */
-    protected $sqlLogger;
+    protected ?string $sqlLogger = null;
 
     public function setName(?string $name): void
     {
@@ -35,7 +35,7 @@ class SQLLoggerCollectorOptions extends AbstractOptions
 
     public function setConfiguration(?string $configuration): void
     {
-        $this->configuration = $configuration ? (string) $configuration : null;
+        $this->configuration = $configuration ?: null;
     }
 
     /**
@@ -43,12 +43,12 @@ class SQLLoggerCollectorOptions extends AbstractOptions
      */
     public function getConfiguration(): string
     {
-        return $this->configuration ? $this->configuration : 'doctrine.configuration.orm_default';
+        return $this->configuration ?: 'doctrine.configuration.orm_default';
     }
 
     public function setSqlLogger(?string $sqlLogger): void
     {
-        $this->sqlLogger = $sqlLogger ? (string) $sqlLogger : null;
+        $this->sqlLogger = $sqlLogger ?: null;
     }
 
     /**

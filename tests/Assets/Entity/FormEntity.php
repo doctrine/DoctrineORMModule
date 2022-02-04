@@ -18,130 +18,62 @@ class FormEntity
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @ORM\Column(type="boolean")
-     *
-     * @var bool
-     */
-    protected $bool;
+    /** @ORM\Column(type="boolean") */
+    protected bool $bool;
 
-    /**
-     * @ORM\Column(type="boolean")
-     *
-     * @var bool
-     */
-    protected $boolean;
+    /** @ORM\Column(type="boolean") */
+    protected bool $boolean;
 
-    /**
-     * @ORM\Column(type="float")
-     *
-     * @var float
-     */
-    protected $float;
+    /** @ORM\Column(type="float") */
+    protected float $float;
 
-    /**
-     * @ORM\Column(type="bigint")
-     *
-     * @var int
-     */
-    protected $bigint;
+    /** @ORM\Column(type="bigint") */
+    protected int $bigint;
 
-    /**
-     * @ORM\Column(type="integer")
-     *
-     * @var int
-     */
-    protected $integer;
+    /** @ORM\Column(type="integer") */
+    protected int $integer;
 
-    /**
-     * @ORM\Column(type="smallint")
-     *
-     * @var int
-     */
-    protected $smallint;
+    /** @ORM\Column(type="smallint") */
+    protected int $smallint;
 
-    /**
-     * @ORM\Column(type="datetime")
-     *
-     * @var DateTime
-     */
-    protected $datetime;
+    /** @ORM\Column(type="datetime") */
+    protected DateTime $datetime;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     *
-     * @var DateTime
-     */
-    protected $datetimeImmutable;
+    /** @ORM\Column(type="datetime_immutable") */
+    protected DateTime $datetimeImmutable;
 
-    /**
-     * @ORM\Column(type="datetimetz")
-     *
-     * @var DateTimeImmutable
-     */
-    protected $datetimetz;
+    /** @ORM\Column(type="datetimetz") */
+    protected DateTimeImmutable $datetimetz;
 
-    /**
-     * @ORM\Column(type="datetimetz_immutable")
-     *
-     * @var DateTimeImmutable
-     */
-    protected $datetimetzImmutable;
+    /** @ORM\Column(type="datetimetz_immutable") */
+    protected DateTimeImmutable $datetimetzImmutable;
 
-    /**
-     * @ORM\Column(type="date")
-     *
-     * @var DateTime
-     */
-    protected $date;
+    /** @ORM\Column(type="date") */
+    protected DateTime $date;
 
-    /**
-     * @ORM\Column(type="time")
-     *
-     * @var DateTime
-     */
-    protected $time;
+    /** @ORM\Column(type="time") */
+    protected DateTime $time;
 
-    /**
-     * @ORM\Column(type="text")
-     *
-     * @var string
-     */
-    protected $text;
+    /** @ORM\Column(type="text") */
+    protected string $text;
 
-    /**
-     * @ORM\Column(type="string", nullable=false, length=20)
-     *
-     * @var string
-     */
-    protected $string;
+    /** @ORM\Column(type="string", nullable=false, length=20) */
+    protected string $string;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $stringNullable;
+    /** @ORM\Column(type="string", nullable=true) */
+    protected ?string $stringNullable = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Target")
-     *
-     * @var Target
-     */
-    protected $targetOne;
+    /** @ORM\OneToOne(targetEntity="Target") */
+    protected Target $targetOne;
 
     /**
      * @ORM\OneToOne(targetEntity="Target")
      * @ORM\JoinColumn(nullable=true)
-     *
-     * @var Target|null
      */
-    protected $targetOneNullable;
+    protected ?Target $targetOneNullable = null;
 
    /**
     * @ORM\OneToOne(targetEntity="Target")
@@ -149,27 +81,23 @@ class FormEntity
     *
     * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")
     * @Form\Options({"empty_option":null})
-    *
-    * @var Target|null
     */
-    protected $noDisplayEmptyOption;
+    protected ?Target $noDisplayEmptyOption = null;
 
     /**
      * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntity")
      *
      * @var Target[]
      */
-    protected $targetMany;
+    protected array $targetMany;
 
     /**
      * @ORM\Column(type="integer")
      *
      * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
      * @Form\Type("Radio")
-     *
-     * @var int
      */
-    protected $specificType;
+    protected int $specificType;
 
     /**
      * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntityMulti")
@@ -178,17 +106,15 @@ class FormEntity
      *
      * @var FormEntityTarget[]
      */
-    protected $specificMultiType;
+    protected array $specificMultiType;
 
     /**
      * @ORM\Column(type="integer")
      *
      * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
      * @Form\Attributes({"type":"textarea"})
-     *
-     * @var int
      */
-    protected $specificAttributeType;
+    protected int $specificAttributeType;
 
     /**
      * @ORM\Column(type="string", length=256)
@@ -196,8 +122,6 @@ class FormEntity
      *
      * @Form\Type("File")
      * @Form\Options({"label":"Image"})
-     *
-     * @var string
      */
-    protected $image;
+    protected string $image;
 }

@@ -11,7 +11,7 @@ use Interop\Container\ContainerInterface;
 
 use function assert;
 
-class EntityManagerFactory extends AbstractFactory
+final class EntityManagerFactory extends AbstractFactory
 {
     /**
      * {@inheritDoc}
@@ -31,18 +31,6 @@ class EntityManagerFactory extends AbstractFactory
         $container->get($options->getEntityResolver());
 
         return EntityManager::create($connection, $config);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @deprecated 4.1.0 With laminas-servicemanager v3 this method is obsolete and will be removed in 5.0.0.
-     *
-     * @return EntityManager
-     */
-    public function createService(ContainerInterface $container)
-    {
-        return $this($container, EntityManager::class);
     }
 
     public function getOptionsClass(): string

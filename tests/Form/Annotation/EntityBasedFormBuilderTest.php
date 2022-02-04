@@ -20,8 +20,7 @@ use function sprintf;
 
 class EntityBasedFormBuilderTest extends TestCase
 {
-    /** @var EntityBasedFormBuilder */
-    protected $builder;
+    protected EntityBasedFormBuilder $builder;
 
     public function setUp(): void
     {

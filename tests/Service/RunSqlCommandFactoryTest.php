@@ -15,8 +15,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RunSqlCommandFactoryTest extends TestCase
 {
-    /** @var ServiceManager */
-    private $serviceLocator;
+    private ServiceManager $serviceLocator;
 
     public function setUp(): void
     {
@@ -29,7 +28,7 @@ class RunSqlCommandFactoryTest extends TestCase
 
         $this->assertInstanceOf(
             RunSqlCommand::class,
-            $factory->createService($this->serviceLocator)
+            $factory($this->serviceLocator, RunSqlCommand::class)
         );
     }
 }

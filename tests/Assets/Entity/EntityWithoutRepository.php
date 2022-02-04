@@ -15,10 +15,8 @@ class EntityWithoutRepository
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     * @var ?int
      */
-    private $id;
+    private ?int $id = null;
 
     public function getId(): ?int
     {

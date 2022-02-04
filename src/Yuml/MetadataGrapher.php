@@ -21,19 +21,19 @@ class MetadataGrapher
     /**
      * Temporary array where already visited collections are stored
      *
-     * @var mixed[]
+     * @var array<string,array<string,bool>>
      */
-    protected $visitedAssociations = [];
+    protected array $visitedAssociations = [];
 
     /** @var ClassMetadata[] */
-    private $metadata;
+    private array $metadata;
 
     /**
      * Temporary array where reverse association name are stored
      *
      * @var ClassMetadata[]
      */
-    private $classByNames = [];
+    private array $classByNames = [];
 
     /**
      * Generate a YUML compatible `dsl_text` to describe a given array
@@ -208,6 +208,8 @@ class MetadataGrapher
 
     /**
      * Visit a given association and mark it as visited
+     *
+     * @psalm-param class-string $className
      *
      * @return bool true if the association was visited before
      */

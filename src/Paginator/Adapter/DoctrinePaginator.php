@@ -4,27 +4,34 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Paginator\Adapter;
 
+use ArrayIterator;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use JsonSerializable;
 use Laminas\Paginator\Adapter\AdapterInterface;
-use ReturnTypeWillChange;
 
 /**
  * Paginator adapter for the Laminas\Paginator component
+ *
+ * @psalm-template T of object
  */
 class DoctrinePaginator implements AdapterInterface, JsonSerializable
 {
-    /** @var Paginator */
-    protected $paginator;
+    /** @var Paginator<T> */
+    protected Paginator $paginator;
 
     /**
      * Constructor
+     *
+     * @param Paginator<T> $paginator
      */
     public function __construct(Paginator $paginator)
     {
         $this->paginator = $paginator;
     }
 
+    /**
+     * @param Paginator<T> $paginator
+     */
     public function setPaginator(Paginator $paginator): self
     {
         $this->paginator = $paginator;
@@ -32,6 +39,9 @@ class DoctrinePaginator implements AdapterInterface, JsonSerializable
         return $this;
     }
 
+    /**
+     * @return Paginator<T>
+     */
     public function getPaginator(): Paginator
     {
         return $this->paginator;
@@ -39,6 +49,8 @@ class DoctrinePaginator implements AdapterInterface, JsonSerializable
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-return ArrayIterator<array-key,T>
      */
     public function getItems($offset, $itemCountPerPage)
     {
@@ -50,11 +62,7 @@ class DoctrinePaginator implements AdapterInterface, JsonSerializable
         return $this->paginator->getIterator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    #[ReturnTypeWillChange]
-    public function count()
+    public function count(): int
     {
         return $this->paginator->count();
     }

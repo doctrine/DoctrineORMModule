@@ -20,8 +20,7 @@ use UnexpectedValueException;
  */
 class YumlControllerTest extends TestCase
 {
-    /** @var YumlController */
-    protected $controller;
+    protected YumlController $controller;
 
     /** @var Client&MockObject */
     protected $httpClient;

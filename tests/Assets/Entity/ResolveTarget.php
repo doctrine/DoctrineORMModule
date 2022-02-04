@@ -15,15 +15,9 @@ class ResolveTarget
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Target")
-     *
-     * @var Target
-     */
-    protected $target;
+    /** @ORM\OneToOne(targetEntity="Target") */
+    protected Target $target;
 }

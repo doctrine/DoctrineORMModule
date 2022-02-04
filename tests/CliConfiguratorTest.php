@@ -40,11 +40,9 @@ use function class_exists;
  */
 class CliConfiguratorTest extends TestCase
 {
-    /** @var ServiceManager */
-    protected $serviceManager;
+    protected ServiceManager $serviceManager;
 
-    /** @var EntityManager */
-    protected $objectManager;
+    protected EntityManager $objectManager;
 
     public function setUp(): void
     {

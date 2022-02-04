@@ -10,16 +10,14 @@ use Laminas\Stdlib\AbstractOptions;
 use function class_exists;
 use function sprintf;
 
-class EntityResolver extends AbstractOptions
+final class EntityResolver extends AbstractOptions
 {
     /**
      * Set the configuration key for the EventManager. Event manager key
      * is assembled as "doctrine.eventmanager.{key}" and pulled from
      * service locator.
-     *
-     * @var string
      */
-    protected $eventManager = 'orm_default';
+    protected string $eventManager = 'orm_default';
 
     /**
      * An array that maps a class name (or interface name) to another class
@@ -27,7 +25,7 @@ class EntityResolver extends AbstractOptions
      *
      * @var mixed[]
      */
-    protected $resolvers = [];
+    protected array $resolvers = [];
 
     public function setEventManager(string $eventManager): self
     {

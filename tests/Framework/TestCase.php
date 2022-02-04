@@ -14,11 +14,9 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
  */
 class TestCase extends PHPUnitTestCase
 {
-    /** @var bool */
-    protected $hasDb = false;
+    protected bool $hasDb = false;
 
-    /** @var ?EntityManager */
-    private $entityManager = null;
+    private ?EntityManager $entityManager = null;
 
     /**
      * Creates a database if not done already.

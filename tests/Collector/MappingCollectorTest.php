@@ -23,8 +23,7 @@ class MappingCollectorTest extends TestCase
     /** @var ClassMetadataFactory&MockObject */
     protected $metadataFactory;
 
-    /** @var MappingCollector */
-    protected $collector;
+    protected MappingCollector $collector;
 
     /**
      * @covers \DoctrineORMModule\Collector\MappingCollector::__construct

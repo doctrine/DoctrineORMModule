@@ -19,15 +19,9 @@ class Session
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="address")
-     *
-     * @var User
-     */
-    protected $user;
+    /** @ORM\ManyToOne(targetEntity="User", inversedBy="address") */
+    protected User $user;
 }

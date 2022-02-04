@@ -22,8 +22,7 @@ use Laminas\Form\Element\Time;
 
 class DoctrineAnnotationListenerTest extends TestCase
 {
-    /** @var DoctrineAnnotationListener */
-    protected $listener;
+    protected DoctrineAnnotationListener $listener;
 
     public function setUp(): void
     {

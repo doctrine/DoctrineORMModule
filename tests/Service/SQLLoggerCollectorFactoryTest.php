@@ -16,11 +16,9 @@ use function assert;
 
 class SQLLoggerCollectorFactoryTest extends TestCase
 {
-    /** @var ServiceManager */
-    protected $services;
+    protected ServiceManager $services;
 
-    /** @var SQLLoggerCollectorFactory */
-    protected $factory;
+    protected SQLLoggerCollectorFactory $factory;
 
     public function setUp(): void
     {
@@ -43,7 +41,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
                 ],
             ]
         );
-        $service = $this->factory->createService($this->services);
+        $service = ($this->factory)($this->services, SQLLoggerCollector::class);
         $this->assertInstanceOf(SQLLoggerCollector::class, $service);
         $this->assertInstanceOf(SQLLogger::class, $configuration->getSQLLogger());
     }
@@ -62,7 +60,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
                 ],
             ]
         );
-        $this->factory->createService($this->services);
+        ($this->factory)($this->services, SQLLoggerCollector::class);
         $this->assertInstanceOf(SQLLogger::class, $configuration->getSQLLogger());
     }
 
@@ -93,7 +91,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
                 ],
             ]
         );
-        $this->factory->createService($this->services);
+        ($this->factory)($this->services, SQLLoggerCollector::class);
         $logger = $configuration->getSQLLogger();
         assert($logger instanceof SQLLogger);
         $logger->startQuery('test query');
@@ -115,7 +113,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
                 ],
             ]
         );
-        $this->factory->createService($this->services);
+        ($this->factory)($this->services, SQLLoggerCollector::class);
         $this->assertSame($logger, $configuration->getSQLLogger());
     }
 
@@ -132,7 +130,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
                 ],
             ]
         );
-        $service = $this->factory->createService($this->services);
+        $service = ($this->factory)($this->services, SQLLoggerCollector::class);
         assert($service instanceof SQLLoggerCollector);
         $this->assertSame('doctrine.sql_logger_collector.test_collector_name', $service->getName());
     }
