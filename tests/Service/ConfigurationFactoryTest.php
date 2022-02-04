@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DoctrineORMModuleTest\Service;
 
 use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\Common\Cache\Psr6\CacheAdapter;
 use Doctrine\ORM\Cache\CacheConfiguration;
 use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
@@ -345,8 +346,10 @@ class ConfigurationFactoryTest extends TestCase
 
         // Doctrine does not allow to retrieve the cache adapter from cache factory, so we are forced to use
         // reflection here
-        $reflProperty = new ReflectionProperty($cacheFactory, 'cache');
+        $reflProperty = new ReflectionProperty($cacheFactory, 'cacheItemPool');
         $reflProperty->setAccessible(true);
-        $this->assertInstanceOf(ArrayCache::class, $reflProperty->getValue($cacheFactory));
+        $cacheDecorator = $reflProperty->getValue($cacheFactory);
+        $this->assertInstanceOf(CacheAdapter::class, $cacheDecorator);
+        $this->assertInstanceOf(ArrayCache::class, $cacheDecorator->getCache());
     }
 }
