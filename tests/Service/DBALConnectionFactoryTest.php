@@ -122,7 +122,6 @@ class DBALConnectionFactoryTest extends TestCase
         $type     = Type::getType($platform->getDoctrineTypeMapping('money'));
 
         $this->assertInstanceOf(MoneyType::class, $type);
-        $this->assertTrue($platform->isCommentedDoctrineType($type));
     }
 
     public function testGettingPlatformFromContainer(): void

@@ -52,7 +52,7 @@
         "doctrine/doctrine-laminas-hydrator": "^2.2.1",
         "doctrine/doctrine-module": "^4.2.2",
         "doctrine/event-manager": "^1.1.1",
-        "doctrine/orm": "^2.9.6",
+        "doctrine/orm": "^2.11.1",
         "doctrine/persistence": "^2.2.2",
         "laminas/laminas-eventmanager": "^3.4.0",
         "laminas/laminas-modulemanager": "^2.11.0",
