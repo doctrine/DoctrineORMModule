@@ -263,9 +263,7 @@ class ConfigurationFactoryTest extends TestCase
         $config = [
             'doctrine' => [
                 'configuration' => [
-                    'test_default' => [
-                        'schema_assets_filter' => $schemaAssetsFilter,
-                    ],
+                    'test_default' => ['schema_assets_filter' => $schemaAssetsFilter],
                 ],
             ],
         ];
