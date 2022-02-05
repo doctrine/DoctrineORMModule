@@ -154,6 +154,14 @@ final class ConfigurationFactory extends DoctrineConfigurationFactory
             }
         }
 
+        // DBAL 2.x
+        if (method_exists($config, 'setSchemaAssetsFilter')) {
+            $schemaAssetsFilter = $options->getSchemaAssetsFilter();
+            if ($schemaAssetsFilter) {
+                $config->setSchemaAssetsFilter($schemaAssetsFilter);
+            }
+        }
+
         $className = $options->getDefaultRepositoryClassName();
         if ($className) {
             $config->setDefaultRepositoryClassName($className);

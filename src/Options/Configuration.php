@@ -191,6 +191,13 @@ final class Configuration extends DBALConfiguration
     protected ?string $filterSchemaAssetsExpression = null;
 
     /**
+     * Configuration option for the schema assets filter callable
+     *
+     * @var callable|null
+     */
+    protected $schemaAssetsFilter = null;
+
+    /**
      * @param mixed[] $datetimeFunctions
      */
     public function setDatetimeFunctions(array $datetimeFunctions): self
@@ -605,6 +612,18 @@ final class Configuration extends DBALConfiguration
     public function getFilterSchemaAssetsExpression(): ?string
     {
         return $this->filterSchemaAssetsExpression;
+    }
+
+    public function setSchemaAssetsFilter(callable $schemaAssetsFilter): self
+    {
+        $this->schemaAssetsFilter = $schemaAssetsFilter;
+
+        return $this;
+    }
+
+    public function getSchemaAssetsFilter(): ?callable
+    {
+        return $this->schemaAssetsFilter;
     }
 
     /**

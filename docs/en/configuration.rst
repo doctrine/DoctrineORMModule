@@ -288,3 +288,22 @@ module.
         ],
     ];
 
+How to exclude tables from a schema diff
+----------------------------------------
+
+The "schema_assets_filter" option can be used to exclude certain tables from being created or deleted in a schema update:
+
+.. code:: php
+
+    return [
+        'doctrine' => [
+            'configuration' => [
+                'orm_default' => [
+                    'schema_assets_filter' => fn (string $tableName): bool => (
+                        in_array($tableName, ['migrations', 'doNotRemoveThisTable']);
+                    ),
+                ],
+            ],
+        ],
+    ];
+

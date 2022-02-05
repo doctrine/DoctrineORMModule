@@ -254,6 +254,27 @@ class ConfigurationFactoryTest extends TestCase
         $this->assertSame($entityListenerResolver, $ormConfig->getEntityListenerResolver());
     }
 
+    public function testWillInstantiateConfigWithSchemaAssetsFilterCallback(): void
+    {
+        $schemaAssetsFilter = static function ($tableName) {
+            return $tableName === 'foobar';
+        };
+
+        $config = [
+            'doctrine' => [
+                'configuration' => [
+                    'test_default' => ['schema_assets_filter' => $schemaAssetsFilter],
+                ],
+            ],
+        ];
+
+        $this->serviceManager->setService('config', $config);
+
+        $ormConfig = ($this->factory)($this->serviceManager, Configuration::class);
+
+        $this->assertSame($schemaAssetsFilter, $ormConfig->getSchemaAssetsFilter());
+    }
+
     public function testWillInstantiateConfigWithEntityListenerResolverReference(): void
     {
         $entityListenerResolver = $this->createMock(EntityListenerResolver::class);
