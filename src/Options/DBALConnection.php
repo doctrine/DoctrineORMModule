@@ -119,6 +119,8 @@ final class DBALConnection extends AbstractOptions
     }
 
     /**
+     * @deprecated 5.1.0 Deprecated in DBAL 3.3, use `Type::requiresSQLCommentTypeHint()` instead.
+     *
      * @param mixed[] $doctrineCommentedTypes
      */
     public function setDoctrineCommentedTypes(array $doctrineCommentedTypes): void
@@ -127,6 +129,8 @@ final class DBALConnection extends AbstractOptions
     }
 
     /**
+     * @deprecated 5.1.0 Deprecated in DBAL 3.3, use `Type::requiresSQLCommentTypeHint()` instead.
+     *
      * @return mixed[]
      */
     public function getDoctrineCommentedTypes(): array
