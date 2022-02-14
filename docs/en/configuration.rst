@@ -61,6 +61,38 @@ Next, you will need to register your custom type with the underlying database pl
         ],
     ];
 
+Using DBAL Middlewares
+----------------------
+
+.. note::
+
+    This feature is only available when using DBAL 3.x and has no effect on DBAL 2.x!
+
+`Official documentation <https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/architecture.html#middlewares>`__
+
+Laminas configuration
+
+.. code:: php
+
+    return [
+        'service_manager' => [
+            'invokables' => [
+                \My\Middlewares\CustomMiddleware::class => \My\Middlewares\CustomMiddleware::class,
+                \My\Middlewares\AnotherCustomMiddleware::class => \My\Middlewares\AnotherCustomMiddleware::class,
+            ],
+        ],
+        'doctrine' => [
+            'configuration' => [
+                'test_default' => [
+                    'middlewares' => [
+                        \My\Middlewares\CustomMiddleware::class,
+                        \My\Middlewares\AnotherCustomMiddleware::class,
+                    ],
+                ],
+            ],
+        ],
+    ];
+
 Built-in Resolver
 -----------------
 
