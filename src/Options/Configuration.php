@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Options;
 
+use Doctrine\DBAL\Driver\Middleware;
 use Doctrine\ORM\Mapping\EntityListenerResolver;
 use Doctrine\ORM\Mapping\NamingStrategy;
 use Doctrine\ORM\Mapping\QuoteStrategy;
@@ -189,6 +190,13 @@ final class Configuration extends DBALConfiguration
      * Configuration option for the filter schema assets expression
      */
     protected ?string $filterSchemaAssetsExpression = null;
+
+    /**
+     * Stack of middleware names
+     *
+     * @var array<class-string<Middleware>>
+     */
+    protected array $middlewares = [];
 
     /**
      * Configuration option for the schema assets filter callable
@@ -642,5 +650,21 @@ final class Configuration extends DBALConfiguration
     public function getDefaultRepositoryClassName(): ?string
     {
         return $this->defaultRepositoryClassName;
+    }
+
+    /**
+     * @param array<class-string<Middleware>> $middlewares
+     */
+    public function setMiddlewares(array $middlewares): void
+    {
+        $this->middlewares = $middlewares;
+    }
+
+    /**
+     * @return array<class-string<Middleware>>
+     */
+    public function getMiddlewares(): array
+    {
+        return $this->middlewares;
     }
 }
