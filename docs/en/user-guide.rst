@@ -65,7 +65,7 @@ Connection parameters can be defined in the application configuration:
            'connection' => [
                // default connection name
                'orm_default' => [
-                   'driverClass' => \Doctrine\DBAL\Driver\PDO\MySql\Driver::class,
+                   'driverClass' => \Doctrine\DBAL\Driver\PDO\MySQL\Driver::class,
                    'params' => [
                        'host'     => 'localhost',
                        'port'     => '3306',

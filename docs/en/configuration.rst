@@ -142,7 +142,7 @@ See also `this blog article <https://blog.tomhanderson.com/2016/03/zf2-doctrine-
         'doctrine' => [
             'connection' => [
                 'orm_crawler' => [
-                    'driverClass'   => \Doctrine\DBAL\Driver\PDO\MySql\Driver::class,
+                    'driverClass'   => \Doctrine\DBAL\Driver\PDO\MySQL\Driver::class,
                     'eventmanager'  => 'orm_crawler',
                     'configuration' => 'orm_crawler',
                     'params'        => [
