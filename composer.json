@@ -57,7 +57,7 @@
         "doctrine/doctrine-module": "^5.1.0",
         "doctrine/event-manager": "^1.1.1",
         "doctrine/orm": "^2.11.1",
-        "doctrine/persistence": "^2.3.0",
+        "doctrine/persistence": "^2.3.0 || ^3.0.0",
         "laminas/laminas-eventmanager": "^3.4.0",
         "laminas/laminas-modulemanager": "^2.11.0",
         "laminas/laminas-mvc": "^3.3.2",

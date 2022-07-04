@@ -7,9 +7,6 @@ parameters:
     treatPhpDocTypesAsCertain: false
     ignoreErrors:
         -
-            message: '#Method .*EntityBasedFormBuilder::createForm\(\) .* iterable type .*FormInterface#'
-            path: src/Form/Annotation/EntityBasedFormBuilder.php
-        -
             message: '#Offset class-string<object> on array\{\} in isset\(\) does not exist#'
             path: src/Yuml/MetadataGrapher.php
         -

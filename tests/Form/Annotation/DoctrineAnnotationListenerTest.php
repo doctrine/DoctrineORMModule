@@ -59,8 +59,11 @@ class DoctrineAnnotationListenerTest extends TestCase
 
     public function testToOneMergesOptions(): void
     {
-        $listener                              = $this->listener;
-        $event                                 = $this->getMetadataEvent();
+        $listener = $this->listener;
+        $event    = $this->getMetadataEvent();
+        /**
+         * @var ArrayObject<string, array<mixed>>
+         */
         $elementSpec                           = new ArrayObject();
         $elementSpec['spec']['options']['foo'] = 'bar';
 
@@ -119,8 +122,11 @@ class DoctrineAnnotationListenerTest extends TestCase
 
     public function testToManyMergesOptions(): void
     {
-        $listener                              = $this->listener;
-        $event                                 = $this->getMetadataEvent();
+        $listener = $this->listener;
+        $event    = $this->getMetadataEvent();
+        /**
+         * @var ArrayObject<string, array<mixed>>
+         */
         $elementSpec                           = new ArrayObject();
         $elementSpec['spec']['options']['foo'] = 'bar';
 
