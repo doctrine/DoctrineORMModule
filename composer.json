@@ -54,7 +54,7 @@
         "container-interop/container-interop": "^1.2.0",
         "doctrine/dbal": "^2.13.7 || ^3.3.2",
         "doctrine/doctrine-laminas-hydrator": "^3.0.0",
-        "doctrine/doctrine-module": "^5.1.0",
+        "doctrine/doctrine-module": "^5.2.0",
         "doctrine/event-manager": "^1.1.1",
         "doctrine/orm": "^2.11.1",
         "doctrine/persistence": "^2.3.0 || ^3.0.0",
