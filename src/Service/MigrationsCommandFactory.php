@@ -111,6 +111,7 @@ final class MigrationsCommandFactory implements FactoryInterface
             return $this->defaultObjectManagerName;
         }
 
+        /** @psalm-suppress ReservedWord */
         return $arguments->getParameterOption('--object-manager');
     }
 }
