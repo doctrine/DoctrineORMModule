@@ -19,6 +19,8 @@ final class EntityManagerAliasCompatFactory implements FactoryInterface
      * @deprecated this method was introduced to allow aliasing of service `Doctrine\ORM\EntityManager`
      *             from `doctrine.entitymanager.orm_default`
      *
+     * @param string $requestedName
+     *
      * @return EntityManager
      */
     public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)

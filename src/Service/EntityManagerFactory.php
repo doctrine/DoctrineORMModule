@@ -16,6 +16,8 @@ final class EntityManagerFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      *
+     * @param string $requestedName
+     *
      * @return EntityManager
      */
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)

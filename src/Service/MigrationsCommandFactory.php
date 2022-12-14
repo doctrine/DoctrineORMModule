@@ -53,6 +53,8 @@ final class MigrationsCommandFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
+     * @param string $requestedName
+     *
      * @return DoctrineCommand
      *
      * @throws InvalidArgumentException
