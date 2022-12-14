@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace DoctrineORMModule;
 
 use Laminas\DeveloperTools\ProfilerEvent;
-use Laminas\EventManager\Event;
 use Laminas\EventManager\EventInterface;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
 use Laminas\ModuleManager\Feature\ControllerProviderInterface;
@@ -51,7 +50,7 @@ final class Module implements
             ->getEventManager()
             ->attach(
                 ProfilerEvent::EVENT_PROFILER_INIT,
-                /** @param Event $event */
+                /** @param EventInterface $event */
                 static function ($event): void {
                     $container = $event->getTarget()->getParam('ServiceManager');
                     $container->get('doctrine.sql_logger_collector.orm_default');
