@@ -8,8 +8,8 @@ use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\DBAL\Logging\LoggerChain;
 use DoctrineORMModule\Collector\SQLLoggerCollector;
 use DoctrineORMModule\Options\SQLLoggerCollectorOptions;
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 use RuntimeException;
 
 use function sprintf;

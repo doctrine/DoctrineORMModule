@@ -7,7 +7,7 @@ namespace DoctrineORMModule\Service;
 use BadMethodCallException;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Collector\MappingCollector;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Service factory responsible for instantiating {@see \DoctrineORMModule\Collector\MappingCollector}

@@ -11,8 +11,8 @@ use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Mapping\EntityListenerResolver;
 use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
 use DoctrineORMModule\Service\DBALConfigurationFactory as DoctrineConfigurationFactory;
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
+use Psr\Container\ContainerInterface;
 
 use function is_string;
 use function method_exists;

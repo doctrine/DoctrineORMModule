@@ -75,7 +75,7 @@ Db\\Cache\\RedisFactory
 
     namespace Db\Cache;
 
-    use Interop\Container\ContainerInterface;
+    use Psr\Container\ContainerInterface;
     use Redis;
 
     class RedisFactory

@@ -7,7 +7,7 @@ namespace DoctrineORMModule\Service;
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\EntityManager as DoctrineORMModuleEntityManager;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 use function assert;
 

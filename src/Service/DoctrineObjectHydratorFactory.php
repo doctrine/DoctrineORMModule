@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace DoctrineORMModule\Service;
 
 use Doctrine\Laminas\Hydrator\DoctrineObject;
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 final class DoctrineObjectHydratorFactory implements FactoryInterface
 {

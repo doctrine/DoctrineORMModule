@@ -7,7 +7,7 @@ namespace DoctrineORMModule\Service;
 use Doctrine\ORM\Tools\ResolveTargetEntityListener;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\EntityResolver;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 use function assert;
 
