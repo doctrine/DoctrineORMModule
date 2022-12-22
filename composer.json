@@ -51,7 +51,6 @@
     "require": {
         "php": "^7.4 || ~8.0.0 || ~8.1.0",
         "ext-json": "*",
-        "container-interop/container-interop": "^1.2.0",
         "doctrine/dbal": "^2.13.7 || ^3.3.2",
         "doctrine/doctrine-laminas-hydrator": "^3.0.0",
         "doctrine/doctrine-module": "^5.2.0",
@@ -62,8 +61,9 @@
         "laminas/laminas-modulemanager": "^2.11.0",
         "laminas/laminas-mvc": "^3.3.2",
         "laminas/laminas-paginator": "^2.12.2",
-        "laminas/laminas-servicemanager": "^3.10.0",
+        "laminas/laminas-servicemanager": "^3.17.0",
         "laminas/laminas-stdlib": "^3.7.1",
+        "psr/container": "^1.1.2",
         "symfony/console": "^5.4.3 || ^6.0.3"
     },
     "require-dev": {

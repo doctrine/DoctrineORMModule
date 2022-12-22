@@ -13,6 +13,8 @@ use Laminas\Paginator\Adapter\AdapterInterface;
  * Paginator adapter for the Laminas\Paginator component
  *
  * @psalm-template T of object
+ * @psalm-template TKey of int
+ * @psalm-template TValue
  */
 class DoctrinePaginator implements AdapterInterface, JsonSerializable
 {
@@ -50,7 +52,7 @@ class DoctrinePaginator implements AdapterInterface, JsonSerializable
     /**
      * {@inheritDoc}
      *
-     * @psalm-return ArrayIterator<array-key,T>
+     * @psalm-return ArrayIterator<TKey, TValue>
      */
     public function getItems($offset, $itemCountPerPage)
     {

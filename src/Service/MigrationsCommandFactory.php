@@ -8,9 +8,9 @@ use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
 use Doctrine\Migrations\Configuration\Migration\ConfigurationArray;
 use Doctrine\Migrations\DependencyFactory;
 use Doctrine\Migrations\Tools\Console\Command\DoctrineCommand;
-use Interop\Container\ContainerInterface;
 use InvalidArgumentException;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 use RuntimeException;
 use Symfony\Component\Console\Input\ArgvInput;
 

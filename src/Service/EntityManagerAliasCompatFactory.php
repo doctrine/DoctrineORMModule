@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace DoctrineORMModule\Service;
 
 use Doctrine\ORM\EntityManager;
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Factory that provides the `Doctrine\ORM\EntityManager` alias for `doctrine.entitymanager.orm_default`

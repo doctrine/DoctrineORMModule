@@ -13,9 +13,6 @@ parameters:
             message: '#Return type .* of method DoctrineORMModule\\Yuml\\YumlController::indexAction\(\)#'
             path: src/Yuml/YumlController.php
         -
-            message: '#Method DoctrineORMModule\\CliConfigurator::getHelpers\(\) should return#'
-            path: src/CliConfigurator.php
-        -
             message: '#Parameter \#1 .* of method DoctrineORMModule\\Options\\Configuration.* stdClass given#'
             path: tests/Options/ConfigurationOptionsTest.php
 includes:

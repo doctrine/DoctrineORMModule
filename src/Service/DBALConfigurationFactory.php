@@ -8,9 +8,9 @@ use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Driver\Middleware;
 use Doctrine\DBAL\Types\Type;
 use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
-use Interop\Container\ContainerInterface;
 use InvalidArgumentException;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 use RuntimeException;
 use UnexpectedValueException;
 

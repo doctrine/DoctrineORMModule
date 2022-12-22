@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule\Yuml;
 
-use Interop\Container\ContainerInterface;
 use Laminas\Http\Client;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 use function sprintf;
 

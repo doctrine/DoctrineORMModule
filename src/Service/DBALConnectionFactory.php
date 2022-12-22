@@ -9,8 +9,8 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Types\Type;
 use DoctrineModule\Service\AbstractFactory;
 use DoctrineORMModule\Options\DBALConnection;
-use Interop\Container\ContainerInterface;
 use PDO;
+use Psr\Container\ContainerInterface;
 
 use function array_key_exists;
 use function array_merge;
