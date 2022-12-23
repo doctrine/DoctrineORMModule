@@ -52,7 +52,12 @@ class DoctrinePaginator implements AdapterInterface, JsonSerializable
     /**
      * {@inheritDoc}
      *
-     * @psalm-return ArrayIterator<TKey, TValue>
+     * @param int|null $offset
+     * @param int|null $itemCountPerPage
+     *
+     * @return ArrayIterator<TKey, TValue>
+     *
+     * @psalm-suppress LessSpecificImplementedReturnType
      */
     public function getItems($offset, $itemCountPerPage)
     {
@@ -70,7 +75,7 @@ class DoctrinePaginator implements AdapterInterface, JsonSerializable
     }
 
     /**
-     * @return array{select: string, count_select: int}
+     * @return array{select: list<string>|string, count_select: int}
      */
     public function jsonSerialize(): array
     {

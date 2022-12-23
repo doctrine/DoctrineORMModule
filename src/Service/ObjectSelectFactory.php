@@ -17,6 +17,8 @@ final class ObjectSelectFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
+     * @param string $requestedName
+     *
      * @return ObjectSelect
      */
     public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)

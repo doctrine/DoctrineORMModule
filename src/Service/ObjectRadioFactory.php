@@ -17,6 +17,8 @@ final class ObjectRadioFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
+     * @param string $requestedName
+     *
      * @return ObjectRadio
      */
     public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)

@@ -33,6 +33,8 @@ class DBALConfigurationFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
+     * @param string $requestedName
+     *
      * @return Configuration
      */
     public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)

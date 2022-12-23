@@ -53,6 +53,8 @@ final class MigrationsCommandFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
+     * @param string $requestedName
+     *
      * @return DoctrineCommand
      *
      * @throws InvalidArgumentException
@@ -109,6 +111,7 @@ final class MigrationsCommandFactory implements FactoryInterface
             return $this->defaultObjectManagerName;
         }
 
+        /** @psalm-suppress ReservedWord */
         return $arguments->getParameterOption('--object-manager');
     }
 }

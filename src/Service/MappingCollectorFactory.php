@@ -17,6 +17,8 @@ final class MappingCollectorFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      *
+     * @param string $requestedName
+     *
      * @return MappingCollector
      */
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)

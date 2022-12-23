@@ -49,11 +49,11 @@
         }
     },
     "require": {
-        "php": "^7.4 || ~8.0.0 || ~8.1.0",
+        "php": "^7.4 || ~8.0.0 || ~8.1.0 || ~8.2.0",
         "ext-json": "*",
         "doctrine/dbal": "^2.13.7 || ^3.3.2",
         "doctrine/doctrine-laminas-hydrator": "^3.0.0",
-        "doctrine/doctrine-module": "^5.2.0",
+        "doctrine/doctrine-module": "^5.3.0",
         "doctrine/event-manager": "^1.1.1",
         "doctrine/orm": "^2.11.1",
         "doctrine/persistence": "^2.3.0 || ^3.0.0",

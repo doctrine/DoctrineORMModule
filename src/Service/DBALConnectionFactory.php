@@ -25,6 +25,8 @@ final class DBALConnectionFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      *
+     * @param string $requestedName
+     *
      * @return Connection
      */
     public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)

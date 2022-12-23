@@ -17,6 +17,8 @@ final class ObjectMultiCheckboxFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
+     * @param string $requestedName
+     *
      * @return ObjectMultiCheckbox
      */
     public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
