@@ -15,6 +15,7 @@ use Laminas\Paginator\Adapter\AdapterInterface;
  * @psalm-template T of object
  * @psalm-template TKey of int
  * @psalm-template TValue
+ * @template-implements AdapterInterface<TKey, TValue>
  */
 class DoctrinePaginator implements AdapterInterface, JsonSerializable
 {
