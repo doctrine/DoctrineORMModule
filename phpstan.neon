@@ -15,6 +15,9 @@ parameters:
         -
             message: '#Parameter \#1 .* of method DoctrineORMModule\\Options\\Configuration.* stdClass given#'
             path: tests/Options/ConfigurationOptionsTest.php
+        -
+            message: '#Parameter \#1 .* of method Doctrine\\Common\\DataFixtures\\Executor\\ORMExecutor::execute\(\)#'
+            path: tests/Paginator/AdapterTest.php
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
 
