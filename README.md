@@ -1,8 +1,8 @@
 Doctrine ORM Module for Laminas
 ===============================
 
-[![Build Status](https://github.com/doctrine/DoctrineORMModule/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/doctrine/DoctrineORMModule/actions/workflows/continuous-integration.yml?query=branch%3A4.1.x)
-[![Code Coverage](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/4.1.x/graph/badge.svg)](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/4.1.x)
+[![Build Status](https://github.com/doctrine/DoctrineORMModule/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/doctrine/DoctrineORMModule/actions/workflows/continuous-integration.yml?query=branch%3A4.4.x)
+[![Code Coverage](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/4.4.x/graph/badge.svg)](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/4.4.x)
 [![Latest Stable Version](https://poser.pugx.org/doctrine/doctrine-orm-module/v/stable.png)](https://packagist.org/packages/doctrine/doctrine-orm-module)
 [![Total Downloads](https://poser.pugx.org/doctrine/doctrine-orm-module/downloads.png)](https://packagist.org/packages/doctrine/doctrine-orm-module)
 
