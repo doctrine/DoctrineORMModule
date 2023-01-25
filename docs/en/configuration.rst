@@ -302,7 +302,7 @@ The "schema_assets_filter" option can be used to exclude certain tables from bei
             'configuration' => [
                 'orm_default' => [
                     'schema_assets_filter' => fn (string $tableName): bool => (
-                        ! in_array($tableName, ['migrations', 'doNotRemoveThisTable']);
+                        ! in_array($tableName, ['migrations', 'doNotRemoveThisTable'])
                     ),
                 ],
             ],
