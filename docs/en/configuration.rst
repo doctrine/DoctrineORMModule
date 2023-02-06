@@ -294,7 +294,7 @@ How to Exclude Tables from a Schema Diff
 ----------------------------------------
 
 The "schema_assets_filter" option can be used to exclude certain tables from being deleted in a schema update.
-It should be set with a filter callback that will receive the table name and should return `false` for any tables that must be excluded.
+It should be set with a filter callback that will receive the table name and should return `false` for any tables that must be excluded and `true` for any other tables.
 
 .. code:: php
 
