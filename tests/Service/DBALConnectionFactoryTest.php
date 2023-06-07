@@ -12,11 +12,15 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Configuration;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
+use DoctrineModule\Cache\LaminasStorageCache;
 use DoctrineORMModule\Service\ConfigurationFactory;
 use DoctrineORMModule\Service\DBALConnectionFactory;
 use DoctrineORMModuleTest\Assets\Types\MoneyType;
+use Laminas\Cache\Storage\Adapter\Memory;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
+
+use function class_exists;
 
 /**
  * @covers \DoctrineORMModule\Service\DBALConnectionFactory
@@ -30,7 +34,11 @@ class DBALConnectionFactoryTest extends TestCase
     {
         $this->serviceManager = new ServiceManager();
         $this->factory        = new DBALConnectionFactory('orm_default');
-        $this->serviceManager->setService('doctrine.cache.array', new ArrayCache());
+        // Set up appropriate cache based on DoctrineModule version detection:
+        $arrayCache = class_exists(ArrayCache::class)
+            ? new ArrayCache()                          // DoctrineModule 5
+            : new LaminasStorageCache(new Memory());    // DoctrineModule 6
+        $this->serviceManager->setService('doctrine.cache.array', $arrayCache);
         $this->serviceManager->setService('doctrine.eventmanager.orm_default', new EventManager());
     }
 

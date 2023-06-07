@@ -5,6 +5,7 @@ declare(strict_types=1);
 return [
     'modules' => [
         'Laminas\Cache',
+        'Laminas\Cache\Storage\Adapter\Memory',
         'Laminas\Form',
         'Laminas\Hydrator',
         'Laminas\Paginator',

@@ -88,6 +88,9 @@ jobs:
       - name: "Configure test application"
         run: "cp ci/config/application.config.php config/application.config.php"
 
+      - name: "Create cache directory"
+        run: "mkdir -p data/DoctrineModule/cache"
+
       - name: "Run PHPUnit"
         run: "vendor/bin/phpunit --coverage-clover=coverage.xml"
 
