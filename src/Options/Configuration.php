@@ -9,13 +9,6 @@ use Doctrine\ORM\Mapping\EntityListenerResolver;
 use Doctrine\ORM\Mapping\NamingStrategy;
 use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Repository\RepositoryFactory;
-use Laminas\Stdlib\Exception\InvalidArgumentException;
-
-use function get_class;
-use function gettype;
-use function is_object;
-use function is_string;
-use function sprintf;
 
 /**
  * Configuration options for an ORM Configuration
@@ -137,18 +130,14 @@ final class Configuration extends DBALConfiguration
     /**
      * Naming strategy or name of the naming strategy service to be set in ORM
      * configuration (if any)
-     *
-     * @var string|NamingStrategy|null
      */
-    protected $namingStrategy = null;
+    protected string|NamingStrategy|null $namingStrategy = null;
 
     /**
      * Quote strategy or name of the quote strategy service to be set in ORM
      * configuration (if any)
-     *
-     * @var string|QuoteStrategy|null
      */
-    protected $quoteStrategy = null;
+    protected string|QuoteStrategy|null $quoteStrategy = null;
 
     /**
      * Default repository class
@@ -158,10 +147,8 @@ final class Configuration extends DBALConfiguration
     /**
      * Repository factory or name of the repository factory service to be set in ORM
      * configuration (if any)
-     *
-     * @var string|RepositoryFactory|null
      */
-    protected $repositoryFactory = null;
+    protected string|RepositoryFactory|null $repositoryFactory = null;
 
     /**
      * Class name of MetaData factory to be set in ORM.
@@ -174,10 +161,8 @@ final class Configuration extends DBALConfiguration
      * to be set in ORM configuration (if any)
      *
      * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
-     *
-     * @var string|EntityListenerResolver|null
      */
-    protected $entityListenerResolver = null;
+    protected string|EntityListenerResolver|null $entityListenerResolver = null;
 
     /**
      * Configuration for second level cache
@@ -443,104 +428,38 @@ final class Configuration extends DBALConfiguration
         return $this->customHydrationModes;
     }
 
-    /**
-     * @param string|NamingStrategy|null $namingStrategy
-     *
-     * @throws InvalidArgumentException   when the provided naming strategy does not fit the expected type.
-     */
-    public function setNamingStrategy($namingStrategy): self
+    public function setNamingStrategy(string|NamingStrategy|null $namingStrategy): self
     {
-        if (
-            $namingStrategy === null
-            || is_string($namingStrategy)
-            || $namingStrategy instanceof NamingStrategy
-        ) {
-            $this->namingStrategy = $namingStrategy;
+        $this->namingStrategy = $namingStrategy;
 
-            return $this;
-        }
-
-        throw new InvalidArgumentException(
-            sprintf(
-                'namingStrategy must be either a string, a Doctrine\ORM\Mapping\NamingStrategy '
-                . 'instance or null, %s given',
-                is_object($namingStrategy) ? get_class($namingStrategy) : gettype($namingStrategy)
-            )
-        );
+        return $this;
     }
 
-    /**
-     * @return string|NamingStrategy|null
-     */
-    public function getNamingStrategy()
+    public function getNamingStrategy(): string|NamingStrategy|null
     {
         return $this->namingStrategy;
     }
 
-    /**
-     * @param string|QuoteStrategy|null $quoteStrategy
-     *
-     * @throws InvalidArgumentException   when the provided quote strategy does not fit the expected type.
-     */
-    public function setQuoteStrategy($quoteStrategy): self
+    public function setQuoteStrategy(string|QuoteStrategy|null $quoteStrategy): self
     {
-        if (
-            $quoteStrategy === null
-            || is_string($quoteStrategy)
-            || $quoteStrategy instanceof QuoteStrategy
-        ) {
-            $this->quoteStrategy = $quoteStrategy;
+        $this->quoteStrategy = $quoteStrategy;
 
-            return $this;
-        }
-
-        throw new InvalidArgumentException(
-            sprintf(
-                'quoteStrategy must be either a string, a Doctrine\ORM\Mapping\QuoteStrategy '
-                . 'instance or null, %s given',
-                is_object($quoteStrategy) ? get_class($quoteStrategy) : gettype($quoteStrategy)
-            )
-        );
+        return $this;
     }
 
-    /**
-     * @return string|QuoteStrategy|null
-     */
-    public function getQuoteStrategy()
+    public function getQuoteStrategy(): string|QuoteStrategy|null
     {
         return $this->quoteStrategy;
     }
 
-    /**
-     * @param string|RepositoryFactory|null $repositoryFactory
-     *
-     * @throws InvalidArgumentException   when the provided repository factory does not fit the expected type.
-     */
-    public function setRepositoryFactory($repositoryFactory): self
+    public function setRepositoryFactory(string|RepositoryFactory|null $repositoryFactory): self
     {
-        if (
-            $repositoryFactory === null
-            || is_string($repositoryFactory)
-            || $repositoryFactory instanceof RepositoryFactory
-        ) {
-            $this->repositoryFactory = $repositoryFactory;
+        $this->repositoryFactory = $repositoryFactory;
 
-            return $this;
-        }
-
-        throw new InvalidArgumentException(
-            sprintf(
-                'repositoryFactory must be either a string, a Doctrine\ORM\Repository\RepositoryFactory '
-                . 'instance or null, %s given',
-                is_object($repositoryFactory) ? get_class($repositoryFactory) : gettype($repositoryFactory)
-            )
-        );
+        return $this;
     }
 
-    /**
-     * @return string|RepositoryFactory|null
-     */
-    public function getRepositoryFactory()
+    public function getRepositoryFactory(): string|RepositoryFactory|null
     {
         return $this->repositoryFactory;
     }
@@ -562,35 +481,14 @@ final class Configuration extends DBALConfiguration
         return $this->classMetadataFactoryName;
     }
 
-    /**
-     * @param string|EntityListenerResolver|null $entityListenerResolver
-     *
-     * @throws InvalidArgumentException           When the provided entity listener resolver
-     *                                            does not fit the expected type.
-     */
-    public function setEntityListenerResolver($entityListenerResolver): self
+    public function setEntityListenerResolver(string|EntityListenerResolver|null $entityListenerResolver): self
     {
-        if (
-            $entityListenerResolver === null
-            || $entityListenerResolver instanceof EntityListenerResolver
-            || is_string($entityListenerResolver)
-        ) {
-            $this->entityListenerResolver = $entityListenerResolver;
+        $this->entityListenerResolver = $entityListenerResolver;
 
-            return $this;
-        }
-
-        throw new InvalidArgumentException(sprintf(
-            'entityListenerResolver must be either a string, a Doctrine\ORM\Mapping\EntityListenerResolver '
-            . 'instance or null, %s given',
-            is_object($entityListenerResolver) ? get_class($entityListenerResolver) : gettype($entityListenerResolver)
-        ));
+        return $this;
     }
 
-    /**
-     * @return string|EntityListenerResolver|null
-     */
-    public function getEntityListenerResolver()
+    public function getEntityListenerResolver(): string|EntityListenerResolver|null
     {
         return $this->entityListenerResolver;
     }

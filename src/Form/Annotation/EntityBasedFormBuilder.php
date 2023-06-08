@@ -21,7 +21,6 @@ use Laminas\Stdlib\ArrayUtils;
 use RuntimeException;
 
 use function class_exists;
-use function get_class;
 use function in_array;
 use function is_object;
 use function sprintf;
@@ -73,10 +72,10 @@ final class EntityBasedFormBuilder
      *
      * @throws InvalidArgumentException    If $entity is not an object or class name.
      */
-    public function getFormSpecification($entity): ArrayObject
+    public function getFormSpecification(string|object $entity): ArrayObject
     {
         $formSpec    = $this->getBuilder()->getFormSpecification($entity);
-        $metadata    = $this->objectManager->getClassMetadata(is_object($entity) ? get_class($entity) : $entity);
+        $metadata    = $this->objectManager->getClassMetadata(is_object($entity) ? $entity::class : $entity);
         $inputFilter = $formSpec['input_filter'];
 
         $formElements = [
@@ -138,7 +137,7 @@ final class EntityBasedFormBuilder
      *
      * @param class-string|object $entity
      */
-    public function createForm($entity): FormInterface
+    public function createForm(string|object $entity): FormInterface
     {
         $formSpec    = ArrayUtils::iteratorToArray($this->getFormSpecification($entity));
         $formFactory = $this->getBuilder()->getFormFactory();

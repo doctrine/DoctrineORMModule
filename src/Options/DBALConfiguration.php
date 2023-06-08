@@ -59,10 +59,7 @@ class DBALConfiguration extends AbstractOptions
         $this->types = $types;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTypes()
+    public function getTypes(): mixed
     {
         return $this->types;
     }

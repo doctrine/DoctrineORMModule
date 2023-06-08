@@ -56,11 +56,9 @@ final class SQLLoggerCollectorFactory implements FactoryInterface
     }
 
     /**
-     * @return mixed
-     *
      * @throws RuntimeException
      */
-    protected function getOptions(ContainerInterface $serviceLocator)
+    protected function getOptions(ContainerInterface $serviceLocator): mixed
     {
         $options = $serviceLocator->get('config');
         $options = $options['doctrine'];

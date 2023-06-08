@@ -23,20 +23,12 @@ class MoneyType extends Type
         return 'MyMoney';
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function convertToPHPValue($value, AbstractPlatform $platform): object
+    public function convertToPHPValue(mixed $value, AbstractPlatform $platform): object
     {
         return new stdClass();
     }
 
-    /**
-     * @param mixed $value
-     *
-     * @return mixed
-     */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): mixed
     {
         return $value->toDecimal();
     }
