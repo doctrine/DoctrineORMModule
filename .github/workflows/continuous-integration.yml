@@ -17,7 +17,6 @@ jobs:
       fail-fast: false
       matrix:
         php-version:
-          - "7.4"
           - "8.0"
           - "8.1"
           - "8.2"
@@ -30,19 +29,19 @@ jobs:
           - true
           - false
         include:
-          - php-version: "7.4"
+          - php-version: "8.0"
             dbal-version: "2.13.0"
             dependencies: "lowest"
             optional-dependencies: false
-          - php-version: "7.4"
+          - php-version: "8.0"
             dbal-version: "3.3.0"
             dependencies: "lowest"
             optional-dependencies: false
-          - php-version: "7.4"
+          - php-version: "8.0"
             dbal-version: "2.13.0"
             dependencies: "lowest"
             optional-dependencies: true
-          - php-version: "7.4"
+          - php-version: "8.0"
             dbal-version: "3.3.0"
             dependencies: "lowest"
             optional-dependencies: true
