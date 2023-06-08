@@ -14,7 +14,6 @@ use Laminas\Form\Form;
 
 use function array_key_exists;
 use function class_exists;
-use function get_class;
 use function in_array;
 use function sprintf;
 
@@ -109,7 +108,7 @@ class EntityBasedFormBuilderTest extends TestCase
             $laminasElementAttribute    = $laminasFormElement->getAttribute('type');
 
             if (
-                (get_class($laminasFormElement) === get_class($annotationFormElement)) &&
+                ($laminasFormElement::class === $annotationFormElement::class) &&
                 ($annotationElementAttribute === $laminasElementAttribute)
             ) {
                 continue;

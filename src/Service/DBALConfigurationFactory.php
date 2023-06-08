@@ -89,11 +89,9 @@ class DBALConfigurationFactory implements FactoryInterface
     }
 
     /**
-     * @return mixed
-     *
      * @throws RuntimeException
      */
-    public function getOptions(ContainerInterface $serviceLocator)
+    public function getOptions(ContainerInterface $serviceLocator): mixed
     {
         $options = $serviceLocator->get('config');
         $options = $options['doctrine'];

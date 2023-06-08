@@ -9,9 +9,9 @@ use Doctrine\ORM\Mapping\NamingStrategy;
 use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Repository\DefaultRepositoryFactory;
 use DoctrineORMModule\Options\Configuration;
-use Laminas\Stdlib\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use TypeError;
 
 class ConfigurationOptionsTest extends TestCase
 {
@@ -28,7 +28,7 @@ class ConfigurationOptionsTest extends TestCase
         $options->setNamingStrategy($namingStrategy);
         $this->assertSame($namingStrategy, $options->getNamingStrategy());
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $options->setNamingStrategy(new stdClass());
     }
 
@@ -45,7 +45,7 @@ class ConfigurationOptionsTest extends TestCase
         $options->setQuoteStrategy($quoteStrategy);
         $this->assertSame($quoteStrategy, $options->getQuoteStrategy());
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $options->setQuoteStrategy(new stdClass());
     }
 
@@ -62,7 +62,7 @@ class ConfigurationOptionsTest extends TestCase
         $options->setRepositoryFactory($repositoryFactory);
         $this->assertSame($repositoryFactory, $options->getRepositoryFactory());
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $options->setRepositoryFactory(new stdClass());
     }
 
@@ -81,7 +81,7 @@ class ConfigurationOptionsTest extends TestCase
         $options->setEntityListenerResolver($entityListenerResolver);
         $this->assertSame($entityListenerResolver, $options->getEntityListenerResolver());
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $options->setEntityListenerResolver(new stdClass());
     }
 }

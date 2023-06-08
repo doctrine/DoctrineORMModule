@@ -32,10 +32,8 @@ final class DBALConnection extends AbstractOptions
     /**
      * Set the PDO instance, if any, to use. If a string is set
      * then the alias is pulled from the service locator.
-     *
-     * @var string|PDO|null
      */
-    protected $pdo = null;
+    protected string|PDO|null $pdo = null;
 
     /**
      * Setting the driver is deprecated. You should set the
@@ -151,18 +149,12 @@ final class DBALConnection extends AbstractOptions
         return $this->driverClass;
     }
 
-    /**
-     * @param PDO|string|null $pdo
-     */
-    public function setPdo($pdo): void
+    public function setPdo(PDO|string|null $pdo): void
     {
         $this->pdo = $pdo;
     }
 
-    /**
-     * @return PDO|string|null
-     */
-    public function getPdo()
+    public function getPdo(): PDO|string|null
     {
         return $this->pdo;
     }
