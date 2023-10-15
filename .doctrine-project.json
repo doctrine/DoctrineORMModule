@@ -4,24 +4,30 @@
   "slug": "doctrine-orm-module",
   "versions": [
     {
-      "name": "5.4",
-      "branchName": "5.4.x",
-      "slug": "5.4",
+      "name": "6.1",
+      "branchName": "6.1.x",
+      "slug": "6.1",
       "aliases": [
         "latest"
       ],
       "upcoming": true
     },
     {
-      "name": "5.3",
-      "branchName": "5.3.x",
-      "slug": "5.3",
+      "name": "6.0",
+      "branchName": "6.0.x",
+      "slug": "6.0",
       "aliases": [
         "current",
         "stable"
       ],
       "current": true,
       "maintained": true
+    },
+    {
+      "name": "5.3",
+      "branchName": "5.3.x",
+      "slug": "5.3",
+      "maintained": false
     },
     {
       "name": "5.2",
