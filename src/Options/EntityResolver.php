@@ -10,6 +10,9 @@ use Laminas\Stdlib\AbstractOptions;
 use function class_exists;
 use function sprintf;
 
+/**
+ * @template-extends AbstractOptions<mixed>
+ */
 final class EntityResolver extends AbstractOptions
 {
     /**

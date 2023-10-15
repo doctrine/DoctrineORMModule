@@ -12,6 +12,8 @@ use PDO;
 
 /**
  * DBAL Connection options
+ *
+ * @template-extends AbstractOptions<mixed>
  */
 final class DBALConnection extends AbstractOptions
 {
