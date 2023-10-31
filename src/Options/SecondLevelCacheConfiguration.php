@@ -8,6 +8,8 @@ use Laminas\Stdlib\AbstractOptions;
 
 /**
  * Configuration options for Second Level Cache
+ *
+ * @template-extends AbstractOptions<mixed>
  */
 final class SecondLevelCacheConfiguration extends AbstractOptions
 {
