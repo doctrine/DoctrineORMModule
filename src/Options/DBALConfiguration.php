@@ -8,6 +8,8 @@ use Laminas\Stdlib\AbstractOptions;
 
 /**
  * Configuration options for a DBAL Connection
+ *
+ * @template-extends AbstractOptions<mixed>
  */
 class DBALConfiguration extends AbstractOptions
 {

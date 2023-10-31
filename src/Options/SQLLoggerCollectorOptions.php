@@ -7,7 +7,9 @@ namespace DoctrineORMModule\Options;
 use Laminas\Stdlib\AbstractOptions;
 
 /**
- * Configuration options for an collector
+ * Configuration options for a collector
+ *
+ * @template-extends AbstractOptions<mixed>
  */
 final class SQLLoggerCollectorOptions extends AbstractOptions
 {
