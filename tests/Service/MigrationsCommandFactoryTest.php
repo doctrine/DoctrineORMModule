@@ -96,24 +96,26 @@ class MigrationsCommandFactoryTest extends TestCase
             );
         }
 
-        $factory        = new MigrationsCommandFactory('diff');
-        $config         = [
+        $entityManager  = self::createMock(EntityManagerInterface::class);
+        $serviceLocator = self::createMock(ServiceManager::class);
+
+        $factory = new MigrationsCommandFactory('diff');
+        $config  = [
             'doctrine' => [
                 'migrations_configuration' => [
                     'orm_default' => [
-                        'dependency_factory_services' => ['myId' => 'myService'],
+                        'dependency_factory_services' => ['test' => 'locator.service'],
                     ],
                 ],
             ],
         ];
-        $entityManager  = self::createMock(EntityManagerInterface::class);
-        $serviceLocator = self::createMock(ServiceManager::class);
+
         $serviceLocator->expects(self::exactly(3))
             ->method('get')
             ->willReturnMap([
                 ['config', $config],
                 ['doctrine.entitymanager.orm_default', $entityManager],
-                ['myService', 'test'],
+                ['locator.service', new stdClass()],
             ]);
 
         $factory($serviceLocator, DiffCommand::class);
