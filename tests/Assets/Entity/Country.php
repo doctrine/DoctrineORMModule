@@ -18,6 +18,9 @@ class Country
     #[ORM\Column(type: 'string', nullable: true)]
     protected string $name;
 
+    #[ORM\OneToOne(targetEntity: City::class, mappedBy: 'country')]
+    private City $city;
+
     public function getId(): int|null
     {
         return $this->id;

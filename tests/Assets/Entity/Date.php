@@ -24,9 +24,11 @@ class Date
         return $this->id;
     }
 
-    public function setDate(DateTime $date): void
+    public function setDate(DateTime $date): self
     {
         $this->date = $date;
+
+        return $this;
     }
 
     public function getDate(): DateTime

@@ -26,9 +26,11 @@ class Auth
         return $this->id;
     }
 
-    public function setPassword(string $password): void
+    public function setPassword(string $password): self
     {
-        $this->password = (string) $password;
+        $this->password = $password;
+
+        return $this;
     }
 
     public function getPassword(): string|null
@@ -36,9 +38,11 @@ class Auth
         return $this->password;
     }
 
-    public function setUsername(string $username): void
+    public function setUsername(string $username): self
     {
-        $this->username = (string) $username;
+        $this->username = $username;
+
+        return $this;
     }
 
     public function getUsername(): string|null

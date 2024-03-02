@@ -18,8 +18,8 @@ class City
     #[ORM\Column(type: 'string', nullable: true)]
     protected string $name;
 
-    #[ORM\OneToOne(targetEntity: Country::class)]
-    #[ORM\JoinColumn(name: 'country_id', referencedColumnName: 'id')]
+    #[ORM\OneToOne(targetEntity: Country::class, inversedBy: 'city')]
+    #[ORM\JoinColumn(name: 'country_id', referencedColumnName: 'id', unique: true)]
     protected Country $country;
 
     public function getId(): int|null

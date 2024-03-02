@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineORMModuleTest\Assets\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -17,6 +18,14 @@ class Category
 
     #[ORM\Column(type: 'string', nullable: true)]
     protected string $name;
+
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'categories')]
+    private ArrayCollection $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     public function getId(): int|null
     {
