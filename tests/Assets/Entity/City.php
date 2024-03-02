@@ -6,26 +6,23 @@ namespace DoctrineORMModuleTest\Assets\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="doctrine_orm_module_city")
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'doctrine_orm_module_city')]
 class City
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer");
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected int $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private int $id;
 
-    /** @ORM\Column(type="string", nullable=true) */
-    protected string $name;
+    #[ORM\Column(type: 'string', nullable: true)]
+    private string $name;
 
-    /** @ORM\OneToOne(targetEntity="Country") */
-    protected Country $country;
+    #[ORM\OneToOne(targetEntity: Country::class)]
+    #[ORM\JoinColumn(name: 'country_id', referencedColumnName: 'id')]
+    private Country $country;
 
-    public function getId(): ?int
+    public function getId(): int|null
     {
         return $this->id;
     }

@@ -6,26 +6,22 @@ namespace DoctrineORMModuleTest\Assets\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="doctrine_orm_module_test")
- */
-class Test
+#[ORM\Entity]
+#[ORM\Table(name: 'doctrine_orm_module_auth')]
+class Auth
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer");
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected int $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private int $id;
 
-    /** @ORM\Column(type="string", nullable=true) */
-    protected string $username;
+    #[ORM\Column(type: 'string', nullable: true)]
+    private string $username;
 
-    /** @ORM\Column(type="string", nullable=true) */
-    protected string $password;
+    #[ORM\Column(type: 'string', nullable: true)]
+    private string $password;
 
-    public function getId(): ?int
+    public function getId(): int|null
     {
         return $this->id;
     }
@@ -35,7 +31,7 @@ class Test
         $this->password = (string) $password;
     }
 
-    public function getPassword(): ?string
+    public function getPassword(): string|null
     {
         return $this->password;
     }
@@ -45,7 +41,7 @@ class Test
         $this->username = (string) $username;
     }
 
-    public function getUsername(): ?string
+    public function getUsername(): string|null
     {
         return $this->username;
     }

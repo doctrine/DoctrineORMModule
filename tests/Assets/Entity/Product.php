@@ -29,7 +29,7 @@ class Product
      */
     protected array $categories;
 
-    public function getId(): ?int
+    public function getId(): int|null
     {
         return $this->id;
     }
@@ -46,9 +46,7 @@ class Product
         return $this->name;
     }
 
-    /**
-     * @param Category[] $categories
-     */
+    /** @param Category[] $categories */
     public function setCategories(array $categories): self
     {
         $this->categories = $categories;
@@ -56,9 +54,7 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Category[]
-     */
+    /** @return Category[] */
     public function getCategories(): array
     {
         return $this->categories;
