@@ -14,10 +14,10 @@ class Date
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private int $id;
+    protected int $id;
 
     #[ORM\Column(type: 'date', nullable: true)]
-    private DateTime $date;
+    protected DateTime $date;
 
     public function getId(): int|null
     {

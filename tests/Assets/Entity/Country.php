@@ -13,10 +13,10 @@ class Country
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private int $id;
+    protected int $id;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    private string $name;
+    protected string $name;
 
     public function getId(): int|null
     {

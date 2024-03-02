@@ -13,14 +13,14 @@ class City
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private int $id;
+    protected int $id;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    private string $name;
+    protected string $name;
 
     #[ORM\OneToOne(targetEntity: Country::class)]
     #[ORM\JoinColumn(name: 'country_id', referencedColumnName: 'id')]
-    private Country $country;
+    protected Country $country;
 
     public function getId(): int|null
     {
