@@ -15,6 +15,6 @@ class ResolveTarget
     protected int $id;
 
     #[ORM\ManyToOne(targetEntity: Target::class)]
-    #[ORM\JoinColumn(name: 'target_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'target_id', referencedColumnName: 'id', unique: true)]
     protected Target $target;
 }

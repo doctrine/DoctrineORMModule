@@ -62,9 +62,15 @@ class FormEntity
     #[ORM\Column(type: 'string', nullable: true)]
     protected string|null $stringNullable = null;
 
+    /**
+     * This join is odd because the targetEntity exists only as an interface
+     **/
     #[ORM\OneToOne(targetEntity: Target::class)]
     protected Target $targetOne;
 
+    /**
+     * This join is odd because the targetEntity exists only as an interface
+     */
     #[ORM\OneToOne(targetEntity: Target::class)]
     #[ORM\JoinColumn(nullable: true)]
     protected Target|null $targetOneNullable = null;
@@ -85,6 +91,13 @@ class FormEntity
     protected int $specificType;
 
     /**
+     * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
+     * @Form\Attributes({"type":"textarea"})
+     */
+    #[ORM\Column(type: 'integer')]
+    protected int $specificAttributeType;
+
+    /**
      * @Form\Type("DoctrineORMModule\Form\Element\EntityMultiCheckbox")
      *
      * @var FormEntityTarget[]
@@ -92,22 +105,17 @@ class FormEntity
     #[ORM\OneToMany(targetEntity: FormEntityTarget::class, mappedBy: 'formEntityMulti')]
     protected array $specificMultiType;
 
+    /** @var Target[] */
+    #[ORM\OneToMany(targetEntity: FormEntityTarget::class, mappedBy: 'formEntity')]
+    protected array $targetMany;
+
     /**
+     * This join is odd because the targetEntity exists only as an interface
+     *
      * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")
      * @Form\Options({"empty_option":null})
      */
     #[ORM\OneToOne(targetEntity: Target::class)]
     #[ORM\JoinColumn(nullable: true)]
     protected Target|null $noDisplayEmptyOption = null;
-
-    /** @var Target[] */
-    #[ORM\OneToMany(targetEntity: FormEntityTarget::class, mappedBy: 'formEntity')]
-    protected array $targetMany;
-
-    /**
-     * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
-     * @Form\Attributes({"type":"textarea"})
-     */
-    #[ORM\Column(type: 'integer')]
-    protected int $specificAttributeType;
 }
