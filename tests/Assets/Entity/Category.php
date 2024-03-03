@@ -4,25 +4,30 @@ declare(strict_types=1);
 
 namespace DoctrineORMModuleTest\Assets\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="doctrine_orm_module_category")
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'doctrine_orm_module_category')]
 class Category
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer");
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected int $id;
 
-    /** @ORM\Column(type="string", nullable=true) */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $name;
 
-    public function getId(): ?int
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'categories')]
+    private ArrayCollection $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
+
+    public function getId(): int|null
     {
         return $this->id;
     }
