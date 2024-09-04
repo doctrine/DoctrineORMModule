@@ -9,119 +9,113 @@ use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Laminas\Form\Annotation as Form;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="doctrine_orm_module_form_entity")
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'doctrine_orm_module_form_entity')]
 class FormEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
     protected int $id;
 
-    /** @ORM\Column(type="boolean") */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     protected bool $bool;
 
-    /** @ORM\Column(type="boolean") */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     protected bool $boolean;
 
-    /** @ORM\Column(type="float") */
+    #[ORM\Column(type: 'float', nullable: false)]
     protected float $float;
 
-    /** @ORM\Column(type="bigint") */
-    protected int $bigint;
+    #[ORM\Column(type: 'bigint', nullable: false)]
+    protected string $bigint;
 
-    /** @ORM\Column(type="integer") */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $integer;
 
-    /** @ORM\Column(type="smallint") */
+    #[ORM\Column(type: 'smallint', nullable: false)]
     protected int $smallint;
 
-    /** @ORM\Column(type="datetime") */
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected DateTime $datetime;
 
-    /** @ORM\Column(type="datetime_immutable") */
-    protected DateTime $datetimeImmutable;
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
+    protected DateTimeImmutable $datetimeImmutable;
 
-    /** @ORM\Column(type="datetimetz") */
-    protected DateTimeImmutable $datetimetz;
+    #[ORM\Column(type: 'datetimetz', nullable: false)]
+    protected DateTime $datetimetz;
 
-    /** @ORM\Column(type="datetimetz_immutable") */
+    #[ORM\Column(type: 'datetimetz_immutable', nullable: false)]
     protected DateTimeImmutable $datetimetzImmutable;
 
-    /** @ORM\Column(type="date") */
+    #[ORM\Column(type: 'date', nullable: false)]
     protected DateTime $date;
 
-    /** @ORM\Column(type="time") */
+    #[ORM\Column(type: 'time', nullable: false)]
     protected DateTime $time;
 
-    /** @ORM\Column(type="text") */
+    #[ORM\Column(type: 'text', nullable: false)]
     protected string $text;
 
-    /** @ORM\Column(type="string", nullable=false, length=20) */
+    #[ORM\Column(type: 'string', length: 20, nullable: false)]
     protected string $string;
 
-    /** @ORM\Column(type="string", nullable=true) */
-    protected ?string $stringNullable = null;
+    #[ORM\Column(type: 'string', nullable: true)]
+    protected string|null $stringNullable = null;
 
-    /** @ORM\OneToOne(targetEntity="Target") */
+    /**
+     * This join is odd because the targetEntity exists only as an interface
+     **/
+    #[ORM\OneToOne(targetEntity: Target::class)]
     protected Target $targetOne;
 
     /**
-     * @ORM\OneToOne(targetEntity="Target")
-     * @ORM\JoinColumn(nullable=true)
+     * This join is odd because the targetEntity exists only as an interface
      */
-    protected ?Target $targetOneNullable = null;
-
-   /**
-    * @ORM\OneToOne(targetEntity="Target")
-    * @ORM\JoinColumn(nullable=true)
-    *
-    * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")
-    * @Form\Options({"empty_option":null})
-    */
-    protected ?Target $noDisplayEmptyOption = null;
+    #[ORM\OneToOne(targetEntity: Target::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    protected Target|null $targetOneNullable = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntity")
-     *
-     * @var Target[]
+     * @Form\Type("File")
+     * @Form\Options({"label":"Image"})
      */
-    protected array $targetMany;
+    #[ORM\Column(type: 'string', length: 256, nullable: true)]
+    #[ORM\JoinColumn(nullable: true)]
+    protected string $image;
 
     /**
-     * @ORM\Column(type="integer")
-     *
      * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
      * @Form\Type("Radio")
      */
+    #[ORM\Column(type: 'integer')]
     protected int $specificType;
 
     /**
-     * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntityMulti")
-     *
+     * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
+     * @Form\Attributes({"type":"textarea"})
+     */
+    #[ORM\Column(type: 'integer')]
+    protected int $specificAttributeType;
+
+    /**
      * @Form\Type("DoctrineORMModule\Form\Element\EntityMultiCheckbox")
      *
      * @var FormEntityTarget[]
      */
+    #[ORM\OneToMany(targetEntity: FormEntityTarget::class, mappedBy: 'formEntityMulti')]
     protected array $specificMultiType;
 
-    /**
-     * @ORM\Column(type="integer")
-     *
-     * @Form\Options({"label":"Please Choose", "value_options":{"f":"false","t":"true"}})
-     * @Form\Attributes({"type":"textarea"})
-     */
-    protected int $specificAttributeType;
+    /** @var Target[] */
+    #[ORM\OneToMany(targetEntity: FormEntityTarget::class, mappedBy: 'formEntity')]
+    protected array $targetMany;
 
     /**
-     * @ORM\Column(type="string", length=256)
-     * @ORM\JoinColumn(nullable=true)
+     * This join is odd because the targetEntity exists only as an interface
      *
-     * @Form\Type("File")
-     * @Form\Options({"label":"Image"})
+     * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")
+     * @Form\Options({"empty_option":null})
      */
-    protected string $image;
+    #[ORM\OneToOne(targetEntity: Target::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    protected Target|null $noDisplayEmptyOption = null;
 }
