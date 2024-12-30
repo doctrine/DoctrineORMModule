@@ -4,9 +4,21 @@ on:
   pull_request:
     branches:
       - "*.x"
+    paths:
+      - ".github/workflows/continuous-integration.yml"
+      - "composer.*"
+      - "src/**"
+      - "phpunit.xml.dist"
+      - "tests/**"
   push:
     branches:
       - "*.x"
+    paths:
+      - ".github/workflows/continuous-integration.yml"
+      - "composer.*"
+      - "src/**"
+      - "phpunit.xml.dist"
+      - "tests/**"
 
 jobs:
   phpunit:
@@ -17,7 +29,6 @@ jobs:
       fail-fast: false
       matrix:
         php-version:
-          - "8.0"
           - "8.1"
           - "8.2"
           - "8.3"
@@ -30,19 +41,19 @@ jobs:
           - true
           - false
         include:
-          - php-version: "8.0"
+          - php-version: "8.1"
             dbal-version: "2.13.0"
             dependencies: "lowest"
             optional-dependencies: false
-          - php-version: "8.0"
+          - php-version: "8.1"
             dbal-version: "3.3.0"
             dependencies: "lowest"
             optional-dependencies: false
-          - php-version: "8.0"
+          - php-version: "8.1"
             dbal-version: "2.13.0"
             dependencies: "lowest"
             optional-dependencies: true
-          - php-version: "8.0"
+          - php-version: "8.1"
             dbal-version: "3.3.0"
             dependencies: "lowest"
             optional-dependencies: true
@@ -61,26 +72,31 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v4"
         with:
           fetch-depth: 2
 
-      - name: "Install PHP"
+      - name: "Install PHP with PCOV"
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: "${{ matrix.php-version }}"
           coverage: "pcov"
-          ini-values: "error_reporting=E_ALL, zend.assertions=1"
+          ini-values: "zend.assertions=1"
           extensions: "pdo_mysql"
+
+      - name: "Set COMPOSER_ROOT_VERSION"
+        run: |
+          echo "COMPOSER_ROOT_VERSION=${{ inputs.composer-root-version }}" >> $GITHUB_ENV
+        if: "${{ inputs.composer-root-version }}"
 
       - name: "Require specific DBAL version"
         run: "composer require doctrine/dbal ^${{ matrix.dbal-version }} --no-update"
 
       - name: "Install dependencies with Composer"
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@v3"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "--prefer-dist --no-suggest"
+          composer-options: "${{ inputs.composer-options }}"
 
       - name: "Remove optional dependencies"
         if: "! matrix.optional-dependencies"
@@ -103,29 +119,31 @@ jobs:
         run: "./ci/run-cli-migrations.sh"
 
       - name: "Upload coverage file"
-        uses: "actions/upload-artifact@v2"
+        uses: "actions/upload-artifact@v4"
         with:
-          name: "phpunit-${{ matrix.php-version }}-${{ matrix.dependencies }}-${{ matrix.dbal-version }}.coverage"
+          name: "phpunit-${{ matrix.php-version }}-${{ matrix.dependencies }}-${{ matrix.optional-dependencies }}-${{ matrix.dbal-version }}.coverage"
           path: "coverage.xml"
 
   upload_coverage:
     name: "Upload coverage to Codecov"
-    runs-on: "ubuntu-20.04"
+    runs-on: "ubuntu-22.04"
     needs:
       - "phpunit"
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v4"
         with:
           fetch-depth: 2
 
       - name: "Download coverage files"
-        uses: "actions/download-artifact@v4.1.7"
+        uses: "actions/download-artifact@v4"
         with:
           path: "reports"
 
       - name: "Upload to Codecov"
-        uses: "codecov/codecov-action@v1"
+        uses: "codecov/codecov-action@v5"
         with:
           directory: "reports"
+        env:
+          CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"

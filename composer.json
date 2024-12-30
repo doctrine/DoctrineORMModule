@@ -1,55 +1,17 @@
 {
     "name": "doctrine/doctrine-orm-module",
     "description": "Laminas Module that provides Doctrine ORM functionality",
-    "type": "library",
     "license": "MIT",
+    "type": "library",
     "keywords": [
         "doctrine",
         "orm",
         "module",
         "laminas"
     ],
-    "homepage": "http://www.doctrine-project.org/",
-    "authors": [
-        {
-            "name":     "Kyle Spraggs",
-            "email":    "theman@spiffyjr.me",
-            "homepage": "http://www.spiffyjr.me/"
-        },
-        {
-            "name":     "Marco Pivetta",
-            "email":    "ocramius@gmail.com",
-            "homepage": "http://marco-pivetta.com/"
-        },
-        {
-            "name":     "Evan Coury",
-            "email":    "me@evancoury.com",
-            "homepage": "http://blog.evan.pro/"
-        },
-        {
-            "name":  "Guilherme Blanco",
-            "email": "guilhermeblanco@hotmail.com"
-        },
-        {
-            "name": "Tom H Anderson",
-            "email": "tom.h.anderson@gmail.com"
-        }
-    ],
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "composer/package-versions-deprecated": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
-    },
-    "extra": {
-        "laminas": {
-            "config-provider": "DoctrineORMModule\\ConfigProvider",
-            "module": "DoctrineORMModule"
-        }
-    },
+    "homepage": "https://www.doctrine-project.org/",
     "require": {
-        "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0",
+        "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
         "ext-json": "*",
         "doctrine/dbal": "^2.13.7 || ^3.3.2",
         "doctrine/doctrine-laminas-hydrator": "^3.0.0",
@@ -88,9 +50,9 @@
         "doctrine/migrations": "<3.3"
     },
     "suggest": {
-        "laminas/laminas-form": "if you want to use form elements backed by Doctrine",
+        "doctrine/migrations": "doctrine migrations if you want to keep your schema definitions versioned",
         "laminas/laminas-developer-tools": "laminas-developer-tools if you want to profile operations executed by the ORM during development",
-        "doctrine/migrations": "doctrine migrations if you want to keep your schema definitions versioned"
+        "laminas/laminas-form": "if you want to use form elements backed by Doctrine"
     },
     "autoload": {
         "psr-4": {
@@ -100,6 +62,19 @@
     "autoload-dev": {
         "psr-4": {
             "DoctrineORMModuleTest\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "laminas": {
+            "config-provider": "DoctrineORMModule\\ConfigProvider",
+            "module": "DoctrineORMModule"
         }
     },
     "scripts": {
