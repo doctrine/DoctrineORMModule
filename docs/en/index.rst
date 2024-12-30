@@ -23,13 +23,17 @@ Run the following to install this library using `Composer <https://getcomposer.o
 Next Steps
 ----------
 
-.. toctree::
-    :caption: Table of Contents
-
-    user-guide
-    developer-tools
-    configuration
-    cache
-    migrations
-    forms
-    miscellaneous
+-  :doc:`User Guide <user-guide>`:
+   general introduction.
+-  :doc:`Developer Tools <developer-tools>`:
+   setting up Laminas Developer Tools.
+-  :doc:`Configuration <configuration>`:
+   learn how to configure DoctrineORMModule.
+-  :doc:`Caching <cache>`:
+   learn how to configure caches.
+-  :doc:`Migrations <migrations>`:
+   learn how to use database migrations.
+-  :doc:`Laminas Forms <forms>`:
+   learn about custom Laminas form elements.
+-  :doc:`Laminas Forms <miscellaneous>`:
+   learn about authentication and custom DBAL types.

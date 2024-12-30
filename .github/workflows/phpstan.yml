@@ -1,0 +1,28 @@
+name: "Static Analysis"
+
+on:
+  pull_request:
+    branches:
+      - "*.x"
+    paths:
+      - ".github/workflows/phpstan.yml"
+      - "composer.*"
+      - "src/**"
+      - "phpstan*"
+      - "tests/**"
+  push:
+    branches:
+      - "*.x"
+    paths:
+      - ".github/workflows/phpstan.yml"
+      - "composer.*"
+      - "src/**"
+      - "phpstan*"
+      - "tests/**"
+
+jobs:
+  static-analysis:
+    name: "Static Analysis"
+    uses: "doctrine/.github/.github/workflows/phpstan.yml@6.0.0"
+    with:
+      php-version: "8.3"
