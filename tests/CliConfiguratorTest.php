@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace DoctrineORMModuleTest\Listener;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
 use Doctrine\DBAL\Tools\Console\Command\ReservedWordsCommand;
 use Doctrine\DBAL\Tools\Console\Command\RunSqlCommand;
-use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
 use Doctrine\Migrations\Tools\Console\Command\ExecuteCommand;
 use Doctrine\Migrations\Tools\Console\Command\GenerateCommand;
@@ -30,7 +28,6 @@ use DoctrineORMModuleTest\ServiceManagerFactory;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Command\Command;
 
 use function assert;
 use function class_exists;
@@ -112,15 +109,6 @@ class CliConfiguratorTest extends TestCase
         assert($emHelper instanceof EntityManagerHelper);
         $this->assertInstanceOf(EntityManagerHelper::class, $emHelper);
         $this->assertSame($this->objectManager, $emHelper->getEntityManager());
-
-        if (! class_exists(ConnectionHelper::class)) {
-            return;
-        }
-
-        $dbHelper = $helperSet->get('db');
-        assert($dbHelper instanceof ConnectionHelper);
-        $this->assertInstanceOf(ConnectionHelper::class, $dbHelper);
-        $this->assertSame($this->objectManager->getConnection(), $dbHelper->getConnection());
     }
 
     /**
@@ -140,7 +128,6 @@ class CliConfiguratorTest extends TestCase
         $cliConfigurator->configure($application);
 
         $command = $application->get($commandName);
-        assert($command instanceof Command);
         $this->assertInstanceOf($className, $command);
 
         // check for the entity-manager option
@@ -161,7 +148,7 @@ class CliConfiguratorTest extends TestCase
      */
     public function dataProviderForTestValidCommands(): array
     {
-        $data = [
+        return [
             [
                 'dbal:run-sql',
                 RunSqlCommand::class,
@@ -223,15 +210,5 @@ class CliConfiguratorTest extends TestCase
                 ExecuteCommand::class,
             ],
         ];
-
-        // this is only available with DBAL 2.x
-        if (class_exists(ImportCommand::class)) {
-            $data[] = [
-                'dbal:import',
-                ImportCommand::class,
-            ];
-        }
-
-        return $data;
     }
 }
