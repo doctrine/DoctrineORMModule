@@ -14,22 +14,22 @@
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
         "ext-json": "*",
         "doctrine/dbal": "^3.3.2",
-        "doctrine/doctrine-laminas-hydrator": "^3.0.0",
-        "doctrine/doctrine-module": "^5.3.0 || ^6.0.5",
+        "doctrine/doctrine-laminas-hydrator": "^3.2.0",
+        "doctrine/doctrine-module": "^6.2.0",
         "doctrine/event-manager": "^2.0.0",
         "doctrine/orm": "^2.13.0",
-        "doctrine/persistence": "^2.3.0 || ^3.0.0",
-        "laminas/laminas-eventmanager": "^3.4.0",
+        "doctrine/persistence": "^3.0.0",
+        "laminas/laminas-eventmanager": "^3.5.0",
         "laminas/laminas-modulemanager": "^2.11.0",
-        "laminas/laminas-mvc": "^3.3.2",
-        "laminas/laminas-paginator": "^2.12.2",
+        "laminas/laminas-mvc": "^3.3.5",
+        "laminas/laminas-paginator": "^2.13.0",
         "laminas/laminas-servicemanager": "^3.17.0",
-        "laminas/laminas-stdlib": "^3.7.1",
+        "laminas/laminas-stdlib": "^3.13.0",
         "psr/container": "^1.1.2",
-        "symfony/console": "^5.4.3 || ^6.0.3"
+        "symfony/console": "^6.1.2 || ^7.0.0"
     },
     "require-dev": {
-        "doctrine/annotations": "^1.13.2",
+        "doctrine/annotations": "^2.0.0",
         "doctrine/coding-standard": "^9.0.0",
         "doctrine/data-fixtures": "^1.5.2",
         "doctrine/migrations": "^3.8.0",
@@ -45,7 +45,8 @@
         "squizlabs/php_codesniffer": "^3.6.2"
     },
     "conflict": {
-        "doctrine/migrations": "<3.8"
+        "doctrine/migrations": "<3.8",
+        "laminas/laminas-form": "<3.10"
     },
     "suggest": {
         "doctrine/migrations": "doctrine migrations if you want to keep your schema definitions versioned",
