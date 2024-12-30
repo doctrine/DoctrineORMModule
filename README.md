@@ -1,10 +1,10 @@
 Doctrine ORM Module for Laminas
 ===============================
 
-[![Build Status](https://github.com/doctrine/DoctrineORMModule/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/doctrine/DoctrineORMModule/actions/workflows/continuous-integration.yml?query=branch%3A4.4.x)
-[![Code Coverage](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/4.4.x/graph/badge.svg)](https://codecov.io/gh/doctrine/DoctrineORMModule/branch/4.4.x)
-[![Latest Stable Version](https://poser.pugx.org/doctrine/doctrine-orm-module/v/stable.png)](https://packagist.org/packages/doctrine/doctrine-orm-module)
-[![Total Downloads](https://poser.pugx.org/doctrine/doctrine-orm-module/downloads.png)](https://packagist.org/packages/doctrine/doctrine-orm-module)
+[![Build Status](https://github.com/doctrine/DoctrineORMModule/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/doctrine/DoctrineORMModule/actions/workflows/continuous-integration.yml)
+[![Code Coverage](https://codecov.io/gh/doctrine/DoctrineORMModule/graphs/badge.svg)](https://app.codecov.io/gh/doctrine/DoctrineORMModule)
+[![Latest Stable Version](https://poser.pugx.org/doctrine/doctrine-orm-module/v)](https://packagist.org/packages/doctrine/doctrine-orm-module)
+[![Total Downloads](https://poser.pugx.org/doctrine/doctrine-orm-module/downloads)](https://packagist.org/packages/doctrine/doctrine-orm-module)
 
 The DoctrineORMModule leverages [DoctrineModule](https://github.com/doctrine/DoctrineModule/) and integrates
 [Doctrine ORM](https://github.com/doctrine/orm) with [Laminas](https://getlaminas.org/) quickly
