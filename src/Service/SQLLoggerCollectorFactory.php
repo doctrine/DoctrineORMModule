@@ -79,7 +79,7 @@ final class SQLLoggerCollectorFactory implements FactoryInterface
     }
 
     /**
-     * @psalm-return class-string
+     * @phpstan-return class-string
      */
     protected function getOptionsClass(): string
     {

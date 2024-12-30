@@ -209,7 +209,7 @@ class MetadataGrapher
     /**
      * Visit a given association and mark it as visited
      *
-     * @psalm-param class-string $className
+     * @phpstan-param class-string $className
      *
      * @return bool true if the association was visited before
      */
