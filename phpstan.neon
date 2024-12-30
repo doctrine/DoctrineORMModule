@@ -12,9 +12,6 @@ parameters:
         -
           identifier: function.alreadyNarrowedType
         -
-          message: '#Method .*CliConfigurator::getHelpers\(\) .*ConnectionHelper#'
-          path: src/CliConfigurator.php
-        -
           message: '#Method .*DBALConnection::getDriverClass\(\) never returns null#'
           path: src/Options/DBALConnection.php
         -
