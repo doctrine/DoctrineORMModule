@@ -129,7 +129,6 @@ class CliConfigurator
             return $this->defaultObjectManagerName;
         }
 
-        /** @psalm-suppress ReservedWord */
         return $arguments->getParameterOption('--object-manager');
     }
 
