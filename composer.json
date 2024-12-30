@@ -15,9 +15,9 @@
         "ext-json": "*",
         "doctrine/dbal": "^3.3.2",
         "doctrine/doctrine-laminas-hydrator": "^3.0.0",
-        "doctrine/doctrine-module": "^5.3.0 || ^6.0.2",
+        "doctrine/doctrine-module": "^5.3.0 || ^6.0.5",
         "doctrine/event-manager": "^2.0.0",
-        "doctrine/orm": "^2.11.1",
+        "doctrine/orm": "^2.13.0",
         "doctrine/persistence": "^2.3.0 || ^3.0.0",
         "laminas/laminas-eventmanager": "^3.4.0",
         "laminas/laminas-modulemanager": "^2.11.0",
@@ -32,21 +32,20 @@
         "doctrine/annotations": "^1.13.2",
         "doctrine/coding-standard": "^9.0.0",
         "doctrine/data-fixtures": "^1.5.2",
-        "doctrine/migrations": "^3.4.1",
+        "doctrine/migrations": "^3.8.0",
         "laminas/laminas-cache-storage-adapter-filesystem": "^2.0",
         "laminas/laminas-cache-storage-adapter-memory": "^2.0",
         "laminas/laminas-developer-tools": "^2.3.0",
         "laminas/laminas-i18n": "^2.13.0",
         "laminas/laminas-log": "^2.15.0",
         "laminas/laminas-serializer": "^2.12.0",
-        "ocramius/proxy-manager": "^2.2.0",
         "phpstan/phpstan": "^2.0.4",
         "phpstan/phpstan-phpunit": "^2.0.3",
         "phpunit/phpunit": "^10.5.40",
         "squizlabs/php_codesniffer": "^3.6.2"
     },
     "conflict": {
-        "doctrine/migrations": "<3.3"
+        "doctrine/migrations": "<3.8"
     },
     "suggest": {
         "doctrine/migrations": "doctrine migrations if you want to keep your schema definitions versioned",
