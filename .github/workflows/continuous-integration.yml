@@ -33,7 +33,6 @@ jobs:
           - "8.2"
           - "8.3"
         dbal-version:
-          - "2.13.0"
           - "3.3.0"
         dependencies:
           - "highest"
@@ -42,17 +41,9 @@ jobs:
           - false
         include:
           - php-version: "8.1"
-            dbal-version: "2.13.0"
-            dependencies: "lowest"
-            optional-dependencies: false
-          - php-version: "8.1"
             dbal-version: "3.3.0"
             dependencies: "lowest"
             optional-dependencies: false
-          - php-version: "8.1"
-            dbal-version: "2.13.0"
-            dependencies: "lowest"
-            optional-dependencies: true
           - php-version: "8.1"
             dbal-version: "3.3.0"
             dependencies: "lowest"

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace DoctrineORMModule;
 
-use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
-use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
@@ -66,12 +64,6 @@ class CliConfigurator
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-
-        if (! class_exists(ImportCommand::class)) {
-            return;
-        }
-
-        $this->commands[] = 'doctrine.dbal_cmd.import';
     }
 
     public function configure(Application $cli): void
@@ -97,17 +89,10 @@ class CliConfigurator
      */
     private function getHelpers(EntityManagerInterface $objectManager): array
     {
-        $helpers = [
+        return [
             'dialog' => new QuestionHelper(),
             'em' => new EntityManagerHelper($objectManager),
         ];
-
-        // this is only available with DBAL 2.x
-        if (class_exists(ConnectionHelper::class)) {
-            $helpers['db'] = new ConnectionHelper($objectManager->getConnection());
-        }
-
-        return $helpers;
     }
 
     private function createObjectManagerInputOption(): InputOption
