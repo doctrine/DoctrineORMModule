@@ -3,17 +3,28 @@ parameters:
     paths:
         - src
         - tests
-    checkGenericClassInNonGenericObjectType: false
     treatPhpDocTypesAsCertain: false
     ignoreErrors:
         -
-            message: '#Offset mixed on array\{\} in isset\(\) does not exist#'
-            path: src/Yuml/MetadataGrapher.php
+          identifier: missingType.generics
         -
-            message: '#Return type .* of method DoctrineORMModule\\Yuml\\YumlController::indexAction\(\)#'
-            path: src/Yuml/YumlController.php
+          identifier: method.alreadyNarrowedType
         -
-            message: '#Parameter \#1 .* of method DoctrineORMModule\\Options\\Configuration.* stdClass given#'
-            path: tests/Options/ConfigurationOptionsTest.php
+          identifier: function.alreadyNarrowedType
+        -
+          message: '#Method .*CliConfigurator::getHelpers\(\) .*ConnectionHelper#'
+          path: src/CliConfigurator.php
+        -
+          message: '#Method .*DBALConnection::getDriverClass\(\) never returns null#'
+          path: src/Options/DBALConnection.php
+        -
+          message: '#Offset mixed on array\{\} in isset\(\) does not exist#'
+          path: src/Yuml/MetadataGrapher.php
+        -
+          message: '#Return type .* of method DoctrineORMModule\\Yuml\\YumlController::indexAction\(\)#'
+          path: src/Yuml/YumlController.php
+        -
+          message: '#Parameter \#1 .* of method DoctrineORMModule\\Options\\Configuration.* stdClass given#'
+          path: tests/Options/ConfigurationOptionsTest.php
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
