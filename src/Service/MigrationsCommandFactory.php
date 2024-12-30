@@ -59,7 +59,7 @@ final class MigrationsCommandFactory implements FactoryInterface
      *
      * @throws InvalidArgumentException
      */
-    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array|null $options = null)
     {
         $commandClassName = $this->commandClassName;
 
@@ -75,7 +75,7 @@ final class MigrationsCommandFactory implements FactoryInterface
             ! preg_match(
                 '/^doctrine\.((?<mappingType>orm|odm)\.|)(?<serviceType>[a-z0-9_]+)\.(?<serviceName>[a-z0-9_]+)$/',
                 $objectManagerName,
-                $matches
+                $matches,
             )
         ) {
             throw new RuntimeException('The object manager name is invalid: ' . $objectManagerName);
@@ -91,7 +91,7 @@ final class MigrationsCommandFactory implements FactoryInterface
 
         $dependencyFactory = DependencyFactory::fromEntityManager(
             new ConfigurationArray($migrationConfig),
-            new ExistingEntityManager($serviceLocator->get($objectManagerName))
+            new ExistingEntityManager($serviceLocator->get($objectManagerName)),
         );
 
         foreach ($dependencyFactoryServices as $id => $service) {

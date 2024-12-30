@@ -19,17 +19,14 @@ use function sprintf;
  */
 final class SQLLoggerCollectorFactory implements FactoryInterface
 {
-    protected string $name;
-
-    public function __construct(string $name)
+    public function __construct(protected string $name)
     {
-        $this->name = $name;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array|null $options = null)
     {
         $options = $this->getOptions($serviceLocator);
 
@@ -55,9 +52,7 @@ final class SQLLoggerCollectorFactory implements FactoryInterface
         return new SQLLoggerCollector($debugStackLogger, 'doctrine.sql_logger_collector.' . $options->getName());
     }
 
-    /**
-     * @throws RuntimeException
-     */
+    /** @throws RuntimeException */
     protected function getOptions(ContainerInterface $serviceLocator): mixed
     {
         $options = $serviceLocator->get('config');
@@ -68,8 +63,8 @@ final class SQLLoggerCollectorFactory implements FactoryInterface
             throw new RuntimeException(
                 sprintf(
                     'Configuration with name "%s" could not be found in "doctrine.sql_logger_collector".',
-                    $this->name
-                )
+                    $this->name,
+                ),
             );
         }
 
@@ -78,9 +73,7 @@ final class SQLLoggerCollectorFactory implements FactoryInterface
         return new $optionsClass($options);
     }
 
-    /**
-     * @phpstan-return class-string
-     */
+    /** @phpstan-return class-string */
     protected function getOptionsClass(): string
     {
         return SQLLoggerCollectorOptions::class;

@@ -13,7 +13,7 @@ final class DoctrineObjectHydratorFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array|null $options = null)
     {
         return new DoctrineObject($serviceLocator->get('doctrine.entitymanager.orm_default'));
     }

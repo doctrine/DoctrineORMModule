@@ -14,10 +14,10 @@ final class ReservedWordsCommandFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array|null $options = null)
     {
         return new ReservedWordsCommand(
-            new SingleConnectionProvider($serviceLocator->get('doctrine.connection.orm_default'))
+            new SingleConnectionProvider($serviceLocator->get('doctrine.connection.orm_default')),
         );
     }
 }

@@ -47,7 +47,7 @@ final class DBALConnection extends AbstractOptions
      * Set the wrapper class for the driver. In general, this should not
      * need to be changed.
      */
-    protected ?string $wrapperClass = null;
+    protected string|null $wrapperClass = null;
 
     /**
      * Driver specific connection parameters.
@@ -84,25 +84,19 @@ final class DBALConnection extends AbstractOptions
         return 'doctrine.eventmanager.' . $this->eventmanager;
     }
 
-    /**
-     * @param mixed[] $params
-     */
+    /** @param mixed[] $params */
     public function setParams(array $params): void
     {
         $this->params = $params;
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getParams(): array
     {
         return $this->params;
     }
 
-    /**
-     * @param mixed[] $doctrineTypeMappings
-     */
+    /** @param mixed[] $doctrineTypeMappings */
     public function setDoctrineTypeMappings(array $doctrineTypeMappings): DBALConnection
     {
         $this->doctrineTypeMappings = $doctrineTypeMappings;
@@ -110,9 +104,7 @@ final class DBALConnection extends AbstractOptions
         return $this;
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getDoctrineTypeMappings(): array
     {
         return $this->doctrineTypeMappings;
@@ -138,15 +130,13 @@ final class DBALConnection extends AbstractOptions
         return $this->doctrineCommentedTypes;
     }
 
-    public function setDriverClass(?string $driverClass): void
+    public function setDriverClass(string|null $driverClass): void
     {
         $this->driverClass = $driverClass;
     }
 
-    /**
-     * @return class-string<Driver>|null
-     */
-    public function getDriverClass(): ?string
+    /** @return class-string<Driver>|null */
+    public function getDriverClass(): string|null
     {
         return $this->driverClass;
     }
@@ -166,10 +156,8 @@ final class DBALConnection extends AbstractOptions
         $this->wrapperClass = $wrapperClass;
     }
 
-    /**
-     * @return class-string<Connection>|null
-     */
-    public function getWrapperClass(): ?string
+    /** @return class-string<Connection>|null */
+    public function getWrapperClass(): string|null
     {
         return $this->wrapperClass;
     }

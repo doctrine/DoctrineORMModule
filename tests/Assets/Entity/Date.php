@@ -23,7 +23,7 @@ class Date
     /** @ORM\Column(type="date", nullable=true) */
     protected DateTime $date;
 
-    public function getId(): ?int
+    public function getId(): int|null
     {
         return $this->id;
     }

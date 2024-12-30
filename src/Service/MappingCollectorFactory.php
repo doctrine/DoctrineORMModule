@@ -21,7 +21,7 @@ final class MappingCollectorFactory extends AbstractFactory
      *
      * @return MappingCollector
      */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, array|null $options = null)
     {
         $name          = $this->getName();
         $objectManager = $container->get('doctrine.entitymanager.' . $name);

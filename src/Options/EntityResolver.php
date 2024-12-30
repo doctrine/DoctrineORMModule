@@ -10,9 +10,7 @@ use Laminas\Stdlib\AbstractOptions;
 use function class_exists;
 use function sprintf;
 
-/**
- * @template-extends AbstractOptions<mixed>
- */
+/** @template-extends AbstractOptions<mixed> */
 final class EntityResolver extends AbstractOptions
 {
     /**
@@ -55,8 +53,8 @@ final class EntityResolver extends AbstractOptions
                     sprintf(
                         '%s is resolved to the entity %s, which does not exist',
                         $old,
-                        $new
-                    )
+                        $new,
+                    ),
                 );
             }
 
@@ -64,9 +62,7 @@ final class EntityResolver extends AbstractOptions
         }
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getResolvers(): array
     {
         return $this->resolvers;

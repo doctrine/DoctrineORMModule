@@ -22,11 +22,9 @@ class YumlControllerTest extends TestCase
 {
     protected YumlController $controller;
 
-    /** @var Client&MockObject */
-    protected $httpClient;
+    protected Client&MockObject $httpClient;
 
-    /** @var PluginManager&MockObject */
-    protected $pluginManager;
+    protected PluginManager&MockObject $pluginManager;
 
     /**
      * {@inheritDoc}
@@ -43,9 +41,7 @@ class YumlControllerTest extends TestCase
         $this->controller->setPluginManager($this->pluginManager);
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\YumlController::indexAction
-     */
+    /** @covers \DoctrineORMModule\Yuml\YumlController::indexAction */
     public function testIndexActionWillRedirectToYuml(): void
     {
         $response           = $this->createMock(Response::class);
@@ -68,9 +64,7 @@ class YumlControllerTest extends TestCase
         $this->assertSame($controllerResponse, $this->controller->indexAction());
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\YumlController::indexAction
-     */
+    /** @covers \DoctrineORMModule\Yuml\YumlController::indexAction */
     public function testIndexActionWillFailOnMalformedResponse(): void
     {
         $response = $this->createMock(Response::class);

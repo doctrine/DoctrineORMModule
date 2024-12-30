@@ -84,17 +84,13 @@ final class SecondLevelCacheConfiguration extends AbstractOptions
         return $this->fileLockRegionDirectory;
     }
 
-    /**
-     * @param mixed[] $regions
-     */
+    /** @param mixed[] $regions */
     public function setRegions(array $regions): void
     {
         $this->regions = $regions;
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getRegions(): array
     {
         return $this->regions;

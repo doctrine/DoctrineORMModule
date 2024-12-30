@@ -23,6 +23,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
         $this->services = new ServiceManager();
         $this->factory  = new SQLLoggerCollectorFactory('orm_default');
     }
@@ -39,7 +40,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
                         'orm_default' => [],
                     ],
                 ],
-            ]
+            ],
         );
         $service = ($this->factory)($this->services, SQLLoggerCollector::class);
         $this->assertInstanceOf(SQLLoggerCollector::class, $service);
@@ -58,7 +59,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
                         'orm_default' => ['configuration' => 'configuration_service_id'],
                     ],
                 ],
-            ]
+            ],
         );
         ($this->factory)($this->services, SQLLoggerCollector::class);
         $this->assertInstanceOf(SQLLogger::class, $configuration->getSQLLogger());
@@ -89,7 +90,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
                         'orm_default' => ['sql_logger' => 'custom_logger'],
                     ],
                 ],
-            ]
+            ],
         );
         ($this->factory)($this->services, SQLLoggerCollector::class);
         $logger = $configuration->getSQLLogger();
@@ -111,7 +112,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
                         'orm_default' => ['sql_logger' => 'logger_service_id'],
                     ],
                 ],
-            ]
+            ],
         );
         ($this->factory)($this->services, SQLLoggerCollector::class);
         $this->assertSame($logger, $configuration->getSQLLogger());
@@ -128,7 +129,7 @@ class SQLLoggerCollectorFactoryTest extends TestCase
                         'orm_default' => ['name' => 'test_collector_name'],
                     ],
                 ],
-            ]
+            ],
         );
         $service = ($this->factory)($this->services, SQLLoggerCollector::class);
         assert($service instanceof SQLLoggerCollector);

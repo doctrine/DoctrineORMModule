@@ -20,14 +20,11 @@ use function unserialize;
  */
 class MappingCollectorTest extends TestCase
 {
-    /** @var ClassMetadataFactory&MockObject */
-    protected $metadataFactory;
+    protected ClassMetadataFactory&MockObject $metadataFactory;
 
     protected MappingCollector $collector;
 
-    /**
-     * @covers \DoctrineORMModule\Collector\MappingCollector::__construct
-     */
+    /** @covers \DoctrineORMModule\Collector\MappingCollector::__construct */
     public function setUp(): void
     {
         parent::setUp();
@@ -36,17 +33,13 @@ class MappingCollectorTest extends TestCase
         $this->collector       = new MappingCollector($this->metadataFactory, 'test-collector');
     }
 
-    /**
-     * @covers \DoctrineORMModule\Collector\MappingCollector::getName
-     */
+    /** @covers \DoctrineORMModule\Collector\MappingCollector::getName */
     public function testGetName(): void
     {
         $this->assertSame('test-collector', $this->collector->getName());
     }
 
-    /**
-     * @covers \DoctrineORMModule\Collector\MappingCollector::getPriority
-     */
+    /** @covers \DoctrineORMModule\Collector\MappingCollector::getPriority */
     public function testGetPriority(): void
     {
         $this->assertIsInt($this->collector->getPriority());
@@ -77,9 +70,7 @@ class MappingCollectorTest extends TestCase
         $this->assertSame($classes['M2'], $m2);
     }
 
-    /**
-     * @covers \DoctrineORMModule\Collector\MappingCollector::canHide
-     */
+    /** @covers \DoctrineORMModule\Collector\MappingCollector::canHide */
     public function testCanHide(): void
     {
         $this->assertTrue($this->collector->canHide());

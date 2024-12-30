@@ -23,7 +23,7 @@ class DBALConfiguration extends AbstractOptions
     /**
      * Set the class name of the SQL Logger, or null, to disable.
      */
-    protected ?string $sqlLogger = null;
+    protected string|null $sqlLogger = null;
 
     /**
      * Keys must be the name of the type identifier and value is
@@ -48,14 +48,12 @@ class DBALConfiguration extends AbstractOptions
         $this->sqlLogger = $sqlLogger;
     }
 
-    public function getSqlLogger(): ?string
+    public function getSqlLogger(): string|null
     {
         return $this->sqlLogger;
     }
 
-    /**
-     * @param mixed[] $types
-     */
+    /** @param mixed[] $types */
     public function setTypes(array $types): void
     {
         $this->types = $types;

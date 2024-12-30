@@ -21,7 +21,7 @@ final class ObjectMultiCheckboxFactory implements FactoryInterface
      *
      * @return ObjectMultiCheckbox
      */
-    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array|null $options = null)
     {
         $entityManager = $serviceLocator->get(EntityManager::class);
         $element       = new ObjectMultiCheckbox();

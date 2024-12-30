@@ -22,9 +22,7 @@ use PHPUnit\Framework\TestCase;
 
 use function class_exists;
 
-/**
- * @covers \DoctrineORMModule\Service\DBALConnectionFactory
- */
+/** @covers \DoctrineORMModule\Service\DBALConnectionFactory */
 class DBALConnectionFactoryTest extends TestCase
 {
     protected ServiceManager $serviceManager;
@@ -117,12 +115,12 @@ class DBALConnectionFactoryTest extends TestCase
         $this->serviceManager->setService('Configuration', $config);
         $this->serviceManager->setService(
             'doctrine.driver.orm_default',
-            $this->createMock(MappingDriver::class)
+            $this->createMock(MappingDriver::class),
         );
         $configurationFactory = new ConfigurationFactory('orm_default');
         $this->serviceManager->setService(
             'doctrine.configuration.orm_default',
-            $configurationFactory($this->serviceManager, Configuration::class)
+            $configurationFactory($this->serviceManager, Configuration::class),
         );
         $dbal     = ($this->factory)($this->serviceManager, DBALConnection::class);
         $platform = $dbal->getDatabasePlatform();

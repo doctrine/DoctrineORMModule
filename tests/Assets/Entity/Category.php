@@ -22,7 +22,7 @@ class Category
     /** @ORM\Column(type="string", nullable=true) */
     protected string $name;
 
-    public function getId(): ?int
+    public function getId(): int|null
     {
         return $this->id;
     }

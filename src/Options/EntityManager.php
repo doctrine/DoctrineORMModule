@@ -6,9 +6,7 @@ namespace DoctrineORMModule\Options;
 
 use Laminas\Stdlib\AbstractOptions;
 
-/**
- * @template-extends AbstractOptions<mixed>
- */
+/** @template-extends AbstractOptions<mixed> */
 final class EntityManager extends AbstractOptions
 {
     /**

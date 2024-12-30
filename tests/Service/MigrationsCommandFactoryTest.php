@@ -52,7 +52,7 @@ class MigrationsCommandFactoryTest extends TestCase
     {
         if (! class_exists(VersionCommand::class)) {
             $this->markTestIncomplete(
-                'Migrations must be installed to run this test.'
+                'Migrations must be installed to run this test.',
             );
         }
 
@@ -60,7 +60,7 @@ class MigrationsCommandFactoryTest extends TestCase
 
         $this->assertInstanceOf(
             ExecuteCommand::class,
-            $factory($this->serviceLocator, ExecuteCommand::class)
+            $factory($this->serviceLocator, ExecuteCommand::class),
         );
     }
 
@@ -68,7 +68,7 @@ class MigrationsCommandFactoryTest extends TestCase
     {
         if (! class_exists(VersionCommand::class)) {
             $this->markTestIncomplete(
-                'Migrations must be installed to run this test.'
+                'Migrations must be installed to run this test.',
             );
         }
 
@@ -76,7 +76,7 @@ class MigrationsCommandFactoryTest extends TestCase
 
         $this->assertInstanceOf(
             DiffCommand::class,
-            $factory($this->serviceLocator, DiffCommand::class)
+            $factory($this->serviceLocator, DiffCommand::class),
         );
     }
 
@@ -92,7 +92,7 @@ class MigrationsCommandFactoryTest extends TestCase
     {
         if (! class_exists(VersionCommand::class)) {
             $this->markTestIncomplete(
-                'Migrations must be installed to run this test.'
+                'Migrations must be installed to run this test.',
             );
         }
 
@@ -125,7 +125,7 @@ class MigrationsCommandFactoryTest extends TestCase
     {
         if (! class_exists(VersionCommand::class)) {
             $this->markTestIncomplete(
-                'Migrations must be installed to run this test.'
+                'Migrations must be installed to run this test.',
             );
         }
 

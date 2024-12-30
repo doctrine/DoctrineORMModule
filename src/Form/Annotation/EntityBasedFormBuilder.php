@@ -34,28 +34,23 @@ final class EntityBasedFormBuilder
 
     protected AbstractBuilder $builder;
 
-    protected ObjectManager $objectManager;
-
     /**
      * Constructor. Ensures ObjectManager is present.
      */
-    public function __construct(ObjectManager $objectManager, ?AbstractBuilder $builder = null)
+    public function __construct(protected ObjectManager $objectManager, AbstractBuilder|null $builder = null)
     {
         if (! class_exists(AbstractBuilder::class)) {
             throw new RuntimeException(sprintf(
                 'Usage of %s requires laminas-form 3.0.0 or newer, which currently is not installed.',
-                self::class
+                self::class,
             ));
         }
 
-        $this->objectManager = $objectManager;
-        $this->builder       = $builder ?? new LaminasAnnotationBuilder();
+        $this->builder = $builder ?? new LaminasAnnotationBuilder();
         (new DoctrineAnnotationListener($this->objectManager))->attach($this->builder->getEventManager());
     }
 
-    /**
-     * @return AbstractBuilder the form builder from laminas-form
-     */
+    /** @return AbstractBuilder the form builder from laminas-form */
     public function getBuilder(): AbstractBuilder
     {
         return $this->builder;

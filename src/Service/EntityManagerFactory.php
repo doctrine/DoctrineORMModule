@@ -20,7 +20,7 @@ final class EntityManagerFactory extends AbstractFactory
      *
      * @return EntityManager
      */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, array|null $options = null)
     {
         $options = $this->getOptions($container, 'entitymanager');
         assert($options instanceof DoctrineORMModuleEntityManager);

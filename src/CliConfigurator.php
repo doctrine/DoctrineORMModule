@@ -59,11 +59,8 @@ class CliConfigurator
         'doctrine.migrations_cmd.uptodate',
     ];
 
-    private ContainerInterface $container;
-
-    public function __construct(ContainerInterface $container)
+    public function __construct(private ContainerInterface $container)
     {
-        $this->container = $container;
     }
 
     public function configure(Application $cli): void
@@ -84,9 +81,7 @@ class CliConfigurator
         }
     }
 
-    /**
-     * @return array<string,Helper>
-     */
+    /** @return array<string,Helper> */
     private function getHelpers(EntityManagerInterface $objectManager): array
     {
         return [
@@ -102,7 +97,7 @@ class CliConfigurator
             null,
             InputOption::VALUE_OPTIONAL,
             'The name of the object manager to use.',
-            $this->defaultObjectManagerName
+            $this->defaultObjectManagerName,
         );
     }
 
@@ -117,9 +112,7 @@ class CliConfigurator
         return $arguments->getParameterOption('--object-manager');
     }
 
-    /**
-     * @return string[]
-     */
+    /** @return string[] */
     private function getAvailableCommands(): array
     {
         if (class_exists(VersionCommand::class)) {

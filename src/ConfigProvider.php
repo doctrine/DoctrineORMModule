@@ -9,9 +9,7 @@ namespace DoctrineORMModule;
  */
 final class ConfigProvider
 {
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function __invoke(): array
     {
         $config                 = include __DIR__ . '/../config/module.config.php';

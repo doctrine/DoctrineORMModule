@@ -27,7 +27,7 @@ final class ConfigurationFactory extends DoctrineConfigurationFactory
      *
      * @return Configuration
      */
-    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array|null $options = null)
     {
         $options = $this->getOptions($serviceLocator);
         $config  = new Configuration();
@@ -97,7 +97,7 @@ final class ConfigurationFactory extends DoctrineConfigurationFactory
             if (is_string($repositoryFactory)) {
                 if (! $serviceLocator->has($repositoryFactory)) {
                     throw new InvalidArgumentException(
-                        sprintf('Repository factory "%s" not found', $repositoryFactory)
+                        sprintf('Repository factory "%s" not found', $repositoryFactory),
                     );
                 }
 
@@ -121,7 +121,7 @@ final class ConfigurationFactory extends DoctrineConfigurationFactory
         if ($secondLevelCache->isEnabled()) {
             $regionsConfig = new RegionsConfiguration(
                 $secondLevelCache->getDefaultLifetime(),
-                $secondLevelCache->getDefaultLockLifetime()
+                $secondLevelCache->getDefaultLockLifetime(),
             );
 
             foreach ($secondLevelCache->getRegions() as $regionName => $regionConfig) {
