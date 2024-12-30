@@ -25,7 +25,7 @@ class TestEntity
     /** @ORM\Column(type="string", nullable=true) */
     protected string $password;
 
-    public function getId(): ?int
+    public function getId(): int|null
     {
         return $this->id;
     }
@@ -35,7 +35,7 @@ class TestEntity
         $this->password = (string) $password;
     }
 
-    public function getPassword(): ?string
+    public function getPassword(): string|null
     {
         return $this->password;
     }
@@ -45,7 +45,7 @@ class TestEntity
         $this->username = (string) $username;
     }
 
-    public function getUsername(): ?string
+    public function getUsername(): string|null
     {
         return $this->username;
     }

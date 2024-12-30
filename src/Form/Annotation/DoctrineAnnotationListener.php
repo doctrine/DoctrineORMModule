@@ -19,11 +19,8 @@ use function in_array;
 
 class DoctrineAnnotationListener extends AbstractListenerAggregate
 {
-    protected ObjectManager $objectManager;
-
-    public function __construct(ObjectManager $objectManager)
+    public function __construct(protected ObjectManager $objectManager)
     {
-        $this->objectManager = $objectManager;
     }
 
     /**
@@ -33,45 +30,43 @@ class DoctrineAnnotationListener extends AbstractListenerAggregate
     {
         $this->listeners[] = $events->attach(
             EntityBasedFormBuilder::EVENT_CONFIGURE_FIELD,
-            [$this, 'handleFilterField']
+            [$this, 'handleFilterField'],
         );
         $this->listeners[] = $events->attach(
             EntityBasedFormBuilder::EVENT_CONFIGURE_FIELD,
-            [$this, 'handleTypeField']
+            [$this, 'handleTypeField'],
         );
         $this->listeners[] = $events->attach(
             EntityBasedFormBuilder::EVENT_CONFIGURE_FIELD,
-            [$this, 'handleValidatorField']
+            [$this, 'handleValidatorField'],
         );
         $this->listeners[] = $events->attach(
             EntityBasedFormBuilder::EVENT_CONFIGURE_FIELD,
-            [$this, 'handleRequiredField']
+            [$this, 'handleRequiredField'],
         );
         $this->listeners[] = $events->attach(
             EntityBasedFormBuilder::EVENT_EXCLUDE_FIELD,
-            [$this, 'handleExcludeField']
+            [$this, 'handleExcludeField'],
         );
         $this->listeners[] = $events->attach(
             EntityBasedFormBuilder::EVENT_CONFIGURE_ASSOCIATION,
-            [$this, 'handleToOne']
+            [$this, 'handleToOne'],
         );
         $this->listeners[] = $events->attach(
             EntityBasedFormBuilder::EVENT_CONFIGURE_ASSOCIATION,
-            [$this, 'handleToMany']
+            [$this, 'handleToMany'],
         );
         $this->listeners[] = $events->attach(
             EntityBasedFormBuilder::EVENT_CONFIGURE_ASSOCIATION,
-            [$this, 'handleRequiredAssociation']
+            [$this, 'handleRequiredAssociation'],
         );
         $this->listeners[] = $events->attach(
             EntityBasedFormBuilder::EVENT_EXCLUDE_ASSOCIATION,
-            [$this, 'handleExcludeAssociation']
+            [$this, 'handleExcludeAssociation'],
         );
     }
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public function handleToOne(EventInterface $event): void
     {
         $metadata = $event->getParam('metadata');
@@ -84,9 +79,7 @@ class DoctrineAnnotationListener extends AbstractListenerAggregate
         $this->mergeAssociationOptions($event->getParam('elementSpec'), $mapping['targetEntity']);
     }
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public function handleToMany(EventInterface $event): void
     {
         $metadata = $event->getParam('metadata');
@@ -106,9 +99,7 @@ class DoctrineAnnotationListener extends AbstractListenerAggregate
         $elementSpec['spec']['attributes']['multiple'] = true;
     }
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public function handleExcludeAssociation(EventInterface $event): bool
     {
         $metadata = $event->getParam('metadata');
@@ -116,9 +107,7 @@ class DoctrineAnnotationListener extends AbstractListenerAggregate
         return $metadata && $metadata->isAssociationInverseSide($event->getParam('name'));
     }
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public function handleExcludeField(EventInterface $event): bool
     {
         $metadata    = $event->getParam('metadata');
@@ -128,9 +117,7 @@ class DoctrineAnnotationListener extends AbstractListenerAggregate
             $metadata->generatorType === ClassMetadata::GENERATOR_TYPE_IDENTITY;
     }
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public function handleFilterField(EventInterface $event): void
     {
         $metadata = $event->getParam('metadata');
@@ -165,9 +152,7 @@ class DoctrineAnnotationListener extends AbstractListenerAggregate
         }
     }
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public function handleRequiredAssociation(EventInterface $event): void
     {
         $metadata = $event->getParam('metadata');
@@ -206,9 +191,7 @@ class DoctrineAnnotationListener extends AbstractListenerAggregate
         }
     }
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public function handleRequiredField(EventInterface $event): void
     {
         $this->prepareEvent($event);
@@ -223,9 +206,7 @@ class DoctrineAnnotationListener extends AbstractListenerAggregate
         $inputSpec['required'] = ! $metadata->isNullable($event->getParam('name'));
     }
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public function handleTypeField(EventInterface $event): void
     {
         $metadata = $event->getParam('metadata');
@@ -281,9 +262,7 @@ class DoctrineAnnotationListener extends AbstractListenerAggregate
         $elementSpec['spec']['type'] = $type;
     }
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public function handleValidatorField(EventInterface $event): void
     {
         $mapping = $this->getFieldMapping($event);
@@ -333,10 +312,8 @@ class DoctrineAnnotationListener extends AbstractListenerAggregate
         }
     }
 
-    /**
-     * @return mixed[]|null
-     */
-    protected function getFieldMapping(EventInterface $event): ?array
+    /** @return mixed[]|null */
+    protected function getFieldMapping(EventInterface $event): array|null
     {
         $metadata = $event->getParam('metadata');
         if ($metadata && $metadata->hasField($event->getParam('name'))) {
@@ -346,10 +323,8 @@ class DoctrineAnnotationListener extends AbstractListenerAggregate
         return null;
     }
 
-    /**
-     * @return mixed[]|null
-     */
-    protected function getAssociationMapping(EventInterface $event): ?array
+    /** @return mixed[]|null */
+    protected function getAssociationMapping(EventInterface $event): array|null
     {
         $metadata = $event->getParam('metadata');
         if ($metadata && $metadata->hasAssociation($event->getParam('name'))) {
@@ -367,7 +342,7 @@ class DoctrineAnnotationListener extends AbstractListenerAggregate
                 'object_manager' => $this->objectManager,
                 'target_class'   => $targetEntity,
             ],
-            $options
+            $options,
         );
 
         $elementSpec['spec']['options'] = $options;

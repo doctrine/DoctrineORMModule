@@ -28,9 +28,7 @@ class MetadataGrapherTest extends TestCase
         $this->grapher = new MetadataGrapher();
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawSimpleEntity(): void
     {
         $class = $this->createMock(ClassMetadata::class);
@@ -41,9 +39,7 @@ class MetadataGrapherTest extends TestCase
         $this->assertSame('[Simple.Entity]', $this->grapher->generateFromMetadata([$class]));
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawSimpleEntityWithFields(): void
     {
         $class = $this->createMock(ClassMetadata::class);
@@ -54,16 +50,14 @@ class MetadataGrapherTest extends TestCase
             $this->returnCallback(
                 static function ($field) {
                     return $field === 'a';
-                }
-            )
+                },
+            ),
         );
 
         $this->assertSame('[Simple.Entity|+a;b;c]', $this->grapher->generateFromMetadata([$class]));
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawOneToOneUniDirectionalAssociation(): void
     {
         $class1 = $this->createMock(ClassMetadata::class);
@@ -82,9 +76,7 @@ class MetadataGrapherTest extends TestCase
         $this->assertSame('[A]-b 1>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawOneToOneBiDirectionalAssociation(): void
     {
         $class1 = $this->createMock(ClassMetadata::class);
@@ -107,9 +99,7 @@ class MetadataGrapherTest extends TestCase
         $this->assertSame('[A]<>a 1-b 1>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawOneToOneBiDirectionalInverseAssociation(): void
     {
         $class1 = $this->createMock(ClassMetadata::class);
@@ -132,9 +122,7 @@ class MetadataGrapherTest extends TestCase
         $this->assertSame('[A]<a 1-b 1<>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawOneToManyBiDirectionalAssociation(): void
     {
         $class1 = $this->createMock(ClassMetadata::class);
@@ -157,9 +145,7 @@ class MetadataGrapherTest extends TestCase
         $this->assertSame('[A]<>a 1-b *>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawOneToManyBiDirectionalInverseAssociation(): void
     {
         $class1 = $this->createMock(ClassMetadata::class);
@@ -182,9 +168,7 @@ class MetadataGrapherTest extends TestCase
         $this->assertSame('[A]<>a *-b 1>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawManyToManyUniDirectionalAssociation(): void
     {
         $class1 = $this->createMock(ClassMetadata::class);
@@ -203,9 +187,7 @@ class MetadataGrapherTest extends TestCase
         $this->assertSame('[A]-b *>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawManyToManyUniDirectionalInverseAssociation(): void
     {
         $class1 = $this->createMock(ClassMetadata::class);
@@ -224,9 +206,7 @@ class MetadataGrapherTest extends TestCase
         $this->assertSame('[A],[B]-a *>[A]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawManyToManyBiDirectionalAssociation(): void
     {
         $class1 = $this->createMock(ClassMetadata::class);
@@ -249,9 +229,7 @@ class MetadataGrapherTest extends TestCase
         $this->assertSame('[A]<>a *-b *>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawManyToManyBiDirectionalInverseAssociation(): void
     {
         $class1 = $this->createMock(ClassMetadata::class);
@@ -274,9 +252,7 @@ class MetadataGrapherTest extends TestCase
         $this->assertSame('[A]<a *-b *<>[B]', $this->grapher->generateFromMetadata([$class1, $class2]));
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawManyToManyAssociationWithoutKnownInverseSide(): void
     {
         $class1 = $this->createMock(ClassMetadata::class);
@@ -290,9 +266,7 @@ class MetadataGrapherTest extends TestCase
         $this->assertSame('[A]<>-b *>[B]', $this->grapher->generateFromMetadata([$class1]));
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawInheritance(): void
     {
         $class1 = $this->createMock(ClassMetadata::class);
@@ -307,13 +281,11 @@ class MetadataGrapherTest extends TestCase
 
         $this->assertSame(
             '[stdClass]^[' . str_replace('\\', '.', $child) . ']',
-            $this->grapher->generateFromMetadata([$class2, $class1])
+            $this->grapher->generateFromMetadata([$class2, $class1]),
         );
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawInheritedFields(): void
     {
         $class1 = $this->createMock(ClassMetadata::class);
@@ -330,13 +302,11 @@ class MetadataGrapherTest extends TestCase
 
         $this->assertSame(
             '[stdClass|inherited]^[' . str_replace('\\', '.', $child) . '|field2]',
-            $this->grapher->generateFromMetadata([$class2, $class1])
+            $this->grapher->generateFromMetadata([$class2, $class1]),
         );
     }
 
-    /**
-     * @covers \DoctrineORMModule\Yuml\MetadataGrapher
-     */
+    /** @covers \DoctrineORMModule\Yuml\MetadataGrapher */
     public function testDrawInheritedAssociations(): void
     {
         $class1 = $this->createMock(ClassMetadata::class);
@@ -361,8 +331,8 @@ class MetadataGrapherTest extends TestCase
                 $this->returnCallback(
                     static function ($assoc) {
                         return strtoupper($assoc);
-                    }
-                )
+                    },
+                ),
             );
         $class2->expects($this->any())->method('isAssociationInverseSide')->will($this->returnValue(false));
         $class2->expects($this->any())->method('isCollectionValuedAssociation')->will($this->returnValue(true));
@@ -379,7 +349,7 @@ class MetadataGrapherTest extends TestCase
         $childName = str_replace('\\', '.', $child);
         $this->assertSame(
             '[stdClass]<>-a *>[A],[stdClass]^[' . $childName . '],[' . $childName . ']<>-b *>[B]',
-            $this->grapher->generateFromMetadata([$class1, $class2])
+            $this->grapher->generateFromMetadata([$class1, $class2]),
         );
     }
 
@@ -391,11 +361,11 @@ class MetadataGrapherTest extends TestCase
         ClassMetadata $class1,
         ClassMetadata $class2,
         ClassMetadata $class3,
-        string $expected
+        string $expected,
     ): void {
         $this->assertSame(
             $expected,
-            $this->grapher->generateFromMetadata([$class1, $class2, $class3])
+            $this->grapher->generateFromMetadata([$class1, $class2, $class3]),
         );
     }
 

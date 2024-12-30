@@ -30,7 +30,7 @@
     },
     "require-dev": {
         "doctrine/annotations": "^2.0.0",
-        "doctrine/coding-standard": "^9.0.0",
+        "doctrine/coding-standard": "^12.0.0",
         "doctrine/data-fixtures": "^1.5.2",
         "doctrine/migrations": "^3.8.0",
         "laminas/laminas-cache-storage-adapter-filesystem": "^2.0",

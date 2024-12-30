@@ -15,9 +15,7 @@ class MoneyType extends Type
 {
     public const MONEY = 'money';
 
-    /**
-     * @param mixed[] $fieldDeclaration
-     */
+    /** @param mixed[] $fieldDeclaration */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return 'MyMoney';

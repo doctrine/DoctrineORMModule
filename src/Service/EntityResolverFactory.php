@@ -16,7 +16,7 @@ final class EntityResolverFactory extends AbstractFactory
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, array|null $options = null)
     {
         $options = $this->getOptions($container, 'entity_resolver');
         assert($options instanceof EntityResolver);

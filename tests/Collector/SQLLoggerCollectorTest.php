@@ -23,6 +23,7 @@ class SQLLoggerCollectorTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
         $this->logger    = new DebugStack();
         $this->collector = new SQLLoggerCollector($this->logger, $this->name);
     }

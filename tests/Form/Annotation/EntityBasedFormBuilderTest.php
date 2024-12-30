@@ -26,16 +26,14 @@ class EntityBasedFormBuilderTest extends TestCase
         if (! class_exists(AbstractBuilder::class)) {
             $this->markTestSkipped(sprintf(
                 '%s requires laminas-form 3.0.0 or newer to be installed.',
-                EntityBasedFormBuilder::class
+                EntityBasedFormBuilder::class,
             ));
         }
 
         $this->builder = new EntityBasedFormBuilder($this->getEntityManager());
     }
 
-    /**
-     * @link https://github.com/doctrine/DoctrineORMModule/issues/237
-     */
+    /** @link https://github.com/doctrine/DoctrineORMModule/issues/237 */
     public function testIssue237(): void
     {
         $entity = new Issue237();
@@ -120,9 +118,7 @@ class EntityBasedFormBuilderTest extends TestCase
         $this->assertTrue($userDefinedTypeOverridesListenerType);
     }
 
-    /**
-     * @link https://github.com/zendframework/zf2/issues/7096
-     */
+    /** @link https://github.com/zendframework/zf2/issues/7096 */
     public function testFileTypeDoesntGrabStringLengthValidator(): void
     {
         $validators = $this

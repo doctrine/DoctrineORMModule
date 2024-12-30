@@ -7,9 +7,7 @@ namespace DoctrineORMModuleTest\Options;
 use DoctrineORMModule\Options\DBALConnection;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \DoctrineORMModule\Options\DBALConnection
- */
+/** @covers \DoctrineORMModule\Options\DBALConnection */
 class DBALConnectionTest extends TestCase
 {
     public function testSetNullCommentedTypes(): void

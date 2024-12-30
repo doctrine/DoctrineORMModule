@@ -142,7 +142,7 @@ final class Configuration extends DBALConfiguration
     /**
      * Default repository class
      */
-    protected ?string $defaultRepositoryClassName = null;
+    protected string|null $defaultRepositoryClassName = null;
 
     /**
      * Repository factory or name of the repository factory service to be set in ORM
@@ -154,7 +154,7 @@ final class Configuration extends DBALConfiguration
      * Class name of MetaData factory to be set in ORM.
      * The entityManager will create a new instance on construction.
      */
-    protected ?string $classMetadataFactoryName = null;
+    protected string|null $classMetadataFactoryName = null;
 
     /**
      * Entity listener resolver or service name of the entity listener resolver
@@ -169,12 +169,12 @@ final class Configuration extends DBALConfiguration
      *
      * @link http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/second-level-cache.html
      */
-    protected ?SecondLevelCacheConfiguration $secondLevelCache = null;
+    protected SecondLevelCacheConfiguration|null $secondLevelCache = null;
 
     /**
      * Configuration option for the filter schema assets expression
      */
-    protected ?string $filterSchemaAssetsExpression = null;
+    protected string|null $filterSchemaAssetsExpression = null;
 
     /**
      * Stack of middleware names
@@ -190,9 +190,7 @@ final class Configuration extends DBALConfiguration
      */
     protected $schemaAssetsFilter = null;
 
-    /**
-     * @param mixed[] $datetimeFunctions
-     */
+    /** @param mixed[] $datetimeFunctions */
     public function setDatetimeFunctions(array $datetimeFunctions): self
     {
         $this->datetimeFunctions = $datetimeFunctions;
@@ -200,9 +198,7 @@ final class Configuration extends DBALConfiguration
         return $this;
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getDatetimeFunctions(): array
     {
         return $this->datetimeFunctions;
@@ -220,9 +216,7 @@ final class Configuration extends DBALConfiguration
         return 'doctrine.driver.' . $this->driver;
     }
 
-    /**
-     * @param mixed[] $entityNamespaces
-     */
+    /** @param mixed[] $entityNamespaces */
     public function setEntityNamespaces(array $entityNamespaces): self
     {
         $this->entityNamespaces = $entityNamespaces;
@@ -230,9 +224,7 @@ final class Configuration extends DBALConfiguration
         return $this;
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getEntityNamespaces(): array
     {
         return $this->entityNamespaces;
@@ -284,9 +276,7 @@ final class Configuration extends DBALConfiguration
         return 'doctrine.cache.' . $this->hydrationCache;
     }
 
-    /**
-     * @param mixed[] $namedNativeQueries
-     */
+    /** @param mixed[] $namedNativeQueries */
     public function setNamedNativeQueries(array $namedNativeQueries): self
     {
         $this->namedNativeQueries = $namedNativeQueries;
@@ -294,17 +284,13 @@ final class Configuration extends DBALConfiguration
         return $this;
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getNamedNativeQueries(): array
     {
         return $this->namedNativeQueries;
     }
 
-    /**
-     * @param mixed[] $namedQueries
-     */
+    /** @param mixed[] $namedQueries */
     public function setNamedQueries(array $namedQueries): self
     {
         $this->namedQueries = $namedQueries;
@@ -312,17 +298,13 @@ final class Configuration extends DBALConfiguration
         return $this;
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getNamedQueries(): array
     {
         return $this->namedQueries;
     }
 
-    /**
-     * @param  mixed[] $numericFunctions
-     */
+    /** @param  mixed[] $numericFunctions */
     public function setNumericFunctions(array $numericFunctions): self
     {
         $this->numericFunctions = $numericFunctions;
@@ -330,17 +312,13 @@ final class Configuration extends DBALConfiguration
         return $this;
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getNumericFunctions(): array
     {
         return $this->numericFunctions;
     }
 
-    /**
-     * @param mixed[] $filters
-     */
+    /** @param mixed[] $filters */
     public function setFilters(array $filters): self
     {
         $this->filters = $filters;
@@ -348,9 +326,7 @@ final class Configuration extends DBALConfiguration
         return $this;
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getFilters(): array
     {
         return $this->filters;
@@ -392,9 +368,7 @@ final class Configuration extends DBALConfiguration
         return 'doctrine.cache.' . $this->queryCache;
     }
 
-    /**
-     * @param  mixed[] $stringFunctions
-     */
+    /** @param  mixed[] $stringFunctions */
     public function setStringFunctions(array $stringFunctions): self
     {
         $this->stringFunctions = $stringFunctions;
@@ -402,17 +376,13 @@ final class Configuration extends DBALConfiguration
         return $this;
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getStringFunctions(): array
     {
         return $this->stringFunctions;
     }
 
-    /**
-     * @param mixed[] $modes
-     */
+    /** @param mixed[] $modes */
     public function setCustomHydrationModes(array $modes): self
     {
         $this->customHydrationModes = $modes;
@@ -420,9 +390,7 @@ final class Configuration extends DBALConfiguration
         return $this;
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getCustomHydrationModes(): array
     {
         return $this->customHydrationModes;
@@ -476,7 +444,7 @@ final class Configuration extends DBALConfiguration
         return $this;
     }
 
-    public function getClassMetadataFactoryName(): ?string
+    public function getClassMetadataFactoryName(): string|null
     {
         return $this->classMetadataFactoryName;
     }
@@ -493,9 +461,7 @@ final class Configuration extends DBALConfiguration
         return $this->entityListenerResolver;
     }
 
-    /**
-     * @param  mixed[] $secondLevelCache
-     */
+    /** @param  mixed[] $secondLevelCache */
     public function setSecondLevelCache(array $secondLevelCache): self
     {
         $this->secondLevelCache = new SecondLevelCacheConfiguration($secondLevelCache);
@@ -515,7 +481,7 @@ final class Configuration extends DBALConfiguration
         return $this;
     }
 
-    public function getFilterSchemaAssetsExpression(): ?string
+    public function getFilterSchemaAssetsExpression(): string|null
     {
         return $this->filterSchemaAssetsExpression;
     }
@@ -527,7 +493,7 @@ final class Configuration extends DBALConfiguration
         return $this;
     }
 
-    public function getSchemaAssetsFilter(): ?callable
+    public function getSchemaAssetsFilter(): callable|null
     {
         return $this->schemaAssetsFilter;
     }
@@ -545,22 +511,18 @@ final class Configuration extends DBALConfiguration
     /**
      * Get default repository class name.
      */
-    public function getDefaultRepositoryClassName(): ?string
+    public function getDefaultRepositoryClassName(): string|null
     {
         return $this->defaultRepositoryClassName;
     }
 
-    /**
-     * @param array<class-string<Middleware>> $middlewares
-     */
+    /** @param array<class-string<Middleware>> $middlewares */
     public function setMiddlewares(array $middlewares): void
     {
         $this->middlewares = $middlewares;
     }
 
-    /**
-     * @return array<class-string<Middleware>>
-     */
+    /** @return array<class-string<Middleware>> */
     public function getMiddlewares(): array
     {
         return $this->middlewares;

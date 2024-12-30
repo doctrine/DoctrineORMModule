@@ -17,12 +17,12 @@ final class SQLLoggerCollectorOptions extends AbstractOptions
     protected string $name = 'orm_default';
 
     /** @var string|null service name of the configuration where the logger has to be put */
-    protected ?string $configuration = null;
+    protected string|null $configuration = null;
 
     /** @var string|null service name of the SQLLogger to be used */
-    protected ?string $sqlLogger = null;
+    protected string|null $sqlLogger = null;
 
-    public function setName(?string $name): void
+    public function setName(string|null $name): void
     {
         $this->name = (string) $name;
     }
@@ -35,7 +35,7 @@ final class SQLLoggerCollectorOptions extends AbstractOptions
         return $this->name;
     }
 
-    public function setConfiguration(?string $configuration): void
+    public function setConfiguration(string|null $configuration): void
     {
         $this->configuration = $configuration ?: null;
     }
@@ -48,7 +48,7 @@ final class SQLLoggerCollectorOptions extends AbstractOptions
         return $this->configuration ?: 'doctrine.configuration.orm_default';
     }
 
-    public function setSqlLogger(?string $sqlLogger): void
+    public function setSqlLogger(string|null $sqlLogger): void
     {
         $this->sqlLogger = $sqlLogger ?: null;
     }
@@ -56,7 +56,7 @@ final class SQLLoggerCollectorOptions extends AbstractOptions
     /**
      * SQLLogger service name
      */
-    public function getSqlLogger(): ?string
+    public function getSqlLogger(): string|null
     {
         return $this->sqlLogger;
     }

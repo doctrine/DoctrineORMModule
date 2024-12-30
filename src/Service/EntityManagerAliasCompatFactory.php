@@ -23,7 +23,7 @@ final class EntityManagerAliasCompatFactory implements FactoryInterface
      *
      * @return EntityManager
      */
-    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array|null $options = null)
     {
         return $serviceLocator->get('doctrine.entitymanager.orm_default');
     }

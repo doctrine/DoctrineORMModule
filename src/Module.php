@@ -38,7 +38,7 @@ final class Module implements
                         ->get(CliConfigurator::class)
                         ->configure($event->getTarget());
                 },
-                1
+                1,
             );
 
         // Initialize logger collector in DeveloperTools
@@ -54,7 +54,7 @@ final class Module implements
                 static function ($event): void {
                     $container = $event->getTarget()->getParam('ServiceManager');
                     $container->get('doctrine.sql_logger_collector.orm_default');
-                }
+                },
             );
     }
 

@@ -21,14 +21,8 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
      */
     public const PRIORITY = 10;
 
-    protected DebugStack $sqlLogger;
-
-    protected string $name;
-
-    public function __construct(DebugStack $sqlLogger, string $name)
+    public function __construct(protected DebugStack $sqlLogger, protected string $name)
     {
-        $this->sqlLogger = $sqlLogger;
-        $this->name      = $name;
     }
 
     public function getName(): string
@@ -55,9 +49,7 @@ class SQLLoggerCollector implements CollectorInterface, AutoHideInterface
         return count($this->sqlLogger->queries);
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getQueries(): array
     {
         return $this->sqlLogger->queries;

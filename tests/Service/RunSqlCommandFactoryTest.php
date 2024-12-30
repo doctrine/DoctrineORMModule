@@ -10,9 +10,7 @@ use DoctrineORMModuleTest\ServiceManagerFactory;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \DoctrineORMModule\Service\RunSqlCommandFactory
- */
+/** @covers \DoctrineORMModule\Service\RunSqlCommandFactory */
 class RunSqlCommandFactoryTest extends TestCase
 {
     private ServiceManager $serviceLocator;
@@ -28,7 +26,7 @@ class RunSqlCommandFactoryTest extends TestCase
 
         $this->assertInstanceOf(
             RunSqlCommand::class,
-            $factory($this->serviceLocator, RunSqlCommand::class)
+            $factory($this->serviceLocator, RunSqlCommand::class),
         );
     }
 }

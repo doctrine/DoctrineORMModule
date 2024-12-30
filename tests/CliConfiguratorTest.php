@@ -32,9 +32,7 @@ use Symfony\Component\Console\Application;
 use function assert;
 use function class_exists;
 
-/**
- * @link    http://www.doctrine-project.org/
- */
+/** @link    http://www.doctrine-project.org/ */
 class CliConfiguratorTest extends TestCase
 {
     protected ServiceManager $serviceManager;
@@ -61,9 +59,7 @@ class CliConfiguratorTest extends TestCase
         $this->assertSame($this->objectManager, $entityManagerHelper->getEntityManager());
     }
 
-    /**
-     * @backupGlobals enabled
-     */
+    /** @backupGlobals enabled */
     public function testEntityManagerUsedCanBeSpecifiedInCommandLineArgument(): void
     {
         $objectManagerName = 'doctrine.entitymanager.some_other_name';
@@ -111,14 +107,12 @@ class CliConfiguratorTest extends TestCase
         $this->assertSame($this->objectManager, $emHelper->getEntityManager());
     }
 
-    /**
-     * @dataProvider dataProviderForTestValidCommands
-     */
+    /** @dataProvider dataProviderForTestValidCommands */
     public function testValidCommands(string $commandName, string $className): void
     {
         if (! class_exists(VersionCommand::class)) {
             $this->markTestIncomplete(
-                'Migrations must be installed to run this test.'
+                'Migrations must be installed to run this test.',
             );
         }
 
@@ -143,9 +137,7 @@ class CliConfiguratorTest extends TestCase
         $this->assertSame('The name of the object manager to use.', $entityManagerOption->getDescription());
     }
 
-    /**
-     * @return list<array{string, class-string}>
-     */
+    /** @return list<array{string, class-string}> */
     public function dataProviderForTestValidCommands(): array
     {
         return [

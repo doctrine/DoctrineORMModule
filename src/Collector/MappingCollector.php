@@ -22,17 +22,14 @@ class MappingCollector implements CollectorInterface, AutoHideInterface
      */
     public const PRIORITY = 10;
 
-    protected string $name;
-
-    protected ?ClassMetadataFactory $classMetadataFactory = null;
+    protected ClassMetadataFactory|null $classMetadataFactory = null;
 
     /** @var ClassMetadata[] indexed by class name */
     protected array $classes = [];
 
-    public function __construct(ClassMetadataFactory $classMetadataFactory, string $name)
+    public function __construct(ClassMetadataFactory $classMetadataFactory, protected string $name)
     {
         $this->classMetadataFactory = $classMetadataFactory;
-        $this->name                 = $name;
     }
 
     public function getName(): string
@@ -67,9 +64,7 @@ class MappingCollector implements CollectorInterface, AutoHideInterface
         return empty($this->classes);
     }
 
-    /**
-     * @return array{name: string, classes: ClassMetadata[]}
-     */
+    /** @return array{name: string, classes: ClassMetadata[]} */
     public function __serialize(): array
     {
         return [
@@ -78,18 +73,14 @@ class MappingCollector implements CollectorInterface, AutoHideInterface
         ];
     }
 
-    /**
-     * @param array{name: string, classes: ClassMetadata[]} $data
-     */
+    /** @param array{name: string, classes: ClassMetadata[]} $data */
     public function __unserialize(array $data): void
     {
         $this->name    = $data['name'];
         $this->classes = $data['classes'];
     }
 
-    /**
-     * @return ClassMetadata[]
-     */
+    /** @return ClassMetadata[] */
     public function getClasses(): array
     {
         return $this->classes;

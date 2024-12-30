@@ -43,7 +43,7 @@ class ConfigurationFactoryTest extends TestCase
         $this->serviceManager->setService('doctrine.cache.array', $this->getArrayCacheInstance());
         $this->serviceManager->setService(
             'doctrine.driver.orm_default',
-            $this->createMock(MappingDriver::class)
+            $this->createMock(MappingDriver::class),
         );
     }
 
@@ -227,7 +227,7 @@ class ConfigurationFactoryTest extends TestCase
         $ormConfig = $factory($this->serviceManager, Configuration::class);
         $this->assertEquals(
             ClassMetadataFactory::class,
-            $ormConfig->getClassMetadataFactoryName()
+            $ormConfig->getClassMetadataFactoryName(),
         );
     }
 
@@ -247,7 +247,7 @@ class ConfigurationFactoryTest extends TestCase
 
         $this->assertInstanceOf(
             EntityListenerResolver::class,
-            $ormConfig->getEntityListenerResolver()
+            $ormConfig->getEntityListenerResolver(),
         );
     }
 

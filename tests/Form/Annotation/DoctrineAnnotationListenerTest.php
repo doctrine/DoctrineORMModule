@@ -29,9 +29,7 @@ class DoctrineAnnotationListenerTest extends TestCase
         $this->listener = new DoctrineAnnotationListener($this->getEntityManager());
     }
 
-    /**
-     * @dataProvider eventNameProvider
-     */
+    /** @dataProvider eventNameProvider */
     public function testEventsWithNoMetadata(string $method): void
     {
         $event = $this->getMetadataEvent();
@@ -52,7 +50,7 @@ class DoctrineAnnotationListenerTest extends TestCase
         $this->assertEquals($this->getEntityManager(), $elementSpec['spec']['options']['object_manager']);
         $this->assertEquals(
             TargetEntity::class,
-            $elementSpec['spec']['options']['target_class']
+            $elementSpec['spec']['options']['target_class'],
         );
         $this->assertEquals(EntitySelect::class, $elementSpec['spec']['type']);
     }
@@ -61,9 +59,7 @@ class DoctrineAnnotationListenerTest extends TestCase
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
-        /**
-         * @var ArrayObject<string, array<mixed>>
-         */
+        /** @var ArrayObject<string, array<mixed>> $elementSpec */
         $elementSpec                           = new ArrayObject();
         $elementSpec['spec']['options']['foo'] = 'bar';
 
@@ -114,7 +110,7 @@ class DoctrineAnnotationListenerTest extends TestCase
         $this->assertEquals($this->getEntityManager(), $elementSpec['spec']['options']['object_manager']);
         $this->assertEquals(
             FormEntityTarget::class,
-            $elementSpec['spec']['options']['target_class']
+            $elementSpec['spec']['options']['target_class'],
         );
         $this->assertEquals(EntitySelect::class, $elementSpec['spec']['type']);
         $this->assertFalse($inputSpec['required']);
@@ -124,9 +120,7 @@ class DoctrineAnnotationListenerTest extends TestCase
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
-        /**
-         * @var ArrayObject<string, array<mixed>>
-         */
+        /** @var ArrayObject<string, array<mixed>> $elementSpec */
         $elementSpec                           = new ArrayObject();
         $elementSpec['spec']['options']['foo'] = 'bar';
 
@@ -150,9 +144,7 @@ class DoctrineAnnotationListenerTest extends TestCase
         $this->assertFalse($listener->handleExcludeAssociation($event));
     }
 
-    /**
-     * @dataProvider eventFilterProvider
-     */
+    /** @dataProvider eventFilterProvider */
     public function testHandleFilterField(string $name, string $type): void
     {
         $listener = $this->listener;
@@ -230,9 +222,7 @@ class DoctrineAnnotationListenerTest extends TestCase
         $this->assertFalse(isset($inputSpec['required']));
     }
 
-    /**
-     * @dataProvider eventTypeProvider
-     */
+    /** @dataProvider eventTypeProvider */
     public function testHandleTypeField(string $name, string $type): void
     {
         $listener = $this->listener;
@@ -249,10 +239,8 @@ class DoctrineAnnotationListenerTest extends TestCase
         $this->assertEquals($type, $elementSpec['spec']['type']);
     }
 
-    /**
-     * @dataProvider eventValidatorProvider
-     */
-    public function testHandleValidatorField(string $name, ?string $type): void
+    /** @dataProvider eventValidatorProvider */
+    public function testHandleValidatorField(string $name, string|null $type): void
     {
         $listener = $this->listener;
         $event    = $this->getMetadataEvent();
@@ -273,10 +261,8 @@ class DoctrineAnnotationListenerTest extends TestCase
         }
     }
 
-    /**
-     * @return list<array{string, string|null}>
-     */
-    public function eventValidatorProvider()
+    /** @return list<array{string, string|null}> */
+    public function eventValidatorProvider(): array
     {
         return [
             ['bool', 'InArray'],
@@ -295,10 +281,8 @@ class DoctrineAnnotationListenerTest extends TestCase
         ];
     }
 
-    /**
-     * @return list<array{string, string}>
-     */
-    public function eventFilterProvider()
+    /** @return list<array{string, string}> */
+    public function eventFilterProvider(): array
     {
         return [
             ['bool', 'Boolean'],
@@ -317,10 +301,8 @@ class DoctrineAnnotationListenerTest extends TestCase
         ];
     }
 
-    /**
-     * @return list<array{string, class-string}>
-     */
-    public function eventTypeProvider()
+    /** @return list<array{string, class-string}> */
+    public function eventTypeProvider(): array
     {
         return [
             ['bool', Checkbox::class],
@@ -339,9 +321,7 @@ class DoctrineAnnotationListenerTest extends TestCase
         ];
     }
 
-    /**
-     * @return list<array{string}>
-     */
+    /** @return list<array{string}> */
     public function eventNameProvider(): array
     {
         return [

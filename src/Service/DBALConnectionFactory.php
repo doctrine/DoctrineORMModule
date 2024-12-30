@@ -29,7 +29,7 @@ final class DBALConnectionFactory extends AbstractFactory
      *
      * @return Connection
      */
-    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array|null $options = null)
     {
         $options = $this->getOptions($serviceLocator, 'connection');
         assert($options instanceof DBALConnection);

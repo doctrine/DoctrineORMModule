@@ -25,7 +25,7 @@ class City
     /** @ORM\OneToOne(targetEntity="Country") */
     protected Country $country;
 
-    public function getId(): ?int
+    public function getId(): int|null
     {
         return $this->id;
     }

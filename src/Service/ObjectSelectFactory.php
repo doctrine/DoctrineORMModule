@@ -21,7 +21,7 @@ final class ObjectSelectFactory implements FactoryInterface
      *
      * @return ObjectSelect
      */
-    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array|null $options = null)
     {
         $entityManager = $serviceLocator->get(EntityManager::class);
         $element       = new ObjectSelect();

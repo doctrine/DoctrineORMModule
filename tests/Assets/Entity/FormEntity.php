@@ -64,7 +64,7 @@ class FormEntity
     protected string $string;
 
     /** @ORM\Column(type="string", nullable=true) */
-    protected ?string $stringNullable = null;
+    protected string|null $stringNullable = null;
 
     /** @ORM\OneToOne(targetEntity="Target") */
     protected Target $targetOne;
@@ -73,7 +73,7 @@ class FormEntity
      * @ORM\OneToOne(targetEntity="Target")
      * @ORM\JoinColumn(nullable=true)
      */
-    protected ?Target $targetOneNullable = null;
+    protected Target|null $targetOneNullable = null;
 
    /**
     * @ORM\OneToOne(targetEntity="Target")
@@ -82,7 +82,7 @@ class FormEntity
     * @Form\Type("DoctrineModule\Form\Element\ObjectSelect")
     * @Form\Options({"empty_option":null})
     */
-    protected ?Target $noDisplayEmptyOption = null;
+    protected Target|null $noDisplayEmptyOption = null;
 
     /**
      * @ORM\OneToMany(targetEntity="FormEntityTarget", mappedBy="formEntity")

@@ -23,11 +23,8 @@ use function sprintf;
  */
 class DBALConfigurationFactory implements FactoryInterface
 {
-    protected string $name;
-
-    public function __construct(string $name)
+    public function __construct(protected string $name)
     {
-        $this->name = $name;
     }
 
     /**
@@ -37,7 +34,7 @@ class DBALConfigurationFactory implements FactoryInterface
      *
      * @return Configuration
      */
-    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array|null $options = null)
     {
         $config = new Configuration();
         $this->setupDBALConfiguration($serviceLocator, $config);
@@ -88,9 +85,7 @@ class DBALConfigurationFactory implements FactoryInterface
         }
     }
 
-    /**
-     * @throws RuntimeException
-     */
+    /** @throws RuntimeException */
     public function getOptions(ContainerInterface $serviceLocator): mixed
     {
         $options = $serviceLocator->get('config');
@@ -101,8 +96,8 @@ class DBALConfigurationFactory implements FactoryInterface
             throw new RuntimeException(
                 sprintf(
                     'Configuration with name "%s" could not be found in "doctrine.configuration".',
-                    $this->name
-                )
+                    $this->name,
+                ),
             );
         }
 

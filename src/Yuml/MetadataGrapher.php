@@ -121,7 +121,7 @@ class MetadataGrapher
             . $this->getClassString($class2);
     }
 
-    private function getClassReverseAssociationName(ClassMetadata $class1, ClassMetadata $class2): ?string
+    private function getClassReverseAssociationName(ClassMetadata $class1, ClassMetadata $class2): string|null
     {
         foreach ($class2->getAssociationNames() as $class2Side) {
             $targetClass = $this->getClassByName($class2->getAssociationTargetClass($class2Side));
@@ -174,7 +174,7 @@ class MetadataGrapher
     /**
      * Retrieve a class metadata instance by name from the given array
      */
-    private function getClassByName(string $className): ?ClassMetadata
+    private function getClassByName(string $className): ClassMetadata|null
     {
         if (! isset($this->classByNames[$className])) {
             foreach ($this->metadata as $class) {
@@ -191,7 +191,7 @@ class MetadataGrapher
     /**
      * Retrieve a class metadata's parent class metadata
      */
-    private function getParent(ClassMetadata $class): ?ClassMetadata
+    private function getParent(ClassMetadata $class): ClassMetadata|null
     {
         $className = $class->getName();
         if (! class_exists($className)) {
@@ -213,7 +213,7 @@ class MetadataGrapher
      *
      * @return bool true if the association was visited before
      */
-    private function visitAssociation(string $className, ?string $association = null): bool
+    private function visitAssociation(string $className, string|null $association = null): bool
     {
         if ($association === null) {
             if (isset($this->visitedAssociations[$className])) {

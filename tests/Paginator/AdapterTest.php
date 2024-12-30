@@ -31,7 +31,7 @@ class AdapterTest extends TestCase
 
         if (! class_exists(FixtureLoader::class)) {
             $this->markTestIncomplete(
-                'DataFixtures must be installed to run this test.'
+                'DataFixtures must be installed to run this test.',
             );
         }
 
