@@ -94,8 +94,8 @@ class MappingCollectorTest extends TestCase
     }
 
     /**
-     * @covers \DoctrineORMModule\Collector\MappingCollector::serialize
-     * @covers \DoctrineORMModule\Collector\MappingCollector::unserialize
+     * @covers \DoctrineORMModule\Collector\MappingCollector::__serialize
+     * @covers \DoctrineORMModule\Collector\MappingCollector::__unserialize
      * @covers \DoctrineORMModule\Collector\MappingCollector::collect
      */
     public function testSerializeUnserializeAndCollectWithNoMetadataFactory(): void

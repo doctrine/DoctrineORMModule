@@ -8,7 +8,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
 use DoctrineORMModuleTest\Assets\Entity\Category;
 use DoctrineORMModuleTest\Assets\Entity\Country;
-use DoctrineORMModuleTest\Assets\Entity\Test as TestEntity;
+use DoctrineORMModuleTest\Assets\Entity\TestEntity;
 
 /**
  * Fixture that loads a constant amount of \DoctrineORMModuleTest\Assets\Entity\Test objects into the manager

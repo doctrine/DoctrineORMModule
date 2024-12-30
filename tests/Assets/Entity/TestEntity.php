@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="doctrine_orm_module_test")
  */
-class Test
+class TestEntity
 {
     /**
      * @ORM\Id

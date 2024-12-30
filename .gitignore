@@ -1,5 +1,5 @@
 /.phpcs.cache
-/.phpunit.result.cache
+/.phpunit.cache/
 /ci/20*/
 /config/application.config.php
 /coverage.xml

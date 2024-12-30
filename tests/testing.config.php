@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Doctrine\DBAL\Driver\PDO\SQLite\Driver;
+use Doctrine\DBAL\Driver\PDO\SQLite\Driver as SQLiteDriver;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use DoctrineModule\Service\EventManagerFactory;
 use DoctrineORMModule\Service\ConfigurationFactory;
@@ -55,13 +55,13 @@ return [
             'orm_default' => [
                 'configuration' => 'orm_default',
                 'eventmanager'  => 'orm_default',
-                'driverClass'   => Driver::class,
+                'driverClass'   => SQLiteDriver::class,
                 'params' => ['memory' => true],
             ],
             'orm_other' => [
                 'configuration' => 'orm_other',
                 'eventmanager'  => 'orm_other',
-                'driverClass'   => Driver::class,
+                'driverClass'   => SQLiteDriver::class,
                 'params' => ['memory' => true],
             ],
         ],

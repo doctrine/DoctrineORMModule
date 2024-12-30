@@ -10,7 +10,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as PaginatorAdapter;
-use DoctrineORMModuleTest\Assets\Entity\Test;
+use DoctrineORMModuleTest\Assets\Entity\TestEntity;
 use DoctrineORMModuleTest\Assets\Fixture\TestFixture;
 use DoctrineORMModuleTest\Framework\TestCase;
 
@@ -46,7 +46,7 @@ class AdapterTest extends TestCase
             ->getEntityManager()
             ->createQueryBuilder()
             ->select('t')
-            ->from(Test::class, 't')
+            ->from(TestEntity::class, 't')
             ->orderBy('t.id', 'ASC');
 
         $this->paginator        = new DoctrinePaginator($this->queryBuilder);
