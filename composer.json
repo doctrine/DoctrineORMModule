@@ -11,11 +11,11 @@
     ],
     "homepage": "https://www.doctrine-project.org/",
     "require": {
-        "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
+        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
         "ext-json": "*",
         "doctrine/dbal": "^3.3.2",
         "doctrine/doctrine-laminas-hydrator": "^3.2.0",
-        "doctrine/doctrine-module": "^6.2.0",
+        "doctrine/doctrine-module": "^6.3.0",
         "doctrine/event-manager": "^2.0.0",
         "doctrine/orm": "^2.13.0",
         "doctrine/persistence": "^3.0.0",
