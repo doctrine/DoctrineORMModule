@@ -11,7 +11,7 @@
     ],
     "homepage": "https://www.doctrine-project.org/",
     "require": {
-        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
         "ext-json": "*",
         "doctrine/dbal": "^3.3.2",
         "doctrine/doctrine-laminas-hydrator": "^3.2.0",
