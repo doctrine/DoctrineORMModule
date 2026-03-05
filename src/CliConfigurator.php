@@ -70,7 +70,7 @@ class CliConfigurator
             $command = $this->container->get($commandName);
             $command->getDefinition()->addOption($this->createObjectManagerInputOption());
 
-            $cli->add($command);
+            $cli->addCommands([$command]);
         }
 
         $objectManager = $this->container->get($this->getObjectManagerName());
