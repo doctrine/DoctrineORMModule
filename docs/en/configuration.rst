@@ -105,8 +105,7 @@ How to Define Relationships with Abstract Classes and Interfaces (ResolveTargetE
             'entity_resolver' => [
                 'orm_default' => [
                     'resolvers' => [
-                        \Acme\InvoiceModule\Model\InvoiceSubjectInterface::class,
-                        \Acme\CustomerModule\Entity\Customer::class,
+                        \Acme\InvoiceModule\Model\InvoiceSubjectInterface::class => \Acme\CustomerModule\Entity\Customer::class,
                     ],
                 ],
             ],
