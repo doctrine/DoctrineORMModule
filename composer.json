@@ -26,7 +26,7 @@
         "laminas/laminas-servicemanager": "^3.17.0",
         "laminas/laminas-stdlib": "^3.13.0",
         "psr/container": "^1.1.2",
-        "symfony/console": "^6.1.2 || ^7.0.0"
+        "symfony/console": "^6.1.2 || ^7.0.0 || ^8.0.0"
     },
     "require-dev": {
         "doctrine/annotations": "^2.0.0",
